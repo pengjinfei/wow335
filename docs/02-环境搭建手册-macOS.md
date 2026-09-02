@@ -29,15 +29,17 @@ brew install openssl@3 readline boost bash-completion curl unzip \
 ```
 
 **本机当前状态（2026-09-02 盘点）**：
-已有 ✅：openssl@3、readline、mysql、jq、cmake、bash；
-缺失 ❌：`boost`、`ccache`（**编译必需，必装**）、bash-completion、curl、
-unzip、expect、tmux、screen。
+已有 ✅：openssl@3、readline、jq、cmake、bash、boost、ccache；
+缺失 ❌：bash-completion、curl、unzip、expect、tmux、screen（均可选）。
 
-安装后启动 MySQL：
+**MySQL 注意**：不要用 `brew install mysql`（9.x）。本机实测 9.3.0 会因
+protobuf 依赖被单独升级而启动即崩；且上游以 8.x 为主。使用 **mysql@8.4**：
 
 ```bash
-brew services start mysql
-mysql -uroot -e "SELECT VERSION();"   # 验证：输出版本号（本机 9.3）
+brew install mysql@8.4
+export PATH="/opt/homebrew/opt/mysql@8.4/bin:$PATH"   # 编译和日常都要带上
+/opt/homebrew/opt/mysql@8.4/support-files/mysql.server start
+mysql -uroot -e "SELECT VERSION();"   # 验证：8.4.x
 ```
 
 ## 2. 获取代码
@@ -81,13 +83,31 @@ EOF
 
 ## 4. 编译
 
+**Apple Silicon 必读**：`apps/compiler/includes/functions.sh` 的 `comp_configure`
+对 macOS 硬编码了 **Intel Homebrew 路径**（`/usr/local/opt/openssl@3/...`），
+在 M 系列芯片上指向不存在的文件，且优先级高于自动探测，导致
+`Could NOT find OpenSSL`。修复：用 `CCUSTOMOPTIONS` 覆盖（它追加在硬编码
+参数之后，后写生效）：
+
 ```bash
+export PATH="/opt/homebrew/opt/mysql@8.4/bin:$PATH"
+HB=$(brew --prefix)
+export CCUSTOMOPTIONS="\
+ -DMYSQL_ADD_INCLUDE_PATH=$HB/opt/mysql@8.4/include/mysql \
+ -DMYSQL_LIBRARY=$HB/opt/mysql@8.4/lib/libmysqlclient.dylib \
+ -DREADLINE_INCLUDE_DIR=$HB/opt/readline/include \
+ -DREADLINE_LIBRARY=$HB/opt/readline/lib/libreadline.dylib \
+ -DOPENSSL_ROOT_DIR=$HB/opt/openssl@3 \
+ -DOPENSSL_INCLUDE_DIR=$HB/opt/openssl@3/include \
+ -DOPENSSL_SSL_LIBRARIES=$HB/opt/openssl@3/lib/libssl.dylib \
+ -DOPENSSL_CRYPTO_LIBRARIES=$HB/opt/openssl@3/lib/libcrypto.dylib"
 ./acore.sh compiler build
 ```
 
 - 首次全量约 **15~30 分钟**（M 系列，开 PCH + ccache）；
-- 产物在 `env/dist/bin/`；
-- 磁盘占用约 8~12GB（`var/build/`）。
+- 产物在 `env/dist/bin/`；磁盘占用约 8~12GB（`var/build/`）。
+- **configure 失败后务必先 `rm -rf var/build/obj`**：CMakeCache 会把
+  `OPENSSL_*-NOTFOUND` 之类的空值缓存住，之后怎么改环境变量都不生效。
 
 **手动编译备用路径**（dashboard 出错时用）：
 
