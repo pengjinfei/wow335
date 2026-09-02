@@ -1,0 +1,10 @@
+# 上游仓库克隆（各自独立的 git 仓库，不纳入本管理库）
+/azerothcore-wotlk/
+
+# 客户端提取数据与运行产物
+/data/
+/env/
+*.log
+
+# macOS
+.DS_Store
