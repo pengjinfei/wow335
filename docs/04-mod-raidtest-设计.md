@@ -44,6 +44,7 @@
 | Run（运行） | 某个场景的一次执行（可含多次尝试） |
 | Attempt（尝试） | Run 内的一次拉怪，从进入战斗到胜负判定或本次重置 |
 | Roster（阵容） | 一组位子：`{槽位, 职业, 职责}`，如 `{0, warrior, tank}` |
+| Roster Blueprint（角色蓝图） | 阵容的完整配置声明：槽位/名称/种族/职业/职责/天赋/专业/装备/宝石/附魔（§5.1） |
 | Test Account（测试账号） | `raidtest` 前缀的专用账号，由模块创建，不与真实/随机 bot 混用 |
 
 ## 3. 架构总览
@@ -97,10 +98,17 @@
 | 开战 | `PullAction` / `AttackAction::Attack(Unit*, bool)`；或引擎级 `Unit::AddThreat`/`AttackStart`（禁止：不绕过 AI 直接改 boss 血） | 触发 boss 战 |
 | 配装 | `PlayerbotFactory` 构造 + `InitSkills/InitTalentsTrees/InitEquipment/ApplyEnchantAndGemsNew`；`AutoGear(bot, itemQuality, ilvl, ...)`；`init=epic/auto` 命令语义 | 合法配装（克隆自工厂随机化逻辑） |
 
-### 4.1 建号与角色创建
+### 4.1 建号与角色创建（配置驱动）
 
+- **角色蓝图（Roster Blueprint）**：阵容中的每个槽位由**配置文件声明**，包括：
+  `槽位 / 名称 / 种族 / 职业 / 职责 / 天赋 / 专业技能 / 装备（逐槽位 item_id）/ 宝石 / 附魔`
+  代码与数据分离——建号逻辑读蓝图执行，改角色方案只改配置，不动代码（格式见 §5.1）。
 - **账号**：在 `auth.account` 建记录（复用 `AccountMgr::CreateAccount` 的 SRP6 建号逻辑），密码随机生成即可——bot 登录走 DB 加载，不走网络验证；
-- **角色**：写入 `characters.characters` 及关联表（`Player::Create` 流程 / `CharacterCreateGameData`）。最稳路径是让 `PlayerbotFactory` 走完整的"造角色+初始化"管线，测试模块只负责调用并传参（等级 80、天赋/技能/装备档位）。
+- **角色**：写入 `characters.characters` 及关联表（`Player::Create` 流程 / `CharacterCreateGameData`）。初始化管线：
+  1. 按蓝图建角色（80 级）
+  2. `PlayerbotFactory` 初始化天赋/技能/法术（复用其成熟逻辑，按蓝图的职业/天赋声明）
+  3. **装备/宝石/附魔按蓝图逐槽位落实**：`Player::AddItem` → 插宝石（`Item::AddSocketGem`）→ 附魔（`Player::ApplyEnchantment`）；未指定的槽位可落回工厂自动配装（档位驱动），实现"精确与省事兼顾"
+- **蓝图的持久化**：建好的账号/角色映射仍写 `raidtest_accounts` 表；蓝图文本随配置进 git，天然版本化，可快速对比"同一角色、不同装备配置"的测试结果
 
 ### 4.2 数据库取舍（重要）
 
@@ -141,11 +149,12 @@ modules/mod-raidtest/
 └── src/
     ├── Module/RaidTestModule.h/.cpp      # ScriptMgr 挂载、命令注册、World loop tick
     ├── Command/RaidTestCommandScript.h/.cpp  # .raidtest 命令解析（Console::Yes）
-    ├── Config/RaidTestConfig.h/.cpp      # 配置读取（前缀、默认尝试数、超时…）
+    ├── Config/
+    │   ├── RaidTestConfig.h/.cpp         # 模块配置读取（前缀、默认尝试数、超时…）
+    │   └── RosterBlueprint.h/.cpp        # ★ 角色蓝图：解析配置文件 → 槽位声明列表
     ├── Scenario/
     │   ├── Scenario.h/.cpp               # 场景定义基类 + 注册表（mapId→scenario）
     │   ├── Encounter.h/.cpp              # 单 boss 战斗：开战 hook / 判定 hook / 超时
-    │   ├── RosterTemplate.h              # 阵容数据结构（槽位/职业/职责）
     │   └── scenarios/
     │       └── NaxxScenario.cpp          # NAXX 场景（首个：Patchwerk）
     ├── Orchestrator/
@@ -153,7 +162,8 @@ modules/mod-raidtest/
     │   ├── RunContext.h                  # 单次 run 的上下文（阵容、账号、uuid）
     │   └── AttemptRunner.h/.cpp          # 单次尝试：传送→开战→轮询判定→记录
     ├── Bot/
-    │   ├── RosterManager.h/.cpp          # 账号/角色生命周期（建/查/重置）
+    │   ├── RosterManager.h/.cpp          # 账号/角色生命周期（按蓝图 建/查/重置）
+    │   ├── RosterBuilder.h/.cpp          # ★ 按蓝图造角：天赋/专业/装备/宝石/附魔落实
     │   ├── RosterLogin.h/.cpp            # 登录（调 PlayerbotMgr）、组队、传送
     │   └── CombatTrigger.h/.cpp          # 开战触发 + "已进入 raid 策略"检查
     ├── Observer/
@@ -167,7 +177,52 @@ modules/mod-raidtest/
 
 **组件依赖方向（严格单向）**：
 `Command → Orchestrator → {RosterManager, AttemptRunner} → {RaidTestConfig, ResultStore}`
-`Scenario → {Encounter, RosterTemplate}`（被 Orchestrator 依赖）
+`Scenario → Encounter`；`RosterManager → RosterBlueprint → RosterBuilder`（被 Orchestrator 依赖）
+
+### 5.1 角色蓝图配置格式（★ 建号数据驱动核心）
+
+蓝图声明一个场景的完整阵容，配置文件名 `mod-raidtest-roster-<scenario>.conf`（随模块 git 版本化）。按槽位描述"这个角色的全部构成"：
+
+```ini
+# mod-raidtest-roster-naxx-patchwerk.conf
+# 槽位索引从 0 开始；职责直接影响 bot 的 AI 行为（tank/heal/dps）
+
+[Roster.0]                    # 副坦（可换人的位置）
+Name            = "Patch-Tank"   # 角色名（自动加前缀，避免与真实玩家冲突）
+Race            = "human"        # 种族（决定初始技能）
+Class           = "warrior"      # 职业
+Role            = "tank"         # 职责：tank/heal/dps
+TalentSpec      = "warrior_tank" # 天赋模板（对应 PlayerbotFactory 天赋骨架）
+Professions     = "mining,jewelcrafting"   # 双专业（逗号分隔）
+MainHand        = 40491          # 逐槽位 item_id；缺省槽位交给工厂按档位自动配装
+OffHand         = 40491
+Head            = 40492
+Shoulder        = 40493
+Neck            = 40494
+Chest           = 40495
+Back            = 40496
+Wrist           = 40497
+Hands           = 40498
+Waist           = 40499
+Legs            = 40500
+Feet            = 40501
+Ring1           = 40502
+Ring2           = 40503
+Trinket1        = 40504
+Trinket2        = 40505
+# 宝石与附魔按槽位（gem=item_id 进 socket, enchant=附魔 id）
+Head.Gem1       = 40111
+Head.Gem2       = 40112
+Head.Enchant    = 3856
+Chest.Gem1      = 40113
+Chest.Enchant   = 3858
+```
+
+关键设计：
+- **不在蓝图里的槽位** → `RosterBuilder` 落回 `PlayerbotFactory` 的档位自动配装（`init=epic` 等价语义），保证"精确到逐件"和"省事到全自动"都成立；
+- **装配顺序**：建角色 → 天赋/专业 → 装备 item → 插宝石（`Item::AddSocketGem`）→ 附魔（`Player::ApplyEnchantment`）→ 校验（`CanEquipItem`）；任一步失败该槽位标记并继续，不中断整队；
+- **蓝图关联场景**：场景元数据里声明自己用的蓝图文件（`Scenario::GetRosterFile()`），`run` 时加载；
+- **蓝图版本对比**：配置即 git 历史，改一套装备 → 重跑 → `compare`，天然支持"装备变量对照实验"。
 
 ## 6. 数据模型（characters 库）
 
@@ -246,16 +301,15 @@ public:
     uint32 GetMapId() const override      { return 533; }          // Naxxramas
     uint32 GetBossEntry() const override  { return 16028; }        // Patchwerk
 
-    RosterTemplate GetRoster(int size) const override
+    // 阵容由蓝图配置驱动（§5.1），运行时按文件加载
+    std::string GetRosterFile() const override
     {
-        // 10 人：1 战士坦 + 1 圣骑/牧/德治疗 + 8 DPS（职业取自 addclass 白名单）
-        // 席位表与 mod-playerbots 的职业感知一致
-        return RosterTemplate::Parse("tank:warrior, heal:priest, heal:druid, dps:mage, dps:warlock, ...");
+        return "mod-raidtest-roster-naxx-patchwerk.conf";
     }
 
     GearProfile GetGearProfile() const override
     {
-        // 对应 init=epic 的档位（T7 入门，ilvl~200），符合"不修改装备"约束
+        // 蓝图未指定槽位的兜底档位（init=epic 等价语义），符合"不修改装备"约束
         return GearProfile::Epic();
     }
 
