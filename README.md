@@ -15,6 +15,7 @@
 | [docs/01-构建体系分析.md](docs/01-构建体系分析.md) | 上游工程结构、cmake/DB/配置/模块机制拆解 |
 | [docs/02-环境搭建手册-macOS.md](docs/02-环境搭建手册-macOS.md) | 从零到服务器跑起来的分步手册（新机器照这个来） |
 | [docs/03-上游同步与分支策略.md](docs/03-上游同步与分支策略.md) | git 分支模型、上游更新同步流程 |
+| [docs/04-mod-raidtest-设计.md](docs/04-mod-raidtest-设计.md) | mod-raidtest 自动化团测模块设计 |
 | [scripts/setup-macos.sh](scripts/setup-macos.sh) | 一键搭建（依赖→克隆→配置→编译→建库） |
 | [scripts/sync-upstream.sh](scripts/sync-upstream.sh) | 上游同步（报告/应用两种模式） |
 
@@ -36,7 +37,7 @@ git clone <本仓库> wow335 && cd wow335
 ## 项目阶段
 
 - [x] 阶段 0：可行性分析、副本覆盖现状调研
-- [ ] **阶段 1：环境构建 + 文档（进行中）**
-- [ ] 阶段 2：10 人小队成型，纳克萨玛斯首 BOSS 流程跑通
+- [x] **阶段 1：环境构建 + 文档（已完成）**
+- [ ] 阶段 2：mod-raidtest 模块开发（设计已完成，待实现）
 - [ ] 阶段 3：团测自动化框架（无客户端闭环验证）
 - [ ] 阶段 4：按副本逐个攻坚
