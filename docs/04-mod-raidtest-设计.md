@@ -112,10 +112,12 @@
 
 ### 4.2 数据库取舍（重要）
 
-**不新增核心数据库连接**。优先复用 `characters` 库存放运行时结果（账号映射、run/attempt/事件），场景定义放配置+代码（场景包含 C++ hook，纯数据不够描述）。理由：
+**不新增核心数据库连接**。优先复用 `characters` 库存放运行时结果（账号映射、run/attempt/事件）。理由：
 
 - 新增独立库需改 `DatabaseEnv.h` / `DatabaseWorkerPool` / `DatabaseUpdater`（core 侧），上游同步会冲突；
 - `characters` 库已承载 mod-playerbots 的扩展表，风险最小、schema 可版本化（`data/sql/characters/updates/` 机制沿用）。
+
+**场景定义：纯数据配置化（重要修订）**。场景的全部数据（mapId、bossEntry、roster 文件、开战安全点、超时、开战方式）由**配置文件**承载（`conf/mod-raidtest-scenario-<name>.conf`），C++ `Scenario` 类只保留**行为钩子**（读配置填数据 + 特殊判定的虚函数，阶段 B 的 Loatheb/Chess 之类才覆写）。**通用场景类 + 启动扫描注册**：框架启动时枚举 `conf/` 下 `mod-raidtest-scenario-*.conf`，每个文件构造一个通用 `Scenario` 实例（`LoadFromFile` 填数据）自动注册进 `ScenarioRegistry`，场景名 = 文件名。新增 boss/副本 = 新增一个配置文件，绝大多数场景不需要写代码，也不用写专用 C++ 类。这是"数据驱动"原则在场景层的延伸（与 §5.1 角色蓝图同一哲学），保证后续 WLK 全团本可依靠增配置扩展、不靠增代码膨胀。
 
 ### 4.3 副本重置
 
@@ -292,35 +294,30 @@ CREATE TABLE raidtest_events (
 
 ## 7. 场景定义（Naxx Patchwerk 最小示例）
 
+场景 = 一个配置文件 +（可选）一个行为子类。纯数据场景只有配置文件：
+
+```ini
+# conf/mod-raidtest-scenario-naxx-patchwerk.conf
+# 框架启动时扫描 conf/mod-raidtest-scenario-*.conf 自动注册，场景名=文件名
+[Scenario]
+MapId           = 533              # Naxxramas
+BossEntry       = 16028            # Patchwerk
+RosterFile      = "mod-raidtest-roster-naxx-patchwerk.conf"
+GearProfile     = epic             # 蓝图未指定槽位的兜底档位（符合"不修改装备"约束）
+EngageX         = 3256.36          # 帕奇维克房安全点（已实测校准）
+EngageY         = -3230.33
+EngageZ         = 294.063
+EngageO         = 0.0
+TimeoutSeconds  = 300
+EngageTrigger   = pull             # PullAction 开战
+```
+
+C++ 侧只需要一个**通用 `Scenario` 类**（实体类，非抽象）：`LoadFromFile()` 填数据，getter 全从配置返回；留一个默认空实现的虚方法 `ApplyEncounterCustomizations(Encounter&)` 供阶段 B 有特殊机制的 boss（Loatheb/Chess 之类）写子类覆盖。任何纯数据场景不需要专用 C++ 类。
+
 ```cpp
-// NaxxScenario.cpp（注册表由 Scenario::Register 汇总）
-class NaxxPatchwerkScenario : public Scenario
-{
-public:
-    std::string GetName() const override { return "naxx-patchwerk"; }
-    uint32 GetMapId() const override      { return 533; }          // Naxxramas
-    uint32 GetBossEntry() const override  { return 16028; }        // Patchwerk
-
-    // 阵容由蓝图配置驱动（§5.1），运行时按文件加载
-    std::string GetRosterFile() const override
-    {
-        return "mod-raidtest-roster-naxx-patchwerk.conf";
-    }
-
-    GearProfile GetGearProfile() const override
-    {
-        // 蓝图未指定槽位的兜底档位（init=epic 等价语义），符合"不修改装备"约束
-        return GearProfile::Epic();
-    }
-
-    void ConfigureEncounter(Encounter& e) override
-    {
-        e.SetTimeoutSeconds(300);
-        // 默认判定：boss 死亡 = kill；全团死亡 = wipe；超时 = timeout
-        e.SetEngageTrigger(EncounterTrigger::Pull);   // PullAction 开战
-    }
-};
-REGISTER_SCENARIO(NaxxPatchwerkScenario);
+// 框架自动扫描注册，无需每个场景手写：
+for (auto const& file : ScanScenarioConfigFiles())
+    ScenarioRegistry::instance().Register(MakeScenario(file));  // LoadFromFile + 记录文件名
 ```
 
 - **职责判定 hook**（`Encounter::OnBossDeath / OnAllDead`）在阶段 B 提供给需要特殊判定的 boss（如 Loatheb 之类靠机制不是靠血量的），MVP 一律用"血量为 0=kill"这个通用判据，后续 boss 按需覆写。
