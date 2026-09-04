@@ -18,6 +18,9 @@
 | [docs/02-环境搭建手册-macOS.md](docs/02-环境搭建手册-macOS.md) | 从零到服务器跑起来的分步手册（新机器照这个来） |
 | [docs/03-上游同步与分支策略.md](docs/03-上游同步与分支策略.md) | git 分支模型、上游更新同步流程 |
 | [docs/04-mod-raidtest-设计.md](docs/04-mod-raidtest-设计.md) | mod-raidtest 自动化团测模块设计 |
+| [docs/05-mod-raidtest-B1-攻坚底座-设计.md](docs/05-mod-raidtest-B1-攻坚底座-设计.md) | B1 攻坚底座设计（AI 激活/顶装/实例重置/可信判定） |
+| [docs/06-mod-raidtest-B2-激活输出循环-设计.md](docs/06-mod-raidtest-B2-激活输出循环-设计.md) | B2 设计（方案 b：模块侧 attack tagged） |
+| [docs/07-mod-playerbots-缺陷上报.md](docs/07-mod-playerbots-缺陷上报.md) | 两个 mod-playerbots 缺陷（站位注释/近战判定）含证据与修法 |
 | [scripts/setup-macos.sh](scripts/setup-macos.sh) | 一键搭建（依赖→克隆→配置→编译→建库） |
 | [scripts/sync-upstream.sh](scripts/sync-upstream.sh) | 上游同步（报告/应用两种模式） |
 
