@@ -219,3 +219,49 @@ else if (botAI->IsAssistTankOfIndex(bot, 1))   // 第 2 个非主坦坦克
 ### 风险提示
 
 改动影响 Gluth 全难度（10/25 人）的僵尸处理与仇恨分配；建议改后用 10/25 人各跑一次，验证 DPS 是否优先转火僵尸、boss 回血是否被遏制、坦克是否还能维持主坦仇恨。修改 `decimatedZombiePct`/`GetDistance2d` 等阈值时注意不要破坏 Decimate 后的正常转火节奏。
+
+---
+
+## 缺陷 ④：Loatheb 坦克不建立仇恨 + 站位点逼近 50 码脱战边界
+
+### 现象
+
+`naxx-loatheb` 场景（10 人）实测：团队输出正常（run54 全队 2.69M，术士/贼/法/圣骑/萨/猎各自 267k-585k），boss 血量能掉到 59%（run52 74%），但**boss 前 120s 从不普攻坦克**——它一直在打 DPS（猎人 45k、术士 44k 等），坦克只吃到 Necrotic Aura 的 153 低伤。**坦克从开局就没进 boss 仇恨表**（boss 首刀 1489ms 打猎人），导致 DPS 逐个被切死、团队 144s 全灭。
+
+### 证据链（file:line + 实测数据）
+
+**① 坦克不建仇（mod-playerbots 策略）：**
+
+`LoathebChooseTargetAction`（`NaxxActions_Loatheb.cpp:30-57`）的选目标逻辑**不区分角色**——任何 bot（含坦克）只要孢子 `GetDistance2d <= 1.0f` 就打孢子，否则打 boss。坦克 run54 前 30s 施法全是 buff（55594 智力×5、5302 盾击×14 打 0 目标）+ 打孢子（355 嘲讽打在 895 上、12721/12868 打 919），**全程不对 boss 出手**（run54 坦克对 boss 仅 2 次 575 伤害）。
+
+**② 站位点逼近脱战边界（mod-playerbots 站位 + 框架 engage）：**
+
+| 位置 | 值 | 距 Loatheb 出生点(2909,-3997.41) |
+|---|---|---|
+| `NaxxBossHelper.h:347` `mainTankPos` | (2877.57,-3967.00) | **43.7 码** |
+| `boss_loatheb.cpp:152-160` `IsInRoom()` | 距出生点 >50 码 → `EnterEvadeMode()` | 脱战阈值 50 码 |
+
+`mainTankPos` 距出生点 43.7 码，**几乎贴着 50 码脱战线**——boss 被打时拉向站位点，位置波动即超 50 码触发 `EnterEvadeMode` 回满血。run52 实测：boss 50s 打到 74% 后被拉远脱战回满 100%。
+
+**③ 实测对比（框架侧 engage 修复前后）：**
+
+| run | engage 点 | 坦克仇恨 | boss 最低血 | 脱战 |
+|---|---|---|---|---|
+| run52 | rangePos(2896,-3980) 距出生点 26 码 | 无 | 74% | 是（50s 拉远回满） |
+| run54 | 出生点旁(2909,-3991) | 无 | **59%** | 否（144s 全灭后归位） |
+
+框架侧把 engage 点改到出生点旁后，boss 不再中途拉远脱战（run54 稳定掉到 59%）——**但坦克仇恨问题独立存在**，是 Loatheb 打不过的真正瓶颈。
+
+### 根因
+
+1. **mod-playerbots 坦克策略未对 boss 建立初始仇恨**：Loatheb 没有显式"坦克开局拉 boss"的动作，坦克依赖通用 Attack 循环，但 `LoathebChooseTargetAction` 让坦克优先被孢子抢目标，且坦克引擎未把 boss 设为 current target → boss 仇恨表为空。
+2. **站位点设计逼近脱战边界**：`mainTankPos(2877,-3967)` 距出生点 43.7 码（<50 脱战阈值），框架 engage 点又偏离出生点，双重叠加导致 boss 拉远脱战（run52）。框架侧已通过 engage 调整缓解，但站位缺陷仍在。
+
+### 建议修法（mod-playerbots）
+
+1. **Loatheb 坦克仇恨专项**：`LoathebChooseTargetAction` 增加"坦克优先 boss"分支——坦克不因孢子抢目标而放弃 boss，开局对 boss `Attack` + 嘲讽（真实打法：坦克踩孢子吃暴击但保持仇恨）。
+2. **站位点校正**：`mainTankPos(2877,-3967)` 若为通用 Naxx 站位模板，建议按 Loatheb 实际出生点(2909,-3997) 复核，保持距出生点 <40 码留足脱战余量。
+
+### 风险提示
+
+改动影响 Loatheb 10/25 人（25 人 `mainTankPos25` 同理需复核）；修坦克仇恨后需重测确认 boss 全程普攻坦克、DPS 不再被切死。框架侧 engage 调整（run54 已验证）已缓解脱战，可作为权宜。
