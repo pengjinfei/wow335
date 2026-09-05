@@ -7,7 +7,7 @@
 
 ## 摘要
 
-mod-raidtest 在 Naxxramas（地图 533）真实战斗的事件流与位置采样归因中，发现 mod-playerbots 两处**独立**缺陷，均导致机器人无法按真实团队副本策略正常战斗。第一处为 NAXX Patchwerk BOSS 站位动作整段被注释（未启用）；第二处为通用"近战接近目标"判定对大型 BOSS 失真的核心逻辑问题。二者共同造成:近战/坦克不贴近 BOSS、坦克零仇恨、团灭。
+mod-raidtest 在 Naxxramas（地图 533）真实战斗的事件流与位置采样归因中，发现 mod-playerbots 三处**独立**缺陷，均导致机器人无法按真实团队副本策略正常战斗。缺陷①为 NAXX Patchwerk BOSS 站位动作整段被注释（未启用）；缺陷②为通用"近战接近目标"判定对大型 BOSS 失真的核心逻辑问题；缺陷③为 Gluth 僵尸处理在 10 人模式下失效（僵尸无人拦截，boss 无限吃僵尸回血）。三者共同造成:近战/坦克不贴近 BOSS、坦克零仇恨、团灭。
 
 ---
 
@@ -128,3 +128,56 @@ boss(entry16028) 位置: 逐步从3256逼近到 3281
 
 - 本项目 context: `docs/06-mod-raidtest-B2-激活输出循环-设计.md`
 - 完整数据: `.superpowers/sdd/progress.md` 中 "B2 深挖" 段
+
+---
+
+## 缺陷 ③：Gluth 僵尸处理在 10 人模式下失效（僵尸无人拦截，boss 无限吃僵尸回血）
+
+### 现象
+
+`mod-raidtest` 的 `naxx-gluth` 场景（10 人，10 bot：1 坦 2 治疗 7 DPS）实测：boss 血量钉死在 97-99%，团队输出 113k-206k 全被 boss 回血对冲，战斗 60-73s 全灭（或拖到 timeout）。**根因不是输出不够，是僵尸完全无人处理**：Gluth 每 10s 召唤 1 只 Zombie Chow，僵尸径直走向 boss，被 `MoveInLineOfSight` 6.5 码内 `SetGazeOn` 吃下，**每次回 5% 血**。60s 战斗 boss 吃 6-7 只 = 回 30-35% 血。
+
+### 证据链（file:line + 实测数据）
+
+**策略代码（已实现但 10 人触发不了）：**
+`modules/mod-playerbots/src/Ai/Raid/Naxx/Action/NaxxActions_Gluth.cpp`:
+
+| 位置 | 内容 |
+|---|---|
+| `NaxxActions_Gluth.cpp:12-87` | `GluthChooseTargetAction::Execute` —— 僵尸处理三路分工 |
+| `:36-37` | 主坦 / **index 0 副坦** → 打 boss（`IsAssistTankOfIndex(bot,0)`） |
+| `:38-48` | **index 1 副坦** → 拦截血量>10% 的近身僵尸（`IsAssistTankOfIndex(bot,1)`） |
+| `:49-63` | 猎人 → 点名 `GetVictim()==boss` 且在 `spellDistance` 内的僵尸 |
+| `:64-78` | 其他 DPS → 只杀 **血量 ≤ `decimatedZombiePct=10`** 的僵尸（依赖 Decimate 先削血） |
+
+**三个分支在 10 人标准阵容全部落空：**
+
+1. **副坦拦僵尸**：`IsAssistTankOfIndex(bot,1)` 需要"第 2 个非主坦坦克"（主坦被 `GetMainTankGuid` 排除后 index 从 0 起）。10 人带 1 个副坦（血 DK）时副坦是 **index 0** → 走打 boss 分支。实测 run41：血 DK 对僵尸 **0 伤害**、全程站主坦位。
+2. **猎人点名**：`spellDistance=28.5`（PlayerbotAIConfig.cpp:110），僵尸出生中门 `zombiePos[0]=(3267.9,-3172.1)`，猎人在 `rangedPos=(3301.45,-3139.29)`，距离 **~47 码 > 28.5** → 猎人分支永不触发。
+3. **DPS 杀僵尸**：`decimatedZombiePct=10` 假设僵尸先被 **Decimate** 削到 ≤10%。但 10 人模式 Decimate 在 **110s**（`boss_gluth.cpp:111` `RAID_MODE(110s,90s)`），而团队 **60-73s 就全灭**（run38/41）→ Decimate 根本没到，僵尸全程满血，DPS 分支永不激活。
+
+**实测数据（raidtest_events）：**
+
+| 指标 | run38（1坦） | run41（+血DK副坦） |
+|---|---|---|
+| 玩家对僵尸总伤害 | 0 | 1643（≈0） |
+| boss 吃僵尸次数 | 6 | 7 |
+| 团队对 boss 输出 | 113k | 206k |
+| boss 最低血 | 98% | 97% |
+| 全灭时间 | 61s | ~66s |
+
+### 根因
+
+`GluthChooseTargetAction` 的僵尸处理**假设**：① 有 2 个副坦克（index 1 才能拦僵尸）；② 猎人在 28.5 码内点名僵尸；③ Decimate 会把僵尸削到 ≤10% 供 DPS 补刀。三个假设对 **10 人模式全部不成立**：10 人通常只有 1 个副坦（index 0）、猎人站 47 码外、Decimate 110s 才来而团队撑不到。**这是策略对 10 人难度适配缺失**（可能与 25 人 3 坦克/多远程/Decimate 90s 的配置错位）。
+
+### 建议修法（mod-playerbots）
+
+任选其一（倾向 2）：
+
+1. **副坦 index 语义修正**：10 人模式让 index 0 的副坦也执行僵尸拦截（`NaxxActions_Gluth.cpp:38` 从 `IsAssistTankOfIndex(bot,1)` 改为 `IsAssistTankOfIndex(bot,0)`，或按 raid 人数分流）。
+2. **DPS 主动处理满血僵尸**：`NaxxActions_Gluth.cpp:64-78` 增加"僵尸存在且血量>10% 时优先转火"的分支（不必等 Decimate），使 10 人标准阵容 DPS 也能拦截僵尸。
+3. **猎人射程放宽**：`spellDistance` 或猎人点名分支改用更远的距离阈值（需评估对 25 人平衡的影响）。
+
+### 风险提示
+
+改动影响 Gluth 全难度（10/25 人）的僵尸处理与仇恨分配；建议改后用 10/25 人各跑一次，验证 DPS 是否优先转火僵尸、boss 回血是否被遏制、坦克是否还能维持主坦仇恨。
