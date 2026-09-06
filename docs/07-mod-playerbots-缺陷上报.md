@@ -255,12 +255,16 @@ else if (botAI->IsAssistTankOfIndex(bot, 1))   // 第 2 个非主坦坦克
 ### 根因
 
 1. **mod-playerbots 坦克策略未对 boss 建立初始仇恨**：Loatheb 没有显式"坦克开局拉 boss"的动作，坦克依赖通用 Attack 循环，但 `LoathebChooseTargetAction` 让坦克优先被孢子抢目标，且坦克引擎未把 boss 设为 current target → boss 仇恨表为空。
-2. **站位点设计逼近脱战边界**：`mainTankPos(2877,-3967)` 距出生点 43.7 码（<50 脱战阈值），框架 engage 点又偏离出生点，双重叠加导致 boss 拉远脱战（run52）。框架侧已通过 engage 调整缓解，但站位缺陷仍在。
+2. **坦克引擎激活不稳定（B2-8 深挖补充）**：战士主坦的 combat 引擎是否激活**在 run 间不稳定**——run52 输出 81k（正常攻击循环）、run54 仅 575（全程只 buff 55594 命令怒吼/57723 等、不打 boss）。同为干净登录的 run，差异仅由 mod-playerbots 引擎初始化随机性造成（同族于 run50 DPS 停摆）。对比血DK 副坦两次都稳定输出（80k/75k）——血DK 的 `BloodDKStrategy` 自带输出循环，不依赖"引擎恰好激活"。
+3. **站位点设计逼近脱战边界**：`mainTankPos(2877,-3967)` 距出生点 43.7 码（<50 脱战阈值），框架 engage 点又偏离出生点，双重叠加导致 boss 拉远脱战（run52）。框架侧已通过 engage 调整缓解，但站位缺陷仍在。
 
 ### 建议修法（mod-playerbots）
 
 1. **Loatheb 坦克仇恨专项**：`LoathebChooseTargetAction` 增加"坦克优先 boss"分支——坦克不因孢子抢目标而放弃 boss，开局对 boss `Attack` + 嘲讽（真实打法：坦克踩孢子吃暴击但保持仇恨）。
-2. **站位点校正**：`mainTankPos(2877,-3967)` 若为通用 Naxx 站位模板，建议按 Loatheb 实际出生点(2909,-3997) 复核，保持距出生点 <40 码留足脱战余量。
+2. **坦克引擎激活确定性**：战士主坦 combat 引擎偶发不激活（run54 全程 buff 不打 boss），根因在 mod-playerbots 引擎初始化随机性（同 run50 DPS 停摆族）。建议排查 `PlayerbotAI::ChangeEngine` 与 `currentEngine` 初始化的竞态——masterless bot 在拉怪后应确定性切入 combat。
+3. **站位点校正**：`mainTankPos(2877,-3967)` 若为通用 Naxx 站位模板，建议按 Loatheb 实际出生点(2909,-3997) 复核，保持距出生点 <40 码留足脱战余量。
+
+**工程绕过（mod-raidtest 侧）**：血DK 的 `BloodDKStrategy` 自带输出循环、引擎稳定（两次 run 均正常输出），可把 roster 主坦从战士改为血DK 验证 Loatheb——避免依赖战士坦克引擎偶发激活。
 
 ### 风险提示
 
