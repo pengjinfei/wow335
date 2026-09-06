@@ -31,6 +31,6 @@
 
 ## 实测验收
 
-run80 两场的10份实际快照已保存在 [snapshots](snapshots)，汇总为 [AUDIT.json](AUDIT.json)：五人均71天赋/6雕文、85件装备全部200、有效cheat=0、防骑防御542，逐角色两场指纹一致。首场混入未清理房间小怪而团灭，第二场88.369秒零死亡击杀；详情见 ../../bosses/heroic-uk-keleseth/README.md。队伍已可用，但场景前置不一致，不能称为稳定通关认证。
+run80 两场的10份实际快照已保存在 [snapshots](snapshots)，汇总为 [AUDIT.json](AUDIT.json)：五人均71天赋/6雕文、85件装备全部200、有效cheat=0、防骑防御542，逐角色两场指纹一致。首场混入未清理房间小怪而团灭，第二场88.369秒零死亡击杀。run86/a1 清怪→恢复→boss 完整链路零死亡击杀；run91/a1、run92/a1、run92/a2 在框架再拉怪门槛修复后连续三场零死亡击杀（详见 ../../bosses/heroic-uk-keleseth/README.md 与 AOE-PULL.md）。队伍已可用；连续多场与冰墓机制验收仍未完成。
 
-框架与配置提交：mod-raidtest/dev `57fbe2c`。
+框架提交：mod-raidtest/dev `3b9203b`（清怪前置与范围重置）+ 未提交的再拉怪门槛修复与诊断；此前 `57fbe2c` 为五人英雄档位适配。

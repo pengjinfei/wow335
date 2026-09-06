@@ -8,3 +8,11 @@ id	run_id	seq	result	duration_ms	boss_hp_min	deaths	death_names	notes	finished_a
 1788426397	85	2	aborted	16483	100	0		prerequisite_failed: initial pull rejected	2026-09-06 11:00:17
 1788426398	86	1	kill	212818	0	0			2026-09-06 11:06:52
 1788426399	86	2	aborted	6403	100	0		prerequisite_invalid: boss missing or engaged before clearing completed	2026-09-06 11:06:52
+1788426400	87	1	aborted	180000	100	0		prerequisite_failed: clearing timeout	2026-09-06 11:17:30
+1788426401	87	2	aborted	22323	100	0		run stopped by request	2026-09-06 11:17:30
+1788426402	88	1	aborted	180009	100	0		prerequisite_failed: clearing timeout	2026-09-06 18:01:52
+1788426403	89	1	aborted	180006	100	0		prerequisite_failed: clearing timeout	2026-09-06 19:03:52
+1788426404	90	1	aborted	180000	100	0		prerequisite_failed: clearing timeout	2026-09-06 19:50:57
+1788426405	91	1	kill	154674	0	0			2026-09-06 20:14:51
+1788426406	92	1	kill	142942	0	0			2026-09-06 20:35:03
+1788426407	92	2	kill	154350	0	0			2026-09-06 20:35:03
