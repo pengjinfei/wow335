@@ -224,6 +224,10 @@ else if (botAI->IsAssistTankOfIndex(bot, 1))   // 第 2 个非主坦坦克
 
 ## 缺陷 ④：Loatheb 坦克不建立仇恨 + 站位点逼近 50 码脱战边界
 
+> **接手根因修正**：血DK持续停攻已定位到测试框架建团漏调 `GroupMgr::AddGroup`。补齐注册后run63零死亡击杀，DK全程战斗引擎、366次/216903伤害，且失去`attack tagged`后仍持续攻击。此项不能直接归责于血DK职业AI；详见[run60起接手验证](investigations/run55/TAKEOVER-VALIDATION.md)。原历史推断保留供审计。
+
+> **实机验证更新**：[run56–59](investigations/run55/VALIDATION.md) 已完成，run58/59真实击杀，run59零死亡且主要由防骑承伤；四场主坦血DK仍仅开局少量伤害，run55长空窗未复现。不能继续把“所有坦克都不建仇”“必须先修引擎才能击杀”作为结论。
+
 > **2026-09-06 接手核验更正**：下文 run55 历史归因尚未修订，请以 [run55 原始数据核验](investigations/run55/README.md) 为准。前 60 秒对 boss 伤害记录合计 31866，主坦为 5 次共 1488；实际正伤害空窗是 7.244–65.260 秒，期间 boss 从 99% 回到 100%。OnSpellCast 并非读条开始事件，“持续自打断/初始化随机性”未获证实。当前优先验证核心无法到达目标状态导致攻击 evade 与回血的路径；新增观测补丁尚未编译验证。
 
 ### 现象

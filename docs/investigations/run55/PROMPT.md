@@ -1,5 +1,11 @@
 # run55 分析 Prompt（给无上下文 AI，一页版）
 
+> 最新验收：[LIFECYCLE-FIX.md](LIFECYCLE-FIX.md)。run67重启后原角色、原实例连续两次零死亡击杀；DK显式主坦、首次传送、击杀后恢复三项通过。下文历史状态保留供审计。
+
+> 接手新进展：见 [TAKEOVER-VALIDATION.md](TAKEOVER-VALIDATION.md)。已定位建团漏注册并修复；run63/65血DK均恢复全场持续攻击并击杀；run65防骑死亡后由DK承伤完成击杀。原run59分析保留历史口径。
+
+> **最新状态：编译及热身+3次正式验证已完成，不要重复执行下文历史任务步骤。** run56/57 timeout，run58/59真实kill（run59零死亡）；四次均无长空窗、无unreachable采样、无boss目标miss=6。主坦持续攻击问题仍存在。下一步以 [VALIDATION.md](VALIDATION.md) 的遗留项为准，run55不可达假设仍未证实。
+
 **角色**：你是 AzerothCore 3.3.5a + mod-playerbots 的战斗分析 AI。目标：定位 run55 Loatheb 战斗"正伤害空窗 + boss 回血"根因。
 
 ## 问题
@@ -27,7 +33,7 @@ boss 追逐防骑至坦克站位(2881,-3969) → 目标不可达 `SetCannotReach
 - 复算脚本：`python3 docs/investigations/run55/analyze.py`
 - 详细核验：`docs/investigations/run55/README.md`
 
-## 代码（已提交 829b220，未编译）
+## 代码（已提交 829b220，已授权编译安装，run56–59 验证完成）
 
 mod-raidtest dev 分支观测补丁（只观察不改 bot 行为）：
 - `CombatEventBus.cpp`：spell detail 带 `cast_ms` + `miss/reflect`；新增 `cast_cancel` 状态事件（`by_self/cast_ms/remaining_ms`）
@@ -41,7 +47,7 @@ mod-raidtest dev 分支观测补丁（只观察不改 bot 行为）：
    - 一致 → 验证假设链，继续定位寻路失败点（boss 为何不可达、站位）
    - 不一致 → 按 `cast_cancel`（by_self？谁取消？剩余读条）或命中结果转查其他路径
 4. 对照 run54 基线（无空窗无回血）
-5. 独立遗留项（不能跳过）：① 主坦未形成持续攻击 ② 事件时钟 rel_ms vs duration_ms 差约 2 倍（300008 vs 最后 boss_hp 150504）③ 全灭后判定仍为 timeout
+5. 独立遗留项（不能跳过）：① 主坦未形成持续攻击 ② 角色死亡后离开副本，最终仍为 timeout（完整事件流到 299998ms，时钟两倍差异已排除）
 
 ## 约束
 

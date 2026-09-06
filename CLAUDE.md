@@ -44,7 +44,7 @@ echo ".raidtest run naxx-loatheb --attempts 3" > /tmp/ac_world_fifo
 - 数据库：4 库 `acore_auth/characters/world/playerbots`；账号 `acore/acore`；`mysql -uacore -pacore acore_characters` 查结果
 - 结果表：`raidtest_runs / raidtest_attempts / raidtest_events`（约 16 万行事件积累至今）
 - 已注册场景：`naxx-patchwerk`、`naxx-loatheb`（场景=配置文件，加新 boss 丢一个 `.conf.dist` 即可）
-- **重要回归**：每次重启服务器后首次 `.raidtest run` 可能 teleport 超时——先热身跑一次再取正式数据
+- **重启/复用回归（2026-09-06更新）**：run67已验证重启后首次原角色、原实例连续两次零死亡击杀，无需热身或force-recreate。传送离队窗口、显式主坦、动态boss恢复修复见 `docs/investigations/run55/LIFECYCLE-FIX.md`（mod-raidtest/dev提交 `931758e`）。
 
 ## 4. 框架定位与边界原则（★ 项目最重要的工作准则）
 

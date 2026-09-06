@@ -1,5 +1,11 @@
 # run55 分析任务书（给接手 AI）
 
+> 最新验收：[LIFECYCLE-FIX.md](LIFECYCLE-FIX.md)。run67重启后原角色、原实例连续两次零死亡击杀；DK显式主坦、首次传送、击杀后恢复三项通过。下文历史状态保留供审计。
+
+> 接手新进展：见 [TAKEOVER-VALIDATION.md](TAKEOVER-VALIDATION.md)。已定位建团漏注册并修复；run63/65血DK均恢复全场持续攻击并击杀；run65防骑死亡后由DK承伤完成击杀。原run59分析保留历史口径。
+
+> **最新状态：编译及热身+3次正式验证已完成，不要重复执行下文历史任务步骤。** run56/57 timeout，run58/59真实kill（run59零死亡）；四次均无长空窗、无unreachable采样、无boss目标miss=6。主坦持续攻击问题仍存在。下一步以 [VALIDATION.md](VALIDATION.md) 的遗留项为准，run55不可达假设仍未证实。
+
 > 用途：其他 AI 会话接手分析 run55 Loatheb 正伤害空窗根因的自包含任务书。
 > 关联：本目录 `README.md`（接手核验详情）、`analyze.py`（复算脚本）、`events-run54-run55.tsv`（本地导出，gitignore）。
 > 更新时间：2026-09-06。
@@ -38,12 +44,12 @@ run55 结果为 timeout（300s），boss_hp_min=86%，但**开局 7.244–65.260
 
 ## 5. 证据与复算
 
-- **数据库**（`mysql -uacore -pacore acore_characters`）：表 `raidtest_runs / raidtest_attempts / raidtest_events`（attempt 1788426354=run54 / 1788426356=run54 / 1788426357=run55；事件类型 enum：spell/damage/death/boss_hp/combat_start/combat_end/strategy/state）
+- **数据库**（`mysql -uacore -pacore acore_characters`）：表 `raidtest_runs / raidtest_attempts / raidtest_events`（attempt 1788426356=run54 / 1788426357=run55；事件类型 enum：spell/damage/death/boss_hp/combat_start/combat_end/strategy/state）
 - **复算脚本**：`python3 docs/investigations/run55/analyze.py`（读本地 `events-run54-run55.tsv`，输出伤害窗口/死亡/空窗/HP 转折）
 - **run55 日志快照**：本目录 `worldserver-run55.log`（gitignore，本地保留）
 - **服务器当前日志**：`env/dist/bin/Playerbots.log`（只到 06:41，**不覆盖 run55 09:40**）
 
-## 6. 代码状态（已提交 829b220，未编译）
+## 6. 代码状态（已提交 829b220，已授权编译安装，run56–59 验证完成）
 
 观测补丁在 `mod-raidtest` dev 分支（只观察、不改 bot 行为/仇恨/boss 机制）：
 - `src/Observer/CombatEventBus.cpp`：spell 事件 detail 加 `cast_ms` + 显式目标 `miss={} reflect={}`；新增 `OnSpellCastCancel` → `cast_cancel` 状态事件（`by_self/cast_ms/remaining_ms`）
@@ -52,7 +58,7 @@ run55 结果为 timeout（300s），boss_hp_min=86%，但**开局 7.244–65.260
 - 不改 SQL schema（复用 detail/state 字段）
 
 **关键源码参考**（假设链落点）：
-- `azerothcore-wotlk/src/server/game/Movement/TargetedMovementGenerator.cpp`（SetCannotReachTarget）
+- `azerothcore-wotlk/src/server/game/Movement/MovementGenerators/TargetedMovementGenerator.cpp`（SetCannotReachTarget）
 - `src/server/game/Entities/Creature/Creature.h`（IsEvadingAttacks/CanNotReachTarget）
 - `src/server/game/Entities/Unit/Unit.cpp`（SPELL_MISS_EVADE 判定）
 - `src/server/game/Entities/Creature/Creature.cpp`（SetCannotReachTarget/IsNotReachableAndNeedRegen）
@@ -67,7 +73,7 @@ run55 结果为 timeout（300s），boss_hp_min=86%，但**开局 7.244–65.260
    - 一致 → 验证假设链，进一步定位寻路失败点（boss 为何不可达、站位如何）
    - 不一致 → 按 `cast_cancel`（by_self？谁取消？剩余读条）或命中结果转查其他路径
 4. **对照**：run54 无回血无空窗，作为正常基线
-5. **独立遗留项**（不能跳过）：主坦未形成持续攻击；事件时钟 vs duration_ms 差约 2 倍；全灭后判定仍为 timeout（B2-6 竞态家族）
+5. **独立遗留项**（不能跳过）：主坦未形成持续攻击；死亡后角色离开副本、最终为 timeout 的判定问题（时钟两倍差异已由完整事件流排除，不预设为竞态）
 
 ## 8. 约束
 
