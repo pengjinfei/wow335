@@ -24,7 +24,7 @@
 └── data/world/                                 ← 客户端提取数据（gitignore）
 ```
 
-**分支纪律**：`mod-raidtest` 的 `main` 是发布线（已合并 A+B1+B2-1~3），`dev` 是开发线（与 main 当前同步）；上游 `Playerbot`/`master` 只读，改动走 `dev` 分支。
+**分支纪律**：`mod-raidtest` 的 `main` 是发布线（已合并 A+B1+B2-1~3），`dev` 是开发线（当前修复提交在 dev，未合并 main）；上游 `Playerbot`/`master` 只读，改动走 `dev` 分支。
 
 ## 3. 环境怎么跑（已搭好，一条命令回到工作状态）
 
@@ -46,6 +46,8 @@ echo ".raidtest run naxx-loatheb --attempts 3" > /tmp/ac_world_fifo
 - 已注册场景：`naxx-patchwerk`、`naxx-loatheb`（场景=配置文件，加新 boss 丢一个 `.conf.dist` 即可）
 - **重启/复用回归（2026-09-06更新）**：run67已验证重启后首次原角色、原实例连续两次零死亡击杀，无需热身或force-recreate。传送离队窗口、显式主坦、动态boss恢复修复见 `docs/investigations/run55/LIFECYCLE-FIX.md`（mod-raidtest/dev提交 `931758e`）。
 
+- **角色配置优化（2026-09-06）**：十人 fixture-v1 固定装备/宝石/附魔/雕文，传送后补齐 71 点天赋；开战前角色/团队门禁与实际配置快照已落地。run72–74 与修复后 run77–78 角色指纹 10/10 一致。战前团队丢失已定位为登录清理包迟到拆新团，建团等待 holder 注册及包队列处理完成后修复；run77 连续两场、run78 同进程复用均零死亡击杀 Loatheb（122774 / 105958 / 121639ms），核心与 mod-playerbots 未改。根因与证据见 `docs/investigations/roster-fixture/GROUP-LOGIN-RACE.md`。完整实施、已知限制和下一步见 `docs/investigations/roster-fixture/README.md`。
+
 ## 4. 框架定位与边界原则（★ 项目最重要的工作准则）
 
 `mod-raidtest` 是**自动化测试框架**，不是 bot 逻辑的一部分：
@@ -55,7 +57,7 @@ echo ".raidtest run naxx-loatheb --attempts 3" > /tmp/ac_world_fifo
 
 **为什么**：这个框架的目的就是验证 mod-playerbots 底层机制能否正确处理各种 boss 机制并最终击杀。框架一旦代写了 bot 逻辑，就污染了观察对象，验证失效。
 
-## 5. 当前进度（2026-09-04，重要）
+## 5. 历史进度（2026-09-04；最新结果见 §3）
 
 ### 已完成并合并 main
 
@@ -70,16 +72,16 @@ echo ".raidtest run naxx-loatheb --attempts 3" > /tmp/ac_world_fifo
 
 1. **底层站位机制成熟且逐 boss 定制**：Loatheb 位置采样证实坦克站 `mainTankPos`、远程站 `rangePos` ✅
 2. **Patchwerk 是全叠近战的"特例"**：它的站位动作被上游注释（`NaxxActions_Patchwerk.cpp` 整段 `//`），不是底层缺失
-3. **当前瓶颈**：Loatheb 站位正确但 attempt 仍 aborted（~28s，boss lost combat, hp 98%）——战斗流程层面问题，**下一步深挖对象**
+3. **当时瓶颈（现已解决，见 §3）**：Loatheb 站位正确但 attempt 仍 aborted（~28s，boss lost combat, hp 98%）——战斗流程层面问题，**下一步深挖对象**
 4. **判定可信**：Kill 需"boss 死亡事件+血量=0"双条件，杜绝假阳性（曾有 `!bossKnown` 误判 bug 已修）
 
-### 当前 git 状态
+### 当时 git 状态
 - `mod-raidtest`: `main = dev = e09f2af`
 - 管理库：docs 已整理提交
 
-## 6. 下一步（B2 继续）
+## 6. 下一步（2026-09-06 更新）
 
-1. **主战场**：用位置+施法数据归因"站位正确后为何仍 aborted"（boss lost combat / DPS 未持续 / 治疗跟不上）
+1. **扩展验证**：先用固定十人配置复测 Patchwerk，再逐 boss 扩展；建立副本阶段装备基线和机制覆盖记录。当前就绪范围与验收流程见 `docs/investigations/roster-fixture/READINESS.md`。
 2. **已知底缺陷清单**（可向 mod-playerbots 上报/研究）：
    - Patchwerk 站位动作未启用（`PatchwerkRangedPositionAction` 被注释）
    - 无 master bot 的输出循环依赖 `attack tagged` 策略（已模块侧启用，可考虑上游化）

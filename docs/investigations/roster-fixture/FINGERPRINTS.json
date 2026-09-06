@@ -1,0 +1,103 @@
+{
+  "compared": [
+    "run72/attempt1",
+    "run73/attempt1",
+    "run73/attempt2",
+    "run74/attempt1",
+    "run77/attempt1",
+    "run77/attempt2",
+    "run78/attempt1"
+  ],
+  "characters": [
+    {
+      "slot": 0,
+      "spec": "dk_blood",
+      "talent_points": 71,
+      "glyphs": 6,
+      "fingerprint": "32f1fe5cf4dbd93a37fd24fb1372a5385dc0c8d70ba94291cd98237640b9e3d6",
+      "all_valid": true,
+      "identical": true
+    },
+    {
+      "slot": 1,
+      "spec": "priest_holy",
+      "talent_points": 71,
+      "glyphs": 6,
+      "fingerprint": "5d722a7dfae04f0aa61efa16b106d5caa1d71258f1d186ee15a0726c798691ba",
+      "all_valid": true,
+      "identical": true
+    },
+    {
+      "slot": 2,
+      "spec": "druid_resto",
+      "talent_points": 71,
+      "glyphs": 6,
+      "fingerprint": "c6a8b2a93896a682e884c5d4ccc7dcc66eabc510a392accb13fdff9899381160",
+      "all_valid": true,
+      "identical": true
+    },
+    {
+      "slot": 3,
+      "spec": "mage_fire",
+      "talent_points": 71,
+      "glyphs": 6,
+      "fingerprint": "40b664eed619aed289b0371a30dd786b8ec62eccee46c618b28fe5a38ac809e9",
+      "all_valid": true,
+      "identical": true
+    },
+    {
+      "slot": 4,
+      "spec": "warlock_destroy",
+      "talent_points": 71,
+      "glyphs": 6,
+      "fingerprint": "e903c6e0e5158e15ecd4454bd22a9e4583f54cbb5d2c6c678a5ce9c5b48fa6b3",
+      "all_valid": true,
+      "identical": true
+    },
+    {
+      "slot": 5,
+      "spec": "hunter_marksman",
+      "talent_points": 71,
+      "glyphs": 6,
+      "fingerprint": "2ac3b109b1f36d183c215098588b022866e778cb75fab0f0bca8b42d1ecca024",
+      "all_valid": true,
+      "identical": true
+    },
+    {
+      "slot": 6,
+      "spec": "rogue_combat",
+      "talent_points": 71,
+      "glyphs": 6,
+      "fingerprint": "e9b9af9e7bc1b91b971e591e35aa918f51c0ec7a3a9fb3e6231760a7afbaacea",
+      "all_valid": true,
+      "identical": true
+    },
+    {
+      "slot": 7,
+      "spec": "shaman_elemental",
+      "talent_points": 71,
+      "glyphs": 6,
+      "fingerprint": "a772f2a8c91f78f5e5b8e2664a968dc85adec0efc615b7c2e58124e196d9e6e7",
+      "all_valid": true,
+      "identical": true
+    },
+    {
+      "slot": 8,
+      "spec": "paladin_prot",
+      "talent_points": 71,
+      "glyphs": 6,
+      "fingerprint": "ec24dbe1f6031cf2fce79c3c52b3fbe6cbd6d353773b478a870a7f3fb7e09fd7",
+      "all_valid": true,
+      "identical": true
+    },
+    {
+      "slot": 9,
+      "spec": "dk_frost",
+      "talent_points": 71,
+      "glyphs": 6,
+      "fingerprint": "b7ed0c1d1b77bf18c02802da8754a117ddec3a76a5344a37540128d552c81cc0",
+      "all_valid": true,
+      "identical": true
+    }
+  ]
+}
