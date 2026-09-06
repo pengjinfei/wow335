@@ -224,11 +224,13 @@ else if (botAI->IsAssistTankOfIndex(bot, 1))   // 第 2 个非主坦坦克
 
 ## 缺陷 ④：Loatheb 坦克不建立仇恨 + 站位点逼近 50 码脱战边界
 
+> **2026-09-06 接手核验更正**：下文 run55 历史归因尚未修订，请以 [run55 原始数据核验](investigations/run55/README.md) 为准。前 60 秒对 boss 伤害记录合计 31866，主坦为 5 次共 1488；实际正伤害空窗是 7.244–65.260 秒，期间 boss 从 99% 回到 100%。OnSpellCast 并非读条开始事件，“持续自打断/初始化随机性”未获证实。当前优先验证核心无法到达目标状态导致攻击 evade 与回血的路径；新增观测补丁尚未编译验证。
+
 ### 现象
 
 `naxx-loatheb` 场景（10 人）实测：团队输出正常（run54 全队 2.69M，术士/贼/法/圣骑/萨/猎各自 267k-585k），boss 血量能掉到 59%（run52 74%），但**boss 前 120s 从不普攻坦克**——它一直在打 DPS（猎人 45k、术士 44k 等），坦克只吃到 Necrotic Aura 的 153 低伤。**坦克从开局就没进 boss 仇恨表**（boss 首刀 1489ms 打猎人），导致 DPS 逐个被切死、团队 144s 全灭。
 
-**run55 追加（2026-09-06）**：换血DK+防骑坦克阵容**并未解决建仇**（主坦对 boss 仍 0 输出，见证据③），且出现**新的 DPS 侧引擎停摆**：run55 开局前 60s 全团对 boss 输出 ≈0（仅防骑 4 次 3818），boss 血量 100% 钉死 60s，最终只掉到 86%（比 run54 的 59% 明显退步）——归因见"根因 4"。
+**run55 追加（2026-09-06 接手核验，详见 [`investigations/run55/README.md`](investigations/run55/README.md)）**：换血DK+防骑坦克阵容**并未解决建仇**（主坦对 boss 全程仅 5 次共 1488，见证据③）。run55 独有现象：开局 **7.244–65.260s 对 boss 正伤害空窗约 58s**（前 60s 全团对 boss 伤害合计 31866），boss 血量 **13.607s 从 99% 回满到 100%**、65.260s 回到 99%，最终 boss_hp_min=86%（比 run54 的 59% 退步）。归因见"根因 4"（优先待验证）。
 
 ### 证据链（file:line + 实测数据）
 
@@ -251,7 +253,7 @@ else if (botAI->IsAssistTankOfIndex(bot, 1))   // 第 2 个非主坦坦克
 |---|---|---|---|---|---|
 | run52 | 战士主坦 | 575×2 | rangePos(2896,-3980) 距出生点 26 码 | 74% | 是（50s 拉远回满） |
 | run54 | 血DK主坦 | **575×2** | 出生点旁(2909,-3991) | **59%** | 否（144s 全灭后归位） |
-| run55 | 血DK主坦+防骑 | **1488×5** | 出生点旁(2909,-3991) | 86% | 否（148s 全灭后归位） |
+| run55 | 血DK主坦+防骑 | **5 次共 1488** | 出生点旁(2909,-3991) | 86% | 否（148s 全灭后归位） |
 
 框架侧把 engage 点改到出生点旁后，boss 不再中途拉远脱战（run54 稳定掉到 59%）——**但坦克仇恨问题独立存在**，是 Loatheb 打不过的真正瓶颈。run54/55 换血DK主坦（甚至加防骑）后**坦克对 boss 伤害仍是个位数×575/1488**：两场主坦全程打孢子/站桩 buff，boss 仇恨表依旧靠 DPS 建立。**结论：建仇缺陷与坦克职业无关**，血DK 的 `BloodDKStrategy` 自带输出循环≠会拉 boss，缺陷④ 的"坦克引擎不激活"是通用坦克问题而非战士特例（此前"工程绕过换血DK"方案被证伪）。
 
@@ -260,15 +262,15 @@ else if (botAI->IsAssistTankOfIndex(bot, 1))   // 第 2 个非主坦坦克
 1. **mod-playerbots 坦克策略未对 boss 建立初始仇恨**：Loatheb 没有显式"坦克开局拉 boss"的动作，坦克依赖通用 Attack 循环，但 `LoathebChooseTargetAction` 让坦克优先被孢子抢目标，且坦克引擎未把 boss 设为 current target → boss 仇恨表为空。
 2. **坦克引擎激活不稳定（B2-8 深挖补充）**：战士主坦的 combat 引擎是否激活**在 run 间不稳定**——run52 输出 81k（正常攻击循环）、run54 仅 575（全程只 buff 55594 命令怒吼/57723 等、不打 boss）。同为干净登录的 run，差异仅由 mod-playerbots 引擎初始化随机性造成（同族于 run50 DPS 停摆）。run55 追加证实**该缺陷与坦克职业无关**：换血DK主坦+防骑后，主坦对 boss 仍是 5 次 1488（run54 血DK 2 次 575），全程打孢子/站桩——血DK 的 `BloodDKStrategy` 自带输出循环只保证"副坦当 DPS 用"时输出正常，不等于会主动拉 boss 建仇。
 3. **站位点设计逼近脱战边界**：`mainTankPos(2877,-3967)` 距出生点 43.7 码（<50 脱战阈值），框架 engage 点又偏离出生点，双重叠加导致 boss 拉远脱战（run52）。框架侧已通过 engage 调整缓解，但站位缺陷仍在。
-4. **run55 独有：DPS 战斗引擎"施法决策抖动"**（2026-09-06 深挖）——run55 开局前 60s 全团对 boss 输出 ≈0（mage/术/猎/贼/萨/暗牧 共施法 200+ 次、damage 结算 0 次，仅防骑 4 次 3818），boss 血量 100% 钉死。**决定性证据是施法间隔**：前 60s 全团 spell 事件**恒定 1.092s**（mage 20 连发全部 1088-1098ms，= GCD 急速压缩）——即 bot **每个 GCD 发起一次读条、读条从未完成就被打断**，下个 GCD 立即重试；60s 后 spell 间隔变为参差的真实读条节奏（21ms~3.6s），伤害才开始结算（65s 起与 spell 1:1）。已排除：boss 免疫/护盾（`boss_loatheb.cpp` 无免疫技能）、站位（位置采样全对：mage 在 rangePos、血DK/防骑在 mainTankPos）、距离/LoS（cast 已通过检查，20 码在射程内）、目标失效（run55 仅一个 Loatheb guid=106）。65s 转折与防骑死亡同帧（64856ms vs 首命中 65446ms），疑为仇恨重排/决策重置使引擎稳定。**根因在 mod-playerbots 战斗引擎的施法决策**：bot 每 tick 重评估当前动作，判定读条无用即打断——run 间随机性决定该 run 是否进入"持续自打断"状态（同族于 run50 DPS 停摆、缺陷④ 坦克引擎不激活）。
+4. **run55 独有：正伤害空窗 + boss 中途回血（2026-09-06 接手核验，优先待验证）**——run55 开局 7.244–65.260s 对 boss 正伤害空窗约 58s（前 60s 合计 31866、主坦 5 次共 1488；冰 DK 空窗中还有 5 条 damage=0 记录，故"无 damage 事件"不准确），boss 血量 **13.607s 从 99% 回满 100%**、65.260s 回 99%。**已撤回旧版"读条持续自打断 / DPS 引擎抖动"归因**：OnSpellCast 是 `Spell::_cast` 执行后段（≠读条开始、不保证命中），恒定施法间隔只是 GCD 节奏、不能证明自打断；`PlayerbotAI::UpdateAI` 的 PREPARING 分支正常路径会等待施法。**当前优先待验证路径（源码链）**：boss 追逐防骑至坦克站位 → `TargetedMovementGenerator` 寻路失败/不可达 `SetCannotReachTarget` → `IsEvadingAttacks()=IsInEvadeMode()||CanNotReachTarget()` → 法术返回 `SPELL_MISS_EVADE`、普攻同类检查 → `SetCannotReachTarget` 启动 evade timer、`IsNotReachableAndNeedRegen` 关联回血 → `EvadeTimerExpired` raid 分支继续 evade regen（不一定正式脱战归位）。**该链可同时解释"持续施法 + 伤害空窗 + 回血 + 防骑死亡（64856ms）后 65260ms 恢复"，但历史事件未记录 miss/evade 标记，仍非已证实根因**。观测补丁（未编译）已就绪：`AttemptObserver` 每秒采样 boss_state（combat/evade/unreachable/evading_attacks/regen）+ `CombatEventBus` spell 带 cast_ms/miss/reflect + 新增 cast_cancel 事件。
 
 ### 建议修法（mod-playerbots）
 
 1. **Loatheb 坦克仇恨专项**：`LoathebChooseTargetAction` 增加"坦克优先 boss"分支——坦克不因孢子抢目标而放弃 boss，开局对 boss `Attack` + 嘲讽（真实打法：坦克踩孢子吃暴击但保持仇恨）。
-2. **战斗引擎激活确定性（坦克+DPS 两侧，run55 追加）**：战士主坦 combat 引擎偶发不激活（run54 全程 buff 不打 boss），血DK 主坦同样不建仇（run55 1488）；run55 更出现 DPS 侧"施法决策抖动"（前 60s 读条每 GCD 被打断、0 结算）。三者同根因——mod-playerbots 引擎初始化/决策的 run 间随机性。建议排查 `PlayerbotAI::ChangeEngine` 与 `currentEngine` 初始化竞态，以及施法决策对读条动作的每 tick 重评估（判定无用即打断）——masterless bot 拉怪后应确定性切入稳定的输出/仇恨循环。
+2. **run55 空窗先定位再修（观测补丁已就绪未编译）**：优先验证"boss 无法到达目标 → evade → 回血 → 伤害空窗"链（根因 4 源码链 1-5）。观测补丁（mod-raidtest，未改 bot 行为/仇恨/boss 机制）：`AttemptObserver` 每秒采样 boss_state（combat/evade/unreachable/evading_attacks/regen/unreachable_guid/victim）、`CombatEventBus` spell 事件带 cast_ms + 显式目标 miss/reflect、新增 cast_cancel 状态事件（by_self/剩余施法时间）。编译重跑 Loatheb 后核对空窗是否与 boss_state.unreachable/evading_attacks 及 spell miss 一致；若一致再定位寻路失败点，若不一致转查取消/命中结果路径。若根因确为 evading_attacks，修法落在 mod-playerbots / core 的不可达目标走位与仇恨处理，而非"坦克引擎随机性"。
 3. **站位点校正**：`mainTankPos(2877,-3967)` 若为通用 Naxx 站位模板，建议按 Loatheb 实际出生点(2909,-3997) 复核，保持距出生点 <40 码留足脱战余量。
 
-**工程绕过（mod-raidtest 侧，run55 后已证伪旧方案）**：原"把 roster 主坦从战士改为血DK"的绕过**被 run54/55 证伪**——血DK 主坦同样 0 建仇（575/1488），且 run55 连 DPS 引擎都抖动。当前无纯 roster 侧绕过；若继续验证 Loatheb，需先解决 mod-playerbots 引擎稳定性（建议修法 2），或接受多次 run 抽样取"引擎恰好稳定"的一次。
+**工程绕过（mod-raidtest 侧，run55 后已证伪旧方案）**：原"把 roster 主坦从战士改为血DK"的绕过**被 run54/55 证伪**——血DK 主坦同样不建仇（2 次 575 / 5 次共 1488）。当前无纯 roster 侧绕过；先编译观测补丁重跑 Loatheb，用 boss_state/miss/cast_cancel 数据定位 run55 空窗根因（根因 4 链）后再定修法方向。
 
 ### 风险提示
 
