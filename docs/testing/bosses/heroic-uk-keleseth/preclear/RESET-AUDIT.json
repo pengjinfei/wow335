@@ -1,0 +1,114 @@
+{
+  "valid_reset_scope": true,
+  "identical_reset_state": false,
+  "snapshots": [
+    {
+      "file": "docs/testing/bosses/heroic-uk-keleseth/preclear/scenes/run-81-attempt-1.tsv",
+      "spawns": [
+        126025,
+        126032,
+        126041,
+        126042,
+        126046
+      ],
+      "errors": [],
+      "fingerprint": "ac9f661ea94a93b4fdd7c1a3b688b46c5e344d6e4fcc5b40e013eaa37552b6fb"
+    },
+    {
+      "file": "docs/testing/bosses/heroic-uk-keleseth/preclear/scenes/run-81-attempt-2.tsv",
+      "spawns": [
+        126025,
+        126032,
+        126041,
+        126042,
+        126046
+      ],
+      "errors": [],
+      "fingerprint": "ac9f661ea94a93b4fdd7c1a3b688b46c5e344d6e4fcc5b40e013eaa37552b6fb"
+    },
+    {
+      "file": "docs/testing/bosses/heroic-uk-keleseth/preclear/scenes/run-82-attempt-1.tsv",
+      "spawns": [
+        126025,
+        126032,
+        126041,
+        126042,
+        126046
+      ],
+      "errors": [],
+      "fingerprint": "4b982c5632d7d83e1487991446be633156f6793818ba72c652b4684b2742cbc1"
+    },
+    {
+      "file": "docs/testing/bosses/heroic-uk-keleseth/preclear/scenes/run-83-attempt-1.tsv",
+      "spawns": [
+        126025,
+        126032,
+        126041,
+        126042,
+        126046
+      ],
+      "errors": [],
+      "fingerprint": "fe6a10898f4d292dcda76b63f24f63107ef553bbd727bc96b902419b7d2b773b"
+    },
+    {
+      "file": "docs/testing/bosses/heroic-uk-keleseth/preclear/scenes/run-84-attempt-1.tsv",
+      "spawns": [
+        126025,
+        126032,
+        126041,
+        126042,
+        126046
+      ],
+      "errors": [],
+      "fingerprint": "312953d520c0053e27638a722ff638e683b3968c667776d00defaf120fe59905"
+    },
+    {
+      "file": "docs/testing/bosses/heroic-uk-keleseth/preclear/scenes/run-85-attempt-1.tsv",
+      "spawns": [
+        126025,
+        126032,
+        126041,
+        126042,
+        126046
+      ],
+      "errors": [],
+      "fingerprint": "6386ace43c2296f4819f8d8739c014ff913428a7e8f2239bdb05b8e8e6533262"
+    },
+    {
+      "file": "docs/testing/bosses/heroic-uk-keleseth/preclear/scenes/run-85-attempt-2.tsv",
+      "spawns": [
+        126025,
+        126032,
+        126041,
+        126042,
+        126046
+      ],
+      "errors": [],
+      "fingerprint": "85e5f12051b951bfa012d457299c11b78d42ef01c6efb5f654e3dcd00874a8ab"
+    },
+    {
+      "file": "docs/testing/bosses/heroic-uk-keleseth/preclear/scenes/run-86-attempt-1.tsv",
+      "spawns": [
+        126025,
+        126032,
+        126041,
+        126042,
+        126046
+      ],
+      "errors": [],
+      "fingerprint": "85e5f12051b951bfa012d457299c11b78d42ef01c6efb5f654e3dcd00874a8ab"
+    },
+    {
+      "file": "docs/testing/bosses/heroic-uk-keleseth/preclear/scenes/run-86-attempt-2.tsv",
+      "spawns": [
+        126025,
+        126032,
+        126041,
+        126042,
+        126046
+      ],
+      "errors": [],
+      "fingerprint": "017a956b97dafa36e13ddeb018440f300da1c6ae173f28ba6ff38ea87de548e1"
+    }
+  ]
+}

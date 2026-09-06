@@ -1,0 +1,932 @@
+run_id	seq	id	attempt_id	rel_ms	event_type	source_guid	target_guid	spell_id	actor_entry	value	detail
+81	1	2040733	1788426391	0	state	145	0	0	23956	0	prerequisite_spawn=126032
+81	1	2040734	1788426391	0	state	153	0	0	23960	0	prerequisite_spawn=126041
+81	1	2040735	1788426391	0	state	165	0	0	23960	0	prerequisite_spawn=126042
+81	1	2040736	1788426391	0	state	164	0	0	23961	0	prerequisite_spawn=126046
+81	1	2040737	1788426391	0	state	0	0	0	0	0	phase=prerequisites_start
+81	2	2040740	1788426392	0	state	145	0	0	23956	0	prerequisite_spawn=126032
+81	2	2040741	1788426392	0	state	153	0	0	23960	0	prerequisite_spawn=126041
+81	2	2040742	1788426392	0	state	165	0	0	23960	0	prerequisite_spawn=126042
+81	2	2040743	1788426392	0	state	164	0	0	23961	0	prerequisite_spawn=126046
+81	2	2040744	1788426392	0	state	0	0	0	0	0	phase=prerequisites_start
+82	1	2040747	1788426393	0	state	145	0	0	23956	0	prerequisite_spawn=126032
+82	1	2040748	1788426393	0	state	153	0	0	23960	0	prerequisite_spawn=126041
+82	1	2040749	1788426393	0	state	154	0	0	23960	0	prerequisite_spawn=126042
+82	1	2040750	1788426393	0	state	158	0	0	23961	0	prerequisite_spawn=126046
+82	1	2040751	1788426393	0	state	0	0	0	0	0	phase=prerequisites_start
+83	1	2040754	1788426394	0	state	145	0	0	23956	0	prerequisite_spawn=126032
+83	1	2040755	1788426394	0	state	153	0	0	23960	0	prerequisite_spawn=126041
+83	1	2040756	1788426394	0	state	154	0	0	23960	0	prerequisite_spawn=126042
+83	1	2040757	1788426394	0	state	158	0	0	23961	0	prerequisite_spawn=126046
+83	1	2040758	1788426394	0	state	0	0	0	0	0	phase=prerequisites_start
+84	1	2040761	1788426395	0	state	145	0	0	23956	0	prerequisite_spawn=126032
+84	1	2040762	1788426395	0	state	153	0	0	23960	0	prerequisite_spawn=126041
+84	1	2040763	1788426395	0	state	154	0	0	23960	0	prerequisite_spawn=126042
+84	1	2040764	1788426395	0	state	158	0	0	23961	0	prerequisite_spawn=126046
+84	1	2040765	1788426395	0	state	0	0	0	0	0	phase=prerequisites_start
+85	1	2040768	1788426396	0	state	145	0	0	23956	0	prerequisite_spawn=126032
+85	1	2040769	1788426396	0	state	153	0	0	23960	0	prerequisite_spawn=126041
+85	1	2040770	1788426396	0	state	154	0	0	23960	0	prerequisite_spawn=126042
+85	1	2040771	1788426396	0	state	158	0	0	23961	0	prerequisite_spawn=126046
+85	1	2040772	1788426396	0	state	0	0	0	0	0	phase=prerequisites_start
+85	1	2041036	1788426396	14366	death	158	730	0	23961	0	
+85	1	2041115	1788426396	18742	death	154	729	0	23960	0	
+85	1	2041436	1788426396	40110	death	145	730	0	23956	0	
+85	1	2041439	1788426396	40501	death	153	728	0	23960	0	
+85	1	2041440	1788426396	40501	state	0	0	0	0	40502	phase=prerequisites_complete
+85	2	2041457	1788426397	0	state	172	0	0	23956	0	prerequisite_spawn=126032
+85	2	2041458	1788426397	0	state	171	0	0	23960	0	prerequisite_spawn=126041
+85	2	2041459	1788426397	0	state	170	0	0	23960	0	prerequisite_spawn=126042
+85	2	2041460	1788426397	0	state	169	0	0	23961	0	prerequisite_spawn=126046
+85	2	2041461	1788426397	0	state	0	0	0	0	0	phase=prerequisites_start
+85	2	2041724	1788426397	13260	death	169	730	0	23961	0	
+85	2	2041783	1788426397	16476	death	170	730	0	23960	0	
+86	1	2041790	1788426398	0	state	145	0	0	23956	0	prerequisite_spawn=126032
+86	1	2041791	1788426398	0	state	153	0	0	23960	0	prerequisite_spawn=126041
+86	1	2041792	1788426398	0	state	165	0	0	23960	0	prerequisite_spawn=126042
+86	1	2041793	1788426398	0	state	164	0	0	23961	0	prerequisite_spawn=126046
+86	1	2041794	1788426398	0	state	0	0	0	0	0	phase=prerequisites_start
+86	1	2042381	1788426398	21698	death	145	730	0	23956	0	
+86	1	2042504	1788426398	25955	death	164	729	0	23961	0	
+86	1	2042556	1788426398	27395	death	153	171	0	23960	0	
+86	1	2042567	1788426398	27954	death	165	729	0	23960	0	
+86	1	2042569	1788426398	27954	state	0	0	0	0	27957	phase=prerequisites_complete
+86	1	2042593	1788426398	42955	state	726	0	0	0	0	recovery_wait:combat=0 hp=28284/28284 mana=3312/6529
+86	1	2042594	1788426398	42955	state	727	0	0	0	0	recovery_wait:combat=0 hp=16110/16110 mana=13937/17503
+86	1	2042595	1788426398	42955	state	729	0	0	0	0	recovery_wait:combat=0 hp=15593/15593 mana=10780/16503
+86	1	2042596	1788426398	42955	state	730	0	0	0	0	recovery_wait:combat=0 hp=16289/16289 mana=11389/17436
+86	1	2042597	1788426398	57956	state	726	0	0	0	0	recovery_wait:combat=0 hp=28284/28284 mana=3701/6529
+86	1	2042598	1788426398	57956	state	729	0	0	0	0	recovery_wait:combat=0 hp=15593/15593 mana=11770/16503
+86	1	2042599	1788426398	57956	state	730	0	0	0	0	recovery_wait:combat=0 hp=16289/16289 mana=12870/17436
+86	1	2042600	1788426398	72957	state	726	0	0	0	0	recovery_wait:combat=0 hp=28284/28284 mana=4091/6529
+86	1	2042601	1788426398	72957	state	729	0	0	0	0	recovery_wait:combat=0 hp=15593/15593 mana=12760/16503
+86	1	2042602	1788426398	72957	state	730	0	0	0	0	recovery_wait:combat=0 hp=16289/16289 mana=14350/17436
+86	1	2042603	1788426398	87960	state	726	0	0	0	0	recovery_wait:combat=0 hp=28284/28284 mana=4480/6529
+86	1	2042604	1788426398	87960	state	729	0	0	0	0	recovery_wait:combat=0 hp=15593/15593 mana=13750/16503
+86	1	2042605	1788426398	102960	state	726	0	0	0	0	recovery_wait:combat=0 hp=28284/28284 mana=4870/6529
+86	1	2042606	1788426398	102960	state	729	0	0	0	0	recovery_wait:combat=0 hp=15593/15593 mana=14740/16503
+86	1	2042607	1788426398	117959	state	726	0	0	0	0	recovery_wait:combat=0 hp=28284/28284 mana=5259/6529
+86	1	2042608	1788426398	132957	state	726	0	0	0	0	recovery_wait:combat=0 hp=28284/28284 mana=5649/6529
+86	1	2042609	1788426398	141732	state	0	0	0	0	113779	phase=recovery_complete
+86	1	2042610	1788426398	141741	state	0	0	0	0	141736	phase=boss_start
+86	1	2042611	1788426398	141741	state	726	0	0	0	0	boss_start_roster:hp=28284/28284 mana=5877/6529
+86	1	2042612	1788426398	141741	state	727	0	0	0	0	boss_start_roster:hp=16110/16110 mana=17503/17503
+86	1	2042613	1788426398	141741	state	728	0	0	0	0	boss_start_roster:hp=18484/18484 mana=0/0
+86	1	2042614	1788426398	141741	state	729	0	0	0	0	boss_start_roster:hp=15593/15593 mana=16503/16503
+86	1	2042615	1788426398	141741	state	730	0	0	0	0	boss_start_roster:hp=16289/16289 mana=17436/17436
+86	1	2042693	1788426398	141983	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=28284 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2042694	1788426398	141983	state	726	139	0	0	574	tank_range:boss_dist=7.915 melee_range=false facing=true orientation=1.433
+86	1	2042695	1788426398	141983	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=0 has_loot=false tapped=false attack_tagged=false master=0
+86	1	2042696	1788426398	141983	state	726	139	0	0	574	tank_strategies:0:Strategies: barmor, boost, bthreat, cast time, chat, cure, default, duel, formation, potions, pull, pull back, racials, tank, tank assist, tank face, utgarde keep
+86	1	2042697	1788426398	141983	state	726	139	0	0	574	tank_actions:0:
+86	1	2042781	1788426398	142235	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=28284 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2042782	1788426398	142235	state	726	139	0	0	574	tank_range:boss_dist=7.441 melee_range=false facing=true orientation=1.433
+86	1	2042783	1788426398	142235	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=0 has_loot=false tapped=false attack_tagged=false master=0
+86	1	2042867	1788426398	142488	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=28284 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2042868	1788426398	142488	state	726	139	0	0	574	tank_range:boss_dist=7.441 melee_range=false facing=true orientation=1.433
+86	1	2042869	1788426398	142488	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=0 has_loot=false tapped=false attack_tagged=false master=0
+86	1	2042951	1788426398	142739	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=28284 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2042952	1788426398	142739	state	726	139	0	0	574	tank_range:boss_dist=7.441 melee_range=false facing=true orientation=1.433
+86	1	2042953	1788426398	142739	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=0 has_loot=false tapped=false attack_tagged=false master=0
+86	1	2042955	1788426398	142739	state	726	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2042956	1788426398	142739	state	727	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2042957	1788426398	142739	state	728	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2042958	1788426398	142739	state	729	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2042959	1788426398	142739	state	730	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2042960	1788426398	142739	state	139	0	0	23953	574	pos:189.65,207.81,40.82
+86	1	2042961	1788426398	142739	state	139	730	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2043047	1788426398	142991	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=28284 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2043048	1788426398	142991	state	726	139	0	0	574	tank_range:boss_dist=7.441 melee_range=false facing=true orientation=1.433
+86	1	2043049	1788426398	142991	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2043138	1788426398	143246	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=28284 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2043139	1788426398	143246	state	726	139	0	0	574	tank_range:boss_dist=7.441 melee_range=false facing=true orientation=1.433
+86	1	2043140	1788426398	143246	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2043224	1788426398	143500	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=28284 victim=139 melee=true select=139 moving=true tank=true mt=true explicit=false entry=23953
+86	1	2043225	1788426398	143500	state	726	139	0	0	574	tank_range:boss_dist=6.685 melee_range=false facing=true orientation=1.412
+86	1	2043226	1788426398	143500	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2043308	1788426398	143743	state	726	0	0	0	574	pos:188.43,200.18,40.82
+86	1	2043309	1788426398	143743	state	727	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2043310	1788426398	143743	state	728	0	0	0	574	pos:188.14,198.37,40.82
+86	1	2043311	1788426398	143743	state	729	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2043312	1788426398	143743	state	730	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2043313	1788426398	143743	state	139	0	0	23953	574	pos:189.65,207.81,40.82
+86	1	2043314	1788426398	143743	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2043317	1788426398	143754	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=28284 victim=139 melee=true select=139 moving=true tank=true mt=true explicit=false entry=23953
+86	1	2043318	1788426398	143754	state	726	139	0	0	574	tank_range:boss_dist=4.642 melee_range=false facing=true orientation=1.412
+86	1	2043319	1788426398	143754	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2043396	1788426398	144004	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=28284 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2043397	1788426398	144004	state	726	139	0	0	574	tank_range:boss_dist=4.095 melee_range=false facing=true orientation=1.412
+86	1	2043398	1788426398	144004	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2043473	1788426398	144262	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=28284 victim=139 melee=true select=139 moving=true tank=true mt=true explicit=false entry=23953
+86	1	2043474	1788426398	144262	state	726	139	0	0	574	tank_range:boss_dist=2.318 melee_range=false facing=true orientation=1.412
+86	1	2043475	1788426398	144262	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2043559	1788426398	144507	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2043560	1788426398	144507	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=1.412
+86	1	2043561	1788426398	144507	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2043640	1788426398	144743	state	726	0	0	0	574	pos:188.86,204.75,40.82
+86	1	2043641	1788426398	144743	state	727	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2043642	1788426398	144743	state	728	0	0	0	574	pos:189.05,204.11,40.82
+86	1	2043643	1788426398	144743	state	729	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2043644	1788426398	144743	state	730	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2043645	1788426398	144743	state	139	0	0	23953	574	pos:189.65,207.81,40.82
+86	1	2043646	1788426398	144743	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2043651	1788426398	144762	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=139 melee=true select=139 moving=true tank=true mt=true explicit=false entry=23953
+86	1	2043652	1788426398	144762	state	726	139	0	0	574	tank_range:boss_dist=0.031 melee_range=true facing=true orientation=1.861
+86	1	2043653	1788426398	144762	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2043736	1788426398	145016	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=139 melee=true select=139 moving=true tank=true mt=true explicit=false entry=23953
+86	1	2043737	1788426398	145016	state	726	139	0	0	574	tank_range:boss_dist=0.000 melee_range=true facing=true orientation=1.861
+86	1	2043738	1788426398	145016	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2043820	1788426398	145267	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=139 melee=true select=139 moving=true tank=true mt=true explicit=false entry=23953
+86	1	2043821	1788426398	145267	state	726	139	0	0	574	tank_range:boss_dist=0.000 melee_range=true facing=false orientation=1.861
+86	1	2043822	1788426398	145267	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2043901	1788426398	145522	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2043902	1788426398	145522	state	726	139	0	0	574	tank_range:boss_dist=0.000 melee_range=true facing=true orientation=5.811
+86	1	2043903	1788426398	145522	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2043980	1788426398	145747	state	726	0	0	0	574	pos:187.64,208.83,40.82
+86	1	2043981	1788426398	145747	state	727	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2043982	1788426398	145747	state	728	0	0	0	574	pos:191.87,207.47,40.90
+86	1	2043983	1788426398	145747	state	729	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2043984	1788426398	145747	state	730	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2043985	1788426398	145747	state	139	0	0	23953	574	pos:189.65,207.81,40.82
+86	1	2043986	1788426398	145747	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2043995	1788426398	145777	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2043996	1788426398	145777	state	726	139	0	0	574	tank_range:boss_dist=0.000 melee_range=true facing=true orientation=5.811
+86	1	2043997	1788426398	145777	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2044088	1788426398	146030	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2044089	1788426398	146030	state	726	139	0	0	574	tank_range:boss_dist=0.000 melee_range=true facing=true orientation=5.811
+86	1	2044090	1788426398	146030	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2044175	1788426398	146283	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2044176	1788426398	146283	state	726	139	0	0	574	tank_range:boss_dist=0.000 melee_range=true facing=true orientation=5.811
+86	1	2044177	1788426398	146283	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2044263	1788426398	146539	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=180 melee=true select=180 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2044264	1788426398	146539	state	726	180	0	0	574	tank_range:boss_dist=0.000 melee_range=true facing=false orientation=2.105
+86	1	2044265	1788426398	146539	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2044339	1788426398	146750	state	726	0	0	0	574	pos:187.64,208.83,40.82
+86	1	2044340	1788426398	146750	state	727	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2044341	1788426398	146750	state	728	0	0	0	574	pos:191.87,207.47,40.90
+86	1	2044342	1788426398	146750	state	729	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2044343	1788426398	146750	state	730	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2044344	1788426398	146750	state	139	0	0	23953	574	pos:189.65,207.81,40.82
+86	1	2044345	1788426398	146750	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2044358	1788426398	146792	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=180 melee=true select=180 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2044359	1788426398	146792	state	726	180	0	0	574	tank_range:boss_dist=0.000 melee_range=true facing=false orientation=2.105
+86	1	2044360	1788426398	146792	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2044454	1788426398	147044	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=180 melee=true select=180 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2044455	1788426398	147044	state	726	180	0	0	574	tank_range:boss_dist=0.000 melee_range=true facing=false orientation=2.105
+86	1	2044456	1788426398	147044	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2044547	1788426398	147301	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=180 melee=true select=180 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2044548	1788426398	147301	state	726	180	0	0	574	tank_range:boss_dist=0.000 melee_range=true facing=false orientation=2.105
+86	1	2044549	1788426398	147301	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2044633	1788426398	147555	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=180 melee=true select=180 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2044634	1788426398	147555	state	726	180	0	0	574	tank_range:boss_dist=0.000 melee_range=true facing=false orientation=2.105
+86	1	2044635	1788426398	147555	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2044698	1788426398	147753	state	726	0	0	0	574	pos:187.64,208.83,40.82
+86	1	2044699	1788426398	147753	state	727	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2044700	1788426398	147753	state	728	0	0	0	574	pos:191.87,207.47,40.90
+86	1	2044701	1788426398	147753	state	729	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2044702	1788426398	147753	state	730	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2044703	1788426398	147753	state	139	0	0	23953	574	pos:189.65,207.81,40.82
+86	1	2044704	1788426398	147753	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2044720	1788426398	147805	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=180 melee=true select=180 moving=true tank=true mt=true explicit=false entry=23970
+86	1	2044721	1788426398	147805	state	726	180	0	0	574	tank_range:boss_dist=0.000 melee_range=true facing=false orientation=2.122
+86	1	2044722	1788426398	147805	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2044809	1788426398	148058	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=180 melee=true select=180 moving=true tank=true mt=true explicit=false entry=23970
+86	1	2044810	1788426398	148058	state	726	180	0	0	574	tank_range:boss_dist=1.204 melee_range=true facing=false orientation=2.122
+86	1	2044811	1788426398	148058	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2044885	1788426398	148310	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=180 melee=true select=180 moving=true tank=true mt=true explicit=false entry=23970
+86	1	2044886	1788426398	148310	state	726	180	0	0	574	tank_range:boss_dist=3.186 melee_range=false facing=false orientation=2.122
+86	1	2044887	1788426398	148310	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2044970	1788426398	148563	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=180 melee=true select=180 moving=true tank=true mt=true explicit=false entry=23970
+86	1	2044971	1788426398	148563	state	726	180	0	0	574	tank_range:boss_dist=5.191 melee_range=false facing=false orientation=2.122
+86	1	2044972	1788426398	148563	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2045039	1788426398	148757	state	726	0	0	0	574	pos:183.58,215.44,40.81
+86	1	2045040	1788426398	148757	state	727	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2045041	1788426398	148757	state	728	0	0	0	574	pos:191.87,207.47,40.90
+86	1	2045042	1788426398	148757	state	729	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2045043	1788426398	148757	state	730	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2045044	1788426398	148757	state	139	0	0	23953	574	pos:189.65,207.81,40.82
+86	1	2045045	1788426398	148757	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2045065	1788426398	148819	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=180 melee=true select=180 moving=true tank=true mt=true explicit=false entry=23970
+86	1	2045066	1788426398	148819	state	726	180	0	0	574	tank_range:boss_dist=7.238 melee_range=false facing=false orientation=2.122
+86	1	2045067	1788426398	148819	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2045154	1788426398	149073	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=180 melee=true select=180 moving=true tank=true mt=true explicit=false entry=23970
+86	1	2045155	1788426398	149073	state	726	180	0	0	574	tank_range:boss_dist=9.284 melee_range=false facing=false orientation=2.122
+86	1	2045156	1788426398	149073	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2045242	1788426398	149324	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=180 melee=true select=180 moving=true tank=true mt=true explicit=false entry=23970
+86	1	2045243	1788426398	149324	state	726	180	0	0	574	tank_range:boss_dist=11.300 melee_range=false facing=false orientation=2.122
+86	1	2045244	1788426398	149324	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2045345	1788426398	149579	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=180 melee=true select=180 moving=true tank=true mt=true explicit=false entry=23970
+86	1	2045346	1788426398	149579	state	726	180	0	0	574	tank_range:boss_dist=11.903 melee_range=false facing=false orientation=2.122
+86	1	2045347	1788426398	149579	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2045438	1788426398	149758	state	726	0	0	0	574	pos:179.36,222.32,40.82
+86	1	2045439	1788426398	149758	state	727	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2045440	1788426398	149758	state	728	0	0	0	574	pos:191.87,207.47,40.90
+86	1	2045441	1788426398	149758	state	729	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2045442	1788426398	149758	state	730	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2045443	1788426398	149758	state	139	0	0	23953	574	pos:187.75,210.45,40.82
+86	1	2045444	1788426398	149758	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2045476	1788426398	149826	state	726	182	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=182 melee=true select=182 moving=true tank=true mt=true explicit=false entry=23970
+86	1	2045477	1788426398	149826	state	726	182	0	0	574	tank_range:boss_dist=11.476 melee_range=false facing=false orientation=2.122
+86	1	2045478	1788426398	149826	state	726	182	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2045599	1788426398	150076	state	726	182	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=182 melee=true select=182 moving=true tank=true mt=true explicit=false entry=23970
+86	1	2045600	1788426398	150076	state	726	182	0	0	574	tank_range:boss_dist=11.851 melee_range=false facing=false orientation=2.122
+86	1	2045601	1788426398	150076	state	726	182	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2045729	1788426398	150328	state	726	182	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=182 melee=true select=182 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2045730	1788426398	150328	state	726	182	0	0	574	tank_range:boss_dist=10.500 melee_range=false facing=false orientation=2.122
+86	1	2045731	1788426398	150328	state	726	182	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2045858	1788426398	150577	state	726	182	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=182 melee=true select=182 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2045859	1788426398	150577	state	726	182	0	0	574	tank_range:boss_dist=10.500 melee_range=false facing=false orientation=2.122
+86	1	2045860	1788426398	150577	state	726	182	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2045946	1788426398	150761	state	726	0	0	0	574	pos:177.61,225.16,40.82
+86	1	2045947	1788426398	150761	state	727	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2045948	1788426398	150761	state	728	0	0	0	574	pos:187.91,211.38,40.82
+86	1	2045949	1788426398	150761	state	729	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2045950	1788426398	150761	state	730	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2045951	1788426398	150761	state	139	0	0	23953	574	pos:185.26,214.04,40.82
+86	1	2045952	1788426398	150761	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2045987	1788426398	150832	state	726	182	0	0	574	tank_state:engine=0 combat=true alive=true hp=26233 victim=182 melee=true select=182 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2045988	1788426398	150832	state	726	182	0	0	574	tank_range:boss_dist=10.500 melee_range=false facing=false orientation=2.122
+86	1	2045989	1788426398	150832	state	726	182	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2046115	1788426398	151081	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=26058 victim=180 melee=true select=180 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2046116	1788426398	151081	state	726	180	0	0	574	tank_range:boss_dist=10.500 melee_range=false facing=false orientation=2.122
+86	1	2046117	1788426398	151081	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2046251	1788426398	151333	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=180 melee=true select=180 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2046252	1788426398	151333	state	726	180	0	0	574	tank_range:boss_dist=10.500 melee_range=false facing=false orientation=2.122
+86	1	2046253	1788426398	151333	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2046381	1788426398	151589	state	726	183	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=183 melee=true select=183 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2046382	1788426398	151589	state	726	183	0	0	574	tank_range:boss_dist=10.500 melee_range=false facing=false orientation=2.122
+86	1	2046383	1788426398	151589	state	726	183	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2046473	1788426398	151763	state	726	0	0	0	574	pos:177.61,225.16,40.82
+86	1	2046474	1788426398	151763	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2046475	1788426398	151763	state	728	0	0	0	574	pos:187.91,211.38,40.82
+86	1	2046476	1788426398	151763	state	729	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2046477	1788426398	151763	state	730	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2046478	1788426398	151763	state	139	0	0	23953	574	pos:185.26,214.04,40.82
+86	1	2046479	1788426398	151763	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2046517	1788426398	151837	state	726	183	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=183 melee=true select=183 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2046518	1788426398	151837	state	726	183	0	0	574	tank_range:boss_dist=10.500 melee_range=false facing=false orientation=2.122
+86	1	2046519	1788426398	151837	state	726	183	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2046648	1788426398	152091	state	726	183	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=183 melee=true select=183 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2046649	1788426398	152091	state	726	183	0	0	574	tank_range:boss_dist=10.500 melee_range=false facing=false orientation=2.122
+86	1	2046650	1788426398	152091	state	726	183	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2046775	1788426398	152340	state	726	183	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=183 melee=true select=183 moving=true tank=true mt=true explicit=false entry=23970
+86	1	2046776	1788426398	152340	state	726	183	0	0	574	tank_range:boss_dist=11.667 melee_range=false facing=false orientation=1.621
+86	1	2046777	1788426398	152340	state	726	183	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2046911	1788426398	152594	state	726	183	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=183 melee=true select=183 moving=true tank=true mt=true explicit=false entry=23970
+86	1	2046912	1788426398	152594	state	726	183	0	0	574	tank_range:boss_dist=11.529 melee_range=false facing=false orientation=1.621
+86	1	2046913	1788426398	152594	state	726	183	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2047002	1788426398	152767	state	726	0	0	0	574	pos:177.41,229.16,40.82
+86	1	2047003	1788426398	152767	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2047004	1788426398	152767	state	728	0	0	0	574	pos:187.91,211.38,40.82
+86	1	2047005	1788426398	152767	state	729	0	0	0	574	pos:188.00,197.50,40.81
+86	1	2047006	1788426398	152767	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2047007	1788426398	152767	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2047008	1788426398	152767	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2047044	1788426398	152844	state	726	183	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=183 melee=true select=183 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2047045	1788426398	152844	state	726	183	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2047046	1788426398	152844	state	726	183	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2047175	1788426398	153098	state	726	183	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=183 melee=true select=183 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2047176	1788426398	153098	state	726	183	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2047177	1788426398	153098	state	726	183	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2047301	1788426398	153354	state	726	183	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=183 melee=true select=183 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2047302	1788426398	153354	state	726	183	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2047303	1788426398	153354	state	726	183	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2047429	1788426398	153599	state	726	183	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=183 melee=true select=183 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2047430	1788426398	153599	state	726	183	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2047431	1788426398	153599	state	726	183	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2047517	1788426398	153769	state	726	0	0	0	574	pos:177.41,229.16,40.82
+86	1	2047518	1788426398	153769	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2047519	1788426398	153769	state	728	0	0	0	574	pos:187.08,212.48,40.82
+86	1	2047520	1788426398	153769	state	729	0	0	0	574	pos:187.47,198.84,40.81
+86	1	2047521	1788426398	153769	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2047522	1788426398	153769	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2047523	1788426398	153769	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2047572	1788426398	153852	state	726	183	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=183 melee=true select=183 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2047573	1788426398	153852	state	726	183	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2047574	1788426398	153852	state	726	183	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2047705	1788426398	154106	state	726	0	0	0	574	tank_state:engine=1 combat=true alive=true hp=25870 victim=0 melee=false select=0 moving=false tank=true mt=true explicit=false entry=0
+86	1	2047706	1788426398	154106	state	726	0	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2047707	1788426398	154106	state	726	0	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2047708	1788426398	154106	state	726	0	0	0	574	tank_strategies:0:Strategies: barmor, bsanc, bthreat, chat, cure, default, duel, emote, follow, food, force rebuff, gather, loot, mount, nc, pull, pvp, quest, tank assist, utgarde keep
+86	1	2047839	1788426398	154360	state	726	0	0	0	574	tank_state:engine=1 combat=true alive=true hp=25870 victim=0 melee=false select=0 moving=false tank=true mt=true explicit=false entry=0
+86	1	2047840	1788426398	154360	state	726	0	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2047841	1788426398	154360	state	726	0	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2047973	1788426398	154614	state	726	0	0	0	574	tank_state:engine=1 combat=true alive=true hp=25870 victim=0 melee=false select=0 moving=false tank=true mt=true explicit=false entry=0
+86	1	2047974	1788426398	154614	state	726	0	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2047975	1788426398	154614	state	726	0	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2048059	1788426398	154768	state	726	0	0	0	574	pos:177.41,229.16,40.82
+86	1	2048060	1788426398	154768	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2048061	1788426398	154768	state	728	0	0	0	574	pos:185.97,213.92,40.82
+86	1	2048062	1788426398	154768	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2048063	1788426398	154768	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2048064	1788426398	154768	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2048065	1788426398	154768	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2048112	1788426398	154865	state	726	182	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=182 melee=true select=182 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2048113	1788426398	154865	state	726	182	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2048114	1788426398	154865	state	726	182	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2048115	1788426398	154865	state	726	182	0	0	574	tank_strategies:0:Strategies: barmor, boost, bthreat, cast time, chat, cure, default, duel, formation, potions, pull, pull back, racials, tank, tank assist, tank face, utgarde keep
+86	1	2048237	1788426398	155119	state	726	182	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=182 melee=true select=182 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2048238	1788426398	155119	state	726	182	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2048239	1788426398	155119	state	726	182	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2048362	1788426398	155368	state	726	182	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=182 melee=true select=182 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2048363	1788426398	155368	state	726	182	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2048364	1788426398	155368	state	726	182	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2048509	1788426398	155620	state	726	182	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=182 melee=true select=182 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2048510	1788426398	155620	state	726	182	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2048511	1788426398	155620	state	726	182	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2048586	1788426398	155771	state	726	0	0	0	574	pos:177.41,229.16,40.82
+86	1	2048587	1788426398	155771	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2048588	1788426398	155771	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2048589	1788426398	155771	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2048590	1788426398	155771	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2048591	1788426398	155771	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2048592	1788426398	155771	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2048643	1788426398	155872	state	726	182	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=182 melee=true select=182 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2048644	1788426398	155872	state	726	182	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2048645	1788426398	155872	state	726	182	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2048775	1788426398	156123	state	726	0	0	0	574	tank_state:engine=1 combat=true alive=true hp=25870 victim=0 melee=false select=0 moving=false tank=true mt=true explicit=false entry=0
+86	1	2048776	1788426398	156123	state	726	0	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2048777	1788426398	156123	state	726	0	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2048778	1788426398	156123	state	726	0	0	0	574	tank_strategies:0:Strategies: barmor, bsanc, bthreat, chat, cure, default, duel, emote, follow, food, force rebuff, gather, loot, mount, nc, pull, pvp, quest, tank assist, utgarde keep
+86	1	2048901	1788426398	156374	state	726	0	0	0	574	tank_state:engine=1 combat=true alive=true hp=25870 victim=0 melee=false select=0 moving=false tank=true mt=true explicit=false entry=0
+86	1	2048902	1788426398	156374	state	726	0	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2048903	1788426398	156374	state	726	0	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2049039	1788426398	156623	state	726	184	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=184 melee=true select=184 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2049040	1788426398	156623	state	726	184	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2049041	1788426398	156623	state	726	184	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2049042	1788426398	156623	state	726	184	0	0	574	tank_strategies:0:Strategies: barmor, boost, bthreat, cast time, chat, cure, default, duel, formation, potions, pull, pull back, racials, tank, tank assist, tank face, utgarde keep
+86	1	2049119	1788426398	156776	state	726	0	0	0	574	pos:177.41,229.16,40.82
+86	1	2049120	1788426398	156776	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2049121	1788426398	156776	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2049122	1788426398	156776	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2049123	1788426398	156776	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2049124	1788426398	156776	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2049125	1788426398	156776	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2049556	1788426398	157624	state	726	181	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=181 melee=true select=181 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2049557	1788426398	157624	state	726	181	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2049558	1788426398	157624	state	726	181	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2049633	1788426398	157776	state	726	0	0	0	574	pos:177.41,229.16,40.82
+86	1	2049634	1788426398	157776	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2049635	1788426398	157776	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2049636	1788426398	157776	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2049637	1788426398	157776	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2049638	1788426398	157776	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2049639	1788426398	157776	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2050053	1788426398	158624	state	726	184	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=184 melee=true select=184 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2050054	1788426398	158624	state	726	184	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=3.829
+86	1	2050055	1788426398	158624	state	726	184	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2050128	1788426398	158776	state	726	0	0	0	574	pos:177.41,229.16,40.82
+86	1	2050129	1788426398	158776	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2050130	1788426398	158776	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2050131	1788426398	158776	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2050132	1788426398	158776	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2050133	1788426398	158776	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2050134	1788426398	158776	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2050531	1788426398	159625	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2050532	1788426398	159625	state	726	139	0	0	574	tank_range:boss_dist=10.778 melee_range=false facing=true orientation=5.185
+86	1	2050533	1788426398	159625	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2050613	1788426398	159779	state	726	0	0	0	574	pos:177.41,229.16,40.82
+86	1	2050614	1788426398	159779	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2050615	1788426398	159779	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2050616	1788426398	159779	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2050617	1788426398	159779	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2050618	1788426398	159779	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2050619	1788426398	159779	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2051012	1788426398	160626	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=25870 victim=139 melee=true select=139 moving=true tank=true mt=true explicit=false entry=23953
+86	1	2051013	1788426398	160626	state	726	139	0	0	574	tank_range:boss_dist=8.082 melee_range=false facing=true orientation=-1.098
+86	1	2051014	1788426398	160626	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2051088	1788426398	160780	state	726	0	0	0	574	pos:179.21,225.66,40.82
+86	1	2051089	1788426398	160780	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2051090	1788426398	160780	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2051091	1788426398	160780	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2051092	1788426398	160780	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2051093	1788426398	160780	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2051094	1788426398	160780	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2051524	1788426398	161627	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=23765 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2051525	1788426398	161627	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.098
+86	1	2051526	1788426398	161627	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2051603	1788426398	161781	state	726	0	0	0	574	pos:181.98,220.23,40.81
+86	1	2051604	1788426398	161781	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2051605	1788426398	161781	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2051606	1788426398	161781	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2051607	1788426398	161781	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2051608	1788426398	161781	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2051609	1788426398	161781	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2052017	1788426398	162627	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=23765 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2052018	1788426398	162627	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.098
+86	1	2052019	1788426398	162627	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2052104	1788426398	162781	state	726	0	0	0	574	pos:181.98,220.23,40.81
+86	1	2052105	1788426398	162781	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2052106	1788426398	162781	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2052107	1788426398	162781	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2052108	1788426398	162781	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2052109	1788426398	162781	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2052110	1788426398	162781	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2052526	1788426398	163629	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=25847 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2052527	1788426398	163629	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.098
+86	1	2052528	1788426398	163629	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2052606	1788426398	163783	state	726	0	0	0	574	pos:181.98,220.23,40.81
+86	1	2052607	1788426398	163783	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2052608	1788426398	163783	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2052609	1788426398	163783	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2052610	1788426398	163783	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2052611	1788426398	163783	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2052612	1788426398	163783	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2052990	1788426398	164633	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=25847 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2052991	1788426398	164633	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.098
+86	1	2052992	1788426398	164633	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2053062	1788426398	164785	state	726	0	0	0	574	pos:181.98,220.23,40.81
+86	1	2053063	1788426398	164785	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2053064	1788426398	164785	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2053065	1788426398	164785	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2053066	1788426398	164785	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2053067	1788426398	164785	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2053068	1788426398	164785	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2053484	1788426398	165639	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=25847 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2053485	1788426398	165639	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.098
+86	1	2053486	1788426398	165639	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2053559	1788426398	165785	state	726	0	0	0	574	pos:181.98,220.23,40.81
+86	1	2053560	1788426398	165785	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2053561	1788426398	165785	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2053562	1788426398	165785	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2053563	1788426398	165785	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2053564	1788426398	165785	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2053565	1788426398	165785	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2053929	1788426398	166639	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=27594 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2053930	1788426398	166639	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.098
+86	1	2053931	1788426398	166639	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2053995	1788426398	166785	state	726	0	0	0	574	pos:181.98,220.23,40.81
+86	1	2053996	1788426398	166785	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2053997	1788426398	166785	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2053998	1788426398	166785	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2053999	1788426398	166785	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2054000	1788426398	166785	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2054001	1788426398	166785	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2054362	1788426398	167642	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=27594 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2054363	1788426398	167642	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.098
+86	1	2054364	1788426398	167642	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2054426	1788426398	167786	state	726	0	0	0	574	pos:181.98,220.23,40.81
+86	1	2054427	1788426398	167786	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2054428	1788426398	167786	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2054429	1788426398	167786	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2054430	1788426398	167786	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2054431	1788426398	167786	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2054432	1788426398	167786	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2054798	1788426398	168644	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=27594 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2054799	1788426398	168644	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.098
+86	1	2054800	1788426398	168644	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2054860	1788426398	168785	state	726	0	0	0	574	pos:181.98,220.23,40.81
+86	1	2054861	1788426398	168785	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2054862	1788426398	168785	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2054863	1788426398	168785	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2054864	1788426398	168785	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2054865	1788426398	168785	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2054866	1788426398	168785	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2055249	1788426398	169645	state	726	183	0	0	574	tank_state:engine=0 combat=true alive=true hp=28284 victim=183 melee=true select=183 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2055250	1788426398	169645	state	726	183	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=false orientation=2.276
+86	1	2055251	1788426398	169645	state	726	183	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2055315	1788426398	169787	state	726	0	0	0	574	pos:181.98,220.23,40.81
+86	1	2055316	1788426398	169787	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2055317	1788426398	169787	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2055318	1788426398	169787	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2055319	1788426398	169787	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2055320	1788426398	169787	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2055321	1788426398	169787	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2055688	1788426398	170647	state	726	183	0	0	574	tank_state:engine=0 combat=true alive=true hp=26373 victim=183 melee=true select=183 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2055689	1788426398	170647	state	726	183	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=false orientation=2.276
+86	1	2055690	1788426398	170647	state	726	183	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2055756	1788426398	170795	state	726	0	0	0	574	pos:181.98,220.23,40.81
+86	1	2055757	1788426398	170795	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2055758	1788426398	170795	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2055759	1788426398	170795	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2055760	1788426398	170795	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2055761	1788426398	170795	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2055762	1788426398	170795	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2056085	1788426398	171649	state	726	185	0	0	574	tank_state:engine=0 combat=true alive=true hp=26373 victim=185 melee=true select=185 moving=false tank=true mt=true explicit=false entry=23965
+86	1	2056086	1788426398	171649	state	726	185	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=5.185
+86	1	2056087	1788426398	171649	state	726	185	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2056145	1788426398	171795	state	726	0	0	0	574	pos:181.98,220.23,40.81
+86	1	2056146	1788426398	171795	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2056147	1788426398	171795	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2056148	1788426398	171795	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2056149	1788426398	171795	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2056150	1788426398	171795	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2056151	1788426398	171795	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2056513	1788426398	172649	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=28120 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2056514	1788426398	172649	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=5.185
+86	1	2056515	1788426398	172649	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2056589	1788426398	172800	state	726	0	0	0	574	pos:181.98,220.23,40.81
+86	1	2056590	1788426398	172800	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2056591	1788426398	172800	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2056592	1788426398	172800	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2056593	1788426398	172800	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2056594	1788426398	172800	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2056595	1788426398	172800	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2056953	1788426398	173655	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=28284 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2056954	1788426398	173655	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=5.185
+86	1	2056955	1788426398	173655	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2057025	1788426398	173807	state	726	0	0	0	574	pos:181.98,220.23,40.81
+86	1	2057026	1788426398	173807	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2057027	1788426398	173807	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2057028	1788426398	173807	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2057029	1788426398	173807	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2057030	1788426398	173807	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2057031	1788426398	173807	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2057397	1788426398	174653	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=28284 victim=180 melee=true select=180 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2057398	1788426398	174653	state	726	180	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=false orientation=2.199
+86	1	2057399	1788426398	174653	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2057466	1788426398	174806	state	726	0	0	0	574	pos:181.98,220.23,40.81
+86	1	2057467	1788426398	174806	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2057468	1788426398	174806	state	728	0	0	0	574	pos:184.81,214.70,40.82
+86	1	2057469	1788426398	174806	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2057470	1788426398	174806	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2057471	1788426398	174806	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2057472	1788426398	174806	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2057846	1788426398	175658	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=28121 victim=180 melee=true select=180 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2057847	1788426398	175658	state	726	180	0	0	574	tank_range:boss_dist=2.399 melee_range=false facing=false orientation=1.599
+86	1	2057848	1788426398	175658	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2057910	1788426398	175807	state	726	0	0	0	574	pos:181.93,222.00,40.81
+86	1	2057911	1788426398	175807	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2057912	1788426398	175807	state	728	0	0	0	574	pos:183.59,216.92,40.82
+86	1	2057913	1788426398	175807	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2057914	1788426398	175807	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2057915	1788426398	175807	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2057916	1788426398	175807	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2058317	1788426398	176660	state	726	184	0	0	574	tank_state:engine=0 combat=true alive=true hp=28121 victim=184 melee=true select=184 moving=true tank=true mt=true explicit=false entry=23970
+86	1	2058318	1788426398	176660	state	726	184	0	0	574	tank_range:boss_dist=3.492 melee_range=false facing=false orientation=2.230
+86	1	2058319	1788426398	176660	state	726	184	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2058380	1788426398	176813	state	726	0	0	0	574	pos:180.83,223.42,40.82
+86	1	2058381	1788426398	176813	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2058382	1788426398	176813	state	728	0	0	0	574	pos:182.80,218.36,40.81
+86	1	2058383	1788426398	176813	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2058384	1788426398	176813	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2058385	1788426398	176813	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2058386	1788426398	176813	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2058764	1788426398	177660	state	726	184	0	0	574	tank_state:engine=0 combat=true alive=true hp=22613 victim=184 melee=true select=184 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2058765	1788426398	177660	state	726	184	0	0	574	tank_range:boss_dist=4.130 melee_range=false facing=true orientation=3.756
+86	1	2058766	1788426398	177660	state	726	184	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2058827	1788426398	177814	state	726	0	0	0	574	pos:180.83,223.42,40.82
+86	1	2058828	1788426398	177814	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2058829	1788426398	177814	state	728	0	0	0	574	pos:182.80,218.36,40.81
+86	1	2058830	1788426398	177814	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2058831	1788426398	177814	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2058832	1788426398	177814	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2058833	1788426398	177814	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2059187	1788426398	178661	state	726	184	0	0	574	tank_state:engine=0 combat=true alive=true hp=24360 victim=184 melee=true select=184 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2059188	1788426398	178661	state	726	184	0	0	574	tank_range:boss_dist=4.130 melee_range=false facing=true orientation=3.756
+86	1	2059189	1788426398	178661	state	726	184	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2059260	1788426398	178815	state	726	0	0	0	574	pos:180.83,223.42,40.82
+86	1	2059261	1788426398	178815	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2059262	1788426398	178815	state	728	0	0	0	574	pos:182.80,218.36,40.81
+86	1	2059263	1788426398	178815	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2059264	1788426398	178815	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2059265	1788426398	178815	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2059266	1788426398	178815	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2059642	1788426398	179662	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=24360 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2059643	1788426398	179662	state	726	139	0	0	574	tank_range:boss_dist=4.130 melee_range=false facing=true orientation=5.125
+86	1	2059644	1788426398	179662	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2059727	1788426398	179816	state	726	0	0	0	574	pos:180.83,223.42,40.82
+86	1	2059728	1788426398	179816	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2059729	1788426398	179816	state	728	0	0	0	574	pos:182.80,218.36,40.81
+86	1	2059730	1788426398	179816	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2059731	1788426398	179816	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2059732	1788426398	179816	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2059733	1788426398	179816	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2060149	1788426398	180663	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=22107 victim=139 melee=true select=139 moving=true tank=true mt=true explicit=false entry=23953
+86	1	2060150	1788426398	180663	state	726	139	0	0	574	tank_range:boss_dist=0.903 melee_range=true facing=true orientation=-1.158
+86	1	2060151	1788426398	180663	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2060231	1788426398	180817	state	726	0	0	0	574	pos:182.19,220.33,40.81
+86	1	2060232	1788426398	180817	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2060233	1788426398	180817	state	728	0	0	0	574	pos:182.94,216.23,40.81
+86	1	2060234	1788426398	180817	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2060235	1788426398	180817	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2060236	1788426398	180817	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2060237	1788426398	180817	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2060665	1788426398	181662	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=24189 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2060666	1788426398	181662	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.158
+86	1	2060667	1788426398	181662	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2060748	1788426398	181817	state	726	0	0	0	574	pos:182.19,220.33,40.81
+86	1	2060749	1788426398	181817	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2060750	1788426398	181817	state	728	0	0	0	574	pos:182.94,216.23,40.81
+86	1	2060751	1788426398	181817	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2060752	1788426398	181817	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2060753	1788426398	181817	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2060754	1788426398	181817	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2061180	1788426398	182662	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=24189 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2061181	1788426398	182662	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.158
+86	1	2061182	1788426398	182662	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2061268	1788426398	182823	state	726	0	0	0	574	pos:182.19,220.33,40.81
+86	1	2061269	1788426398	182823	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2061270	1788426398	182823	state	728	0	0	0	574	pos:182.94,216.23,40.81
+86	1	2061271	1788426398	182823	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2061272	1788426398	182823	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2061273	1788426398	182823	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2061274	1788426398	182823	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2061699	1788426398	183666	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=21709 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2061700	1788426398	183666	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.158
+86	1	2061701	1788426398	183666	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2061782	1788426398	183821	state	726	0	0	0	574	pos:182.19,220.33,40.81
+86	1	2061783	1788426398	183821	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2061784	1788426398	183821	state	728	0	0	0	574	pos:182.94,216.23,40.81
+86	1	2061785	1788426398	183821	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2061786	1788426398	183821	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2061787	1788426398	183821	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2061788	1788426398	183821	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2062220	1788426398	184667	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=23456 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2062221	1788426398	184667	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.158
+86	1	2062222	1788426398	184667	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2062300	1788426398	184821	state	726	0	0	0	574	pos:182.19,220.33,40.81
+86	1	2062301	1788426398	184821	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2062302	1788426398	184821	state	728	0	0	0	574	pos:182.94,216.23,40.81
+86	1	2062303	1788426398	184821	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2062304	1788426398	184821	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2062305	1788426398	184821	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2062306	1788426398	184821	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2062689	1788426398	185666	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=27507 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2062690	1788426398	185666	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.158
+86	1	2062691	1788426398	185666	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2062762	1788426398	185820	state	726	0	0	0	574	pos:182.19,220.33,40.81
+86	1	2062763	1788426398	185820	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2062764	1788426398	185820	state	728	0	0	0	574	pos:182.94,216.23,40.81
+86	1	2062765	1788426398	185820	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2062766	1788426398	185820	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2062767	1788426398	185820	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2062768	1788426398	185820	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2063166	1788426398	186666	state	726	186	0	0	574	tank_state:engine=0 combat=true alive=true hp=27365 victim=186 melee=true select=186 moving=false tank=true mt=true explicit=false entry=23965
+86	1	2063167	1788426398	186666	state	726	186	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.158
+86	1	2063168	1788426398	186666	state	726	186	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2063237	1788426398	186820	state	726	0	0	0	574	pos:182.19,220.33,40.81
+86	1	2063238	1788426398	186820	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2063239	1788426398	186820	state	728	0	0	0	574	pos:181.95,217.95,40.81
+86	1	2063240	1788426398	186820	state	729	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2063241	1788426398	186820	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2063242	1788426398	186820	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2063243	1788426398	186820	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2063612	1788426398	187671	state	726	182	0	0	574	tank_state:engine=0 combat=true alive=true hp=28284 victim=182 melee=true select=182 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2063613	1788426398	187671	state	726	182	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=false orientation=2.225
+86	1	2063614	1788426398	187671	state	726	182	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2063683	1788426398	187825	state	726	0	0	0	574	pos:182.19,220.33,40.81
+86	1	2063684	1788426398	187825	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2063685	1788426398	187825	state	728	0	0	0	574	pos:182.84,214.88,40.81
+86	1	2063686	1788426398	187825	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2063687	1788426398	187825	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2063688	1788426398	187825	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2063689	1788426398	187825	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2064063	1788426398	188671	state	726	182	0	0	574	tank_state:engine=0 combat=true alive=true hp=25946 victim=182 melee=true select=182 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2064064	1788426398	188671	state	726	182	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=false orientation=2.225
+86	1	2064065	1788426398	188671	state	726	182	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2064129	1788426398	188825	state	726	0	0	0	574	pos:182.19,220.33,40.81
+86	1	2064130	1788426398	188825	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2064131	1788426398	188825	state	728	0	0	0	574	pos:184.65,208.61,40.82
+86	1	2064132	1788426398	188825	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2064133	1788426398	188825	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2064134	1788426398	188825	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2064135	1788426398	188825	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2064504	1788426398	189671	state	726	182	0	0	574	tank_state:engine=0 combat=true alive=true hp=25766 victim=182 melee=true select=182 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2064505	1788426398	189671	state	726	182	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=false orientation=2.077
+86	1	2064506	1788426398	189671	state	726	182	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2064574	1788426398	189825	state	726	0	0	0	574	pos:182.19,220.33,40.81
+86	1	2064575	1788426398	189825	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2064576	1788426398	189825	state	728	0	0	0	574	pos:186.52,202.11,40.82
+86	1	2064577	1788426398	189825	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2064578	1788426398	189825	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2064579	1788426398	189825	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2064580	1788426398	189825	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2064944	1788426398	190674	state	726	186	0	0	574	tank_state:engine=0 combat=true alive=true hp=27513 victim=186 melee=true select=186 moving=false tank=true mt=true explicit=false entry=23965
+86	1	2064945	1788426398	190674	state	726	186	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=4.953
+86	1	2064946	1788426398	190674	state	726	186	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2065014	1788426398	190826	state	726	0	0	0	574	pos:182.19,220.33,40.81
+86	1	2065015	1788426398	190826	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2065016	1788426398	190826	state	728	0	0	0	574	pos:189.19,199.02,40.82
+86	1	2065017	1788426398	190826	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2065018	1788426398	190826	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2065019	1788426398	190826	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2065020	1788426398	190826	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2065387	1788426398	191678	state	726	0	0	0	574	tank_state:engine=1 combat=true alive=true hp=27349 victim=0 melee=false select=0 moving=false tank=true mt=true explicit=false entry=0
+86	1	2065388	1788426398	191678	state	726	0	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=4.953
+86	1	2065389	1788426398	191678	state	726	0	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2065390	1788426398	191678	state	726	0	0	0	574	tank_strategies:0:Strategies: barmor, bsanc, bthreat, chat, cure, default, duel, emote, follow, food, force rebuff, gather, loot, mount, nc, pull, pvp, quest, tank assist, utgarde keep
+86	1	2065457	1788426398	191830	state	726	0	0	0	574	pos:182.19,220.33,40.81
+86	1	2065458	1788426398	191830	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2065459	1788426398	191830	state	728	0	0	0	574	pos:189.19,199.02,40.82
+86	1	2065460	1788426398	191830	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2065461	1788426398	191830	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2065462	1788426398	191830	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2065463	1788426398	191830	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2065843	1788426398	192681	state	726	183	0	0	574	tank_state:engine=0 combat=true alive=true hp=27349 victim=183 melee=true select=183 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2065844	1788426398	192681	state	726	183	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=false orientation=2.811
+86	1	2065845	1788426398	192681	state	726	183	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2065846	1788426398	192681	state	726	183	0	0	574	tank_strategies:0:Strategies: barmor, boost, bthreat, cast time, chat, cure, default, duel, formation, potions, pull, pull back, racials, tank, tank assist, tank face, utgarde keep
+86	1	2065918	1788426398	192833	state	726	0	0	0	574	pos:182.19,220.33,40.81
+86	1	2065919	1788426398	192833	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2065920	1788426398	192833	state	728	0	0	0	574	pos:189.19,199.02,40.82
+86	1	2065921	1788426398	192833	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2065922	1788426398	192833	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2065923	1788426398	192833	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2065924	1788426398	192833	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2066301	1788426398	193681	state	726	0	0	0	574	tank_state:engine=1 combat=true alive=true hp=28284 victim=0 melee=false select=0 moving=false tank=true mt=true explicit=false entry=0
+86	1	2066302	1788426398	193681	state	726	0	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=false orientation=2.811
+86	1	2066303	1788426398	193681	state	726	0	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2066304	1788426398	193681	state	726	0	0	0	574	tank_strategies:0:Strategies: barmor, bsanc, bthreat, chat, cure, default, duel, emote, follow, food, force rebuff, gather, loot, mount, nc, pull, pvp, quest, tank assist, utgarde keep
+86	1	2066373	1788426398	193832	state	726	0	0	0	574	pos:182.19,220.33,40.81
+86	1	2066374	1788426398	193832	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2066375	1788426398	193832	state	728	0	0	0	574	pos:187.50,204.52,40.82
+86	1	2066376	1788426398	193832	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2066377	1788426398	193832	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2066378	1788426398	193832	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2066379	1788426398	193832	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2066758	1788426398	194683	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=28284 victim=180 melee=true select=180 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2066759	1788426398	194683	state	726	180	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=false orientation=2.811
+86	1	2066760	1788426398	194683	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2066761	1788426398	194683	state	726	180	0	0	574	tank_strategies:0:Strategies: barmor, boost, bthreat, cast time, chat, cure, default, duel, formation, potions, pull, pull back, racials, tank, tank assist, tank face, utgarde keep
+86	1	2066825	1788426398	194835	state	726	0	0	0	574	pos:182.19,220.33,40.81
+86	1	2066826	1788426398	194835	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2066827	1788426398	194835	state	728	0	0	0	574	pos:185.70,210.37,40.82
+86	1	2066828	1788426398	194835	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2066829	1788426398	194835	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2066830	1788426398	194835	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2066831	1788426398	194835	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2067230	1788426398	195689	state	726	184	0	0	574	tank_state:engine=0 combat=true alive=true hp=26067 victim=184 melee=true select=184 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2067231	1788426398	195689	state	726	184	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=false orientation=2.811
+86	1	2067232	1788426398	195689	state	726	184	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2067311	1788426398	195835	state	726	0	0	0	574	pos:182.19,220.33,40.81
+86	1	2067312	1788426398	195835	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2067313	1788426398	195835	state	728	0	0	0	574	pos:184.79,213.31,40.82
+86	1	2067314	1788426398	195835	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2067315	1788426398	195835	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2067316	1788426398	195835	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2067317	1788426398	195835	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2067716	1788426398	196688	state	726	182	0	0	574	tank_state:engine=0 combat=true alive=true hp=27672 victim=182 melee=true select=182 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2067717	1788426398	196688	state	726	182	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=false orientation=2.811
+86	1	2067718	1788426398	196688	state	726	182	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2067792	1788426398	196838	state	726	0	0	0	574	pos:182.19,220.33,40.81
+86	1	2067793	1788426398	196838	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2067794	1788426398	196838	state	728	0	0	0	574	pos:184.79,213.31,40.82
+86	1	2067795	1788426398	196838	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2067796	1788426398	196838	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2067797	1788426398	196838	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2067798	1788426398	196838	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2068191	1788426398	197689	state	726	182	0	0	574	tank_state:engine=0 combat=true alive=true hp=25447 victim=182 melee=true select=182 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2068192	1788426398	197689	state	726	182	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=false orientation=1.770
+86	1	2068193	1788426398	197689	state	726	182	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2068260	1788426398	197839	state	726	0	0	0	574	pos:182.33,220.88,40.81
+86	1	2068261	1788426398	197839	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2068262	1788426398	197839	state	728	0	0	0	574	pos:184.79,213.31,40.82
+86	1	2068263	1788426398	197839	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2068264	1788426398	197839	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2068265	1788426398	197839	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2068266	1788426398	197839	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2068656	1788426398	198689	state	726	0	0	0	574	tank_state:engine=1 combat=true alive=true hp=25447 victim=0 melee=false select=0 moving=false tank=true mt=true explicit=false entry=0
+86	1	2068657	1788426398	198689	state	726	0	0	0	574	tank_range:boss_dist=4.255 melee_range=false facing=false orientation=1.308
+86	1	2068658	1788426398	198689	state	726	0	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2068659	1788426398	198689	state	726	0	0	0	574	tank_strategies:0:Strategies: barmor, bsanc, bthreat, chat, cure, default, duel, emote, follow, food, force rebuff, gather, loot, mount, nc, pull, pvp, quest, tank assist, utgarde keep
+86	1	2068722	1788426398	198840	state	726	0	0	0	574	pos:183.21,224.13,40.81
+86	1	2068723	1788426398	198840	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2068724	1788426398	198840	state	728	0	0	0	574	pos:184.79,213.31,40.82
+86	1	2068725	1788426398	198840	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2068726	1788426398	198840	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2068727	1788426398	198840	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2068728	1788426398	198840	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2069095	1788426398	199688	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=25447 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2069096	1788426398	199688	state	726	139	0	0	574	tank_range:boss_dist=4.255 melee_range=false facing=true orientation=4.779
+86	1	2069097	1788426398	199688	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2069098	1788426398	199688	state	726	139	0	0	574	tank_strategies:0:Strategies: barmor, boost, bthreat, cast time, chat, cure, default, duel, formation, potions, pull, pull back, racials, tank, tank assist, tank face, utgarde keep
+86	1	2069170	1788426398	199840	state	726	0	0	0	574	pos:183.21,224.13,40.81
+86	1	2069171	1788426398	199840	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2069172	1788426398	199840	state	728	0	0	0	574	pos:184.79,213.31,40.82
+86	1	2069173	1788426398	199840	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2069174	1788426398	199840	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2069175	1788426398	199840	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2069176	1788426398	199840	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2069550	1788426398	200695	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=25447 victim=139 melee=true select=139 moving=true tank=true mt=true explicit=false entry=23953
+86	1	2069551	1788426398	200695	state	726	139	0	0	574	tank_range:boss_dist=0.854 melee_range=true facing=true orientation=-1.504
+86	1	2069552	1788426398	200695	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2069621	1788426398	200841	state	726	0	0	0	574	pos:183.44,220.64,40.81
+86	1	2069622	1788426398	200841	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2069623	1788426398	200841	state	728	0	0	0	574	pos:184.79,213.31,40.82
+86	1	2069624	1788426398	200841	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2069625	1788426398	200841	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2069626	1788426398	200841	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2069627	1788426398	200841	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2069971	1788426398	201688	state	726	187	0	0	574	tank_state:engine=0 combat=true alive=true hp=25447 victim=187 melee=true select=187 moving=false tank=true mt=true explicit=false entry=23965
+86	1	2069972	1788426398	201688	state	726	187	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.504
+86	1	2069973	1788426398	201688	state	726	187	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2070040	1788426398	201842	state	726	0	0	0	574	pos:183.44,220.64,40.81
+86	1	2070041	1788426398	201842	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2070042	1788426398	201842	state	728	0	0	0	574	pos:184.86,212.96,40.82
+86	1	2070043	1788426398	201842	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2070044	1788426398	201842	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2070045	1788426398	201842	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2070046	1788426398	201842	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2070397	1788426398	202695	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=25447 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2070398	1788426398	202695	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.504
+86	1	2070399	1788426398	202695	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2070465	1788426398	202842	state	726	0	0	0	574	pos:183.44,220.64,40.81
+86	1	2070466	1788426398	202842	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2070467	1788426398	202842	state	728	0	0	0	574	pos:186.13,206.08,40.82
+86	1	2070468	1788426398	202842	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2070469	1788426398	202842	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2070470	1788426398	202842	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2070471	1788426398	202842	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2070827	1788426398	203691	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=24439 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2070828	1788426398	203691	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.504
+86	1	2070829	1788426398	203691	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2070899	1788426398	203844	state	726	0	0	0	574	pos:183.44,220.64,40.81
+86	1	2070900	1788426398	203844	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2070901	1788426398	203844	state	728	0	0	0	574	pos:187.59,201.14,40.82
+86	1	2070902	1788426398	203844	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2070903	1788426398	203844	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2070904	1788426398	203844	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2070905	1788426398	203844	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2071252	1788426398	204693	state	726	187	0	0	574	tank_state:engine=0 combat=true alive=true hp=24439 victim=187 melee=true select=187 moving=false tank=true mt=true explicit=false entry=23965
+86	1	2071253	1788426398	204693	state	726	187	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.504
+86	1	2071254	1788426398	204693	state	726	187	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2071313	1788426398	204845	state	726	0	0	0	574	pos:183.44,220.64,40.81
+86	1	2071314	1788426398	204845	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2071315	1788426398	204845	state	728	0	0	0	574	pos:189.19,199.02,40.82
+86	1	2071316	1788426398	204845	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2071317	1788426398	204845	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2071318	1788426398	204845	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2071319	1788426398	204845	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2071651	1788426398	205692	state	726	0	0	0	574	tank_state:engine=1 combat=true alive=true hp=23298 victim=0 melee=false select=0 moving=false tank=true mt=true explicit=false entry=0
+86	1	2071652	1788426398	205692	state	726	0	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.504
+86	1	2071653	1788426398	205692	state	726	0	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2071654	1788426398	205692	state	726	0	0	0	574	tank_strategies:0:Strategies: barmor, bsanc, bthreat, chat, cure, default, duel, emote, follow, food, force rebuff, gather, loot, mount, nc, pull, pvp, quest, tank assist, utgarde keep
+86	1	2071717	1788426398	205845	state	726	0	0	0	574	pos:183.44,220.64,40.81
+86	1	2071718	1788426398	205845	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2071719	1788426398	205845	state	728	0	0	0	574	pos:189.19,199.02,40.82
+86	1	2071720	1788426398	205845	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2071721	1788426398	205845	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2071722	1788426398	205845	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2071723	1788426398	205845	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2072073	1788426398	206698	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=23298 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2072074	1788426398	206698	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.504
+86	1	2072075	1788426398	206698	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2072076	1788426398	206698	state	726	139	0	0	574	tank_strategies:0:Strategies: barmor, boost, bthreat, cast time, chat, cure, default, duel, formation, potions, pull, pull back, racials, tank, tank assist, tank face, utgarde keep
+86	1	2072137	1788426398	206850	state	726	0	0	0	574	pos:183.44,220.64,40.81
+86	1	2072138	1788426398	206850	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2072139	1788426398	206850	state	728	0	0	0	574	pos:189.09,199.35,40.82
+86	1	2072140	1788426398	206850	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2072141	1788426398	206850	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2072142	1788426398	206850	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2072143	1788426398	206850	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2072472	1788426398	207698	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=23298 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2072473	1788426398	207698	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.504
+86	1	2072474	1788426398	207698	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2072539	1788426398	207851	state	726	0	0	0	574	pos:183.44,220.64,40.81
+86	1	2072540	1788426398	207851	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2072541	1788426398	207851	state	728	0	0	0	574	pos:187.03,206.05,40.82
+86	1	2072542	1788426398	207851	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2072543	1788426398	207851	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2072544	1788426398	207851	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2072545	1788426398	207851	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2072885	1788426398	208698	state	726	139	0	0	574	tank_state:engine=0 combat=true alive=true hp=23550 victim=139 melee=true select=139 moving=false tank=true mt=true explicit=false entry=23953
+86	1	2072886	1788426398	208698	state	726	139	0	0	574	tank_range:boss_dist=0.750 melee_range=true facing=true orientation=-1.504
+86	1	2072887	1788426398	208698	state	726	139	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2072949	1788426398	208859	state	726	0	0	0	574	pos:183.44,220.64,40.81
+86	1	2072950	1788426398	208859	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2072951	1788426398	208859	state	728	0	0	0	574	pos:185.35,211.51,40.82
+86	1	2072952	1788426398	208859	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2072953	1788426398	208859	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2072954	1788426398	208859	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2072955	1788426398	208859	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2073309	1788426398	209700	state	726	183	0	0	574	tank_state:engine=0 combat=true alive=true hp=23550 victim=183 melee=true select=183 moving=true tank=true mt=true explicit=false entry=23970
+86	1	2073310	1788426398	209700	state	726	183	0	0	574	tank_range:boss_dist=1.137 melee_range=true facing=false orientation=2.557
+86	1	2073311	1788426398	209700	state	726	183	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2073384	1788426398	209852	state	726	0	0	0	574	pos:181.92,221.64,40.81
+86	1	2073385	1788426398	209852	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2073386	1788426398	209852	state	728	0	0	0	574	pos:184.79,213.31,40.82
+86	1	2073387	1788426398	209852	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2073388	1788426398	209852	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2073389	1788426398	209852	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2073390	1788426398	209852	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2073810	1788426398	210700	state	726	183	0	0	574	tank_state:engine=0 combat=true alive=true hp=23365 victim=183 melee=true select=183 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2073811	1788426398	210700	state	726	183	0	0	574	tank_range:boss_dist=2.164 melee_range=false facing=true orientation=3.547
+86	1	2073812	1788426398	210700	state	726	183	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2073893	1788426398	210852	state	726	0	0	0	574	pos:181.82,221.71,40.81
+86	1	2073894	1788426398	210852	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2073895	1788426398	210852	state	728	0	0	0	574	pos:184.79,213.31,40.82
+86	1	2073896	1788426398	210852	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2073897	1788426398	210852	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2073898	1788426398	210852	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2073899	1788426398	210852	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2074316	1788426398	211703	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=25112 victim=180 melee=true select=180 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2074317	1788426398	211703	state	726	180	0	0	574	tank_range:boss_dist=2.164 melee_range=false facing=true orientation=3.547
+86	1	2074318	1788426398	211703	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2074393	1788426398	211858	state	726	0	0	0	574	pos:181.82,221.71,40.81
+86	1	2074394	1788426398	211858	state	727	0	0	0	574	pos:187.08,199.76,40.81
+86	1	2074395	1788426398	211858	state	728	0	0	0	574	pos:184.79,213.31,40.82
+86	1	2074396	1788426398	211858	state	729	0	0	0	574	pos:172.05,198.91,42.44
+86	1	2074397	1788426398	211858	state	730	0	0	0	574	pos:187.45,198.91,40.81
+86	1	2074398	1788426398	211858	state	139	0	0	23953	574	pos:183.69,216.89,40.81
+86	1	2074399	1788426398	211858	state	139	726	0	23953	0	boss_state:combat=true evade=false unreachable=false evading_attacks=false regen=false unreachable_guid=0
+86	1	2074823	1788426398	212704	state	726	180	0	0	574	tank_state:engine=0 combat=true alive=true hp=25112 victim=180 melee=true select=180 moving=false tank=true mt=true explicit=false entry=23970
+86	1	2074824	1788426398	212704	state	726	180	0	0	574	tank_range:boss_dist=2.164 melee_range=false facing=true orientation=3.547
+86	1	2074825	1788426398	212704	state	726	180	0	0	574	tank_ownership:group=7 registered=true loot_group=7 has_loot=true tapped=true attack_tagged=false master=0
+86	1	2074881	1788426398	212814	death	139	729	0	23953	0	
+86	2	2074888	1788426399	0	state	191	0	0	23956	0	prerequisite_spawn=126032
+86	2	2074889	1788426399	0	state	190	0	0	23960	0	prerequisite_spawn=126041
+86	2	2074890	1788426399	0	state	189	0	0	23960	0	prerequisite_spawn=126042
+86	2	2074891	1788426399	0	state	188	0	0	23961	0	prerequisite_spawn=126046
+86	2	2074892	1788426399	0	state	0	0	0	0	0	phase=prerequisites_start
+86	2	2074952	1788426399	6397	damage	729	192	0	0	459	

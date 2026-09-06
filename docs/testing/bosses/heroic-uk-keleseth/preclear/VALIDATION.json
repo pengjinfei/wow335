@@ -1,0 +1,56 @@
+{
+  "framework_commit": "3b9203b44f24141caecdcf4a3d583860a952b854",
+  "scenario_sha256": "36375b75a2dcab3726f84598cfb5ce392c992cae9c83d826b6c90e405535f57d",
+  "build": "MTHREADS=4 ./acore.sh compiler build; passed",
+  "cpp_codestyle": "passed",
+  "sql_codestyle": "not completed: tool requires absent origin remote; no SQL changes",
+  "effective_cheats_all_zero": true,
+  "all_10_roster_preflights_valid": true,
+  "static_roster_comparison": [
+    {
+      "file": "run-86-attempt-1-slot-0.tsv",
+      "fingerprint_without_temporary_enchant": "57018ca2eea0f696e865248133b793f8ec129a5ebc8a3a2bb216837caf4399fa"
+    },
+    {
+      "file": "run-86-attempt-1-slot-1.tsv",
+      "fingerprint_without_temporary_enchant": "7a2d38abdd8ddfcc34a28384fefb8a384aa956053f93ab6b048b3d36cc88a0a9"
+    },
+    {
+      "file": "run-86-attempt-1-slot-2.tsv",
+      "fingerprint_without_temporary_enchant": "7b14229ec9c3e7a1447e5c3a17adce6480d98175b66f09c279870cb26ac6ab34"
+    },
+    {
+      "file": "run-86-attempt-1-slot-3.tsv",
+      "fingerprint_without_temporary_enchant": "6d09df5d3213136fac977cd65ab16e3f740f721858deb4968e8cb0a6b7729326"
+    },
+    {
+      "file": "run-86-attempt-1-slot-4.tsv",
+      "fingerprint_without_temporary_enchant": "da4473b098a958147c66a6c6403344a7571f522dac221f839f3d18a165efe72d"
+    },
+    {
+      "file": "run-86-attempt-2-slot-0.tsv",
+      "fingerprint_without_temporary_enchant": "57018ca2eea0f696e865248133b793f8ec129a5ebc8a3a2bb216837caf4399fa"
+    },
+    {
+      "file": "run-86-attempt-2-slot-1.tsv",
+      "fingerprint_without_temporary_enchant": "7a2d38abdd8ddfcc34a28384fefb8a384aa956053f93ab6b048b3d36cc88a0a9"
+    },
+    {
+      "file": "run-86-attempt-2-slot-2.tsv",
+      "fingerprint_without_temporary_enchant": "7b14229ec9c3e7a1447e5c3a17adce6480d98175b66f09c279870cb26ac6ab34"
+    },
+    {
+      "file": "run-86-attempt-2-slot-3.tsv",
+      "fingerprint_without_temporary_enchant": "6d09df5d3213136fac977cd65ab16e3f740f721858deb4968e8cb0a6b7729326"
+    },
+    {
+      "file": "run-86-attempt-2-slot-4.tsv",
+      "fingerprint_without_temporary_enchant": "da4473b098a958147c66a6c6403344a7571f522dac221f839f3d18a165efe72d"
+    }
+  ],
+  "limitations": [
+    "Full fingerprints differ in rogue and shaman temporary weapon enchants; supplied consumables can be spent.",
+    "Native creature random levels cause max-health differences after respawn.",
+    "No legacy ten-player runtime regression this round."
+  ]
+}

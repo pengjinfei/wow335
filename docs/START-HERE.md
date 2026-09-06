@@ -14,10 +14,10 @@
 
 | 仓库 | 分支 | 最近确认的 HEAD |
 |---|---|---|
-| 管理库 | main | a13be61 为上一轮代码证据文档提交；本交接更新之后以 git log 为准 |
+| 管理库 | main | cf295fc 为上一轮五人配置提交；本交接更新之后以 git log 为准 |
 | azerothcore-wotlk | Playerbot | 47960183bb03b83e8943eb2f0f39c16df9710c9d |
 | modules/mod-playerbots | master | 2f7d9f774987d0157c6a0d0cc08c40bec3db3945 |
-| modules/mod-raidtest | dev | 57fbe2cb906b267a2df4447b4ff099a5911f0419 |
+| modules/mod-raidtest | dev | 3b9203b（清怪前置与范围重置；完整HEAD见git log） |
 
 核心与机器人代码未做本地修改；框架 dev 尚未合并 main。此前提交未 push。机器人 origin 指向上游，尚未配置自己的 fork remote；不能把“本地克隆”称为已建立远端 fork。
 
@@ -32,9 +32,9 @@
 
 ## 当前任务（2026-09-06：用户调整方向）
 
-用户决定先从五人本开始，明确选择早期英雄本毕业档位，不含冠军试炼和 ICC 三本。已新增防骑/神牧/战斗贼/火法/元素萨满，固定 ilvl200；五人/英雄难度框架适配已构建并实测；run80第一场混入房间小怪团灭，第二场88.369秒零死亡击杀。五人角色验收通过，下一步是清怪前置/重置范围和冰墓机制验收。
+用户决定先从五人本开始，明确选择早期英雄本毕业档位，不含冠军试炼和 ICC 三本。已新增防骑/神牧/战斗贼/火法/元素萨满，固定 ilvl200；五人/英雄难度框架适配已构建并实测；run80第一场混入房间小怪团灭，第二场88.369秒零死亡击杀。五人角色验收通过。最新run86/a1完成清怪27.957秒、自然恢复113.779秒、boss约71.1秒，总212.818秒零死亡击杀；a2五个出生点重置成功，法师清怪时误伤boss被保护拦截。详见[清怪前置验收](testing/bosses/heroic-uk-keleseth/PRECLEAR.md)。下一步先处理清怪误伤与恢复预算，再验收冰墓；不能称为连续稳定通关。
 
-入口：[heroic5-v1 配置](testing/fixtures/heroic5-v1/README.md)、[凯雷塞斯王子记录](testing/bosses/heroic-uk-keleseth/README.md)。当前运行配置已从 food,taxi,raid 改为空，run79/80 实际五人快照有效掩码均为0；旧 run77/78 的结论不追溯改写。构建后须重核该配置，不能假设持续关闭。
+入口：[heroic5-v1 配置](testing/fixtures/heroic5-v1/README.md)、[凯雷塞斯王子记录](testing/bosses/heroic-uk-keleseth/README.md)。当前运行配置已从 food,taxi,raid 改为空，run79/80及run86 实际五人快照有效掩码均为0；旧 run77/78 的结论不追溯改写。构建后须重核该配置，不能假设持续关闭。
 
 之前的“先复测 Patchwerk”计划暂后移。新会话优先接续五人英雄本台账，并查实际运行是否已结束；不要同时启动另一轮。
 

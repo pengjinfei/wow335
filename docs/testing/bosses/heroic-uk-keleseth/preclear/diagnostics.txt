@@ -1,0 +1,36 @@
+Source: wow335-preclear-diagnostic-world.log
+pull_rejected: leader=GUID Full: 0x00000000000002d6 Type: Player Low: 726 target=GUID Full: 0xf130005d9900009e Type: Creature Entry: 23961  Low: 158 distance=29.833965 los=false valid=true alive=true in_world=true evade=false leader_pos=(173,248,42.9) target_pos=(197.267,225.973,40.9016)
+Source: wow335-preclear-probe-world.log
+pull_rejected: leader=GUID Full: 0x00000000000002d6 Type: Player Low: 726 target=GUID Full: 0xf130005d9900009e Type: Creature Entry: 23961  Low: 158 distance=29.833965 los=false valid=true alive=true in_world=true evade=false leader_pos=(173,248,42.9) target_pos=(197.267,225.973,40.9016)
+pull_probe: x=180 y=235 floor=40.86403 los=true
+pull_probe: x=180 y=245 floor=42.86844 los=false
+pull_probe: x=180 y=255 floor=42.86844 los=false
+pull_probe: x=190 y=235 floor=40.815002 los=false
+pull_probe: x=190 y=245 floor=40.840137 los=false
+pull_probe: x=190 y=255 floor=42.86844 los=true
+pull_probe: x=200 y=235 floor=40.815163 los=true
+pull_probe: x=200 y=245 floor=40.815243 los=true
+pull_probe: x=200 y=255 floor=42.86844 los=true
+pull_probe: x=210 y=235 floor=40.81536 los=false
+pull_probe: x=210 y=245 floor=40.815186 los=true
+pull_probe: x=210 y=255 floor=42.86783 los=true
+pull_probe: x=220 y=235 floor=40.81488 los=false
+pull_probe: x=220 y=245 floor=40.83203 los=false
+pull_probe: x=220 y=255 floor=-200000 los=false
+Source: wow335-preclear-run85-world.log
+pull_rejected: leader=GUID Full: 0x00000000000002d6 Type: Player Low: 726 target=GUID Full: 0xf130005d940000ac Type: Creature Entry: 23956  Low: 172 distance=38.38745 los=false valid=true alive=true in_world=true evade=false leader_pos=(206.67249,239.37978,40.8149) target_pos=(221.203,200.627,40.9015)
+pull_probe: x=180 y=235 floor=40.86403 los=true
+pull_probe: x=180 y=245 floor=42.86844 los=false
+pull_probe: x=180 y=255 floor=42.86844 los=true
+pull_probe: x=190 y=235 floor=40.815002 los=false
+pull_probe: x=190 y=245 floor=40.840137 los=true
+pull_probe: x=190 y=255 floor=42.86844 los=false
+pull_probe: x=200 y=235 floor=40.815163 los=true
+pull_probe: x=200 y=245 floor=40.815243 los=true
+pull_probe: x=200 y=255 floor=42.86844 los=false
+pull_probe: x=210 y=235 floor=40.81536 los=true
+pull_probe: x=210 y=245 floor=40.815186 los=true
+pull_probe: x=210 y=255 floor=42.86783 los=false
+pull_probe: x=220 y=235 floor=40.81488 los=true
+pull_probe: x=220 y=245 floor=40.83203 los=true
+pull_probe: x=220 y=255 floor=-200000 los=false
