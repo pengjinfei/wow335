@@ -1,0 +1,9 @@
+id	finished_at
+79	2026-09-06 10:32:58
+80	2026-09-06 10:36:26
+run_id	seq	result	duration_ms	deaths	boss_hp_min	notes
+79	1	aborted	0	0	100	fixture_invalid: see roster snapshot and raidtest log; no pull performed
+80	1	wipe	75795	5	84	
+80	2	kill	88369	0	0	
+id	map	difficulty
+4	574	1

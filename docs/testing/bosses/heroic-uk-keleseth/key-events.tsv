@@ -1,0 +1,23 @@
+seq	rel_ms	source_guid	target_guid	actor_entry	spell_id	event_type	value	detail
+1	9987	729	158	0	0	death	0	
+1	29845	726	176	0	0	state	574	tank_state:engine=0 combat=true alive=true hp=12459 victim=176 melee=true select=176 moving=false tank=true mt=true explicit=false entry=23965
+1	44633	730	139	0	0	death	0	
+1	45865	726	179	0	0	state	574	tank_state:engine=0 combat=true alive=true hp=24504 victim=179 melee=true select=179 moving=false tank=true mt=true explicit=false entry=23965
+1	47866	726	179	0	0	state	574	tank_state:engine=0 combat=true alive=true hp=23446 victim=179 melee=true select=179 moving=false tank=true mt=true explicit=false entry=23965
+1	49866	726	179	0	0	state	574	tank_state:engine=0 combat=true alive=true hp=16780 victim=179 melee=true select=179 moving=false tank=true mt=true explicit=false entry=23965
+1	50866	726	179	0	0	state	574	tank_state:engine=0 combat=true alive=true hp=13853 victim=0 melee=false select=179 moving=false tank=true mt=true explicit=false entry=23965
+1	55646	727	165	0	0	death	0	
+1	59469	730	153	0	0	death	0	
+1	61156	728	158	0	0	death	0	
+1	74885	726	185	0	0	state	574	tank_state:engine=0 combat=true alive=true hp=6833 victim=185 melee=true select=185 moving=false tank=true mt=true explicit=false entry=23965
+1	75778	726	139	0	0	death	0	
+2	29933	726	195	0	0	state	574	tank_state:engine=0 combat=true alive=true hp=24504 victim=195 melee=true select=195 moving=false tank=true mt=true explicit=false entry=23965
+2	30934	726	195	0	0	state	574	tank_state:engine=0 combat=true alive=true hp=24347 victim=195 melee=true select=195 moving=false tank=true mt=true explicit=false entry=23965
+2	44946	726	196	0	0	state	574	tank_state:engine=0 combat=true alive=true hp=23346 victim=196 melee=true select=196 moving=false tank=true mt=true explicit=false entry=23965
+2	45948	726	196	0	0	state	574	tank_state:engine=0 combat=true alive=true hp=21910 victim=196 melee=true select=196 moving=false tank=true mt=true explicit=false entry=23965
+2	46947	726	196	0	0	state	574	tank_state:engine=0 combat=true alive=true hp=21910 victim=196 melee=true select=196 moving=true tank=true mt=true explicit=false entry=23965
+2	47947	726	196	0	0	state	574	tank_state:engine=0 combat=true alive=true hp=21910 victim=196 melee=true select=196 moving=true tank=true mt=true explicit=false entry=23965
+2	59975	726	197	0	0	state	574	tank_state:engine=0 combat=true alive=true hp=24504 victim=197 melee=true select=197 moving=false tank=true mt=true explicit=false entry=23965
+2	60974	726	197	0	0	state	574	tank_state:engine=0 combat=true alive=true hp=24504 victim=197 melee=true select=197 moving=false tank=true mt=true explicit=false entry=23965
+2	74991	726	198	0	0	state	574	tank_state:engine=0 combat=true alive=true hp=20194 victim=0 melee=false select=198 moving=false tank=true mt=true explicit=false entry=23965
+2	88367	139	727	23953	0	death	0	

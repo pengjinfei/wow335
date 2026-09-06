@@ -1,0 +1,122 @@
+[
+  {
+    "file": "docs/testing/fixtures/heroic5-v1/snapshots/run-80-attempt-1-slot-0.tsv",
+    "spec": "paladin_prot",
+    "run": "80",
+    "attempt": "1",
+    "guid": "GUID Full: 0x00000000000002d6 Type: Player Low: 726",
+    "talent_points": 71,
+    "glyphs": 6,
+    "items": 17,
+    "fingerprint": "57018ca2eea0f696e865248133b793f8ec129a5ebc8a3a2bb216837caf4399fa",
+    "errors": []
+  },
+  {
+    "file": "docs/testing/fixtures/heroic5-v1/snapshots/run-80-attempt-1-slot-1.tsv",
+    "spec": "priest_holy",
+    "run": "80",
+    "attempt": "1",
+    "guid": "GUID Full: 0x00000000000002d7 Type: Player Low: 727",
+    "talent_points": 71,
+    "glyphs": 6,
+    "items": 17,
+    "fingerprint": "7a2d38abdd8ddfcc34a28384fefb8a384aa956053f93ab6b048b3d36cc88a0a9",
+    "errors": []
+  },
+  {
+    "file": "docs/testing/fixtures/heroic5-v1/snapshots/run-80-attempt-1-slot-2.tsv",
+    "spec": "rogue_combat",
+    "run": "80",
+    "attempt": "1",
+    "guid": "GUID Full: 0x00000000000002d8 Type: Player Low: 728",
+    "talent_points": 71,
+    "glyphs": 6,
+    "items": 17,
+    "fingerprint": "7b14229ec9c3e7a1447e5c3a17adce6480d98175b66f09c279870cb26ac6ab34",
+    "errors": []
+  },
+  {
+    "file": "docs/testing/fixtures/heroic5-v1/snapshots/run-80-attempt-1-slot-3.tsv",
+    "spec": "mage_fire",
+    "run": "80",
+    "attempt": "1",
+    "guid": "GUID Full: 0x00000000000002d9 Type: Player Low: 729",
+    "talent_points": 71,
+    "glyphs": 6,
+    "items": 17,
+    "fingerprint": "6d09df5d3213136fac977cd65ab16e3f740f721858deb4968e8cb0a6b7729326",
+    "errors": []
+  },
+  {
+    "file": "docs/testing/fixtures/heroic5-v1/snapshots/run-80-attempt-1-slot-4.tsv",
+    "spec": "shaman_elemental",
+    "run": "80",
+    "attempt": "1",
+    "guid": "GUID Full: 0x00000000000002da Type: Player Low: 730",
+    "talent_points": 71,
+    "glyphs": 6,
+    "items": 17,
+    "fingerprint": "da4473b098a958147c66a6c6403344a7571f522dac221f839f3d18a165efe72d",
+    "errors": []
+  },
+  {
+    "file": "docs/testing/fixtures/heroic5-v1/snapshots/run-80-attempt-2-slot-0.tsv",
+    "spec": "paladin_prot",
+    "run": "80",
+    "attempt": "2",
+    "guid": "GUID Full: 0x00000000000002d6 Type: Player Low: 726",
+    "talent_points": 71,
+    "glyphs": 6,
+    "items": 17,
+    "fingerprint": "57018ca2eea0f696e865248133b793f8ec129a5ebc8a3a2bb216837caf4399fa",
+    "errors": []
+  },
+  {
+    "file": "docs/testing/fixtures/heroic5-v1/snapshots/run-80-attempt-2-slot-1.tsv",
+    "spec": "priest_holy",
+    "run": "80",
+    "attempt": "2",
+    "guid": "GUID Full: 0x00000000000002d7 Type: Player Low: 727",
+    "talent_points": 71,
+    "glyphs": 6,
+    "items": 17,
+    "fingerprint": "7a2d38abdd8ddfcc34a28384fefb8a384aa956053f93ab6b048b3d36cc88a0a9",
+    "errors": []
+  },
+  {
+    "file": "docs/testing/fixtures/heroic5-v1/snapshots/run-80-attempt-2-slot-2.tsv",
+    "spec": "rogue_combat",
+    "run": "80",
+    "attempt": "2",
+    "guid": "GUID Full: 0x00000000000002d8 Type: Player Low: 728",
+    "talent_points": 71,
+    "glyphs": 6,
+    "items": 17,
+    "fingerprint": "7b14229ec9c3e7a1447e5c3a17adce6480d98175b66f09c279870cb26ac6ab34",
+    "errors": []
+  },
+  {
+    "file": "docs/testing/fixtures/heroic5-v1/snapshots/run-80-attempt-2-slot-3.tsv",
+    "spec": "mage_fire",
+    "run": "80",
+    "attempt": "2",
+    "guid": "GUID Full: 0x00000000000002d9 Type: Player Low: 729",
+    "talent_points": 71,
+    "glyphs": 6,
+    "items": 17,
+    "fingerprint": "6d09df5d3213136fac977cd65ab16e3f740f721858deb4968e8cb0a6b7729326",
+    "errors": []
+  },
+  {
+    "file": "docs/testing/fixtures/heroic5-v1/snapshots/run-80-attempt-2-slot-4.tsv",
+    "spec": "shaman_elemental",
+    "run": "80",
+    "attempt": "2",
+    "guid": "GUID Full: 0x00000000000002da Type: Player Low: 730",
+    "talent_points": 71,
+    "glyphs": 6,
+    "items": 17,
+    "fingerprint": "da4473b098a958147c66a6c6403344a7571f522dac221f839f3d18a165efe72d",
+    "errors": []
+  }
+]

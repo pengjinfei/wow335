@@ -1,0 +1,1225 @@
+[
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Head",
+    "item": 37633,
+    "name": "Ground Tremor Helm",
+    "ilvl": 200,
+    "sources": [
+      "Moorabi"
+    ],
+    "enchant": 3818,
+    "gems": [
+      41380,
+      40031
+    ]
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Neck",
+    "item": 43282,
+    "name": "Shadowseeker's Pendant",
+    "ilvl": 200,
+    "sources": [
+      "Jedoga Shadowseeker"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Shoulder",
+    "item": 37814,
+    "name": "Iron Dwarf Smith Pauldrons",
+    "ilvl": 200,
+    "sources": [
+      "General Bjarngrim"
+    ],
+    "enchant": 3811,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Back",
+    "item": 37728,
+    "name": "Cloak of the Enemy",
+    "ilvl": 200,
+    "sources": [
+      "Commander Stoutbeard"
+    ],
+    "enchant": 1951,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Chest",
+    "item": 37658,
+    "name": "Sun-Emblazoned Chestplate",
+    "ilvl": 200,
+    "sources": [
+      "Sjonnir The Ironshaper"
+    ],
+    "enchant": 1953,
+    "gems": [
+      40008
+    ]
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Wrist",
+    "item": 37620,
+    "name": "Bracers of the Herald",
+    "ilvl": 200,
+    "sources": [
+      "Herald Volazj"
+    ],
+    "enchant": 3850,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Hands",
+    "item": 37862,
+    "name": "Gauntlets of the Water Revenant",
+    "ilvl": 200,
+    "sources": [
+      "Ichoron"
+    ],
+    "enchant": 3253,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Waist",
+    "item": 37801,
+    "name": "Waistguard of the Risen Knight",
+    "ilvl": 200,
+    "sources": [
+      "Darkweb Recluse",
+      "Drakkari Bat",
+      "Drakkari Commander",
+      "Drakkari Guardian",
+      "Drakkari Gutripper",
+      "Drakkari Scytheclaw",
+      "Drakkari Shaman",
+      "Ghoul Tormentor",
+      "Risen Drakkari Bat Rider",
+      "Risen Drakkari Death Knight",
+      "Risen Drakkari Handler",
+      "Risen Drakkari Soulmage",
+      "Risen Drakkari Warrior",
+      "Scourge Brute",
+      "Scourge Reanimator",
+      "Wretched Belcher"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Legs",
+    "item": 43500,
+    "name": "Bolstered Legplates",
+    "ilvl": 200,
+    "sources": [
+      "Cyanigosa (heroic loot 31506)"
+    ],
+    "enchant": 3822,
+    "gems": [
+      40031
+    ]
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Feet",
+    "item": 37618,
+    "name": "Greaves of Ancient Evil",
+    "ilvl": 200,
+    "sources": [
+      "Herald Volazj"
+    ],
+    "enchant": 1075,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Ring1",
+    "item": 37186,
+    "name": "Unsmashable Heavy Band",
+    "ilvl": 200,
+    "sources": [
+      "Ingvar the Plunderer"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Ring2",
+    "item": 38617,
+    "name": "Woeful Band",
+    "ilvl": 200,
+    "sources": [
+      "Maiden of Grief"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Trinket1",
+    "item": 37220,
+    "name": "Essence of Gossamer",
+    "ilvl": 200,
+    "sources": [
+      "Hadronox"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Trinket2",
+    "item": 37872,
+    "name": "Lavanthor's Talisman",
+    "ilvl": 200,
+    "sources": [
+      "Lavanthor"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "MainHand",
+    "item": 37401,
+    "name": "Red Sword of Courage",
+    "ilvl": 200,
+    "sources": [
+      "King Ymiron"
+    ],
+    "enchant": 2673,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "OffHand",
+    "item": 37162,
+    "name": "Bulwark of the Noble Protector",
+    "ilvl": 200,
+    "sources": [
+      "Keristrasza"
+    ],
+    "enchant": 1952,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Ranged",
+    "item": 40707,
+    "name": "Libram of Obstruction",
+    "ilvl": 200,
+    "sources": [
+      "Vendor, ExtendedCost 2525"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_holy",
+    "equipment_slot": "Head",
+    "item": 37594,
+    "name": "Elder Headpiece",
+    "ilvl": 200,
+    "sources": [
+      "Elder Nadox"
+    ],
+    "enchant": 3819,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_holy",
+    "equipment_slot": "Neck",
+    "item": 37141,
+    "name": "Amulet of Dazzling Light",
+    "ilvl": 200,
+    "sources": [
+      "Anomalus"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_holy",
+    "equipment_slot": "Shoulder",
+    "item": 37196,
+    "name": "Runecaster's Mantle",
+    "ilvl": 200,
+    "sources": [
+      "Dragonflayer Bonecrusher",
+      "Dragonflayer Forge Master",
+      "Dragonflayer Heartsplitter",
+      "Dragonflayer Ironhelm",
+      "Dragonflayer Metalworker",
+      "Dragonflayer Overseer",
+      "Dragonflayer Runecaster",
+      "Dragonflayer Spiritualist",
+      "Dragonflayer Strategist",
+      "Dragonflayer Weaponsmith",
+      "Enslaved Proto-Drake",
+      "Proto-Drake Handler",
+      "Proto-Drake Rider"
+    ],
+    "enchant": 3809,
+    "gems": [
+      40051
+    ]
+  },
+  {
+    "slot": 1,
+    "spec": "priest_holy",
+    "equipment_slot": "Back",
+    "item": 43283,
+    "name": "Subterranean Waterfall Shroud",
+    "ilvl": 200,
+    "sources": [
+      "Jedoga Shadowseeker"
+    ],
+    "enchant": 3831,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_holy",
+    "equipment_slot": "Chest",
+    "item": 37222,
+    "name": "Egg Sac Robes",
+    "ilvl": 200,
+    "sources": [
+      "Hadronox"
+    ],
+    "enchant": 3832,
+    "gems": [
+      39998,
+      40051
+    ]
+  },
+  {
+    "slot": 1,
+    "spec": "priest_holy",
+    "equipment_slot": "Wrist",
+    "item": 37613,
+    "name": "Flame Sphere Bindings",
+    "ilvl": 200,
+    "sources": [
+      "Prince Taldaram"
+    ],
+    "enchant": 2332,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_holy",
+    "equipment_slot": "Hands",
+    "item": 37172,
+    "name": "Gloves of Glistening Runes",
+    "ilvl": 200,
+    "sources": [
+      "Keristrasza"
+    ],
+    "enchant": 3246,
+    "gems": [
+      39998
+    ]
+  },
+  {
+    "slot": 1,
+    "spec": "priest_holy",
+    "equipment_slot": "Waist",
+    "item": 37289,
+    "name": "Sash of Phantasmal Images",
+    "ilvl": 200,
+    "sources": [
+      "Mage-Lord Urom"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_holy",
+    "equipment_slot": "Legs",
+    "item": 37189,
+    "name": "Breeches of the Caller",
+    "ilvl": 200,
+    "sources": [
+      "Ingvar the Plunderer"
+    ],
+    "enchant": 3719,
+    "gems": [
+      39998,
+      40026
+    ]
+  },
+  {
+    "slot": 1,
+    "spec": "priest_holy",
+    "equipment_slot": "Feet",
+    "item": 37867,
+    "name": "Footwraps of Teleportation",
+    "ilvl": 200,
+    "sources": [
+      "Xevozz"
+    ],
+    "enchant": 3232,
+    "gems": [
+      40051
+    ]
+  },
+  {
+    "slot": 1,
+    "spec": "priest_holy",
+    "equipment_slot": "Ring1",
+    "item": 37195,
+    "name": "Band of Enchanted Growth",
+    "ilvl": 200,
+    "sources": [
+      "Mage-Lord Urom"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_holy",
+    "equipment_slot": "Ring2",
+    "item": 37732,
+    "name": "Spectral Seal of the Prophet",
+    "ilvl": 200,
+    "sources": [
+      "The Prophet Tharon'ja"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_holy",
+    "equipment_slot": "Trinket1",
+    "item": 37734,
+    "name": "Talisman of Troll Divinity",
+    "ilvl": 200,
+    "sources": [
+      "The Prophet Tharon'ja"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_holy",
+    "equipment_slot": "Trinket2",
+    "item": 37657,
+    "name": "Spark of Life",
+    "ilvl": 200,
+    "sources": [
+      "Sjonnir The Ironshaper"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_holy",
+    "equipment_slot": "MainHand",
+    "item": 37169,
+    "name": "War Mace of Unrequited Love",
+    "ilvl": 200,
+    "sources": [
+      "Keristrasza"
+    ],
+    "enchant": 3834,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_holy",
+    "equipment_slot": "OffHand",
+    "item": 37364,
+    "name": "Frostbridge Orb",
+    "ilvl": 200,
+    "sources": [
+      "Azure Inquisitor",
+      "Azure Ley-Whelp",
+      "Azure Spellbinder",
+      "Centrifuge Construct",
+      "Ring-Lord Conjurer",
+      "Ring-Lord Sorceress"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_holy",
+    "equipment_slot": "Ranged",
+    "item": 37619,
+    "name": "Wand of Ahn'kahet",
+    "ilvl": 200,
+    "sources": [
+      "Herald Volazj"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Head",
+    "item": 43403,
+    "name": "Shroud of Darkness",
+    "ilvl": 200,
+    "sources": [
+      "Zuramat the Obliterator"
+    ],
+    "enchant": 3817,
+    "gems": [
+      41398,
+      40037
+    ]
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Neck",
+    "item": 37861,
+    "name": "Necklace of Arcane Spheres",
+    "ilvl": 200,
+    "sources": [
+      "Xevozz"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Shoulder",
+    "item": 37139,
+    "name": "Spaulders of the Careless Thief",
+    "ilvl": 200,
+    "sources": [
+      "Grand Magus Telestra"
+    ],
+    "enchant": 3808,
+    "gems": [
+      39997
+    ]
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Back",
+    "item": 43406,
+    "name": "Cloak of the Gushing Wound",
+    "ilvl": 200,
+    "sources": [
+      "Erekem"
+    ],
+    "enchant": 1099,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Chest",
+    "item": 37219,
+    "name": "Custodian's Chestpiece",
+    "ilvl": 200,
+    "sources": [
+      "Krik'thir the Gatewatcher"
+    ],
+    "enchant": 3832,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Wrist",
+    "item": 37366,
+    "name": "Drake-Champion's Bracers",
+    "ilvl": 200,
+    "sources": [
+      "Azure Inquisitor",
+      "Azure Ley-Whelp",
+      "Azure Spellbinder",
+      "Centrifuge Construct",
+      "Ring-Lord Conjurer",
+      "Ring-Lord Sorceress"
+    ],
+    "enchant": 3845,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Hands",
+    "item": 37409,
+    "name": "Gilt-Edged Leather Gauntlets",
+    "ilvl": 200,
+    "sources": [
+      "King Ymiron"
+    ],
+    "enchant": 1603,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Waist",
+    "item": 37194,
+    "name": "Sharp-Barbed Leather Belt",
+    "ilvl": 200,
+    "sources": [
+      "Ingvar the Plunderer"
+    ],
+    "enchant": 0,
+    "gems": [
+      40023
+    ]
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Legs",
+    "item": 37644,
+    "name": "Gored Hide Legguards",
+    "ilvl": 200,
+    "sources": [
+      "Gal'darah"
+    ],
+    "enchant": 3823,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Feet",
+    "item": 37666,
+    "name": "Boots of the Whirling Mist",
+    "ilvl": 200,
+    "sources": [
+      "Sjonnir The Ironshaper"
+    ],
+    "enchant": 1597,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Ring1",
+    "item": 37642,
+    "name": "Hemorrhaging Circle",
+    "ilvl": 200,
+    "sources": [
+      "Gal'darah"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Ring2",
+    "item": 37624,
+    "name": "Stained-Glass Shard Ring",
+    "ilvl": 200,
+    "sources": [
+      "Ahn'kahar Slasher",
+      "Ahn'kahar Spell Flinger",
+      "Ahn'kahar Watcher",
+      "Ahn'kahar Web Winder",
+      "Anub'ar Prime Guard",
+      "Anub'ar Skirmisher",
+      "Anub'ar Warrior",
+      "Anub'ar Webspinner",
+      "Bonegrinder",
+      "Deep Crawler",
+      "Eye of Taldaram",
+      "Forgotten One",
+      "Frostbringer",
+      "Plague Walker",
+      "Plundering Geist",
+      "Savage Cave Beast",
+      "Twilight Apostle",
+      "Twilight Darkcaster"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Trinket1",
+    "item": 37390,
+    "name": "Meteorite Whetstone",
+    "ilvl": 200,
+    "sources": [
+      "King Ymiron"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Trinket2",
+    "item": 37166,
+    "name": "Sphere of Red Dragon's Blood",
+    "ilvl": 200,
+    "sources": [
+      "Keristrasza"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "MainHand",
+    "item": 37871,
+    "name": "The Key",
+    "ilvl": 200,
+    "sources": [
+      "Lavanthor"
+    ],
+    "enchant": 3789,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "OffHand",
+    "item": 37235,
+    "name": "Crypt Lord's Deft Blade",
+    "ilvl": 200,
+    "sources": [
+      "Anub'arak"
+    ],
+    "enchant": 3789,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Ranged",
+    "item": 37410,
+    "name": "Tracker's Balanced Knives",
+    "ilvl": 200,
+    "sources": [
+      "Bloodthirsty Tundra Wolf",
+      "Dragonflayer Deathseeker",
+      "Dragonflayer Fanatic",
+      "Dragonflayer Seer",
+      "Scourge Hulk",
+      "Ymirjar Berserker",
+      "Ymirjar Dusk Shaman",
+      "Ymirjar Flesh Hunter",
+      "Ymirjar Necromancer",
+      "Ymirjar Savage"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Head",
+    "item": 37594,
+    "name": "Elder Headpiece",
+    "ilvl": 200,
+    "sources": [
+      "Elder Nadox"
+    ],
+    "enchant": 3820,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Neck",
+    "item": 37595,
+    "name": "Necklace of Taldaram",
+    "ilvl": 200,
+    "sources": [
+      "Prince Taldaram"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Shoulder",
+    "item": 37673,
+    "name": "Dark Runic Mantle",
+    "ilvl": 200,
+    "sources": [
+      "Dark Rune Elementalist",
+      "Dark Rune Giant",
+      "Dark Rune Scholar",
+      "Dark Rune Shaper",
+      "Dark Rune Theurgist",
+      "Dark Rune Warrior",
+      "Dark Rune Worker",
+      "Lightning Construct",
+      "Raging Construct",
+      "Unrelenting Construct"
+    ],
+    "enchant": 3810,
+    "gems": [
+      39998
+    ]
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Back",
+    "item": 37630,
+    "name": "Shroud of Moorabi",
+    "ilvl": 200,
+    "sources": [
+      "Moorabi"
+    ],
+    "enchant": 3831,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Chest",
+    "item": 43401,
+    "name": "Water-Drenched Robe",
+    "ilvl": 200,
+    "sources": [
+      "Ichoron"
+    ],
+    "enchant": 3832,
+    "gems": [
+      40026,
+      39998
+    ]
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Wrist",
+    "item": 37725,
+    "name": "Savage Wound Wrap",
+    "ilvl": 200,
+    "sources": [
+      "King Dred"
+    ],
+    "enchant": 2332,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Hands",
+    "item": 37843,
+    "name": "Giant-Hair Woven Gloves",
+    "ilvl": 200,
+    "sources": [
+      "Volkhan"
+    ],
+    "enchant": 3246,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Waist",
+    "item": 37408,
+    "name": "Girdle of Bane",
+    "ilvl": 200,
+    "sources": [
+      "King Ymiron"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Legs",
+    "item": 37854,
+    "name": "Woven Bracae Leggings",
+    "ilvl": 200,
+    "sources": [
+      "Loken"
+    ],
+    "enchant": 3719,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Feet",
+    "item": 37218,
+    "name": "Stone-Worn Footwraps",
+    "ilvl": 200,
+    "sources": [
+      "Krik'thir the Gatewatcher"
+    ],
+    "enchant": 3232,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Ring1",
+    "item": 37651,
+    "name": "The Prospector's Prize",
+    "ilvl": 200,
+    "sources": [
+      "Krystallus"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Ring2",
+    "item": 37192,
+    "name": "Annhylde's Ring",
+    "ilvl": 200,
+    "sources": [
+      "Ingvar the Plunderer"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Trinket1",
+    "item": 37264,
+    "name": "Pendulum of Telluric Currents",
+    "ilvl": 200,
+    "sources": [
+      "Mage-Lord Urom"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Trinket2",
+    "item": 37660,
+    "name": "Forge Ember",
+    "ilvl": 200,
+    "sources": [
+      "Sjonnir The Ironshaper"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "MainHand",
+    "item": 37721,
+    "name": "Cursed Lich Blade",
+    "ilvl": 200,
+    "sources": [
+      "Novos the Summoner"
+    ],
+    "enchant": 3834,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "OffHand",
+    "item": 37134,
+    "name": "Telestra's Journal",
+    "ilvl": 200,
+    "sources": [
+      "Grand Magus Telestra"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Ranged",
+    "item": 37177,
+    "name": "Wand of the San'layn",
+    "ilvl": 200,
+    "sources": [
+      "Prince Keleseth"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Head",
+    "item": 37592,
+    "name": "Brood Plague Helmet",
+    "ilvl": 200,
+    "sources": [
+      "Elder Nadox"
+    ],
+    "enchant": 3820,
+    "gems": [
+      41285,
+      39998
+    ]
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Neck",
+    "item": 43285,
+    "name": "Amulet of the Spell Flinger",
+    "ilvl": 200,
+    "sources": [
+      "Amanitar"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Shoulder",
+    "item": 37398,
+    "name": "Mantle of Discarded Ways",
+    "ilvl": 200,
+    "sources": [
+      "King Ymiron"
+    ],
+    "enchant": 3810,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Back",
+    "item": 37630,
+    "name": "Shroud of Moorabi",
+    "ilvl": 200,
+    "sources": [
+      "Moorabi"
+    ],
+    "enchant": 3831,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Chest",
+    "item": 43410,
+    "name": "Moragg's Chestguard",
+    "ilvl": 200,
+    "sources": [
+      "Moragg"
+    ],
+    "enchant": 3832,
+    "gems": [
+      40026,
+      40051
+    ]
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Wrist",
+    "item": 37365,
+    "name": "Bands of the Sky Ring",
+    "ilvl": 200,
+    "sources": [
+      "Azure Inquisitor",
+      "Azure Ley-Whelp",
+      "Azure Spellbinder",
+      "Centrifuge Construct",
+      "Ring-Lord Conjurer",
+      "Ring-Lord Sorceress"
+    ],
+    "enchant": 2332,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Hands",
+    "item": 37623,
+    "name": "Fiery Obelisk Handguards",
+    "ilvl": 200,
+    "sources": [
+      "Herald Volazj"
+    ],
+    "enchant": 3246,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Waist",
+    "item": 37868,
+    "name": "Girdle of the Ethereal",
+    "ilvl": 200,
+    "sources": [
+      "Xevozz"
+    ],
+    "enchant": 0,
+    "gems": [
+      40026
+    ]
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Legs",
+    "item": 37818,
+    "name": "Patroller's War-Kilt",
+    "ilvl": 200,
+    "sources": [
+      "General Bjarngrim"
+    ],
+    "enchant": 3719,
+    "gems": [
+      39998
+    ]
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Feet",
+    "item": 37218,
+    "name": "Stone-Worn Footwraps",
+    "ilvl": 200,
+    "sources": [
+      "Krik'thir the Gatewatcher"
+    ],
+    "enchant": 3232,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Ring1",
+    "item": 37651,
+    "name": "The Prospector's Prize",
+    "ilvl": 200,
+    "sources": [
+      "Krystallus"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Ring2",
+    "item": 37869,
+    "name": "Globule Signet",
+    "ilvl": 200,
+    "sources": [
+      "Ichoron"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Trinket1",
+    "item": 37264,
+    "name": "Pendulum of Telluric Currents",
+    "ilvl": 200,
+    "sources": [
+      "Mage-Lord Urom"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Trinket2",
+    "item": 37660,
+    "name": "Forge Ember",
+    "ilvl": 200,
+    "sources": [
+      "Sjonnir The Ironshaper"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "MainHand",
+    "item": 37169,
+    "name": "War Mace of Unrequited Love",
+    "ilvl": 200,
+    "sources": [
+      "Keristrasza"
+    ],
+    "enchant": 3834,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "OffHand",
+    "item": 37216,
+    "name": "Facade Shield of Glyphs",
+    "ilvl": 200,
+    "sources": [
+      "Krik'thir the Gatewatcher"
+    ],
+    "enchant": 2654,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Ranged",
+    "item": 40708,
+    "name": "Totem of the Elemental Plane",
+    "ilvl": 200,
+    "sources": [
+      "Vendor, ExtendedCost 2525"
+    ],
+    "enchant": 0,
+    "gems": []
+  }
+]

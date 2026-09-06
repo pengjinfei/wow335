@@ -13,7 +13,7 @@ def audit(path):
     if values.get('valid') != '1':
         errors.append('snapshot did not pass preflight')
     canonical = sorted('\t'.join(r) for r in rows if r[0] in {
-        'fixture_version', 'spec', 'level', 'talent', 'glyph', 'spell', 'item', 'profession'})
+        'fixture_version', 'spec', 'level', 'talent', 'glyph', 'spell', 'item', 'profession', 'supply_item'})
     return {
         'file': str(path), 'spec': values.get('spec'),
         'run': values.get('run'), 'attempt': values.get('attempt'), 'guid': values.get('guid'),

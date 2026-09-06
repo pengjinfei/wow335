@@ -1,0 +1,20 @@
+{
+  "change": {
+    "before": "AiPlayerbot.BotCheats = \"food,taxi,raid\"",
+    "after": "AiPlayerbot.BotCheats = \"\""
+  },
+  "files": [
+    {
+      "path": "azerothcore-wotlk/env/dist/etc/modules/playerbots.conf",
+      "sha256": "2d25eb09639ca61855cb4a30d1518f4a50ffcf4460e6286fd123fe65a4fd4b95"
+    },
+    {
+      "path": "azerothcore-wotlk/env/dist/etc/modules/mod-raidtest-roster-heroic5-v1.conf",
+      "sha256": "fb7f997842ca95b1b12d12e27eb3456e0a3a975d4509c4d3766b7dd317fb7d20"
+    },
+    {
+      "path": "azerothcore-wotlk/env/dist/etc/modules/mod-raidtest-scenario-heroic-uk-keleseth.conf",
+      "sha256": "482fe85f296f17d33e4bb22bc9ad8bd04f29305e76729b6d014a0d420aad4ebf"
+    }
+  ]
+}

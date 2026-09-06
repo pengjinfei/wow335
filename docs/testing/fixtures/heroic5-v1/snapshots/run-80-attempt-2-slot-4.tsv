@@ -1,0 +1,424 @@
+fixture_version	1
+run	80
+attempt	2
+guid	GUID Full: 0x00000000000002da Type: Player Low: 730
+spec	shaman_elemental
+level	80
+effective_cheats	0
+defense_skill	400
+max_health	14149
+talent	51486
+talent	17489
+talent	51470
+talent	30706
+talent	51490
+talent	29065
+talent	16293
+talent	30666
+talent	16544
+talent	16582
+talent	16305
+talent	16164
+talent	51482
+talent	29080
+talent	16108
+talent	30674
+talent	16161
+talent	60188
+talent	30679
+talent	29000
+talent	16166
+talent	16111
+talent	62101
+talent	16041
+talent_points	71
+free_talent_points	0
+supply_item	5175
+supply_count	5175	1
+supply_item	5176
+supply_count	5176	1
+supply_item	5177
+supply_count	5177	1
+supply_item	5178
+supply_count	5178	1
+supply_item	17030
+supply_count	17030	10
+supply_item	33443
+supply_count	33443	20
+supply_item	33445
+supply_count	33445	20
+glyph	0	226
+glyph	1	473
+glyph	2	475
+glyph	3	220
+glyph	4	612
+glyph	5	752
+spell	66844	1
+spell	66843	1
+spell	60043	1
+spell	58785	1
+spell	58774	1
+spell	58773	1
+spell	58757	1
+spell	58755	1
+spell	58751	1
+spell	58749	1
+spell	58734	1
+spell	58731	1
+spell	58699	1
+spell	58656	1
+spell	58652	1
+spell	58649	1
+spell	58643	1
+spell	58582	1
+spell	58581	1
+spell	57994	1
+spell	57960	1
+spell	57622	1
+spell	55459	1
+spell	55458	1
+spell	52134	1
+spell	51994	1
+spell	51993	1
+spell	51991	1
+spell	58737	1
+spell	51988	1
+spell	51490	1
+spell	49281	1
+spell	49280	1
+spell	58804	1
+spell	49276	1
+spell	58803	1
+spell	49275	1
+spell	58801	1
+spell	49273	1
+spell	49272	1
+spell	49270	1
+spell	49238	1
+spell	49237	1
+spell	49236	1
+spell	49235	1
+spell	59158	1
+spell	49233	1
+spell	49230	1
+spell	58704	1
+spell	34090	0
+spell	33736	1
+spell	49271	1
+spell	33391	0
+spell	30706	1
+spell	29228	1
+spell	25590	1
+spell	25574	1
+spell	57720	1
+spell	25563	1
+spell	25560	1
+spell	25547	1
+spell	25546	1
+spell	25509	1
+spell	25508	1
+spell	25469	1
+spell	25464	1
+spell	25454	1
+spell	25449	1
+spell	58790	1
+spell	25442	1
+spell	58771	1
+spell	36936	1
+spell	25423	1
+spell	25422	1
+spell	25396	1
+spell	58739	1
+spell	25391	1
+spell	34091	1
+spell	25357	1
+spell	20777	1
+spell	20610	1
+spell	20609	1
+spell	20608	1
+spell	16339	1
+spell	16166	1
+spell	61657	1
+spell	52129	1
+spell	15208	1
+spell	51514	1
+spell	10623	1
+spell	10622	1
+spell	10605	1
+spell	10601	1
+spell	10595	1
+spell	10587	1
+spell	10586	1
+spell	10538	1
+spell	8155	1
+spell	10537	1
+spell	204	1
+spell	10526	1
+spell	8512	1
+spell	10497	1
+spell	2149	1
+spell	10486	1
+spell	57721	1
+spell	2538	1
+spell	10478	1
+spell	548	1
+spell	945	1
+spell	10473	1
+spell	547	1
+spell	10472	1
+spell	25552	1
+spell	10466	1
+spell	10463	1
+spell	10462	1
+spell	16387	1
+spell	8050	1
+spell	10432	1
+spell	10431	1
+spell	8046	1
+spell	10428	1
+spell	10413	1
+spell	8030	1
+spell	10412	1
+spell	16362	1
+spell	10407	1
+spell	8010	1
+spell	10392	1
+spell	25570	1
+spell	8499	1
+spell	6196	1
+spell	8181	1
+spell	8177	1
+spell	8170	1
+spell	8160	1
+spell	8134	1
+spell	8249	1
+spell	8052	1
+spell	10427	1
+spell	8045	1
+spell	6041	1
+spell	10408	1
+spell	8044	1
+spell	8235	1
+spell	8038	1
+spell	8227	1
+spell	10391	1
+spell	8027	1
+spell	2645	1
+spell	10585	1
+spell	10406	1
+spell	8024	1
+spell	2062	1
+spell	10399	1
+spell	7620	1
+spell	8017	1
+spell	25472	1
+spell	16341	1
+spell	8004	1
+spell	52138	1
+spell	131	1
+spell	8071	1
+spell	6495	1
+spell	58796	1
+spell	33388	0
+spell	25448	1
+spell	6392	1
+spell	58795	1
+spell	6391	1
+spell	58794	1
+spell	6390	1
+spell	32182	1
+spell	6377	1
+spell	2008	1
+spell	6375	1
+spell	6365	1
+spell	25420	1
+spell	6364	1
+spell	6363	1
+spell	5730	1
+spell	25525	1
+spell	5675	1
+spell	5394	1
+spell	959	1
+spell	3738	1
+spell	25505	1
+spell	2479	1
+spell	3273	1
+spell	10437	1
+spell	2894	1
+spell	58580	1
+spell	8161	1
+spell	2550	1
+spell	2881	1
+spell	8042	1
+spell	2484	1
+spell	58789	1
+spell	2018	1
+spell	1064	1
+spell	905	1
+spell	16355	1
+spell	8018	1
+spell	2108	1
+spell	25567	1
+spell	556	1
+spell	8033	1
+spell	10396	1
+spell	25557	1
+spell	943	1
+spell	546	1
+spell	8008	1
+spell	25533	1
+spell	6477	1
+spell	63645	1
+spell	10447	1
+spell	522	1
+spell	9059	1
+spell	325	1
+spell	7126	1
+spell	3275	1
+spell	8143	1
+spell	203	1
+spell	930	1
+spell	3365	1
+spell	58703	1
+spell	1535	1
+spell	9078	1
+spell	197	1
+spell	16342	1
+spell	8005	1
+spell	913	1
+spell	331	1
+spell	52127	1
+spell	51730	1
+spell	25528	1
+spell	7266	1
+spell	10442	1
+spell	11314	1
+spell	198	1
+spell	22027	1
+spell	3115	1
+spell	8012	1
+spell	52136	1
+spell	526	1
+spell	20776	1
+spell	529	1
+spell	332	1
+spell	10600	1
+spell	6233	1
+spell	2660	1
+spell	25489	1
+spell	2860	1
+spell	81	1
+spell	8184	1
+spell	15590	1
+spell	107	1
+spell	6478	1
+spell	10448	1
+spell	11315	1
+spell	199	1
+spell	61649	1
+spell	68398	1
+spell	58756	1
+spell	2382	1
+spell	8154	1
+spell	21652	1
+spell	59159	1
+spell	403	1
+spell	51505	1
+spell	6247	1
+spell	8232	1
+spell	24398	1
+spell	22810	1
+spell	8058	1
+spell	21651	1
+spell	59156	1
+spell	49231	1
+spell	8737	1
+spell	2663	1
+spell	6603	1
+spell	9125	1
+spell	49232	1
+spell	60348	1
+spell	7355	1
+spell	8056	1
+spell	10438	1
+spell	58746	1
+spell	59540	1
+spell	25361	1
+spell	12260	1
+spell	16356	1
+spell	8019	1
+spell	28875	1
+spell	6246	1
+spell	2662	1
+spell	668	1
+spell	3050	1
+spell	66842	1
+spell	10468	1
+spell	8498	1
+spell	818	1
+spell	421	1
+spell	37836	1
+spell	15207	1
+spell	7267	1
+spell	915	1
+spell	9058	1
+spell	324	1
+spell	227	1
+spell	8075	1
+spell	58745	1
+spell	1180	1
+spell	57722	1
+spell	29932	1
+spell	10479	1
+spell	8604	1
+spell	10395	1
+spell	10467	1
+spell	939	1
+spell	8190	1
+spell	2152	1
+spell	2540	1
+spell	25439	1
+spell	75461	1
+spell	25500	1
+spell	10414	1
+spell	61437	1
+spell	45927	1
+spell	196	1
+spell	52131	1
+spell	63644	1
+spell	10456	1
+spell	9077	1
+spell	10495	1
+spell	58741	1
+spell	51992	1
+spell	9116	1
+spell	3599	1
+spell	58753	1
+spell	59547	1
+spell	370	1
+spell	27763	1
+spell	49277	1
+spell	25457	1
+spell	8386	1
+spell	28878	1
+spell	10496	1
+spell	7738	1
+spell	8053	1
+item	0	37592	200	3820	0	3621	3448	0	2771	0	0	0	0	0	0
+item	1	43285	200	0	0	0	0	0	0	0	0	0	0	0	0
+item	2	37398	200	3810	0	0	0	0	0	0	0	0	0	0	0
+item	4	43410	200	3832	0	3472	3490	0	3310	0	0	0	0	0	0
+item	5	37868	200	0	0	3472	0	0	3308	0	0	0	0	0	0
+item	6	37818	200	3719	0	3448	0	0	2868	0	0	0	0	0	0
+item	7	37218	200	3232	0	0	0	0	0	0	0	0	0	0	0
+item	8	37365	200	2332	0	0	0	0	0	0	0	0	0	0	0
+item	9	37623	200	3246	0	0	0	0	0	0	0	0	0	0	0
+item	10	37651	200	0	0	0	0	0	0	0	0	0	0	0	0
+item	11	37869	200	0	0	0	0	0	0	0	0	0	0	0	0
+item	12	37264	200	0	0	0	0	0	0	0	0	0	0	0	0
+item	13	37660	200	0	0	0	0	0	0	0	0	0	0	0	0
+item	14	37630	200	3831	0	0	0	0	0	0	0	0	0	0	0
+item	15	37169	200	3834	0	0	0	0	0	0	0	0	0	0	0
+item	16	37216	200	2654	0	0	0	0	0	0	0	0	0	0	0
+item	17	40708	200	0	0	0	0	0	0	0	0	0	0	0	0
+valid	1
