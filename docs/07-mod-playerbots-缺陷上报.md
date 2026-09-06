@@ -228,6 +228,8 @@ else if (botAI->IsAssistTankOfIndex(bot, 1))   // 第 2 个非主坦坦克
 
 `naxx-loatheb` 场景（10 人）实测：团队输出正常（run54 全队 2.69M，术士/贼/法/圣骑/萨/猎各自 267k-585k），boss 血量能掉到 59%（run52 74%），但**boss 前 120s 从不普攻坦克**——它一直在打 DPS（猎人 45k、术士 44k 等），坦克只吃到 Necrotic Aura 的 153 低伤。**坦克从开局就没进 boss 仇恨表**（boss 首刀 1489ms 打猎人），导致 DPS 逐个被切死、团队 144s 全灭。
 
+**run55 追加（2026-09-06）**：换血DK+防骑坦克阵容**并未解决建仇**（主坦对 boss 仍 0 输出，见证据③），且出现**新的 DPS 侧引擎停摆**：run55 开局前 60s 全团对 boss 输出 ≈0（仅防骑 4 次 3818），boss 血量 100% 钉死 60s，最终只掉到 86%（比 run54 的 59% 明显退步）——归因见"根因 4"。
+
 ### 证据链（file:line + 实测数据）
 
 **① 坦克不建仇（mod-playerbots 策略）：**
@@ -243,28 +245,30 @@ else if (botAI->IsAssistTankOfIndex(bot, 1))   // 第 2 个非主坦坦克
 
 `mainTankPos` 距出生点 43.7 码，**几乎贴着 50 码脱战线**——boss 被打时拉向站位点，位置波动即超 50 码触发 `EnterEvadeMode` 回满血。run52 实测：boss 50s 打到 74% 后被拉远脱战回满 100%。
 
-**③ 实测对比（框架侧 engage 修复前后）：**
+**③ 实测对比（框架侧 engage 修复前后 + run55 坦克换血DK/防骑验证）：**
 
-| run | engage 点 | 坦克仇恨 | boss 最低血 | 脱战 |
-|---|---|---|---|---|
-| run52 | rangePos(2896,-3980) 距出生点 26 码 | 无 | 74% | 是（50s 拉远回满） |
-| run54 | 出生点旁(2909,-3991) | 无 | **59%** | 否（144s 全灭后归位） |
+| run | 阵容/坦克 | 坦克对 boss | engage 点 | boss 最低血 | 脱战 |
+|---|---|---|---|---|---|
+| run52 | 战士主坦 | 575×2 | rangePos(2896,-3980) 距出生点 26 码 | 74% | 是（50s 拉远回满） |
+| run54 | 血DK主坦 | **575×2** | 出生点旁(2909,-3991) | **59%** | 否（144s 全灭后归位） |
+| run55 | 血DK主坦+防骑 | **1488×5** | 出生点旁(2909,-3991) | 86% | 否（148s 全灭后归位） |
 
-框架侧把 engage 点改到出生点旁后，boss 不再中途拉远脱战（run54 稳定掉到 59%）——**但坦克仇恨问题独立存在**，是 Loatheb 打不过的真正瓶颈。
+框架侧把 engage 点改到出生点旁后，boss 不再中途拉远脱战（run54 稳定掉到 59%）——**但坦克仇恨问题独立存在**，是 Loatheb 打不过的真正瓶颈。run54/55 换血DK主坦（甚至加防骑）后**坦克对 boss 伤害仍是个位数×575/1488**：两场主坦全程打孢子/站桩 buff，boss 仇恨表依旧靠 DPS 建立。**结论：建仇缺陷与坦克职业无关**，血DK 的 `BloodDKStrategy` 自带输出循环≠会拉 boss，缺陷④ 的"坦克引擎不激活"是通用坦克问题而非战士特例（此前"工程绕过换血DK"方案被证伪）。
 
 ### 根因
 
 1. **mod-playerbots 坦克策略未对 boss 建立初始仇恨**：Loatheb 没有显式"坦克开局拉 boss"的动作，坦克依赖通用 Attack 循环，但 `LoathebChooseTargetAction` 让坦克优先被孢子抢目标，且坦克引擎未把 boss 设为 current target → boss 仇恨表为空。
-2. **坦克引擎激活不稳定（B2-8 深挖补充）**：战士主坦的 combat 引擎是否激活**在 run 间不稳定**——run52 输出 81k（正常攻击循环）、run54 仅 575（全程只 buff 55594 命令怒吼/57723 等、不打 boss）。同为干净登录的 run，差异仅由 mod-playerbots 引擎初始化随机性造成（同族于 run50 DPS 停摆）。对比血DK 副坦两次都稳定输出（80k/75k）——血DK 的 `BloodDKStrategy` 自带输出循环，不依赖"引擎恰好激活"。
+2. **坦克引擎激活不稳定（B2-8 深挖补充）**：战士主坦的 combat 引擎是否激活**在 run 间不稳定**——run52 输出 81k（正常攻击循环）、run54 仅 575（全程只 buff 55594 命令怒吼/57723 等、不打 boss）。同为干净登录的 run，差异仅由 mod-playerbots 引擎初始化随机性造成（同族于 run50 DPS 停摆）。run55 追加证实**该缺陷与坦克职业无关**：换血DK主坦+防骑后，主坦对 boss 仍是 5 次 1488（run54 血DK 2 次 575），全程打孢子/站桩——血DK 的 `BloodDKStrategy` 自带输出循环只保证"副坦当 DPS 用"时输出正常，不等于会主动拉 boss 建仇。
 3. **站位点设计逼近脱战边界**：`mainTankPos(2877,-3967)` 距出生点 43.7 码（<50 脱战阈值），框架 engage 点又偏离出生点，双重叠加导致 boss 拉远脱战（run52）。框架侧已通过 engage 调整缓解，但站位缺陷仍在。
+4. **run55 独有：DPS 战斗引擎"施法决策抖动"**（2026-09-06 深挖）——run55 开局前 60s 全团对 boss 输出 ≈0（mage/术/猎/贼/萨/暗牧 共施法 200+ 次、damage 结算 0 次，仅防骑 4 次 3818），boss 血量 100% 钉死。**决定性证据是施法间隔**：前 60s 全团 spell 事件**恒定 1.092s**（mage 20 连发全部 1088-1098ms，= GCD 急速压缩）——即 bot **每个 GCD 发起一次读条、读条从未完成就被打断**，下个 GCD 立即重试；60s 后 spell 间隔变为参差的真实读条节奏（21ms~3.6s），伤害才开始结算（65s 起与 spell 1:1）。已排除：boss 免疫/护盾（`boss_loatheb.cpp` 无免疫技能）、站位（位置采样全对：mage 在 rangePos、血DK/防骑在 mainTankPos）、距离/LoS（cast 已通过检查，20 码在射程内）、目标失效（run55 仅一个 Loatheb guid=106）。65s 转折与防骑死亡同帧（64856ms vs 首命中 65446ms），疑为仇恨重排/决策重置使引擎稳定。**根因在 mod-playerbots 战斗引擎的施法决策**：bot 每 tick 重评估当前动作，判定读条无用即打断——run 间随机性决定该 run 是否进入"持续自打断"状态（同族于 run50 DPS 停摆、缺陷④ 坦克引擎不激活）。
 
 ### 建议修法（mod-playerbots）
 
 1. **Loatheb 坦克仇恨专项**：`LoathebChooseTargetAction` 增加"坦克优先 boss"分支——坦克不因孢子抢目标而放弃 boss，开局对 boss `Attack` + 嘲讽（真实打法：坦克踩孢子吃暴击但保持仇恨）。
-2. **坦克引擎激活确定性**：战士主坦 combat 引擎偶发不激活（run54 全程 buff 不打 boss），根因在 mod-playerbots 引擎初始化随机性（同 run50 DPS 停摆族）。建议排查 `PlayerbotAI::ChangeEngine` 与 `currentEngine` 初始化的竞态——masterless bot 在拉怪后应确定性切入 combat。
+2. **战斗引擎激活确定性（坦克+DPS 两侧，run55 追加）**：战士主坦 combat 引擎偶发不激活（run54 全程 buff 不打 boss），血DK 主坦同样不建仇（run55 1488）；run55 更出现 DPS 侧"施法决策抖动"（前 60s 读条每 GCD 被打断、0 结算）。三者同根因——mod-playerbots 引擎初始化/决策的 run 间随机性。建议排查 `PlayerbotAI::ChangeEngine` 与 `currentEngine` 初始化竞态，以及施法决策对读条动作的每 tick 重评估（判定无用即打断）——masterless bot 拉怪后应确定性切入稳定的输出/仇恨循环。
 3. **站位点校正**：`mainTankPos(2877,-3967)` 若为通用 Naxx 站位模板，建议按 Loatheb 实际出生点(2909,-3997) 复核，保持距出生点 <40 码留足脱战余量。
 
-**工程绕过（mod-raidtest 侧）**：血DK 的 `BloodDKStrategy` 自带输出循环、引擎稳定（两次 run 均正常输出），可把 roster 主坦从战士改为血DK 验证 Loatheb——避免依赖战士坦克引擎偶发激活。
+**工程绕过（mod-raidtest 侧，run55 后已证伪旧方案）**：原"把 roster 主坦从战士改为血DK"的绕过**被 run54/55 证伪**——血DK 主坦同样 0 建仇（575/1488），且 run55 连 DPS 引擎都抖动。当前无纯 roster 侧绕过；若继续验证 Loatheb，需先解决 mod-playerbots 引擎稳定性（建议修法 2），或接受多次 run 抽样取"引擎恰好稳定"的一次。
 
 ### 风险提示
 
