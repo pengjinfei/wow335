@@ -1,0 +1,3 @@
+spawn	entry	guid	health	max_health	combat	map	instance	difficulty	x	y	z
+126024	24201	GUID Full: 0xf130005e890000a4 Type: Creature Entry: 24201  Low: 164	208528	208528	0	574	5	1	112.023	-40.2865	118.861
+126023	24200	GUID Full: 0xf130005e880000a5 Type: Creature Entry: 24200  Low: 165	201600	201600	0	574	5	1	109.516	-33.658	118.861

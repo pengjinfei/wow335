@@ -32,9 +32,9 @@
 
 ## 当前任务（2026-09-06：用户调整方向）
 
-用户决定先从五人本开始，明确选择早期英雄本毕业档位，不含冠军试炼和 ICC 三本。已新增防骑/神牧/战斗贼/火法/元素萨满，固定 ilvl200；五人/英雄难度框架适配已构建并实测；run80第一场混入房间小怪团灭，第二场88.369秒零死亡击杀。五人角色验收通过。run86/a1 完整链路零死亡击杀；run87/88/90 再拉怪死锁已定位并修复（门槛误用 unit combat 标志，改判 AI 战斗态），run91/a1、run92/a1、run92/a2 连续三场零死亡击杀。详见[清怪前置验收](testing/bosses/heroic-uk-keleseth/PRECLEAR.md)与[停滞/误伤调查](testing/bosses/heroic-uk-keleseth/AOE-PULL.md)。下一步连续多场与冰墓机制验收；不能称为已认证连续稳定通关。
+用户决定先从五人本开始，明确选择早期英雄本毕业档位，不含冠军试炼和 ICC 三本。已新增防骑/神牧/战斗贼/火法/元素萨满，固定 ilvl200；五人/英雄难度框架适配已构建并实测。凯雷塞斯 run91/a1、run92/a1、run92/a2 连续三场零死亡击杀（再拉怪门槛修复）；斯卡瓦德&达尔隆 run94/96 三场击杀（KillGateSpawn 框架改动，双 boss 双杀判定）；因格瓦尔 run95/97 两次 P2 团灭（机制完整运行，bots 打不过=mod-playerbots 绕背策略缺陷，未改策略）。UK 三 boss 机制审计通过（与官方一致）。详见[UK 机制审计](testing/bosses/heroic-uk/MECHANICS-AUDIT.md)及各 boss 记录。下一步：修因格瓦尔绕背策略（触发器/远程/斧子规避）后复测；连续多场与冰墓机制验收；双 boss/因格瓦尔房间小怪清怪前置调优。
 
-入口：[heroic5-v1 配置](testing/fixtures/heroic5-v1/README.md)、[凯雷塞斯王子记录](testing/bosses/heroic-uk-keleseth/README.md)。当前运行配置已从 food,taxi,raid 改为空，run79/80及run86 实际五人快照有效掩码均为0；旧 run77/78 的结论不追溯改写。构建后须重核该配置，不能假设持续关闭。
+入口：[heroic5-v1 配置](testing/fixtures/heroic5-v1/README.md)、[凯雷塞斯王子记录](testing/bosses/heroic-uk-keleseth/README.md)、[斯卡瓦德&达尔隆](testing/bosses/heroic-uk-skarvald-dalronn/README.md)、[因格瓦尔](testing/bosses/heroic-uk-ingvar/README.md)。当前运行配置已从 food,taxi,raid 改为空，run79/80及run86 实际五人快照有效掩码均为0；旧 run77/78 的结论不追溯改写。构建后须重核该配置，不能假设持续关闭。
 
 之前的“先复测 Patchwerk”计划暂后移。新会话优先接续五人英雄本台账，并查实际运行是否已结束；不要同时启动另一轮。
 

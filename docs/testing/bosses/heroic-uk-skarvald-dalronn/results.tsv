@@ -1,0 +1,5 @@
+id	run_id	seq	result	duration_ms	boss_hp_min	deaths	death_names	notes	finished_at
+1788426408	93	1	aborted	0	100	0		prerequisite_invalid: missing or already engaged spawn	2026-09-06 22:17:59
+1788426409	94	1	kill	58769	0	0			2026-09-06 22:32:05
+1788426411	96	1	kill	55996	0	0			2026-09-06 22:42:15
+1788426412	96	2	kill	59148	0	1	raidtebhfiva		2026-09-06 22:42:15
