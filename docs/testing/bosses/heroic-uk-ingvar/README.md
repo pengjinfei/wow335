@@ -33,13 +33,15 @@ run145 是真实路线勘测：准备点在斯卡瓦尔德与达隆房间 `(109.
 
 为定位缺口，run146 对斯卡瓦尔德房间起点做零位移 probe，得到完整路径 `type=1`；run147 对骑手平台做零位移 probe，仍为 `type=17`。这表明 map 574 已加载、起点有效，而上层骑手平台坐标不在可用 MMap 多边形上，不能从已知地面路线抵达。框架新增 `NavigationOnly=true`：最后一个节点到达后记录 `navigation_complete` 并在夹具、前置拉怪和 Boss 战之前结束。run148 在有效房间节点验证了此流程。故正式场景仍不写入任何楼梯节点，不能把 run145–148 记为完整链路通过。
 
-## MMap 资产阻断（2026-09-07）
+## MMap 资产与平台探针（2026-09-07）
 
-平台所在的 `5743029.map` 只有 68 字节，已生成的 `5743029.mmtile` 只有 588 字节；重新生成 map 574 的 64 个 MMap tile 并未补出平台碰撞。现有 `clientmpq` 仅有 `common.MPQ`、`common-2.MPQ`、`expansion.MPQ`、`lichking.MPQ`，没有 locale 或 patch MPQ。标准高精度 `vmap4_extractor -l` 因缺少 `Map.dbc` 无法启动；临时单图读取 `574 / UtgardeKeep` 也没有读到 `UtgardeKeep.wdt`，未产生可组装的 UK 矢量几何。
+此前把 `(252.247,-350.532,185.813)` 归到 `5743029` 是坐标轴理解错误。该点落在 vmap `574_32_31.vmtile`，而 MMap 文件名按 `tileY,tileX` 编排，对应 `5743132.mmtile`；`5743029` 的 588 字节空 tile 与骑手平台无关。
 
-结论是当前本机没有能重提取骑手平台的完整客户端资产。要解除阻断，需要可用的 WotLK 3.3.5 客户端 `Data` 目录，含 locale 的 `Map.dbc`、基础 MPQ 及对应 patch MPQ；随后以该目录重新提取 `maps`/`vmaps`，重建 map 574 MMap，并先用 `NavigationOnly=true` 对平台零位移和整段路线复核。没有这些资产时，不会手工伪造平台碰撞或填写楼梯坐标。
+已从 Windows 上的完整天蓝 3.3.5 客户端复制基础、locale 与 patch MPQ，在隔离目录以 `vmap4_extractor -l` 重新提取 map 574。`Map.dbc` 的内部名 `Valgarde70` 经核对是 Utgarde Keep 的官方内部名，因此该客户端输入有效。默认 `verticesPerMapEdge=2000` 时，目标 tile `[32,31]` 有 66,539 个顶点，超过 Detour 的 65,535 上限，生成器会跳过写入 `5743132.mmtile`。对 map 574 采用 `verticesPerMapEdge=1600`、`verticesPerTileEdge=80` 的生成器覆盖后，目标 tile 成功生成（4.7 MiB，无溢出）。这是一项可重复的 MMap 生成配置修复，不依赖手工伪造碰撞。
 
-已核验另一份 2025-09 的预提取数据包：其 `5743029.map` 仍为 68 字节，未提供 `5743029.mmtile`。虽然 map 574 的 vmap 文件与当前版本有差异，但用当前 `mmaps_generator` 在隔离目录重建时出现 `ModelSpawn, file name too long`，只输出 51 个 tile，仍没有平台 tile。因此该包的 vmap 二进制格式与本 core 不兼容，不能作为替换来源。
+候选 vmap/MMap 通过硬链接隔离 DataDir 启动 worldserver，run149 用 `NavigationOnly=true` 在骑手给定坐标做零位移探针。结果仍为 `type=17`、0ms、0 死亡、100% Boss 血量，且没有夹具、前置怪或战斗。因此顶点溢出和错误 tile 名不是唯一根因；给定平台坐标/高度尚未投影到可走多边形。下一步是以该候选 DataDir 对骑手平台做网格和 Z 轴导航探针，记录首个可走点，再据此勘测楼梯分段；在得到实测节点前不填写正式 `NavigationWaypoints`。
+
+已核验另一份 2025-09 的预提取数据包：其 vmap 与当前 core 二进制格式不兼容，隔离重建报 `ModelSpawn, file name too long`，不能作为替换来源。
 
 ## 神牧是否影响击杀
 
