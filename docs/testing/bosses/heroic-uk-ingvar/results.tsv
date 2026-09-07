@@ -1,3 +1,6 @@
 id	run_id	seq	result	duration_ms	boss_hp_min	deaths	death_names	notes	finished_at
 1788426410	95	1	wipe	112717	0	5	raidteahfivb, raidtebhfivb, raidtechfivb, raidtedhfivb, raidteehfivb		2026-09-06 22:37:41
 1788426413	97	1	wipe	130527	0	5	raidteahfivb, raidtebhfivb, raidtechfivb, raidtedhfivb, raidteehfivb		2026-09-06 22:45:23
+1788426424	107	1	wipe	162159	0	5	raidteahfivb, raidtebhfivb, raidtechfivb, raidtedhfivb, raidteehfivb	holy; platform stable; tank death at 106701ms	2026-09-07
+1788426425	108	1	timeout	300007	0	3	raidteahfivc, raidtechfivc, raidtedhfivc	discipline A/B; tank death at 116218ms; healer and shaman alive at timeout	2026-09-07
+1788426430	116	1	kill	112716	0	2	raidtechfivc, raidteehfivc	discipline; real 2s tank aggro lead; P1+resurrection+P2 complete	2026-09-07
