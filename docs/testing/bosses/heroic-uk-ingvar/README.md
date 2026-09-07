@@ -29,7 +29,9 @@ run134、136 已证明前置目标可被框架登记、清理并进入 P2，但 
 
 run142 使用单个准备点作为无位移 smoke test，日志依次出现 `navigation_waypoint_start`、`navigation_waypoint_reached` 和 `before_fixture`，证明状态机不会跳过确认；五名 bot 也通过同一 `Map*` 实例检查。该 run 由人工停止，不能作为战斗结果。
 
-run145 是真实路线勘测：准备点在斯卡瓦尔德与达隆房间 `(109.5,-33.7,118.9)`，目标为骑手平台 `(252.247,-350.532,185.813)`。先用本地 `maps`/`vmaps` 重建了 map 574 的全部 64 个 MMap tile（补出 `5743029.mmtile`），仍得到 `type=17`，即 `PATHFIND_NORMAL | PATHFIND_NOT_USING_PATH`。虽然 fallback 报告的终点坐标与请求相同，它没有多边形地面路径，可能直穿多层几何；框架在发出移动命令前以 `navigation_failed` 中止，未造成任何伤害或拉怪。该失败 attempt 已持久化为 run145/a1，备注保留路径类型和终点坐标。故正式场景仍不写入任何楼梯节点，不能把 run145 记为完整链路通过。
+run145 是真实路线勘测：准备点在斯卡瓦尔德与达隆房间 `(109.5,-33.7,118.9)`，目标为骑手平台 `(252.247,-350.532,185.813)`。先用本地 `maps`/`vmaps` 重建了 map 574 的全部 64 个 MMap tile（补出 `5743029.mmtile`），仍得到 `type=17`，即 `PATHFIND_NORMAL | PATHFIND_NOT_USING_PATH`。虽然 fallback 报告的终点坐标与请求相同，它没有多边形地面路径，可能直穿多层几何；框架在发出移动命令前以 `navigation_failed` 中止，未造成任何伤害或拉怪。该失败 attempt 已持久化为 run145/a1，备注保留路径类型和终点坐标。
+
+为定位缺口，run146 对斯卡瓦尔德房间起点做零位移 probe，得到完整路径 `type=1`；run147 对骑手平台做零位移 probe，仍为 `type=17`。这表明 map 574 已加载、起点有效，而上层骑手平台坐标不在可用 MMap 多边形上，不能从已知地面路线抵达。框架新增 `NavigationOnly=true`：最后一个节点到达后记录 `navigation_complete` 并在夹具、前置拉怪和 Boss 战之前结束。run148 在有效房间节点验证了此流程。故正式场景仍不写入任何楼梯节点，不能把 run145–148 记为完整链路通过。
 
 ## 神牧是否影响击杀
 
