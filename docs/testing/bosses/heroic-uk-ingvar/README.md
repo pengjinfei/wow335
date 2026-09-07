@@ -33,6 +33,12 @@ run145 是真实路线勘测：准备点在斯卡瓦尔德与达隆房间 `(109.
 
 为定位缺口，run146 对斯卡瓦尔德房间起点做零位移 probe，得到完整路径 `type=1`；run147 对骑手平台做零位移 probe，仍为 `type=17`。这表明 map 574 已加载、起点有效，而上层骑手平台坐标不在可用 MMap 多边形上，不能从已知地面路线抵达。框架新增 `NavigationOnly=true`：最后一个节点到达后记录 `navigation_complete` 并在夹具、前置拉怪和 Boss 战之前结束。run148 在有效房间节点验证了此流程。故正式场景仍不写入任何楼梯节点，不能把 run145–148 记为完整链路通过。
 
+## MMap 资产阻断（2026-09-07）
+
+平台所在的 `5743029.map` 只有 68 字节，已生成的 `5743029.mmtile` 只有 588 字节；重新生成 map 574 的 64 个 MMap tile 并未补出平台碰撞。现有 `clientmpq` 仅有 `common.MPQ`、`common-2.MPQ`、`expansion.MPQ`、`lichking.MPQ`，没有 locale 或 patch MPQ。标准高精度 `vmap4_extractor -l` 因缺少 `Map.dbc` 无法启动；临时单图读取 `574 / UtgardeKeep` 也没有读到 `UtgardeKeep.wdt`，未产生可组装的 UK 矢量几何。
+
+结论是当前本机没有能重提取骑手平台的完整客户端资产。要解除阻断，需要可用的 WotLK 3.3.5 客户端 `Data` 目录，含 locale 的 `Map.dbc`、基础 MPQ 及对应 patch MPQ；随后以该目录重新提取 `maps`/`vmaps`，重建 map 574 MMap，并先用 `NavigationOnly=true` 对平台零位移和整段路线复核。没有这些资产时，不会手工伪造平台碰撞或填写楼梯坐标。
+
 ## 神牧是否影响击杀
 
 有影响，但不是本 Boss 当前无法击杀的根因。
