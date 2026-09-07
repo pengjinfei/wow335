@@ -6,3 +6,4 @@ id	run_id	seq	result	duration_ms	boss_hp_min	deaths	death_names	notes	finished_a
 1788426430	116	1	kill	112716	0	2	raidtechfivc, raidteehfivc	discipline; real 2s tank aggro lead; P1+resurrection+P2 complete	2026-09-07
 1788426444	130	1	kill	115014	0	3	raidtebhfivb, raidtechfivb, raidtedhfivb	discipline; P1+resurrection+P2 complete; clean restart instance	2026-09-07
 1788426456	142	1	aborted	6288	100	0		navigation state-machine smoke test; same-instance five-member arrival confirmed; stopped by request before prerequisite result	2026-09-07
+1788426459	145	1	aborted	0	100	0		navigation route survey; map 574 MMaps rebuilt; rejected PATHFIND_NOT_USING_PATH type=17 before movement/combat	2026-09-07
