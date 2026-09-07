@@ -39,6 +39,8 @@ run145 是真实路线勘测：准备点在斯卡瓦尔德与达隆房间 `(109.
 
 结论是当前本机没有能重提取骑手平台的完整客户端资产。要解除阻断，需要可用的 WotLK 3.3.5 客户端 `Data` 目录，含 locale 的 `Map.dbc`、基础 MPQ 及对应 patch MPQ；随后以该目录重新提取 `maps`/`vmaps`，重建 map 574 MMap，并先用 `NavigationOnly=true` 对平台零位移和整段路线复核。没有这些资产时，不会手工伪造平台碰撞或填写楼梯坐标。
 
+已核验另一份 2025-09 的预提取数据包：其 `5743029.map` 仍为 68 字节，未提供 `5743029.mmtile`。虽然 map 574 的 vmap 文件与当前版本有差异，但用当前 `mmaps_generator` 在隔离目录重建时出现 `ModelSpawn, file name too long`，只输出 51 个 tile，仍没有平台 tile。因此该包的 vmap 二进制格式与本 core 不兼容，不能作为替换来源。
+
 ## 神牧是否影响击杀
 
 有影响，但不是本 Boss 当前无法击杀的根因。
