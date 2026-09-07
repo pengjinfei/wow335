@@ -1,4 +1,4 @@
-# 新会话接手（更新：2026-09-06）
+# 新会话接手（更新：2026-09-08）
 
 ## 目标与阅读顺序
 
@@ -14,27 +14,32 @@
 
 | 仓库 | 分支 | 最近确认的 HEAD |
 |---|---|---|
-| 管理库 | main | 920b6b6（fork 设置文档）；本交接更新之后以 git log 为准 |
-| azerothcore-wotlk | Playerbot | 413bea61a85e20d9caef7d66fc601a661fdddd9d（2026-09-07 同步；Ulduar/Dragonblight 修复+DB） |
-| modules/mod-playerbots | master | b949b50bfcdd4fab937781bac2d7765e39330e4b（2026-09-07 同步）；dev 同值（已合并 master 并推回 mine fork） |
-| modules/mod-raidtest | dev | 7ddd744a2aa41f2d988e12ca6ea5bfb08fc24c80（KillGateSpawn；前序 a58a7f7 再拉怪修复） |
+| 管理库 | main | `a54e636`（本次收尾前的文档状态） |
+| azerothcore-wotlk | Playerbot | `413bea61a85e20d9caef7d66fc601a661fdddd9d` |
+| modules/mod-playerbots | codex/heroic-uk-ingvar | `22c1beab2aa08fd3e685cedff4aa08754fca9545`（基于 `b949b50b` 的三项因格瓦尔策略修复） |
+| modules/mod-raidtest | dev | `ef037da`（导航节点到达确认与仅导航探针；`origin/dev` 之前 5 个提交） |
 
-核心与机器人代码未做本地修改；框架 dev 尚未合并 main。mod-playerbots fork 已配置：remote `mine` = `pengjinfei/mod-playerbots`，`dev` 分支已推送（base `2f7d9f77`，当前无本地特调），`origin` 保留上游；mod-raidtest 框架改动（`a58a7f7`/`7ddd744`）在本地 dev，未推任何远端。
+2026-09-08 四个工作区均干净。core 未作本地改动；因格瓦尔策略修复在本地 `mod-playerbots` 分支，框架改动在本地 `mod-raidtest` `dev`，两者均未合并到各自上游基线。
 
-## 最新结论
+## 当前进展与待办（2026-09-08）
 
-- 十人 fixture-v1 固定装备/宝石/附魔/雕文/技能要求；全员 71 点天赋、六雕文，实际快照校验通过。
-- 这是 ICC/红玉级别混合高装等能力基线，血 DK 使用橙斧；不是 NAXX 同阶段配装。
-- run77 两场和 run78 同进程复用：122774 / 105958 / 121639ms，均零死亡击杀 Loatheb；30 份快照与旧固定基线一致。
-- 登录清理离队包晚于新团建立是前次回归失败根因；8f06a10 等待 holder 注册及会话包处理完成再建团。
-- **2026-09-06 读取实际配置发现 `AiPlayerbot.BotCheats = "food,taxi,raid"`**（`env/dist/etc/modules/playerbots.conf`）。这是磁盘配置核验，不能替代运行时逐 bot 有效掩码与动作触发核验。已有结果不证明无辅助通关，也未证明 cheat 导致 Loatheb 击杀；角色指纹当前不包含 cheat 开关。
-- ICC/奥杜尔/红玉还发现直接加减光环、击杀单位或回蓝的源码路径，部分有 cheat 开关，部分不能假定受该开关控制。
+五人基线为 heroic、5 人、early-WLK heroic 装备（ilvl 200 上限）；已核验的 run79/80/86 五人快照有效 cheat 掩码均为 0。历史 Loatheb 使用的十人高装等基线和其 cheat 审计保留在台账中，不作为当前五人线的通关证据。
 
-## 当前任务（2026-09-06：用户调整方向）
+- 凯雷塞斯：run86 完整链路零死亡击杀，run91/92 共三场零死亡击杀；冰墓与连续稳定性尚待验收。
+- 斯卡瓦尔德与达隆：run127 重启后同实例零死亡击杀；房间小怪清理与更多冷启动样本尚待验收。
+- 因格瓦尔：run116、run130 在 ilvl 200 戒律牧队中完成 P1→复活→P2 击杀。`mod-playerbots` 的开局嫁祸/误导、绕背与暗影斧规避修复已在隔离战中得到击杀证据；`mod-raidtest` 的前置、重置和导航到达确认也已有单项验证。完整链路尚未通过：斯卡瓦尔德与达隆房间到骑手平台的当前 MMap 没有严格路线。
 
-用户决定先从五人本开始，明确选择早期英雄本毕业档位，不含冠军试炼和 ICC 三本。已新增防骑/神牧/战斗贼/火法/元素萨满，固定 ilvl200；五人/英雄难度框架适配已构建并实测。凯雷塞斯 run91/a1、run92/a1、run92/a2 连续三场零死亡击杀（再拉怪门槛修复）；斯卡瓦德&达尔隆 run94/96 三场击杀（KillGateSpawn 框架改动，双 boss 双杀判定）；因格瓦尔隔离 Boss 已完成 P1→复活→P2 击杀，但完整链路受下层至骑手平台的 MMap 连通性阻塞。局部扫描的实验实现已移除；下一步是服务端双向连通分量与正常场景过渡机制分析，确认可复现修复后才提交代码。详见[UK 机制审计](testing/bosses/heroic-uk/MECHANICS-AUDIT.md)及各 boss 记录。
+接续顺序：
 
-入口：[heroic5-v1 配置](testing/fixtures/heroic5-v1/README.md)、[凯雷塞斯王子记录](testing/bosses/heroic-uk-keleseth/README.md)、[斯卡瓦德&达尔隆](testing/bosses/heroic-uk-skarvald-dalronn/README.md)、[因格瓦尔](testing/bosses/heroic-uk-ingvar/README.md)。当前运行配置已从 food,taxi,raid 改为空，run79/80及run86 实际五人快照有效掩码均为0；旧 run77/78 的结论不追溯改写。构建后须重核该配置，不能假设持续关闭。
+1. 只用服务端做下层与平台两端的双向连通分量/过渡机制分析；不写入猜测的楼梯坐标、不用跨层传送替代行走。客户端仅在服务端资产与实际可达性矛盾时作为最终核验。
+2. 找到可复现根因后，再提交最小的地图资产、寻路或框架修复；以冷启动、含三名骑手前置怪的完整链路回归验证。
+3. 因格瓦尔完整链路通过后，回到凯雷塞斯冰墓和双 boss 房间清怪的机制验收，再按台账逐个扩展五人本 boss。
+
+## 记录与提交规则
+
+临时扫描、探针、日志和猜测性实现只用于定位，完成当轮后删除或保留在未提交工作区；不要为它们单独提交文档或代码。只在以下节点提交：可复现的问题根因及其已验证修复、改变复现基线的框架/配置、或 boss 验收结论与其必要证据。文档与代码在同一关键节点一起更新，避免按试验次数堆叠提交。
+
+入口：[heroic5-v1 配置](testing/fixtures/heroic5-v1/README.md)、[凯雷塞斯王子记录](testing/bosses/heroic-uk-keleseth/README.md)、[斯卡瓦德&达尔隆](testing/bosses/heroic-uk-skarvald-dalronn/README.md)、[因格瓦尔](testing/bosses/heroic-uk-ingvar/README.md)、[UK 机制审计](testing/bosses/heroic-uk/MECHANICS-AUDIT.md)。
 
 之前的“先复测 Patchwerk”计划暂后移。新会话优先接续五人英雄本台账，并查实际运行是否已结束；不要同时启动另一轮。
 
@@ -47,4 +52,4 @@
 
 ## 可复制给新会话的启动指令
 
-> 接手这个项目。先读根目录 AGENTS.md、docs/START-HERE.md 和 docs/testing/BOSS-LEDGER.md，再检查各仓库状态与当前运行任务。按文档中的下一步推进，区分框架回归和正常规则机制验收；不要自动同步上游或改变基线。每轮把证据、提交状态及下一步写回 boss 记录，不依赖旧聊天。
+> 接手这个项目。先读根目录 AGENTS.md、docs/START-HERE.md 和 docs/testing/BOSS-LEDGER.md，再检查各仓库状态与当前运行任务。按文档中的下一步推进，区分框架回归和正常规则机制验收；不要自动同步上游或改变基线。只在已验证修复、基线变化或关键验收节点更新文档并提交，不依赖旧聊天。
