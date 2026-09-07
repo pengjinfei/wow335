@@ -14,10 +14,10 @@
 
 | 仓库 | 分支 | 最近确认的 HEAD |
 |---|---|---|
-| 管理库 | main | cf295fc 为上一轮五人配置提交；本交接更新之后以 git log 为准 |
-| azerothcore-wotlk | Playerbot | 47960183bb03b83e8943eb2f0f39c16df9710c9d |
-| modules/mod-playerbots | master | 2f7d9f774987d0157c6a0d0cc08c40bec3db3945 |
-| modules/mod-raidtest | dev | 3b9203b（清怪前置与范围重置；完整HEAD见git log） |
+| 管理库 | main | 920b6b6（fork 设置文档）；本交接更新之后以 git log 为准 |
+| azerothcore-wotlk | Playerbot | 413bea61a85e20d9caef7d66fc601a661fdddd9d（2026-09-07 同步；Ulduar/Dragonblight 修复+DB） |
+| modules/mod-playerbots | master | b949b50bfcdd4fab937781bac2d7765e39330e4b（2026-09-07 同步）；dev 同值（已合并 master 并推回 mine fork） |
+| modules/mod-raidtest | dev | 7ddd744a2aa41f2d988e12ca6ea5bfb08fc24c80（KillGateSpawn；前序 a58a7f7 再拉怪修复） |
 
 核心与机器人代码未做本地修改；框架 dev 尚未合并 main。mod-playerbots fork 已配置：remote `mine` = `pengjinfei/mod-playerbots`，`dev` 分支已推送（base `2f7d9f77`，当前无本地特调），`origin` 保留上游；mod-raidtest 框架改动（`a58a7f7`/`7ddd744`）在本地 dev，未推任何远端。
 
