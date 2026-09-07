@@ -48,7 +48,7 @@ WHERE a.run_id = <run_id> ORDER BY e.rel_ms, e.id;
 
 先分层：框架/角色/数据/底层策略。最小复现成立后，只在所属仓库修复。mod-playerbots 的 master 和核心 Playerbot 为上游基线，不直接提交；遵循 docs/03 的 dev 开发线，具体任务可从已记录基线建 codex/<boss>-<fix> 分支。已有 dev 含补丁时不得随意重置。共享同一构建目录时，切分支后必须确认源码与二进制对应，不与其他测试同时操作。
 
-远端 fork 当前尚未配置；获得目标账号及用户授权后再创建并增加独立 remote（例如 mine），保留 origin 上游地址。记录 fork URL、base SHA、补丁 SHA、PR 和同步状态；本地开发不依赖先创建远端 fork。不要因准备修复自动同步上游，先保留稳定复现基线；同步单独形成变更和回归。
+远端 fork 已配置（2026-09-07）：`pengjinfei/mod-playerbots`，remote `mine`（`git remote add mine https://github.com/pengjinfei/mod-playerbots.git`），`origin` 保留上游地址。`dev` 分支已推送（`git push -u mine dev`）。特调提交到本地 `dev`（或 `codex/<boss>-<fix>` 分支）后 `git push mine <分支>`；同步上游：`git fetch origin master && git merge master` 再 `git push mine dev`。记录 fork URL、base SHA、补丁 SHA、PR 和同步状态。不要因准备修复自动同步上游，先保留稳定复现基线；同步单独形成变更和回归。
 
 修复前后固定配置对照，检查目标机制确实触发，并回归受影响的旧 boss。上游合并补丁后验证再移除本地补丁，避免静默丢失行为。SQL 改动遵循所在子仓库当前 AGENTS.md，不能照旧文档直接修改历史/base SQL。
 

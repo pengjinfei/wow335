@@ -19,7 +19,7 @@
 | modules/mod-playerbots | master | 2f7d9f774987d0157c6a0d0cc08c40bec3db3945 |
 | modules/mod-raidtest | dev | 3b9203b（清怪前置与范围重置；完整HEAD见git log） |
 
-核心与机器人代码未做本地修改；框架 dev 尚未合并 main。此前提交未 push。机器人 origin 指向上游，尚未配置自己的 fork remote；不能把“本地克隆”称为已建立远端 fork。
+核心与机器人代码未做本地修改；框架 dev 尚未合并 main。mod-playerbots fork 已配置：remote `mine` = `pengjinfei/mod-playerbots`，`dev` 分支已推送（base `2f7d9f77`，当前无本地特调），`origin` 保留上游；mod-raidtest 框架改动（`a58a7f7`/`7ddd744`）在本地 dev，未推任何远端。
 
 ## 最新结论
 
