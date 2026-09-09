@@ -146,3 +146,50 @@ run286 的日志可见接近步骤两次生效：`elapsed=4ms` 时对 54.59 码�
 `Dragonflayer Strategist`/`Runecaster`/`Ironhelm` 位于 `x≈101–112, y≈38–59, z≈87.4`，**不在任何现有场景的前置列表里**——UK 还有未覆盖的小怪房间。
 
 下一步按序：为 UK 小怪机制补 playerbots 触发器/动作，按致命度排序（Ticking Bomb 散开 → Rune of Flame 规避 → Runecaster 打断 → Fixate 处理 → Decrepify 解诅咒），每项用 raidtest 单独验证，与 boss 机制同一套流程。
+
+### 2026-09-09 坦克改为联盟并重建四套 roster（attempt 1788426636–1788426642）
+
+目标是让真人（盗贼 DPS）与 bot 同队验证首要目标。原 roster 的坦克是**血精灵圣骑士（部落）**，其余四人是联盟。
+
+#### 为什么不改 AllowTwoSide
+
+核心代码给出精确边界：
+
+- `GroupHandler.cpp:119` / `Group.cpp:2178`：跨阵营**邀请与成员**需要 `AllowTwoSide.Interaction.Group`。
+- `ChatHandler.cpp:231`：开 `Group` 后队伍/团队频道变 `LANG_UNIVERSAL`，指令能通且可读。
+- `ChatHandler.cpp:428`：跨阵营**私聊**另需 `AllowTwoSide.Interaction.Chat`，否则 `SendWrongFactionNotice()`——而私聊正是指挥单个 bot 的方式。
+- `IsTwoFactionInstance()` 只覆盖 540/576/631/632/649/650/658/668，**map 574 不在其中**，无副本侧特殊分支。
+
+同时有一条已有证据说明**跨阵营治疗本就在工作**：所有 run 里矮人戒律牧都在给血精灵坦克治疗（run263 为 76 次、180,553 点），而当时 `Group = 0`。也就是说那两个开关只影响"玩家主动邀请"和"玩家聊天"。
+
+即便如此，开两个开关等于把服务器改成跨阵营互通，是一处基线改动。**改坦克种族更小且不碰基线**，故采用后者。
+
+#### 实施：force-recreate 是现成路径
+
+`RosterManager.cpp:105` 的角色复用靠持久映射表 `raidtest_accounts`（scenario_key, slot）→ character_guid，**不按名字查**；`DeleteSlotMapping` 在 force-recreate 时删映射行**与角色本身**（账号保留、拒绝删在线角色），因此旧名字会被释放，此前"每槽位仅 6 个候选名已耗尽"的限制自动消失。命令为 `.raidtest run <scenario> --attempts 1 --force-recreate`（`RaidTestCommandScript.cpp:263`）。
+
+改动仅两处：`mod-raidtest-roster-heroic5-disc-v1.conf` 的坦克 `Race = "bloodelf"` → `"dwarf"`（运行配置与模板同步），然后四套 UK 场景各 force-recreate 一次。注意该开关会重建**全部 5 个槽位**，所以四套的五人都按同一蓝图重建；只有坦克种族变化，其余同职业同天赋同装备。
+
+重建结果（全部为矮人圣骑 + 矮人牧师 + 人类盗贼 + 人类法师 + 德莱尼萨满，**皆联盟**，各 18–19 件装备）：
+
+| 场景 | 槽位 0–4 的 guid |
+|---|---|
+| heroic-uk-ingvar-disc | 751 / 752 / 753 / 754 / 755 |
+| heroic-uk-keleseth | 756 / 757 / 758 / 759 / 760 |
+| heroic-uk-skarvald-dalronn | 761 / 762 / 763 / 764 / 765 |
+| heroic-uk-ingvar | 766 / 767 / 768 / 769 / 770 |
+
+#### 换坦克后的验证
+
+| attempt | 场景 | 结果 | 猛击次数 | effect-0 命中 | 坦克承伤 | 治疗输出 |
+|---|---|---|---:|---:|---:|---:|
+| 1788426636 | ingvar-disc | 击杀 113.9s / 1 死 | 8 | 0 | 62,031 | 142,557 |
+| 1788426640 | ingvar-disc | 击杀 108.9s / 1 死 | 8 | 0 | 82,757 | 171,926 |
+| 1788426641 | ingvar-disc | 击杀 96.9s / 2 死 | 7 | 2 | 44,742 | 110,732 |
+| 1788426642 | ingvar-disc | 击杀 116.4s / 1 死 | 8 | 1 | 65,503 | 152,006 |
+
+**4/4 击杀，且坦克在 31 次猛击中一次都没被 effect-0 选中**——闪避修复与种族无关，成立。三次 effect-0 命中全在非坦克身上，且都是已记录的残余项：盗贼在接触距离两次（`dist=0.00`，boundary 旁路）、法师一次（`dist=3.48`，即中心距约 3.87 码，远程脱离偶尔失守）。
+
+必须如实标注差异：血精灵那套是 8/8、93.9–112.3 秒、4 场零死亡、56 次猛击仅 1 次 effect-0；矮人这套 4 场每场 1–2 死、坦克承伤 44.7k–82.8k（原 40.2k–59.0k）、治疗输出 110.7k–171.9k（原 68.2k–120.1k）。样本量 n=4 下不能断言两者等价，但"能稳定击杀"与"坦克闪避有效"两条都成立。
+
+其余三套的附带结果：斯卡瓦尔德完整链路**击杀 108.6s / 0 死**；官方 ingvar 仍在骑手阶段失败（骑手平台无导航网格，既有阻塞）；凯雷塞斯出现一个**既有门禁的时间余量问题**——`prerequisite_failed: natural recovery timeout`，`recovery_wait` 显示法师血已满而法力仅 10,166/16,503 且仍以约 990/次恢复，120 秒预算刚好不够（新角色打完前置怪时法力更低）。这不是机制失败，后续可单独复测或调整该预算。

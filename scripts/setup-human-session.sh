@@ -4,11 +4,14 @@
 # 设计取舍：不新建账号/角色/配装。ingvar-disc 那套五人（guid 741-745）已经
 # 持有 ilvl 200 蓝图装备、对应天赋与雕文，并且是 Ingvar 9/9 击杀的那一批。
 # 重建一套等价角色只会引入与验证基线的偏差，所以这里复用它们：
-#   741 raidteahfivc  血精灵 圣骑士  paladin_prot  坦克   -> bot
-#   742 raidtebhfivc  矮人   牧师    priest_disc   治疗   -> bot
-#   743 raidtechfivc  人类   盗贼    rogue_combat  DPS    -> 真人操作
-#   744 raidtedhfivc  人类   法师    mage_fire     DPS    -> bot
-#   745 raidteehfivc  德莱尼 萨满    shaman_elem   DPS    -> bot
+#   751 raidteahfivc  矮人   圣骑士  paladin_prot  坦克   -> bot
+#   752 raidtebhfivc  矮人   牧师    priest_disc   治疗   -> bot
+#   753 raidtechfivc  人类   盗贼    rogue_combat  DPS    -> 真人操作
+#   754 raidtedhfivc  人类   法师    mage_fire     DPS    -> bot
+#   755 raidteehfivc  德莱尼 萨满    shaman_elem   DPS    -> bot
+#
+# 2026-09-09：坦克种族已由 bloodelf 改为 dwarf 并 force-recreate，全队皆联盟，
+# 因此不需要改动 AllowTwoSide 的任何开关（原方案要同时开 Group 与 Chat）。
 #
 # 用法：
 #   scripts/setup-human-session.sh --password <你的密码> [--ip <LAN IP>] [--apply]
@@ -18,7 +21,7 @@ set -e
 ROOT=/Users/nowcoder/IdeaProjects/github/wow335/azerothcore-wotlk
 MYSQL=/opt/homebrew/opt/mysql@8.4/bin/mysql
 FIFO=/tmp/ac_world_fifo
-ROGUE_ACCOUNT=54          # RAIDTEST2，拥有 743 raidtechfivc（人类盗贼）
+ROGUE_ACCOUNT=54          # RAIDTEST2，拥有 753 raidtechfivc（人类盗贼）
 BOT_ACCOUNTS=(52 53 55 56)
 APPLY=0
 PASSWORD=""
@@ -38,7 +41,7 @@ if [ -z "$LAN_IP" ]; then echo "无法自动获取 LAN IP，请用 --ip 指定";
 if [ -z "$PASSWORD" ]; then echo "必须用 --password 指定账号密码（不写进脚本）"; exit 1; fi
 
 ACCOUNT_NAME=$($MYSQL -uroot acore_auth -N -e "SELECT username FROM account WHERE id=$ROGUE_ACCOUNT;")
-ROGUE_GUID=743             # 精确定位：账号 54 上有多套 roster 的同类角色，只有 743 是 9/9 验证过的那个
+ROGUE_GUID=753             # 精确定位：账号 54 上有多套 roster 的同类角色，753 是当前 ingvar-disc 映射的那个
 ROGUE_NAME=$($MYSQL -uroot acore_characters -N -e "SELECT name FROM characters WHERE guid=$ROGUE_GUID AND account=$ROGUE_ACCOUNT;")
 if [ -z "$ROGUE_NAME" ]; then echo "guid $ROGUE_GUID 不在账号 $ROGUE_ACCOUNT 上，请核对"; exit 1; fi
 
@@ -47,12 +50,9 @@ echo "1. realmlist.address / localAddress -> $LAN_IP"
 echo "   （认证后服务器告诉客户端连哪里；现在是 127.0.0.1，局域网客户端必然失败）"
 echo "   注意：本机应用防火墙已关闭，改完后局域网内任何设备都能连 3724/8085。"
 echo "   不要在路由器上把这两个端口转发到公网。"
-echo "2. worldserver.conf: AllowTwoSide.Interaction.Group 0 -> 1"
-echo "   （坦克是血精灵=部落，其余四人是联盟；raidtest 程序化建组绕过了阵营检查，"
-echo "     真人必须靠这个开关才能与坦克同队。这是一处基线改动，已记录。）"
-echo "3. playerbots_account_links: 账号 $ROGUE_ACCOUNT 与 ${BOT_ACCOUNTS[*]} 双向互链"
+echo "2. playerbots_account_links: 账号 $ROGUE_ACCOUNT 与 ${BOT_ACCOUNTS[*]} 双向互链"
 echo "   （让你能用 .playerbots bot add 控制另外四个账号上的角色）"
-echo "4. account set password $ACCOUNT_NAME <你指定的密码>（经 worldserver 控制台）"
+echo "3. account set password $ACCOUNT_NAME <你指定的密码>（经 worldserver 控制台）"
 echo
 echo "你登录后使用：账号 $ACCOUNT_NAME / 角色 $ROGUE_NAME（人类盗贼，rogue_combat，ilvl 200）"
 
@@ -71,16 +71,7 @@ $MYSQL -uroot acore_auth -e \
 echo "realmlist 已更新："
 $MYSQL -uroot acore_auth -e "SELECT id,name,address,localAddress,port,gamebuild FROM realmlist;"
 
-# 2. 跨阵营组队
-CONF=$ROOT/env/dist/etc/worldserver.conf
-if grep -qE "^AllowTwoSide\.Interaction\.Group *= *0" $CONF; then
-  /usr/bin/sed -i '' 's/^AllowTwoSide\.Interaction\.Group *= *0/AllowTwoSide.Interaction.Group = 1/' $CONF
-  echo "AllowTwoSide.Interaction.Group -> 1（需重启 worldserver 生效）"
-else
-  echo "AllowTwoSide.Interaction.Group 已非 0，跳过"
-fi
-
-# 3. 账号互链（PlayerbotMgr 查 playerbots_account_links 判断能否控制他人角色）
+# 2. 账号互链（PlayerbotMgr 查 playerbots_account_links 判断能否控制他人角色）
 for acc in "${BOT_ACCOUNTS[@]}"; do
   $MYSQL -uroot acore_playerbots -e \
     "INSERT IGNORE INTO playerbots_account_links (account_id, linked_account_id) VALUES ($ROGUE_ACCOUNT,$acc),($acc,$ROGUE_ACCOUNT);"
@@ -88,7 +79,7 @@ done
 echo "账号链接已写入："
 $MYSQL -uroot acore_playerbots -e "SELECT * FROM playerbots_account_links ORDER BY account_id, linked_account_id;"
 
-# 4. 密码（需要 worldserver 在运行，且 FIFO 有 reader）
+# 3. 密码（需要 worldserver 在运行，且 FIFO 有 reader）
 if pgrep -f "apps/worldserver$" >/dev/null 2>&1; then
   PASSWORD="$PASSWORD" ACCOUNT_NAME="$ACCOUNT_NAME" python3 -c "
 import os
