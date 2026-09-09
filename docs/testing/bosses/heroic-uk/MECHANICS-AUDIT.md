@@ -193,3 +193,38 @@ run286 的日志可见接近步骤两次生效：`elapsed=4ms` 时对 54.59 码�
 必须如实标注差异：血精灵那套是 8/8、93.9–112.3 秒、4 场零死亡、56 次猛击仅 1 次 effect-0；矮人这套 4 场每场 1–2 死、坦克承伤 44.7k–82.8k（原 40.2k–59.0k）、治疗输出 110.7k–171.9k（原 68.2k–120.1k）。样本量 n=4 下不能断言两者等价，但"能稳定击杀"与"坦克闪避有效"两条都成立。
 
 其余三套的附带结果：斯卡瓦尔德完整链路**击杀 108.6s / 0 死**；官方 ingvar 仍在骑手阶段失败（骑手平台无导航网格，既有阻塞）；凯雷塞斯出现一个**既有门禁的时间余量问题**——`prerequisite_failed: natural recovery timeout`，`recovery_wait` 显示法师血已满而法力仅 10,166/16,503 且仍以约 990/次恢复，120 秒预算刚好不够（新角色打完前置怪时法力更低）。这不是机制失败，后续可单独复测或调整该预算。
+
+### 2026-09-09 真人带队首场 + 三个框架缺陷修复
+
+#### 真人带队的第一份数据（无 raidtest attempt，仅 playerbots 日志）
+
+用户以人类盗贼 DPS（`Raidtechfivc`）带 4 个 bot（矮人圣骑坦克、矮人戒律牧、人类法师、德莱尼萨满）打通英雄 UK 三个 boss，`completedEncounters = 7`、五人 `permanent=1` 绑定 instance 8。
+
+坦克闪避在真人场里直接命中。82 次判据评估中 15 次 `useful=true`：
+
+| 判据组合 | 次数 | 含义 |
+|---|---:|---|
+| `inside_bypass=false inside_cone=false` | 67 | 坦克安全 |
+| `inside_bypass=true inside_cone=true` | 10 | 两条件都满足 |
+| **`inside_bypass=true inside_cone=false`** | **4** | **只在 2.0 码旁路内、不在前锥** |
+| `inside_bypass=false inside_cone=true` | 1 | 只在前锥内 |
+
+那 **4 次正是旧 `!behind` 判据会漏掉的类型**——旧代码会判成「在背后=安全」而跳过，然后硬吃 26k–34k。执行侧 10 次 `moved=true`、5 次 `duplicate=true`，落点全为 `boss_dest_dist=3.50`。远程脱离触发 7 次（距离 11.91–13.00 码）；散开触发 130 次、执行 94 次；斧规避 9 次发现、20 次尝试。
+
+**唯一死亡是真人自己**：P2 暗影猛击击杀。这是对 boundary 旁路结论的实地验证——`59709` 是暗影伤害（护甲无效）26,249–33,750，而 `IsWithinBoundaryRadius` 对玩家是 2.0 码**且绕过角度**，近战贴身时站背后同样被选中。bot 侧无问题，说明修复对 bot 有效，真人需要同样的站位纪律（中心距保持在 (2.0, 5.0) 区间）。
+
+#### 修复的三个缺陷
+
+1. **生成的角色名全小写**，导致任何按名字的命令都解析不到。`CharacterCache::GetCharacterGuidByName` 是 `std::map` 精确查找、区分大小写，而命令路径先经 `normalizePlayerName` 变成首字母大写——`.playerbots bot add Raidteahfivc` 永远找不到 raidtest 建的 `raidteahfivc`（实测报 `Character 'Raidteahfivc' not found`）。raidtest 自身不受影响，因为它从 `raidtest_accounts` 按 guid 取角色。`MakeCharacterName` 现在首字母大写，与核心角色名规范一致；库中既有角色已批量更名。
+2. **run 结束不解散队伍**。`groups` / `group_member` 会持久化，bot 下次上线仍在其中，真人加入只能当队员——队长恒为槽位 0 的坦克，于是排不了地牢查找器、也重置不了副本绑定（实测报「已与该副本锁定」，五人全部 `permanent=1` 绑在旧 instance 5）。`LogoutAll` 现在先 `Group::Disband()` 再登出。
+3. **观察器只在 attempt 内工作**，真人场没有 resolved target、effect_mask、站位采样与承伤归因——正是与 masterless 基线对照所需的证据。新增 `.raidtest observe start <scenario>` / `observe stop`：把既有采样器挂到发起者当前队伍上（含真人自己），**不登录角色、不建组、不传送、不开怪、不做判定**；成员每 tick 重取以跟随队伍变化；观察者离开世界即自动收尾。attempt 行以新的 `'observed'` 结果标记，而不是复用 `'aborted'`——后者会把只观察的场次混进通过率统计（此前占位行已造成过一次误判）。schema 迁移为模块自有的 `2026_09_09_00_mod_raidtest_observed.sql`，由更新器自动应用。
+
+修复后回归：一次 Ingvar 冷启动**击杀 112.0 秒、0 死亡**（矮人坦克首次零死亡），run 结束后队伍已消失，`Server.log` 有 `disbanding run group ... before logout`。
+
+#### 另一发现：客户端插件不是为上游写的
+
+用户的「天蓝机器人控制器」插件（`Interface\AddOns\playerbots\PlayerBots.lua`）通过 `SendChatMessage` 发送**中文命令原文**（`攻击`/`坦克攻击`/`散开`/`集合`/`驱散`/`三角阵型`…），且不加 `BOT\t` 前缀。而 `ExternalEventHelper::HandleCommand` 直接用收到的字符串查触发器（`aiObjectContext->GetTrigger(name)`），触发器名是英文字面量，所以中文命令被静默丢弃——手打 `attack` 能用只是因为它恰好等于上游触发器名。
+
+插件的英文管理命令在上游 mod-playerbots 中搜索结果**全部为 0 处**：`onlineselfbot`（即「小弟面板」）、`onlineguildmember`、`offlineallbot`、`onlinefriends`、`invitefriend`、`groupfriend`、`resetdungeon`、`setAndGetSmartStatus`、`setAndGetSmartFindPathStatus`、`startSellGoldMode`。插件另有 15 处 AIO 引用（基于 Eluna 的 RPC，AzerothCore 默认不带），面板数据大概走该通道。
+
+结论：该插件面向的是一个**大幅汉化并扩展过的 mod-playerbots 分支**，不是上游。要复现用户熟悉的操作方式需要分三层补：中文命令别名（可直接映射到已有触发器）、上游缺失的战斗功能（`散开` 可由 Ingvar 的 `ingvar spread` 推广）、以及账号管理命令（改插件调用 `.playerbots bot add` 比在服务端复刻更划算）。这些均属操作便利性，不阻塞「真人+机器人打通 boss」这一首要目标。
