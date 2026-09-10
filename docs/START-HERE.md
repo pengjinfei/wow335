@@ -115,6 +115,35 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
    场景是**启动时扫描注册**的（`RegisterAllScenarios`），**没有 reload 命令，新场景必须重启
    worldserver 才能跑**。用 `raidtest scenario list` 确认注册成功。
 
+1b. **官方场景不存在、要自己定坐标时**（换新本最常见），先过这三关，**不要靠试**：
+
+   **① 准备点必须在导航网格上。** 坐标看着在地上不代表 on-mesh。用核心 `findNearestPoly`
+   取实测投影再写进 conf——斯卡瓦尔德&达隆的 `(75,0,117)` 距最近可走多边形 **8.3 码**，
+   bot 被传送进几何体内部，对小怪和 boss 的 `los` 全为 false，两种拉怪都被拒，
+   该场景因此从加入起就没启动过。改成投影 `(81.50,-5.13,118.90)` 才跑通。
+
+   **② 准备点要在仇恨半径之外。** 核心 `Creature::CanStartAttack` 的判据是
+   `IsWithinDistInMap(who, GetAggroRange(who) + m_CombatDistance, ...)`，而
+   `Creature::GetAggroRange`：
+   ```
+   半径 = (detection_range − (玩家等级 − 怪等级) + 检测范围光环) × Rate.Creature.Aggro
+          detection_range 默认 20.0（creature_template 可覆盖）
+          下限 5 码，上限 45 码；本机 Rate.Creature.Aggro = 1
+   ```
+   **80 级玩家打 82 级英雄怪 → 20 − (80 − 82) = 22 码**，再加 `m_CombatDistance`。
+   另有垂直保护：`GetDistanceZ(who) > CREATURE_Z_ATTACK_RANGE + m_CombatDistance` 时不拉仇恨。
+   ⚠️ 源码里 `creatureLevel` / `playerLevel` 两个局部变量**名字是反的**
+   （`creatureLevel` 存的是玩家等级），照名字读会算错方向。
+
+   **③ 准备点要对拉怪目标有视线。** 房间是 L 形之类时，可能**不存在**能看到全部目标的
+   单一坐标——这不是坐标没选好。编排层已有 `AttemptRunner::ApproachPrerequisiteTarget`
+   （`AttemptRunner.cpp:1389`）：拉怪被拒时下达一次普通接近移动并重试，沿用整队全或无
+   路线预检，上限仍是 `PrerequisiteTimeoutSeconds`。斯卡瓦尔德&达隆的 10 只前置怪就是
+   靠它清掉的。
+
+   **场景范围不能改小。** 如果因为小怪在仇恨半径内就把 `PrerequisiteSpawns` 删掉，
+   那已经不是这个遭遇战了——见下面「场景范围与结论口径」。
+
 2. **跑基线前的固定动作**：
    ```sql
    DELETE FROM acore_characters.account_instance_times;
@@ -140,6 +169,24 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
 
 7. **样本纪律（本轮踩过的坑）**：先量化再下结论。本轮有三条假设是「看着像」但被实测推翻的
    （`save mana` 乘子、治疗空转、Woe 伤害阈值），都写在 Ingvar 记录里，别重走。
+
+### 场景范围与结论口径（**新建场景时最容易犯的错**）
+
+**删掉遭遇战本该清的小怪 = 把它改成了隔离形态，结论口径必须跟着降级。**
+
+改小场景范围（删 `PrerequisiteSpawns`、绕过 `KillGateSpawn`、跳过某个阶段）都属于
+「不是这个遭遇战了」。这类结果**只能记「隔离 boss 战当前配置击杀」，不能记
+「正常规则机制验收通过」**。
+
+先例：因格瓦尔有两个场景并存——`heroic-uk-ingvar`（官方，带三骑手前置）与
+`heroic-uk-ingvar-disc`（隔离）。隔离档 **9/9 击杀**，官方档只有 **1/5**，
+台账里分开记、**不混算**。只看隔离档会得出「这个 boss 已经通关」的错误结论。
+
+所以遇到「小怪在仇恨半径内没法干净开怪」时，正确顺序是：
+1. 先按上面 1b 找一个 on-mesh、距目标 > 仇恨半径、且有视线的准备点；
+2. 单点看不全就用 `ApproachPrerequisiteTarget` 分批接近；
+3. **确实无解**再退到隔离形态——并且在 conf 注释与 boss 记录里**写死删了什么、为什么**，
+   同时保留完整场景的条目，别让后来者把隔离档的击杀率当成通关证据。
 
 ## 记录与提交规则
 

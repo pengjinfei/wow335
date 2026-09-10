@@ -10,6 +10,10 @@
 
 复制 BOSS-TEMPLATE.md 到 bosses/<scenario>/README.md。核对 boss entry、难度、坐标、门和前置事件、实例恢复逻辑。默认单 boss 死亡判定不适合所有遭遇（例如治疗目标或多个首领）；先适配编排/判定，再实测。禁止让框架代替机器人完成机制。
 
+**场景范围只能等于或大于真实遭遇战，不能改小。** 删 `PrerequisiteSpawns`、绕过 `KillGateSpawn`、跳过某个阶段，都等于换了一个更容易的遭遇战；这类结果只能记「隔离 boss 战当前配置击杀」，**不能记「正常规则机制验收通过」**。先例：`heroic-uk-ingvar-disc`（隔离）9/9 击杀，而带三骑手前置的官方 `heroic-uk-ingvar` 只有 1/5，台账分开记、不混算。确需隔离形态时，**保留完整场景的条目**，并在 conf 注释与 boss 记录里写死删了什么、为什么。
+
+**自己定坐标时的三关**（详见 [START-HERE 新副本快速开始](../START-HERE.md)）：准备点必须是 `findNearestPoly` 的实测 on-mesh 投影（曾出现距最近多边形 8.3 码、bot 被塞进几何体、LoS 全 false 的情况）；必须落在仇恨半径外——`Creature::CanStartAttack` 用 `GetAggroRange(who) + m_CombatDistance`，而 `GetAggroRange` ≈ `(detection_range 默认 20 − (玩家等级 − 怪等级)) × Rate.Creature.Aggro`，80 级打 82 级英雄怪即 **22 码**（注意源码里 `creatureLevel`/`playerLevel` 变量名是反的）；必须对拉怪目标有视线，单点看不全时用已有的 `AttemptRunner::ApproachPrerequisiteTarget` 分批接近，而不是删怪。
+
 场景模板在 azerothcore-wotlk/modules/mod-raidtest/conf/；实际加载 env/dist/etc/modules/ 下的 .conf，模板文件不等于运行配置。安装可能覆盖运行配置，构建前后对照保存。编译需遵循当前用户授权，已授权时在核心目录运行 `MTHREADS=4 ./acore.sh compiler build`，按子仓库 AGENTS.md 做适用检查。保存构建结果及启动记录，确认服务加载了对应二进制。
 
 ## 3. 运行与观察
