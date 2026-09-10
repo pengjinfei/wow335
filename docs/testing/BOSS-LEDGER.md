@@ -2,6 +2,31 @@
 
 更新：2026-09-10。每行结果限定版本、装备、难度和辅助配置；未填不代表支持。
 
+2026-09-10 干净环境复测（run332，3 击杀 / 2 团灭）——两条结论：
+(1) **无视线秒数与成败显著相关**。合并 run329/331/332 的 11 场完成 attempt：无视线 = 0 的
+6 场全部击杀，无视线 > 0 的 5 场中 4 场团灭；**四场团灭全部有无视线时间，七场击杀里六场为 0**，
+双尾 Fisher **p = 0.015**（唯一例外来自环境已退化的 run331/seq2）。
+(2) **「Woe 反射伤害 ≥2 万即团灭」这个阈值被推翻**：run332/seq1 反射 48,768 却击杀，
+seq4 只有 16,515 却团灭。此前基于 run317–326 的「击杀 ≤19,175 / 团灭 ≥21,311」是样本巧合，
+**不得再引用**；反射伤害仍是主要压力源，但绝对值不是判据，**能否及时解掉才是**。
+样本仍只有 11 场，且散开逻辑一改会同时影响躲前锥（20%→67% 的来源），
+**动手前须再补一轮干净的 10–15 场，并把「前锥命中率」纳入回归**。
+
+2026-09-10 环境与框架三处问题（均已处理，独立于策略线）：
+(1) **bot 自动装备捡到的升级件会静默破坏固定装备档**——run330 超时场里法师捡了 ilvl 200 的腿
+换上，顶破 187 上限，该 run 后续 7 场全被夹具拦下。根因 `AiPlayerbot.AutoEquipUpgradeLoot = 1`，
+**运行配置已改为 0**；这是在*执行*「装备档位固定」而非放宽。此前各 run 逐槽校验均通过，
+历史证据不受影响。
+(2) **夹具校验把「还没复活」误报成「装备不合格」（已修）**：`RosterBuilder` 用
+`bot->CanUseItem(item)`，而 `Player::CanUseItem` 对死亡角色返回 `EQUIP_ERR_YOU_ARE_DEAD`，
+上一场有减员时校验赶在复活前跑就会**每个槽位都报** `item requirements not met`（run331/seq3）。
+改为 `CanUseItem(item, false)`：只跳过死亡判定，其余要求照常；存活由 Recovery 阶段的
+`roster casualty before boss pull` 把关。
+(3) **长时间连续运行后编排不稳**：run330/331 首场均 300 秒超时（boss 到 6% 后 `boss_hp`
+采样中断），run331 末三场与 run332/seq6 卡 `role-separated preparation position gate failed`。
+缓解：每轮前清 `account_instance_times` 与 `instance WHERE map=574` 并重启 worldserver；
+**根因未定位**，列为待办。
+
 2026-09-10 UK 另两个 boss 的 normal5-v1 基线（**普通装打英雄本的第一批结论**）：新建
 `heroic-uk-keleseth-n5` 与 `heroic-uk-skarvald-dalronn-n5`，与各自英雄场景逐行相同、只换
 RosterFile 到 `normal5-v1`，不动 boss、难度与 cheat（`BotCheats = ""`）。
