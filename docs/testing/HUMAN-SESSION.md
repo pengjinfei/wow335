@@ -122,6 +122,41 @@ target/hp/strategy/action/values 等）。
 
 中文别名与自定义插件交互是**待办**，不是现状。
 
+## 4b. 让 bot 接管自己的角色（selfbot）
+
+打 boss 时不想自己操作，可以把自己的角色交给 bot AI 打。**游戏内**发：
+
+```
+.playerbots bot self
+```
+
+**这是个开关，再发一次就收回控制权**（源码 `PlayerbotMgr.cpp` 的 `"self"` 分支：
+已有 botAI 就 `delete`，没有就 `AddPlayerbotData(master, true)` 并 `SetMaster(master)`）。
+
+已从源码/配置核对过的前提：
+
+| 项 | 值 | 说明 |
+|---|---|---|
+| 命令 | `.playerbots bot self` | 命令表 `playerbots` → `bot`；`Console::No`，**只能游戏内发，控制台不行** |
+| 权限门槛 | `AiPlayerbot.SelfBotLevel = 1` | 0=禁用，1=**仅 GM**，2=所有玩家，3=登录即自动接管 |
+| 当前账号 | `ADMIN` gmlevel **3** | `CanBeGameMaster()` 走 RBAC `RBAC_PERM_COMMAND_GM`，管理员默认具备 |
+
+所以**当前配置下你直接就能用，不需要改任何东西**。如果要让非 GM 账号也能用，把
+`SelfBotLevel` 改成 2；改成 3 会变成每次登录自动接管（多数时候不是你想要的）。
+
+接管后 bot 用的是 `AiFactory` 按你的**专精**给的默认策略，和普通 bot 一路。指挥方式和第 4 节
+一样（`/p attack` 等英文触发器）。
+
+**注意事项**：
+
+- 接管期间你自己的键鼠输入会和 AI 抢移动，最好站着别动，只用聊天下指令。
+- 一旦接管，这个角色就**不再是「真人操作」的证据**了。如果这一场是要证明「真人带队 +
+  bot 配合」，接管前后要在记录里写清楚哪几段是 bot 打的，别把整场标成真人验证。
+- `.raidtest observe` 与它互不影响，观察器只采样、不管谁在操作。
+
+**尚未实机验证**：以上是源码与配置层面的确认，本轮没有真人客户端上机实测过接管后的实际
+表现（能否正常进战斗、走位是否和客户端打架）。第一次用的时候留意一下，把结果补回这里。
+
 ## 5. 采集证据
 
 真人自己开观察会话（命令已降到 `SEC_PLAYER`，不需要 GM）：
@@ -150,6 +185,7 @@ FROM acore_characters.raidtest_attempts WHERE run_id=<run> ORDER BY seq;
 
 ## 已知未做
 
+- selfbot 接管的实机验证（命令与权限已从源码确认，见 4b，但没上机跑过）
 - 中文命令别名
 - 自定义插件与 bot 的双向交互
 - 阵型 / 集火 / 散开一类的新增指令
