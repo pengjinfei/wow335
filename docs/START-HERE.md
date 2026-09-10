@@ -40,26 +40,45 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
 英雄档 heroic5-v1 及其全部证据原样保留，不覆盖）。boss 难度仍为英雄。也就是说：
 **难度不再靠装备补，只能靠 bot 策略。** 不得用作弊、难度开关或临时调装换击杀率。
 
-已完成的起点（UK 因格瓦尔，场景 `heroic-uk-ingvar-n5`）：
+UK 三个 boss 的普通档基线已经全部跑完（2026-09-10）：
 
-| 阶段 | 击杀率 |
-|---|---|
-| 换普通装备（run316） | 1/5 = 20% |
-| 修 P2 两个走位缺陷后（run317/318/321） | 10/15 = **67%**，4 场零死亡 |
+| 场景 | 结果 | 判定 |
+|---|---|---|
+| `heroic-uk-keleseth-n5`（run322） | 4 击杀 / 0 团灭，四场零死亡 | 不是瓶颈 |
+| `heroic-uk-skarvald-dalronn-n5`（run323） | **5/5 击杀**，五场零死亡 | 不是瓶颈 |
+| `heroic-uk-ingvar-n5`（run316→317/318/321） | 20% → 10/15 = **67%**，4 场零死亡 | **唯一瓶颈** |
 
-三轮跨度为 80/80/40，15 个样本不足以把击杀率定到个位数精度；要报稳定值需要更多样本。
+也就是说 **UK 里只有因格瓦尔受装备档位影响**，另两个照抄英雄场景换 roster 就直接过，
+不需要为它们改 bot 策略。Ingvar 的 67% 来自三轮 80/80/40，15 个样本不足以定到个位数精度。
 
 推进建议（新会话可按此展开）：
 
-1. 先把 UK 另外两个 boss（凯雷塞斯、斯卡瓦尔德&达隆）也切到 normal5-v1 跑基线——
-   只需照 `mod-raidtest-scenario-heroic-uk-ingvar-n5.conf.dist` 复制场景并指向
-   `normal5-v1` 阵容，不改 boss 与规则。先量出普通装下的实际击杀率，再决定要不要修。
-2. Ingvar 剩余团灭的靶子已经明确且与站位无关：**Dreadful Roar 的全队 6.6k–10.8k 伤害**。
-   run318/seq4 全队以 84/74/77/**50**/94% 血进这一记，法师被 10,766 打死；同期戒律牧师
-   放了 19 次射击（Shoot）、全场**零次群体治疗**。方向是「利用 2 秒读条把队伍垫起来」
-   （预读条群疗或全队套盾），不是继续调站位。
+1. **Ingvar 的靶子已经从「Dreadful Roar 伤害」修正为「治疗在冷却间隙空转」。**
+   牧师带着 **45% 法力**阵亡、P1 全程满蓝，所以不是法力问题；run318/seq4 里它从
+   87.680s 起连续 **7.5 秒不提交任何法术**（位置不动、`moving=false can_move=true`，
+   未被恐惧或控制），同期坦克 20.7%→10.3%、盗贼 15.4% 并死亡。盾被虚弱灵魂挡、
+   苦修与愈言术都在 10 秒 CD 上，**唯一无 CD 的快速治疗一次都没放**。这不是普通档
+   特有：英雄档 8/8 那八场同样是快速治疗 0–2 次、Shoot 13–22 次。
+   下一步是取引擎自己的判定（`A:flash heal on party - USELESS/IMPOSSIBLE/FAILED`），
+   见下面「本轮留下的两件半成品」。
+2. **新缺陷：bot 战斗外低于 `LowMana` 阈值仍不喝水**（run322/attempt1 唯一非击杀的
+   直接原因）。包里有 20 个蜜风茶，牧师 11.9% 法力，回蓝曲线全程恒定 ~78/s 没有加速段。
+   五人本连打时它直接决定下一场能不能开，前置怪越多越严重。属 mod-playerbots，优先修。
 3. 扩到 UK 以外的英雄本时，逐本重复同一套流程：先建场景 + 跑基线 → 定位死因 →
-   只在 mod-playerbots 修 → 重测 → 记录。**不要**先写策略再找问题。
+   只在 mod-playerbots 修 → 重测 → 记录。**不要**先写策略再找问题。UK 的经验是：
+   多数 boss 在普通档下直接过，先跑基线能省掉大量无用的策略改动。
+
+### 本轮留下的两件半成品（下次接手先处理）
+
+- **运行配置被改过**：`env/dist/etc/modules/playerbots.conf` 的
+  `AiPlayerbot.LogInGroupOnly` 已由 1 改为 **0**（否则 `Engine::lastAction` 恒为空，
+  取不到引擎判定）。诊断做完必须改回 1。改前副本见会话 scratchpad。
+- **mod-raidtest 有未提交、未编译的只读改动**：`AttemptObserver` 增加了治疗的
+  `heal_strategies` / `heal_actions` 采样（与既有 `tank_actions` 同机制，只回读
+  `HandleRemoteCommand("action")`，不触发 `isUseful/CheckCast`，不改任何 tank_* 证据）。
+  需要一次增量编译才能生效：
+  `nice -n 10 cmake --build var/build/obj --target worldserver -j4`（约 5 个 TU + 链接）。
+  编译前须征得用户同意。
 
 **避坑（本轮踩过的）**：查 attempt 结果必须等 `raidtest_runs.finished_at` 非空；
 跑动中 attempt 行会显示为 `aborted/0/NULL` 占位值，我据此把 run321 统计成了 2/2，
