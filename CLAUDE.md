@@ -6,6 +6,7 @@
 
 - 根目录 AGENTS.md 是会话工作约定；核心及模块各自的 AGENTS.md 同样适用。
 - [测试/fork/交接流程](docs/testing/WORKFLOW.md)
+- [真人实机验证流程（Windows 客户端连 Mac）](docs/testing/HUMAN-SESSION.md)
 - [逐 boss 记录模板](docs/testing/BOSS-TEMPLATE.md)
 - [源码覆盖与辅助行为](docs/testing/SOURCE-COVERAGE.md)
 - [环境搭建](docs/02-环境搭建手册-macOS.md)
