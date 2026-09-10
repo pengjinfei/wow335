@@ -2,6 +2,66 @@
 
 更新：2026-09-10。每行结果限定版本、装备、难度和辅助配置；未填不代表支持。
 
+## 英雄魔枢（The Nexus，map 576）normal5-v1 首轮（2026-09-10）
+
+UK 收尾后按 START-HERE 换本，选魔枢：四 boss 全在地面、无载具/护送，mod-playerbots 上游
+已有 `wotlk-nex` 策略覆盖四个 boss 的机制，mmap 四个房间的 tile 齐全。装备档位、难度、
+cheat 一律不变（`normal5-v1` / 英雄 / `BotCheats = ""` / `AutoEquipUpgradeLoot = 0`）。
+
+| boss | 场景 | 结果 | 判定 |
+|---|---|---|---|
+| 大魔导师泰蕾斯特拉 | `heroic-nexus-telestra-n5` | run353/354 合计 7 场 -> **4 击杀 / 1 团灭 / 2 场未进到 boss**，四场击杀零死亡 | **完整链路（4 只房前守卫 + boss）正常规则击杀，稳定性未验收** |
+| 阿诺姆鲁斯 | `heroic-nexus-anomalus-n5` | run342 **0 击杀 / 5 团灭**，boss 最低 33% | **策略失败**（本副本唯一无小怪污染的干净样本） |
+| 奥莫洛克 | `heroic-nexus-ormorok-n5` | run343 **0 击杀 / 5 团灭**，boss 最低 90% | **策略失败**，且守卫组分不开（形态 = boss + 4 精英一次开怪） |
+| 凯利丝塔萨 | `heroic-nexus-keristrasza-n5` | run337 `pull failed (boss not engaged)`，boss 100% | **框架阻断**：真机制进度门禁，无法隔离测试 |
+
+**凯利丝塔萨是硬门禁，不是坐标问题**：`boss_keristrasza.cpp:100-120` 里她默认带
+`UNIT_FLAG_NON_ATTACKABLE` + 冰冻牢笼(47854)，解除条件是 `DATA_TELESTRA_ORB`(5) /
+`DATA_ANOMALUS_ORB`(6) / `DATA_ORMOROK_ORB`(7) 全为 `DONE`；而这三个状态**只能**由点击
+三个球体 gameobject（188526/188527/188528）置位（`instance_nexus.cpp:140-158`），球体又要
+对应 boss 先死才可选中（同文件 106-125）。也就是说「打通魔枢」需要**同一实例内的多 boss
+链式场景 + 三次 gameobject 使用**，现有 `Scenario`（一个 `BossEntry` + 可选一个
+`KillGateSpawn`、attempt 间清实例绑定）做不到。两条可选路线写在
+[凯利丝塔萨记录](bosses/heroic-nexus-keristrasza/README.md)，**需用户决定**。
+
+**夹具层的三条硬数值**（[勘测记录](bosses/heroic-nexus/FIXTURE-SURVEY.md)，跨副本可复用）：
+(1) 英雄 boss 仇恨半径 **22 码**（`Creature::GetAggroRange`：detection 20 − 等级差 −2，
+rate 1，且要求 LOS）；小怪等级 80 同式得 20 码。
+(2) **远程 bot 站桩距离约「离目标 26 码」**（run338 实测：目标 (517.0,90.3)、法师 (541.9,80.9)）——
+选清怪点必须把这 26 码算进去，否则会多拉一组，run338 因此 5/5 报废。
+(3) 「清小怪时 boss 参战」有两个成因：**bot 走进 boss 22 码半径**（泰蕾斯特拉，清怪点
+推到 32 码即解决），与**守卫本身离 boss 太近、挨打即协助**（奥莫洛克，守卫距 boss 17.1 码，
+第一下伤害后 **90 毫秒** boss 参战；清怪点放到 41.5 码外仍触发，**挪位置无解**）。
+
+**三个被实测推翻的方案，别重走**：
+(1) **「守卫留活、只打 boss」不可行**——泰蕾斯特拉 run341（拉怪点距守卫 29.8 码）5/5 场守卫
+参战；奥莫洛克 run343（距守卫 31.9 码）5/5 场守卫参战且承伤 Keeper 288,315 + Tender 160,307
+超过 boss 本人 150,258。
+(2) **零位移导航探针证不了连通性**——probe-g 的 (239.2,-249.0,-8.40) 零位移通过，实际是孤岛
+（`type=4 actual_end=247.20,-248.27 component=disconnected`），清怪 180 秒超时。要验证连通性
+必须用位移探针（起点候选点、终点 boss 生成点）。
+(3) **奥莫洛克的守卫是巡逻怪**——DB 生成点 x∈[247.9,253.4]，运行时实测同一只 `28231` 出现在
+(303.55,-240.54,-14.09) 与 (285.51,-233.67,-8.41)，游走 50 余码；冷启动瞬间总在生成点附近、
+距 boss 17.1 码，所以「固定清怪点 + 固定前置 GUID」这套夹具对它天然不成立。
+
+**阿诺姆鲁斯的归因（干净样本）**：五场 bot 对 boss 输出 233k–276k、对裂隙及召唤物 162k–217k
+（占 37–46%），说明 `chaotic rift -> chaotic rift target` 转火**确实在生效**；但承伤是
+Chaotic Rift 479,849 + Crazed Mana-Wraith 184,635 + Crazed Mana-Surge 134,143 = **798,627**，
+超过 boss 本人的 709,734。即不是「bot 不会打裂隙」，而是裂隙产出快过 5 人 ilvl 187 的清理与
+治疗速度。raid DPS 约 5,000–5,600，与 UK 同 roster 的 5,800–6,700 同量级，属该装备档正常水平。
+
+**框架改动（mod-raidtest，本轮唯一代码改动）**：`CombatTrigger::RuntimeStrategyName` 原来只
+映射 `"wotlk-uk" -> "utgarde keep"`；map 576 的 Context 键是 `"wotlk-nex"` 而 `Engine` 以
+`WotlkDungeonNexStrategy::getName()` 即 `"nexus"` 存放，导致 `EnsureCombatInstanceStrategy`
+把每次拉怪判成 `raid_invalid: instance combat strategy inactive before pull`。改成映射表后
+运行时日志确认 `strategy='wotlk-nex' active=true`。
+
+**roster 收敛（按用户要求）**：mod-raidtest 原本按 `scenario_key` 给每个场景各建一套角色，
+而 12 字符截断后同 roster 基名相同、只靠 `a..e` 后缀区分（`kNameAttempts = 5`），
+`normal5-v1` 的六个名额已被占满，第 6 个场景直接 `roster ensure failed (create failed)`。
+**没有改代码放宽后缀**，而是把四个魔枢场景的 `raidtest_accounts` 映射统一指到同一套角色
+（guid **796–800**）。附带好处：四个 boss 的样本来自完全相同的五个角色。10 人本再另建账号。
+
 ## 英雄乌特加德城堡（UK）normal5-v1 收尾（2026-09-10）
 
 本副本在普通五人本毕业装备（normal5-v1，ilvl 上限 187，boss 仍为英雄难度，
@@ -138,6 +198,10 @@ run322/attempt1 是唯一非击杀，记为 `prerequisite_failed: natural recove
 | heroic-uk-skarvald-dalronn-n5，五人 normal5-v1 | run323：**5/5 击杀，五场零死亡**（前置 34–47s、双 boss 段 59.5–64.8s） | **普通装不构成瓶颈**，完整链路含 10 只前置怪 | 不需为它改策略 |
 | heroic-uk-ingvar-n5，五人 normal5-v1 | 固定二进制 run317/318/321/324 合计 13/20 = 65%；run332 干净环境 3/5 | **未通关**；根因已定位（Woe Strike 反射 + 法师无视线，Fisher p=0.015）未修 | 修散开视线约束时须同时回归前锥命中率，并先补 10–15 场 |
 | heroic-uk-ingvar，五人 heroic5-disc-v1 | 6514 验证首把斧 0 码成员可借侧向回退撤至 8–12 码；6520/6528/6530 击杀，6521–526 为诊断样本；6526 记录 `59709` resolved targets；6532 覆盖 5 次 P2 的 history 探针反例；6534、6536 为新紧急移动分支后的自然团灭；6538 为新二进制自然击杀；6540–6543 为 P1/斧诊断；6544 复验 P1 职责边界；6546 为新增自然击杀；6548–6549 验证精确结算站位；6557、6559 动作归因/隔离样本；6561–6568 斧净空、普通绕背与 `reach melee` 复验；6569–6573 安全环及当前版本 cold start；6574 P1 只读诊断；6575 不修正共同准备点对照；6576 角色分离 fixture 首样本；6577–6579 新基线 cold start；6578 P2 首死归因；6580 暗影斧只读动作闭环；6581 CanMove 控制状态样本；6582 aura/时序样本 | 角色分离 fixture 已连续 5 次以 5/5 位置门禁通过；新基线正式 cold-start 仍仅为 **2/3 击杀，稳定性未验收**（6577 kill/0 death，6578 wipe/5 deaths，6579 kill/1 death）。6580–6582 是单场诊断团灭，不混入稳定率：两把斧的 20/1/7 码、HP、最近治疗与生命周期均已持久化。6580 的第二把斧前治疗已在 P2 的后方 `effect_mask=6` 伤害中死亡，随后萨满 0 码面对有效的 8 码候选却因 `CanMove=false` 未提交，收到斧实体 5,514 点伤害死亡。6581 确认有效候选的 `CanMove=false` 可同时为 `lost_control=true/rooted=true`；6582 将其具体映射为英雄暗影猛击的 `stun:59709`，排除旧移动等待。6582 中 `59709` 于 108.595s 施放、暗影斧于 108.608s 出现；斧首次进入危险半径时角色已处于正常控制窗口，不能用优先级或强制移动绕过。三场首次 P1 `59706` 均只命中坦克，排除旧共同前方出生点作为本组团灭的直接解释；三场均有 P2 记录。旧共同准备点结果不得混计。P2 前锥紧急动作已与普通绕背分离为 `MOVEMENT_FORCED`，且不依赖当前攻击目标；6538 已验证主链路。P1 恢复坦克朝向、非坦克后方模型，6544 的 P1 effect-0 仅命中坦克。6563 验证 7 码斧候选净空（20 次成功提交最低 7.88 码）；`Follow` 试验 6566 与单参数 `MoveChase` 试验 6568 均出现中心重叠，均已回退；6567 证明 `reach melee` 成功端点为 3.75–4.88 码，非该场 1 码重叠的直接来源。6571/6572 验证安全环触发→forced 7 码后方移动。 | 保留 fixture、斧的 7 码净空、`set behind` 隔离、`reach melee` 观察和 1.5 码提前安全环（`ACTION_MOVE + 10`）。2026-09-09 已完成该只读对照（6577–6582）：P2 首把斧在六场中全部落在首次 `59709` 之后恰好 +1.99~2.00 秒（必定在控制窗口内）且从未致死；第二把斧（102.0–108.6 秒）在出现的四场中每场至少致死一人，与是否撞控制窗口无关（+0.01s 两场、+6.17/6.46s 两场）。因此排除移动优先级与强制移动方向。三场团灭停在 Boss 7%/10%/13%；P1 六场均为 247,626 点/36.7–42.8 秒（约 5,800–6,700 raid DPS），P2 同为 247,626 点却只有 2,551–5,389 raid DPS，差距来源已实测为 `59709` 自读条起始把全队（含 reach 校正后 28.83 码的治疗）置为 `can_move=false`，而 P1 的 `59706` 窗口全员 `can_move=true`。6582 第二把斧同时命中相距约 3.9 码中心距的法师（55% 血）与萨满（45% 血），两跳各约 4.7k–5.1k 致死；中心距约 7.2 码与 8.3 码的成员未受斧伤，满血两跳不致死。下一步按序为：P2 非坦克互散 8 码、补治疗法力/目标只读字段、归因治疗在 101–107 秒先死、查清近战 effect-0 接触路径、统计 P2 不可行动/规避/输出占比。不得绕过控制、调装备、难度、cheat 或泛化 P1 躲避；跨进程以 attempt ID 聚合 |
+| heroic-nexus-telestra-n5，五人 normal5-v1 | run353 2/2 零死亡击杀；run354 2 击杀 / 1 团灭(boss 6%) / 2 场清怪减员未进 boss | **完整链路正常规则击杀**（4 只房前守卫 + boss），稳定性未验收 | 补 10 场判稳定率；压清怪阶段减员 |
+| heroic-nexus-anomalus-n5，五人 normal5-v1 | run342 0 击杀 / 5 团灭，boss 最低 33%；裂隙及召唤物承伤 798,627 > boss 709,734 | **策略失败**（无小怪污染的干净样本） | 查裂隙清理效率与治疗在裂隙 AoE 下的站位 |
+| heroic-nexus-ormorok-n5，五人 normal5-v1 | run343 0 击杀 / 5 团灭，boss 最低 90%；守卫组无法分离（run349/355 证明挪清怪点无解） | **策略失败**，形态 = boss + 4 精英一次开怪 | 需框架支持「按巡逻距离择时开怪」才能测干净 boss 段 |
+| heroic-nexus-keristrasza-n5，五人 normal5-v1 | run337 `pull failed (boss not engaged)`，boss 100%、0 死亡 | **框架阻断**：三球体进度门禁（代码级证据已存） | 需用户决定框架路线（多 boss 链式 或 隔离形态） |
 | naxx-loatheb，十人 fixture-v1 | run77/a1,a2、run78/a1；3 次零死亡击杀；框架 8f06a10 | 当前配置编排回归通过；无辅助、同阶段装备及完整机制覆盖未验收 | cheat 审计后建立正常规则对照 |
 | naxx-patchwerk | 已有场景配置和历史测试；未做 8f06a10 固定角色回归 | 待本版本验证 | 完成基线口径核验后复测 |
 | 其他 WLK boss | 仅源码覆盖初查 | 未验收 | 按 WORKFLOW 新建逐 boss 记录 |

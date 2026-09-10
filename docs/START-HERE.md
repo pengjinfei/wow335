@@ -17,7 +17,7 @@
 | 管理库 | main | UK 收尾提交（见 `git log -1`） |
 | azerothcore-wotlk | Playerbot | `516b14df1`（map 574 诊断与长路线容量，本轮未改） |
 | modules/mod-playerbots | codex/heroic-uk-ingvar | `67ac953c`（P2 两个走位缺陷修复；**已推送到 fork `mine`**；本轮未改） |
-| modules/mod-raidtest | dev | `dfc7372`（三组只读采样 + 夹具死亡误判修复 + 两个 n5 场景） |
+| modules/mod-raidtest | dev | `dfc7372` + **未提交**：`CombatTrigger` 策略名映射加 `"wotlk-nex" -> "nexus"`（否则 map 576 每次拉怪都被门禁拒）、四个 `heroic-nexus-*-n5` 场景 |
 
 mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-playerbots`（无写权限），
 `mine` 才是 fork `pengjinfei/mod-playerbots`。分支 upstream 已固定到 `mine`，直接 `git push` 即可。
@@ -29,7 +29,7 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
 零死亡击杀、斯卡瓦尔德&达隆 run286–288 三次完整链路零死亡击杀、因格瓦尔 run265–272 八次
 冷启动 8/8。这一档的全部证据保留，**不被 normal5-v1 覆盖**。寻径方面 map 574 上下端已实测
 在同一 Detour 连通分量，但三骑手平台缺 mmap 覆盖，跨房间自主行进仍被资产阻塞。
-细节见各 boss 记录与 [UK 机制审计](testing/bosses/heroic-uk/MECHANICS-AUDIT.md)。
+细节见各 boss 记录与 [UK 机制审计](testing/bosses/heroic-uk/MECHANICS-AUDIT.md)、[魔枢夹具勘测](testing/bosses/heroic-nexus/FIXTURE-SURVEY.md)、[泰蕾斯特拉](testing/bosses/heroic-nexus-telestra/README.md)、[阿诺姆鲁斯](testing/bosses/heroic-nexus-anomalus/README.md)、[奥莫洛克](testing/bosses/heroic-nexus-ormorok/README.md)、[凯利丝塔萨](testing/bosses/heroic-nexus-keristrasza/README.md)。
 
 ## 当前目标（2026-09-10 用户指定）
 
@@ -39,7 +39,7 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
 英雄档 heroic5-v1 及其全部证据原样保留，不覆盖）。boss 难度仍为英雄。也就是说：
 **难度不再靠装备补，只能靠 bot 策略。** 不得用作弊、难度开关或临时调装换击杀率。
 
-### UK 已收尾（2026-09-10），下一步换本
+### UK 已收尾（2026-09-10）
 
 | 场景 | 结果 | 判定 |
 |---|---|---|
@@ -47,32 +47,38 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
 | `heroic-uk-skarvald-dalronn-n5`（run323） | **5/5 击杀**，五场零死亡 | **正常规则通关**（含 10 只前置怪 + 双 boss） |
 | `heroic-uk-ingvar-n5` | 固定二进制 13/20 = **65%** | **未通关**，根因已定位未修 |
 
-冰墓机制本轮一并验收通过：四场击杀里冰墓每场生成，五名成员全部对其输出，是转火拆而非硬扛。
+因格瓦尔剩下的事见 [台账](testing/BOSS-LEDGER.md) 与 [Ingvar 记录](testing/bosses/heroic-uk-ingvar/README.md)：
+根因是 Woe Strike(59735) 诅咒的反射伤害 + 法师近六成诅咒时间对坦克无视线（Fisher p = 0.015），
+**没动手修**，因为散开逻辑正是上一轮 20%→67% 的来源，改动必须同时回归「前锥 effect-0 命中率」。
 
-**因格瓦尔剩下的事（不阻塞换本，详见台账与 Ingvar 记录）**：根因是 Woe Strike(59735) 诅咒
-挂坦克身上时治疗每治疗坦克一次就有一份暗影伤害打回治疗，法师能解但近六成诅咒时间对坦克
-无视线（散开落点不校验视线），无视线秒数与成败 Fisher **p = 0.015**（11 场）。
-**没动手修**，因为散开逻辑正是上一轮 20%→67% 的来源，加视线约束可能把成员推回前锥——
-改的话必须同时回归「前锥 effect-0 命中率」，并先补一轮干净的 10–15 场。
+### 第二个副本：英雄魔枢（The Nexus，map 576）首轮已完成（2026-09-10）
 
-下一步（新会话按此展开）：
+四个场景已建好并跑出基线，详见 [夹具勘测](testing/bosses/heroic-nexus/FIXTURE-SURVEY.md)
+与四个 boss 记录。**结论：魔枢比 UK 难得多，四个 boss 只有一个能过。**
 
-1. **换下一个英雄五人本，先建场景跑基线。** 照
-   `mod-raidtest-scenario-heroic-uk-*-n5.conf.dist` 复制一份，只把 `RosterFile` 指向
-   `mod-raidtest-roster-normal5-v1.conf`，boss、难度、前置怪、准备点全部照抄官方场景。
-   **UK 的经验是：多数 boss 在普通档下直接过（三个里只有一个需要深挖），先量基线能省掉
-   大量无用的策略改动。不要先写策略再找问题。** 候选按邻近度：魔枢、艾卓-尼鲁布、
-   安卡赫特、violet hold。
-2. **跑之前的固定动作**：清 `account_instance_times` 与 `instance WHERE map=<mapid>`，
-   重启 worldserver；确认 `AiPlayerbot.AutoEquipUpgradeLoot = 0`（否则 bot 会捡装备穿上、
-   静默顶破 187 装备档）；结果一律等 `raidtest_runs.finished_at` 非空再统计。
-3. **跨本很可能复用的两个已知缺陷**（都还没修，遇到再一起解决收益更大）：
-   - **bot 战斗外低于 `LowMana` 阈值仍不喝水**（run322/attempt1 唯一非击杀的直接原因；
-     包里有 20 个蜜风茶，回蓝曲线恒定 ~78/s 无加速段）。前置怪越多越严重。
-   - **散开落点不校验对队友的视线**，导致驱散/治疗类目标选择静默失败
-     （`PartyMemberValue::Check` 硬性要求 `IsWithinLOS`）。因格瓦尔上已量化。
-4. 因格瓦尔的收尾修复（散开加视线约束 + 前锥命中率回归）可以等积累了其它副本的样本
-   之后再一起做——如果同一个缺陷在多个本里都出现，修一次的收益更大。
+| boss | 场景 | 结果 | 判定 |
+|---|---|---|---|
+| 泰蕾斯特拉 | `heroic-nexus-telestra-n5` | 7 场 -> 4 击杀 / 1 团灭 / 2 场未进 boss | **完整链路击杀**，稳定性未验收 |
+| 阿诺姆鲁斯 | `heroic-nexus-anomalus-n5` | 0/5，boss 最低 33% | **策略失败**（干净样本） |
+| 奥莫洛克 | `heroic-nexus-ormorok-n5` | 0/5，boss 最低 90% | **策略失败**，守卫组分不开 |
+| 凯利丝塔萨 | `heroic-nexus-keristrasza-n5` | 无法开怪 | **框架阻断**（三球体进度门禁） |
+
+**下一步需要用户先决定两件事（都不是配置问题）：**
+
+1. **凯利丝塔萨的进度门禁。** 她默认 `UNIT_FLAG_NON_ATTACKABLE` + 冰冻牢笼，解除条件是
+   三个 ORB 状态全 DONE，而 ORB 只能由**点击三个球体 gameobject** 置位、球体又要对应 boss
+   先死（代码位置见 [她的记录](testing/bosses/heroic-nexus-keristrasza/README.md)）。
+   两条路线：(a) 给 mod-raidtest 加**同一实例内的多 boss 链式场景 + gameobject 使用步骤**
+   （贴近「打通副本」原意，工作量大）；(b) 加一个夹具键直接置 ORB 状态做**隔离形态**
+   （便宜，但结论只能记「隔离 boss 战」，参照 `heroic-uk-ingvar-disc` 的记账先例）。
+2. **奥莫洛克的守卫组择时开怪。** 守卫是巡逻怪、冷启动时距 boss 17.1 码，挨第一下伤害后
+   90 毫秒 boss 就协助参战，**挪清怪点无解**（41.5 码外仍触发）。要测到干净的 boss 段需要
+   框架支持「等前置目标巡逻到距 boss ≥N 码再开怪」。否则该 boss 的形态只能是
+   「boss + 4 精英一次开怪」，当前 0/5、boss 最低 90%，差距很大。
+
+在这两件事之外，可以直接推进的策略线是**阿诺姆鲁斯**（夹具已干净）：
+五场 bot 对 boss 输出 233k–276k、对裂隙及召唤物 162k–217k（占 37–46%），说明转火策略在生效，
+但裂隙及召唤物承伤 798,627 已超过 boss 本人的 709,734。
 
 ### 环境与基线状态（接手时重新核对）
 
@@ -83,8 +89,11 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
   run330 因此报废）、`SelfBotLevel = 2`（由 1 改，让真人用的 RAIDTEST 账号也能发
   `.playerbots bot self` 把自己的角色交给 AI；只放开这一件事，不授予其它 GM 权限，
   见 [真人流程 4b](testing/HUMAN-SESSION.md)）。`BotCheats = ""` 不变。
-- 角色 guid 会随 `--force-recreate` 变化，当前为 **791–795**（账号号与角色名不变）；
-  按 guid 查数据前先核对。
+- 角色 guid 会随 `--force-recreate` 变化；按 guid 查数据前先核对。UK 的 n5 线是
+  **791–795**（`*nfive`），**魔枢四个场景共用 796–800**（`*nfivc`，账号 52–56）——
+  按用户要求「一套普通五人本毕业装备只要一套角色」，不再每个场景各建一套；
+  10 人本/更难的副本再另建账号。原因与做法见
+  [魔枢夹具勘测](testing/bosses/heroic-nexus/FIXTURE-SURVEY.md) 的 roster 一节。
 - mod-raidtest 已提交三组只读采样（`heal_actions` / `boss_threat` / `curse_watch`，提交
   `14282f3`）与夹具死亡误判修复（`dfc7372`）。采样只回读现成状态，不触发
   `isUseful/isPossible/CheckCast`；对照组 run324 为 3/5，与基线一致。
@@ -158,6 +167,15 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
 4. **判读结果**：一律等 `raidtest_runs.finished_at` 非空再统计；跑动中的 attempt 行会显示为
    `aborted/0/NULL` 占位值。`boss_hp_min=0` 不等于击杀（双阶段 boss 中途就会归零）。
 
+4b. **选清怪点/拉怪点的三条硬约束（魔枢实测，跨副本可复用）**：距 boss > **22 码**
+   （英雄 boss 仇恨半径 = detection 20 − 等级差 −2）、距目标小怪 < 20 码（拉得动）、
+   **且把远程 bot 约 26 码的站桩距离算进去**（否则会多拉一组，run338 因此 5/5 报废）。
+   验证坐标用导航探针：零位移探针只能证明「点在网格上」，**证不了连通性**
+   （probe-g 的点零位移通过、实际是孤岛）；连通性要用位移探针（起点候选点、终点 boss 生成点）。
+   配方见 [魔枢夹具勘测](testing/bosses/heroic-nexus/FIXTURE-SURVEY.md)。
+   另外：小怪本身离 boss 太近时（如奥莫洛克的守卫 17.1 码），挨打后 90 毫秒 boss 就协助参战，
+   **挪队伍位置无解**。
+
 5. **要深挖时**，mod-raidtest 已有三组只读采样可直接用（提交 `14282f3`）：
    `heal_actions`（治疗的引擎决策，需 `LogInGroupOnly=0`，测完改回 1）、
    `boss_threat`（boss 当前目标 + 仇恨表前二）、`curse_watch`（可解诅咒 + 解咒者的判据/视线）。
@@ -192,7 +210,7 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
 
 临时扫描、探针、日志和猜测性实现只用于定位，完成当轮后删除或保留在未提交工作区；不要为它们单独提交文档或代码。只在以下节点提交：可复现的问题根因及其已验证修复、改变复现基线的框架/配置、或 boss 验收结论与其必要证据。文档与代码在同一关键节点一起更新，避免按试验次数堆叠提交。
 
-入口：[真人实机验证流程](testing/HUMAN-SESSION.md)、[heroic5-v1 配置](testing/fixtures/heroic5-v1/README.md)、[normal5-v1 配置](testing/fixtures/normal5-v1/README.md)、[凯雷塞斯王子记录](testing/bosses/heroic-uk-keleseth/README.md)、[斯卡瓦德&达尔隆](testing/bosses/heroic-uk-skarvald-dalronn/README.md)、[因格瓦尔](testing/bosses/heroic-uk-ingvar/README.md)、[UK 机制审计](testing/bosses/heroic-uk/MECHANICS-AUDIT.md)。
+入口：[真人实机验证流程](testing/HUMAN-SESSION.md)、[heroic5-v1 配置](testing/fixtures/heroic5-v1/README.md)、[normal5-v1 配置](testing/fixtures/normal5-v1/README.md)、[凯雷塞斯王子记录](testing/bosses/heroic-uk-keleseth/README.md)、[斯卡瓦德&达尔隆](testing/bosses/heroic-uk-skarvald-dalronn/README.md)、[因格瓦尔](testing/bosses/heroic-uk-ingvar/README.md)、[UK 机制审计](testing/bosses/heroic-uk/MECHANICS-AUDIT.md)、[魔枢夹具勘测](testing/bosses/heroic-nexus/FIXTURE-SURVEY.md)、[泰蕾斯特拉](testing/bosses/heroic-nexus-telestra/README.md)、[阿诺姆鲁斯](testing/bosses/heroic-nexus-anomalus/README.md)、[奥莫洛克](testing/bosses/heroic-nexus-ormorok/README.md)、[凯利丝塔萨](testing/bosses/heroic-nexus-keristrasza/README.md)。
 
 之前的“先复测 Patchwerk”计划暂后移。新会话优先按上面「当前目标」推进，并查实际运行是否已结束；不要同时启动另一轮。
 
@@ -208,7 +226,9 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
 > 接手这个项目。先读根目录 AGENTS.md、docs/START-HERE.md 和 docs/testing/BOSS-LEDGER.md，
 > 再逐库检查仓库状态与当前运行任务。目标是**以 normal5-v1 普通五人本毕业装备打通全部英雄
 > 五人本**：装备档位固定不变，难度只能靠 bot 策略解决，不得用作弊、难度开关或调装换击杀率。
-> **UK 已收尾（凯雷塞斯、斯卡瓦尔德&达隆通关，因格瓦尔 65% 根因已定位未修），下一步是换新
-> 副本**——按 START-HERE 的「新副本快速开始」建场景、跑基线，先量出实际击杀率再决定要不要修，
-> 不要先写策略再找问题。区分框架回归和正常规则机制验收；不要自动同步上游或改变基线。
+> **UK 已收尾**（凯雷塞斯、斯卡瓦尔德&达隆通关，因格瓦尔 65% 根因已定位未修）；
+> **第二个副本英雄魔枢首轮已完成**（泰蕾斯特拉完整链路 4/7 击杀，阿诺姆鲁斯 0/5、
+> 奥莫洛克 0/5，凯利丝塔萨被三球体进度门禁挡住无法开怪）。接手后先看 START-HERE 里
+> 「第二个副本」那一节的**两个待用户决定的框架问题**，不要自己扩框架；
+> 可直接推进的策略线是阿诺姆鲁斯。区分框架回归和正常规则机制验收；不要自动同步上游或改变基线。
 > 只在已验证修复、基线变化或关键验收节点更新文档并提交，不依赖旧聊天。
