@@ -1,8 +1,12 @@
 # Boss 验证台账
 
-更新：2026-09-09。每行结果限定版本、装备、难度和辅助配置；未填不代表支持。
+更新：2026-09-10。每行结果限定版本、装备、难度和辅助配置；未填不代表支持。
 
 本轮未提交差异审阅确认：Ingvar 的历史 1/3 不代表后续策略修复后的固定版本稳定率；“多斧同时重叠”尚未证实。6538 已自然验证 P2 前锥应急主链路；6540–6543 已确认 P1 effect-0 前锥模型与单斧生命周期。6544 复验 P1 的正确职责边界，6546 为新增自然击杀；精确结算站位又发现非坦克可在 Boss 中心重叠，常态后方阵型尚待处理，详见 Boss 记录末尾。
+
+2026-09-10 普通五人本毕业档位（normal5-v1）：新建与 heroic5-disc-v1 并存的装备档位（**未覆盖英雄档，其证据全部保留**），除装等外阵容完全一致，boss 仍为英雄难度。ilvl 上限 187（普通本掉落上限；英雄本才 200），85 件装备在本地世界库/Spell.dbc 全部可核验来源（drop 40、quest 34、chest 27、crafted 26、vendor 4），宝石降为 ilvl 70 优秀档。场景 `heroic-uk-ingvar-n5`，run 316 六次 attempt（末次撞副本创建限流）：**1 击杀 / 4 团灭 = 20%**，对照英雄档同场景 8/8。四次团灭中三次把 P2 打到 **4–9% 血**，是窄边界而非碾压；瓶颈在 P2 后段承伤与治疗续航（坦克耐力 −21.7%、潜行者命中 −61.1%），伤害侧五人均有实质输出。详见 [normal5-v1 装备档位](fixtures/normal5-v1/README.md) 与 [Ingvar 记录](bosses/heroic-uk-ingvar/README.md)。
+
+2026-09-10 框架修复（mod-raidtest）：`CombatTrigger::BeginAssistForAll` 的 `alreadyAssisting` 判据过严，要求跟随者 `IsInCombat() && BOT_STATE_COMBAT`，而坦克建立仇恨后跟随者常已锁定 boss 但尚未出手，导致 run 312/314/315 共 9 次 attempt 里 **8 次**被误报 `pull failed (not all followers entered combat)`（装备夹具同时全部 `valid=true`，排除装备原因）。判据改为只看 `current target == boss && victim == boss`；boss 是否参战已由上一步 `AwaitTankAggro` 确认，跟随者是否输出由采样证据体现。修复后 `could not begin assist` 归零，7 次 `already assisting` 全部可用伤害事件核验为实际参战。
 
 2026-09-09 Ingvar 三骑手前置根因：官方 `heroic-uk-ingvar` 首次跑通一次完整链路（1788426626，185.3 秒、1 死，三骑手 48.3 秒清完），但五次冷启动仅 **1/5**，四次失败全在骑手阶段。零位移导航探针（run294）证明 `PrerequisiteX/Y/Z = 252,-350,185.8` 在网格上**没有任何投影**（`type=17`、终点 `polyRef=0`、`find_path=0x00000000`、`component=disconnected`），成员到达即坠落——run296 的 1.41 秒 `victim=736 killer=736` 单次 **26,324 自伤**打死坦克，正是 run183 症状的确切机制。改从已实测可走的准备点集结（run295）则因骑手高 5 码而无视线，180 秒超时、0 死亡。故这是 **map 574 上层平台缺 mmap 覆盖**的资产阻塞，与跨房间自主行进同源，纯配置无解；隔离形态 `heroic-uk-ingvar-disc` 仍为 9/9 击杀。另修掉本轮自引入的告警刷屏（180 秒 73,185 条 → 0）。
 

@@ -1,0 +1,1163 @@
+[
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Head",
+    "item": 36969,
+    "name": "Helm of the Ley-Guardian",
+    "ilvl": 187,
+    "sources": [
+      "chest: Cache of Eregos"
+    ],
+    "enchant": 3818,
+    "gems": [
+      39938
+    ]
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Neck",
+    "item": 37053,
+    "name": "Amulet of Deflected Blows",
+    "ilvl": 187,
+    "sources": [
+      "drop: Skadi the Ruthless"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Shoulder",
+    "item": 37115,
+    "name": "Crusader's Square Pauldrons",
+    "ilvl": 187,
+    "sources": [
+      "drop: Acolyte",
+      "drop: Acolyte (1)",
+      "drop: Bile Golem",
+      "drop: Bile Golem (1)",
+      "drop: Crypt Fiend",
+      "drop: Crypt Fiend (1)",
+      "drop: Dark Necromancer",
+      "drop: Dark Necromancer (1)",
+      "drop: Devouring Ghoul",
+      "drop: Devouring Ghoul (1)",
+      "drop: Enraging Ghoul",
+      "drop: Enraging Ghoul (1)",
+      "drop: Infinite Adversary",
+      "drop: Infinite Adversary (1)",
+      "drop: Infinite Agent",
+      "drop: Infinite Agent (1)",
+      "drop: Infinite Hunter",
+      "drop: Infinite Hunter (1)",
+      "drop: Master Necromancer",
+      "drop: Master Necromancer (1)",
+      "drop: Patchwork Construct",
+      "drop: Patchwork Construct (1)",
+      "drop: Tomb Stalker",
+      "drop: Tomb Stalker (1)"
+    ],
+    "enchant": 3811,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Back",
+    "item": 43363,
+    "name": "Screeching Cape",
+    "ilvl": 175,
+    "sources": [
+      "drop: Erekem"
+    ],
+    "enchant": 1951,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Chest",
+    "item": 37052,
+    "name": "Reanimated Armor",
+    "ilvl": 187,
+    "sources": [
+      "drop: Gortok Palehoof"
+    ],
+    "enchant": 1953,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Wrist",
+    "item": 37040,
+    "name": "Svala's Bloodied Shackles",
+    "ilvl": 187,
+    "sources": [
+      "drop: Svala Sorrowgrave"
+    ],
+    "enchant": 3850,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Hands",
+    "item": 41357,
+    "name": "Daunting Handguards",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Daunting Handguards"
+    ],
+    "enchant": 3253,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Waist",
+    "item": 36952,
+    "name": "Girdle of Obscuring",
+    "ilvl": 187,
+    "sources": [
+      "drop: Mage-Lord Urom"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Legs",
+    "item": 41345,
+    "name": "Daunting Legplates",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Daunting Legplates"
+    ],
+    "enchant": 3822,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Feet",
+    "item": 37082,
+    "name": "Slaughterhouse Sabatons",
+    "ilvl": 187,
+    "sources": [
+      "drop: Meathook"
+    ],
+    "enchant": 1075,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Ring1",
+    "item": 43306,
+    "name": "Gal'darah's Signet",
+    "ilvl": 179,
+    "sources": [
+      "drop: Gal'darah"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Ring2",
+    "item": 36961,
+    "name": "Dragonflight Great-Ring",
+    "ilvl": 187,
+    "sources": [
+      "chest: Cache of Eregos"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Trinket1",
+    "item": 36993,
+    "name": "Seal of the Pantheon",
+    "ilvl": 187,
+    "sources": [
+      "drop: Loken"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Trinket2",
+    "item": 36972,
+    "name": "Tome of Arcane Phenomena",
+    "ilvl": 187,
+    "sources": [
+      "chest: Cache of Eregos"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "MainHand",
+    "item": 36984,
+    "name": "Eternally Folded Blade",
+    "ilvl": 187,
+    "sources": [
+      "drop: Volkhan"
+    ],
+    "enchant": 2673,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "OffHand",
+    "item": 37107,
+    "name": "Leeka's Shield",
+    "ilvl": 187,
+    "sources": [
+      "chest: Dark Runed Chest",
+      "chest: Pants",
+      "chest: Shirts",
+      "chest: Unmentionables",
+      "chest: Water Bucket"
+    ],
+    "enchant": 1952,
+    "gems": []
+  },
+  {
+    "slot": 0,
+    "spec": "paladin_prot",
+    "equipment_slot": "Ranged",
+    "item": 38363,
+    "name": "Venture Co. Libram of Protection",
+    "ilvl": 150,
+    "sources": [
+      "vendor: \"Grizzly\" D. Adams",
+      "vendor: Purkom"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_disc",
+    "equipment_slot": "Head",
+    "item": 43971,
+    "name": "Frostsavage Cowl",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Frostsavage Cowl"
+    ],
+    "enchant": 3819,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_disc",
+    "equipment_slot": "Neck",
+    "item": 36988,
+    "name": "Chaotic Spiral Amulet",
+    "ilvl": 187,
+    "sources": [
+      "drop: Loken"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_disc",
+    "equipment_slot": "Shoulder",
+    "item": 43973,
+    "name": "Frostsavage Shoulders",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Frostsavage Shoulders"
+    ],
+    "enchant": 3809,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_disc",
+    "equipment_slot": "Back",
+    "item": 44020,
+    "name": "Bloodbane's Fall",
+    "ilvl": 174,
+    "sources": [
+      "quest: The Fate of Bloodbane"
+    ],
+    "enchant": 3831,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_disc",
+    "equipment_slot": "Chest",
+    "item": 44404,
+    "name": "Bauble-Woven Gown",
+    "ilvl": 187,
+    "sources": [
+      "quest: Junk in My Trunk"
+    ],
+    "enchant": 3832,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_disc",
+    "equipment_slot": "Wrist",
+    "item": 43974,
+    "name": "Frostsavage Bracers",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Frostsavage Bracers"
+    ],
+    "enchant": 2332,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_disc",
+    "equipment_slot": "Hands",
+    "item": 44396,
+    "name": "Gloves of the Time Guardian",
+    "ilvl": 187,
+    "sources": [
+      "quest: A Royal Escort"
+    ],
+    "enchant": 3246,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_disc",
+    "equipment_slot": "Waist",
+    "item": 41986,
+    "name": "Deep Frozen Cord",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Deep Frozen Cord"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_disc",
+    "equipment_slot": "Legs",
+    "item": 43975,
+    "name": "Frostsavage Leggings",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Frostsavage Leggings"
+    ],
+    "enchant": 3719,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_disc",
+    "equipment_slot": "Feet",
+    "item": 42096,
+    "name": "Aurora Slippers",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Aurora Slippers"
+    ],
+    "enchant": 3232,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_disc",
+    "equipment_slot": "Ring1",
+    "item": 43180,
+    "name": "Lion's Head Ring",
+    "ilvl": 175,
+    "sources": [
+      "quest: For Posterity"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_disc",
+    "equipment_slot": "Ring2",
+    "item": 44334,
+    "name": "Ring of Temerity",
+    "ilvl": 175,
+    "sources": [
+      "quest: The Struggle Persists"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_disc",
+    "equipment_slot": "Trinket1",
+    "item": 37111,
+    "name": "Soul Preserver",
+    "ilvl": 187,
+    "sources": [
+      "chest: Dark Runed Chest",
+      "chest: Pants",
+      "chest: Shirts",
+      "chest: Unmentionables",
+      "chest: Water Bucket"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_disc",
+    "equipment_slot": "Trinket2",
+    "item": 36972,
+    "name": "Tome of Arcane Phenomena",
+    "ilvl": 187,
+    "sources": [
+      "chest: Cache of Eregos"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_disc",
+    "equipment_slot": "MainHand",
+    "item": 41822,
+    "name": "Screw-Sprung Fixer-Upper",
+    "ilvl": 175,
+    "sources": [
+      "quest: The Champion of Anguish"
+    ],
+    "enchant": 3834,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_disc",
+    "equipment_slot": "OffHand",
+    "item": 44023,
+    "name": "Bonecaster's Endgame",
+    "ilvl": 174,
+    "sources": [
+      "quest: Banshee's Revenge"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 1,
+    "spec": "priest_disc",
+    "equipment_slot": "Ranged",
+    "item": 43186,
+    "name": "Iceshrieker's Touch",
+    "ilvl": 174,
+    "sources": [
+      "quest: Changing the Wind's Course",
+      "quest: Sirana Iceshriek"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Head",
+    "item": 44409,
+    "name": "Headguard of Retaliation",
+    "ilvl": 187,
+    "sources": [
+      "quest: Vengeance Be Mine!"
+    ],
+    "enchant": 3817,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Neck",
+    "item": 44033,
+    "name": "The Severed Noose of Westwind",
+    "ilvl": 174,
+    "sources": [
+      "quest: The Admiral Revealed"
+    ],
+    "enchant": 0,
+    "gems": [
+      39953
+    ]
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Shoulder",
+    "item": 43433,
+    "name": "Eviscerator's Shoulderpads",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Eviscerator's Shoulderpads"
+    ],
+    "enchant": 3808,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Back",
+    "item": 38614,
+    "name": "Embrace of Sorrow",
+    "ilvl": 183,
+    "sources": [
+      "drop: Maiden of Grief"
+    ],
+    "enchant": 1099,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Chest",
+    "item": 44405,
+    "name": "Exotic Leather Tunic",
+    "ilvl": 187,
+    "sources": [
+      "quest: Junk in My Trunk"
+    ],
+    "enchant": 3832,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Wrist",
+    "item": 43435,
+    "name": "Eviscerator's Bindings",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Eviscerator's Bindings"
+    ],
+    "enchant": 3845,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Hands",
+    "item": 44397,
+    "name": "Handwraps of Preserved History",
+    "ilvl": 187,
+    "sources": [
+      "quest: A Royal Escort"
+    ],
+    "enchant": 1603,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Waist",
+    "item": 43437,
+    "name": "Eviscerator's Waistguard",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Eviscerator's Waistguard"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Legs",
+    "item": 42731,
+    "name": "Leggings of Visceral Strikes",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Leggings of Visceral Strikes"
+    ],
+    "enchant": 3823,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Feet",
+    "item": 44024,
+    "name": "The Darkspeaker's Treads",
+    "ilvl": 174,
+    "sources": [
+      "quest: Mind Tricks"
+    ],
+    "enchant": 1597,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Ring1",
+    "item": 43191,
+    "name": "Jagged Ice Band",
+    "ilvl": 174,
+    "sources": [
+      "quest: Forging the Keystone",
+      "quest: The Brothers Bronzebeard"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Ring2",
+    "item": 43251,
+    "name": "Ring of Scarlet Shadows",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Ring of Scarlet Shadows"
+    ],
+    "enchant": 0,
+    "gems": [
+      39935
+    ]
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Trinket1",
+    "item": 44013,
+    "name": "Cannoneer's Fuselighter",
+    "ilvl": 174,
+    "sources": [
+      "quest: The Last Line Of Defense"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Trinket2",
+    "item": 36972,
+    "name": "Tome of Arcane Phenomena",
+    "ilvl": 187,
+    "sources": [
+      "chest: Cache of Eregos"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "MainHand",
+    "item": 41825,
+    "name": "Wodin's Second-Best Shanker",
+    "ilvl": 175,
+    "sources": [
+      "quest: The Champion of Anguish"
+    ],
+    "enchant": 3789,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "OffHand",
+    "item": 44028,
+    "name": "Vengance Shiv",
+    "ilvl": 174,
+    "sources": [
+      "quest: Banshee's Revenge"
+    ],
+    "enchant": 3789,
+    "gems": []
+  },
+  {
+    "slot": 2,
+    "spec": "rogue_combat",
+    "equipment_slot": "Ranged",
+    "item": 36994,
+    "name": "Projectile Activator",
+    "ilvl": 187,
+    "sources": [
+      "drop: Loken"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Head",
+    "item": 44019,
+    "name": "The Argent Skullcap",
+    "ilvl": 174,
+    "sources": [
+      "quest: The Crusaders' Pinnacle"
+    ],
+    "enchant": 3820,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Neck",
+    "item": 36943,
+    "name": "Timeless Beads of Eternos",
+    "ilvl": 187,
+    "sources": [
+      "drop: Drakos the Interrogator"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Shoulder",
+    "item": 43973,
+    "name": "Frostsavage Shoulders",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Frostsavage Shoulders"
+    ],
+    "enchant": 3810,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Back",
+    "item": 43305,
+    "name": "Shroud of Akali",
+    "ilvl": 179,
+    "sources": [
+      "drop: Gal'darah"
+    ],
+    "enchant": 3831,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Chest",
+    "item": 42844,
+    "name": "Robes of Lightning",
+    "ilvl": 187,
+    "sources": [
+      "quest: Whatever it Takes!"
+    ],
+    "enchant": 3832,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Wrist",
+    "item": 43974,
+    "name": "Frostsavage Bracers",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Frostsavage Bracers"
+    ],
+    "enchant": 2332,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Hands",
+    "item": 41516,
+    "name": "Frostsavage Gloves",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Frostsavage Gloves"
+    ],
+    "enchant": 3246,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Waist",
+    "item": 41986,
+    "name": "Deep Frozen Cord",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Deep Frozen Cord"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Legs",
+    "item": 43975,
+    "name": "Frostsavage Leggings",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Frostsavage Leggings"
+    ],
+    "enchant": 3719,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Feet",
+    "item": 43970,
+    "name": "Frostsavage Boots",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Frostsavage Boots"
+    ],
+    "enchant": 3232,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Ring1",
+    "item": 43253,
+    "name": "Ring of Northern Tears",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Ring of Northern Tears"
+    ],
+    "enchant": 0,
+    "gems": [
+      39941
+    ]
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Ring2",
+    "item": 43189,
+    "name": "Amberglow Signet",
+    "ilvl": 174,
+    "sources": [
+      "quest: Forging the Keystone",
+      "quest: The Brothers Bronzebeard"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Trinket1",
+    "item": 37111,
+    "name": "Soul Preserver",
+    "ilvl": 187,
+    "sources": [
+      "chest: Dark Runed Chest",
+      "chest: Pants",
+      "chest: Shirts",
+      "chest: Unmentionables",
+      "chest: Water Bucket"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Trinket2",
+    "item": 36972,
+    "name": "Tome of Arcane Phenomena",
+    "ilvl": 187,
+    "sources": [
+      "chest: Cache of Eregos"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "MainHand",
+    "item": 43871,
+    "name": "Saronite Spellblade",
+    "ilvl": 175,
+    "sources": [
+      "crafted: Saronite Spellblade"
+    ],
+    "enchant": 3834,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "OffHand",
+    "item": 44023,
+    "name": "Bonecaster's Endgame",
+    "ilvl": 174,
+    "sources": [
+      "quest: Banshee's Revenge"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 3,
+    "spec": "mage_fire",
+    "equipment_slot": "Ranged",
+    "item": 43186,
+    "name": "Iceshrieker's Touch",
+    "ilvl": 174,
+    "sources": [
+      "quest: Changing the Wind's Course",
+      "quest: Sirana Iceshriek"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Head",
+    "item": 43132,
+    "name": "Nightshock Hood",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Nightshock Hood"
+    ],
+    "enchant": 3820,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Neck",
+    "item": 36943,
+    "name": "Timeless Beads of Eternos",
+    "ilvl": 187,
+    "sources": [
+      "drop: Drakos the Interrogator"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Shoulder",
+    "item": 43195,
+    "name": "Stormforged Shoulders",
+    "ilvl": 174,
+    "sources": [
+      "quest: Diametrically Opposed"
+    ],
+    "enchant": 3810,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Back",
+    "item": 43305,
+    "name": "Shroud of Akali",
+    "ilvl": 179,
+    "sources": [
+      "drop: Gal'darah"
+    ],
+    "enchant": 3831,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Chest",
+    "item": 44384,
+    "name": "Chestguard of Unwanted Success",
+    "ilvl": 183,
+    "sources": [
+      "quest: Battle at Valhalas: Final Challenge"
+    ],
+    "enchant": 3832,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Wrist",
+    "item": 43452,
+    "name": "Stormhide Wristguards",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Stormhide Wristguards"
+    ],
+    "enchant": 2332,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Hands",
+    "item": 43212,
+    "name": "Gauntlets of the Windreacher",
+    "ilvl": 187,
+    "sources": [
+      "quest: The Reckoning"
+    ],
+    "enchant": 3246,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Waist",
+    "item": 43133,
+    "name": "Nightshock Girdle",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Nightshock Girdle"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Legs",
+    "item": 43456,
+    "name": "Stormhide Legguards",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Stormhide Legguards"
+    ],
+    "enchant": 3719,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Feet",
+    "item": 43173,
+    "name": "Scaled Boots of Fallen Hope",
+    "ilvl": 175,
+    "sources": [
+      "quest: One of a Kind"
+    ],
+    "enchant": 3232,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Ring1",
+    "item": 43189,
+    "name": "Amberglow Signet",
+    "ilvl": 174,
+    "sources": [
+      "quest: Forging the Keystone",
+      "quest: The Brothers Bronzebeard"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Ring2",
+    "item": 43253,
+    "name": "Ring of Northern Tears",
+    "ilvl": 187,
+    "sources": [
+      "crafted: Ring of Northern Tears"
+    ],
+    "enchant": 0,
+    "gems": [
+      39941
+    ]
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Trinket1",
+    "item": 37111,
+    "name": "Soul Preserver",
+    "ilvl": 187,
+    "sources": [
+      "chest: Dark Runed Chest",
+      "chest: Pants",
+      "chest: Shirts",
+      "chest: Unmentionables",
+      "chest: Water Bucket"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Trinket2",
+    "item": 36972,
+    "name": "Tome of Arcane Phenomena",
+    "ilvl": 187,
+    "sources": [
+      "chest: Cache of Eregos"
+    ],
+    "enchant": 0,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "MainHand",
+    "item": 41822,
+    "name": "Screw-Sprung Fixer-Upper",
+    "ilvl": 175,
+    "sources": [
+      "quest: The Champion of Anguish"
+    ],
+    "enchant": 3834,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "OffHand",
+    "item": 44032,
+    "name": "Bulwark of Redemption",
+    "ilvl": 174,
+    "sources": [
+      "quest: Banshee's Revenge"
+    ],
+    "enchant": 2654,
+    "gems": []
+  },
+  {
+    "slot": 4,
+    "spec": "shaman_elemental",
+    "equipment_slot": "Ranged",
+    "item": 38361,
+    "name": "Venture Co. Lightning Rod",
+    "ilvl": 150,
+    "sources": [
+      "vendor: \"Grizzly\" D. Adams",
+      "vendor: Purkom"
+    ],
+    "enchant": 0,
+    "gems": []
+  }
+]
