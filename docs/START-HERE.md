@@ -17,7 +17,7 @@
 | 管理库 | main | UK 收尾提交（见 `git log -1`） |
 | azerothcore-wotlk | Playerbot | `516b14df1`（map 574 诊断与长路线容量，本轮未改） |
 | modules/mod-playerbots | **codex/nexus-anomalus-rift-focus** | `34886ce1`（阿诺姆鲁斯裂隙转火判据修复，基于 `67ac953c`；**已推送到 fork `mine`**） |
-| modules/mod-raidtest | dev | `dfc7372` + **未提交**：`CombatTrigger` 策略名映射加 `"wotlk-nex" -> "nexus"`（否则 map 576 每次拉怪都被门禁拒）、四个 `heroic-nexus-*-n5` 场景 |
+| modules/mod-raidtest | dev | `1036eb3`（策略名映射 `"wotlk-nex" -> "nexus"`、四个 `heroic-nexus-*-n5` 场景、开怪时机门禁 `PrerequisiteMinBossDistance` + 延迟恢复自主选怪） |
 
 mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-playerbots`（无写权限），
 `mine` 才是 fork `pengjinfei/mod-playerbots`。分支 upstream 已固定到 `mine`，直接 `git push` 即可。
@@ -54,14 +54,15 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
 ### 第二个副本：英雄魔枢（The Nexus，map 576）首轮已完成（2026-09-10）
 
 四个场景已建好并跑出基线，详见 [夹具勘测](testing/bosses/heroic-nexus/FIXTURE-SURVEY.md)
-与四个 boss 记录。**四个 boss 里两个已通关**（泰蕾斯特拉、阿诺姆鲁斯），
-阿诺姆鲁斯是先量化再改判据修好的（0/5 → 5/5 零死亡，见下）。
+与四个 boss 记录。**四个 boss 里三个已通关**（泰蕾斯特拉、阿诺姆鲁斯、奥莫洛克），
+只剩凯利丝塔萨被三球体进度门禁挡住。阿诺姆鲁斯靠改 bot 策略修好（0/5 → 稳定可杀），
+奥莫洛克靠框架的「择时开怪」修好（0/5 → 6/8，**bot 策略一行未改**）。
 
 | boss | 场景 | 结果 | 判定 |
 |---|---|---|---|
 | 泰蕾斯特拉 | `heroic-nexus-telestra-n5` | 7 场 -> 4 击杀 / 1 团灭 / 2 场未进 boss | **完整链路击杀**，稳定性未验收 |
-| 阿诺姆鲁斯 | `heroic-nexus-anomalus-n5` | **10 场 9 击杀、零团灭**（修复后 run356+358） | **正常规则通关** |
-| 奥莫洛克 | `heroic-nexus-ormorok-n5` | 0/5，boss 最低 90% | **策略失败**，守卫组分不开 |
+| 阿诺姆鲁斯 | `heroic-nexus-anomalus-n5` | 300 秒档 10 场 9 击杀；**420 秒档** 5 场 4 击杀 | **正常规则通关** |
+| 奥莫洛克 | `heroic-nexus-ormorok-n5` | **8 场 6 击杀 / 0 团灭**（run367+368） | **完整链路正常规则击杀** |
 | 凯利丝塔萨 | `heroic-nexus-keristrasza-n5` | 无法开怪 | **框架阻断**（三球体进度门禁） |
 
 **下一步需要用户先决定两件事（都不是配置问题）：**
@@ -72,10 +73,11 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
    两条路线：(a) 给 mod-raidtest 加**同一实例内的多 boss 链式场景 + gameobject 使用步骤**
    （贴近「打通副本」原意，工作量大）；(b) 加一个夹具键直接置 ORB 状态做**隔离形态**
    （便宜，但结论只能记「隔离 boss 战」，参照 `heroic-uk-ingvar-disc` 的记账先例）。
-2. **奥莫洛克的守卫组择时开怪。** 守卫是巡逻怪、冷启动时距 boss 17.1 码，挨第一下伤害后
-   90 毫秒 boss 就协助参战，**挪清怪点无解**（41.5 码外仍触发）。要测到干净的 boss 段需要
-   框架支持「等前置目标巡逻到距 boss ≥N 码再开怪」。否则该 boss 的形态只能是
-   「boss + 4 精英一次开怪」，当前 0/5、boss 最低 90%，差距很大。
+2. ~~奥莫洛克的守卫组择时开怪~~ **已解决（2026-09-11）**：mod-raidtest 新增
+   `PrerequisiteMinBossDistance`（前置目标距 boss 不足 24 码就不开怪，等巡逻走远）+
+   把「恢复 bot 自主选怪」推迟到真正开怪那一刻，清怪点用位移探针勘测出
+   (287,-260,-12)。完整链路 8 场 6 击杀 / 0 团灭。详见
+   [奥莫洛克记录](testing/bosses/heroic-nexus-ormorok/README.md)。
 
 **阿诺姆鲁斯已修好（2026-09-10）**：根因是转火裂隙的判据太晚——只在 boss 挂护盾时才转火，
 而英雄难度每 15 秒生一个裂隙、每个裂隙每 5/10 秒各召一只怨魂，护盾只在所有裂隙死完才解。
