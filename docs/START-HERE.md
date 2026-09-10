@@ -16,7 +16,7 @@
 |---|---|---|
 | 管理库 | main | UK 收尾提交（见 `git log -1`） |
 | azerothcore-wotlk | Playerbot | `516b14df1`（map 574 诊断与长路线容量，本轮未改） |
-| modules/mod-playerbots | codex/heroic-uk-ingvar | `67ac953c`（P2 两个走位缺陷修复；**已推送到 fork `mine`**；本轮未改） |
+| modules/mod-playerbots | **codex/nexus-anomalus-rift-focus** | `34886ce1`（阿诺姆鲁斯裂隙转火判据修复，基于 `67ac953c`；**已推送到 fork `mine`**） |
 | modules/mod-raidtest | dev | `dfc7372` + **未提交**：`CombatTrigger` 策略名映射加 `"wotlk-nex" -> "nexus"`（否则 map 576 每次拉怪都被门禁拒）、四个 `heroic-nexus-*-n5` 场景 |
 
 mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-playerbots`（无写权限），
@@ -54,12 +54,13 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
 ### 第二个副本：英雄魔枢（The Nexus，map 576）首轮已完成（2026-09-10）
 
 四个场景已建好并跑出基线，详见 [夹具勘测](testing/bosses/heroic-nexus/FIXTURE-SURVEY.md)
-与四个 boss 记录。**结论：魔枢比 UK 难得多，四个 boss 只有一个能过。**
+与四个 boss 记录。**四个 boss 里两个已通关**（泰蕾斯特拉、阿诺姆鲁斯），
+阿诺姆鲁斯是先量化再改判据修好的（0/5 → 5/5 零死亡，见下）。
 
 | boss | 场景 | 结果 | 判定 |
 |---|---|---|---|
 | 泰蕾斯特拉 | `heroic-nexus-telestra-n5` | 7 场 -> 4 击杀 / 1 团灭 / 2 场未进 boss | **完整链路击杀**，稳定性未验收 |
-| 阿诺姆鲁斯 | `heroic-nexus-anomalus-n5` | 0/5，boss 最低 33% | **策略失败**（干净样本） |
+| 阿诺姆鲁斯 | `heroic-nexus-anomalus-n5` | **5/5 击杀，每场零死亡**（修复后 run356） | **正常规则通关** |
 | 奥莫洛克 | `heroic-nexus-ormorok-n5` | 0/5，boss 最低 90% | **策略失败**，守卫组分不开 |
 | 凯利丝塔萨 | `heroic-nexus-keristrasza-n5` | 无法开怪 | **框架阻断**（三球体进度门禁） |
 
@@ -76,9 +77,12 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
    框架支持「等前置目标巡逻到距 boss ≥N 码再开怪」。否则该 boss 的形态只能是
    「boss + 4 精英一次开怪」，当前 0/5、boss 最低 90%，差距很大。
 
-在这两件事之外，可以直接推进的策略线是**阿诺姆鲁斯**（夹具已干净）：
-五场 bot 对 boss 输出 233k–276k、对裂隙及召唤物 162k–217k（占 37–46%），说明转火策略在生效，
-但裂隙及召唤物承伤 798,627 已超过 boss 本人的 709,734。
+**阿诺姆鲁斯已修好（2026-09-10）**：根因是转火裂隙的判据太晚——只在 boss 挂护盾时才转火，
+而英雄难度每 15 秒生一个裂隙、每个裂隙每 5/10 秒各召一只怨魂，护盾只在所有裂隙死完才解。
+改成「45 码内有存活裂隙就转火」+ 坦克排除 + 让 `dps assist` 在裂隙存活期让路，
+**0/5 → 5/5 每场零死亡**。mod-playerbots 分支 `codex/nexus-anomalus-rift-focus` @ `34886ce1`
+（已推 fork `mine`，未建 PR）。唯一未排除的风险是击杀时长 209–260 秒对 300 秒超时预算
+余量只有 40–90 秒。详见 [阿诺姆鲁斯记录](testing/bosses/heroic-nexus-anomalus/README.md)。
 
 ### 环境与基线状态（接手时重新核对）
 
