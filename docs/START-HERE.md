@@ -53,14 +53,23 @@ UK 三个 boss 的普通档基线已经全部跑完（2026-09-10）：
 
 推进建议（新会话可按此展开）：
 
-1. **Ingvar 的靶子已经从「Dreadful Roar 伤害」修正为「治疗在冷却间隙空转」。**
-   牧师带着 **45% 法力**阵亡、P1 全程满蓝，所以不是法力问题；run318/seq4 里它从
-   87.680s 起连续 **7.5 秒不提交任何法术**（位置不动、`moving=false can_move=true`，
-   未被恐惧或控制），同期坦克 20.7%→10.3%、盗贼 15.4% 并死亡。盾被虚弱灵魂挡、
-   苦修与愈言术都在 10 秒 CD 上，**唯一无 CD 的快速治疗一次都没放**。这不是普通档
-   特有：英雄档 8/8 那八场同样是快速治疗 0–2 次、Shoot 13–22 次。
-   下一步是取引擎自己的判定（`A:flash heal on party - USELESS/IMPOSSIBLE/FAILED`），
-   见下面「本轮留下的两件半成品」。
+1. **Ingvar 的真凶已定位：Woe Strike（59735）。** 因格瓦尔英雄 P2 每 15–20 秒给坦克挂
+   一次（每场 4–7 次），挂着期间**治疗每治疗坦克一次，就有一份暗影伤害直接打回治疗
+   身上**（触发 59736）。所以治疗站在 24.68 码外仍在持续挨 boss 伤害，**八场团灭治疗
+   全部阵亡、五场是第一个死的**。反射伤害是干净判据：击杀场 1,432–19,175，团灭场
+   **21,311–60,098**。
+   Woe Strike 的 `Dispel = 2` 是**诅咒**（牧师驱散魔法无效），能解的是**法师的解除诅咒
+   475**；法师确实在用（合计 74 次），但**每场 4–7 次上身只解掉 0–4 次**——3 秒内被解的
+   窗口 proc 0–7 次，一直没解的窗口 proc 3–24 次。**下一步是量清楚法师为什么漏解**
+   （已知法师有时会先死，但不足以解释全部）。
+
+   同日已证伪、**不要重走**的三条（数据见 Ingvar 记录）：
+   - `HealerAutoSaveManaMultiplier` 掐掉快速治疗 → 补上门槛重编后指标零变化，已回退；
+     快速治疗的真实拒绝原因是 GCD、`UNIT_STATE_LOST_CONTROL` 与自身苦修引导。
+   - 治疗空转 → 第一版把治疗死后的时间算成了空档；按存活期重算，GCD 利用率击杀 60.3%、
+     团灭 62.7%（团灭反而更高），最长真实空档 9.4 秒。真正的差别是治疗活多久。
+   - 治疗拉仇恨 → boss 仇恨采样 133 个样本里 132 个当前目标是坦克。
+
 2. **新缺陷：bot 战斗外低于 `LowMana` 阈值仍不喝水**（run322/attempt1 唯一非击杀的
    直接原因）。包里有 20 个蜜风茶，牧师 11.9% 法力，回蓝曲线全程恒定 ~78/s 没有加速段。
    五人本连打时它直接决定下一场能不能开，前置怪越多越严重。属 mod-playerbots，优先修。
@@ -73,12 +82,15 @@ UK 三个 boss 的普通档基线已经全部跑完（2026-09-10）：
 - **运行配置被改过**：`env/dist/etc/modules/playerbots.conf` 的
   `AiPlayerbot.LogInGroupOnly` 已由 1 改为 **0**（否则 `Engine::lastAction` 恒为空，
   取不到引擎判定）。诊断做完必须改回 1。改前副本见会话 scratchpad。
-- **mod-raidtest 有未提交、未编译的只读改动**：`AttemptObserver` 增加了治疗的
-  `heal_strategies` / `heal_actions` 采样（与既有 `tank_actions` 同机制，只回读
-  `HandleRemoteCommand("action")`，不触发 `isUseful/CheckCast`，不改任何 tank_* 证据）。
-  需要一次增量编译才能生效：
-  `nice -n 10 cmake --build var/build/obj --target worldserver -j4`（约 5 个 TU + 链接）。
+- **mod-raidtest 有未提交的只读采样改动（已编译、已验证行为中立）**：`AttemptObserver`
+  新增 `heal_strategies` / `heal_actions`（治疗的 `Engine::lastAction`）与 `boss_threat`
+  （boss 的 `GetLastVictim()`、仇恨表前二、坦克/治疗的仇恨值与到 boss 距离）。两者都只
+  回读现成状态，不触发 `isUseful/CheckCast`，不改任何既有 tank_* 证据。对照组 run324
+  为 3/5，与 65% 基线一致。重编命令：
+  `nice -n 10 cmake --build var/build/obj --target worldserver -j4`（约 5 个 TU + 链接），
   编译前须征得用户同意。
+- 普通档 Ingvar 的固定二进制基线现为 run317/318/321/324 合计 **13/20 = 65%**
+  （run325 带过一处已回退的改动，不计入；run326 为加了仇恨采样后的 3/5）。
 
 **避坑（本轮踩过的）**：查 attempt 结果必须等 `raidtest_runs.finished_at` 非空；
 跑动中 attempt 行会显示为 `aborted/0/NULL` 占位值，我据此把 run321 统计成了 2/2，
