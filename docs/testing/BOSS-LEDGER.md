@@ -12,7 +12,7 @@ cheat 一律不变（`normal5-v1` / 英雄 / `BotCheats = ""` / `AutoEquipUpgrad
 |---|---|---|---|
 | 大魔导师泰蕾斯特拉 | `heroic-nexus-telestra-n5` | run353/354 合计 7 场 -> **4 击杀 / 1 团灭 / 2 场未进到 boss**，四场击杀零死亡 | **完整链路（4 只房前守卫 + boss）正常规则击杀，稳定性未验收** |
 | 阿诺姆鲁斯 | `heroic-nexus-anomalus-n5` | run342 **0 击杀 / 5 团灭**，boss 最低 33% | **策略失败**（本副本唯一无小怪污染的干净样本） |
-| 奥莫洛克 | `heroic-nexus-ormorok-n5` | run343 **0 击杀 / 5 团灭**，boss 最低 90% | **策略失败**，且守卫组分不开（形态 = boss + 4 精英一次开怪） |
+| 奥莫洛克 | `heroic-nexus-ormorok-n5` | run343 **0 击杀 / 5 团灭**，boss 最低 90% | **策略失败**，且守卫组分不开（形态 = boss + 4 精英一次开怪；4 只守卫每场都参战，**范围没有改小**，不是隔离形态） |
 | 凯利丝塔萨 | `heroic-nexus-keristrasza-n5` | run337 `pull failed (boss not engaged)`，boss 100% | **框架阻断**：真机制进度门禁，无法隔离测试 |
 
 **凯利丝塔萨是硬门禁，不是坐标问题**：`boss_keristrasza.cpp:100-120` 里她默认带
