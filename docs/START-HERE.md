@@ -1,4 +1,4 @@
-# 新会话接手（更新：2026-09-09）
+# 新会话接手（更新：2026-09-10）
 
 ## 目标与阅读顺序
 
@@ -14,12 +14,14 @@
 
 | 仓库 | 分支 | 最近确认的 HEAD |
 |---|---|---|
-| 管理库 | main | `a54e636`（本次收尾前的文档状态） |
-| azerothcore-wotlk | Playerbot | `516b14df1`（map 574 诊断与长路线容量） |
-| modules/mod-playerbots | codex/heroic-uk-ingvar | 见各库 `git log`（本轮新增远程脱离前锥半径与 P2 散开） |
-| modules/mod-raidtest | dev | 见各库 `git log`（本轮新增全员资源采样与装备夹具复位） |
+| 管理库 | main | `aac1cbd`（normal5-v1 档位 + P2 走位优化收尾） |
+| azerothcore-wotlk | Playerbot | `516b14df1`（map 574 诊断与长路线容量，本轮未改） |
+| modules/mod-playerbots | codex/heroic-uk-ingvar | `67ac953c`（P2 两个走位缺陷修复；**已推送到 fork `mine`**） |
+| modules/mod-raidtest | dev | `5620b0d`（开怪门槛假阴性修复 + normal5-v1 阵容/场景） |
 
-2026-09-09 上述源码提交均为本地分支提交，尚未同步或合并上游。`env/dist` 下的日志、角色 TSV 与场景快照为可再生成测试工件，不纳入提交；接手时仍需逐库执行 `git status`。
+mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-playerbots`（无写权限），
+`mine` 才是 fork `pengjinfei/mod-playerbots`。分支 upstream 已固定到 `mine`，直接 `git push` 即可。
+其余源码提交仍为本地分支提交，未同步或合并上游。`env/dist` 下的日志、角色 TSV 与场景快照为可再生成测试工件，不纳入提交；接手时仍需逐库执行 `git status`。
 
 ## 当前进展与待办（2026-09-09）
 
@@ -30,7 +32,41 @@
 - 因格瓦尔：平台角色分离 fixture 已持续通过 5/5 位置门禁；坦克闪避修复后**八次独立冷启动 8/8 击杀**（93.9–112.3 秒，4 场零死亡）。P1 的旧共同前方出生点问题已由 fixture 隔离；P2 仍有暗影斧、治疗余量和 `59709` 控制窗口的组合风险。2026-09-09 的只读时序归因已收敛方向：第一把斧在六场中固定落在首次 `59709` 之后 +2.00 秒（必定处于正常 stun 中）且从未致死，第二把斧（102–109 秒）无论是否撞控制窗口都会致死；三场团灭停在 Boss 7%/10%/13%。P2 输出只有 P1 的一半左右，原因是 `59709` 自读条起始即把全队（含 28.83 码外的治疗）置为 `can_move=false`，而 P1 的 `59706` 不会。致死条件是「同半径内有第二个人」加「命中时仅 45–55% 血」，因此下一步是散开与治疗余量，不是移动优先级。详见 Ingvar 记录末尾。
 - 寻径：map 574 的上下端已实测在同一 4,562-poly Detour 连通分量；此前失败分别是 1,024 查询节点耗尽与 148-poly 输出截断，而非已证实的楼梯断网。核心现为长路线提供 4,096 节点查询和 playerbots 512-poly/point 容量；run168 已取得完整地面路径。首段 NavigationOnly 通过同实例门禁，但会进入斯卡瓦尔德/达隆近战范围，故尚不能作为完整副本安全通行证据。
 
-接续顺序：
+## 当前目标（2026-09-10 用户指定）
+
+**以 normal5-v1 普通五人本毕业装备，打通全部英雄五人本。**
+
+装备档位固定为 [normal5-v1](testing/fixtures/normal5-v1/README.md)（ilvl 上限 187，普通本掉落上限；
+英雄档 heroic5-v1 及其全部证据原样保留，不覆盖）。boss 难度仍为英雄。也就是说：
+**难度不再靠装备补，只能靠 bot 策略。** 不得用作弊、难度开关或临时调装换击杀率。
+
+已完成的起点（UK 因格瓦尔，场景 `heroic-uk-ingvar-n5`）：
+
+| 阶段 | 击杀率 |
+|---|---|
+| 换普通装备（run316） | 1/5 = 20% |
+| 修 P2 两个走位缺陷后（run317/318/321） | 10/15 = **67%**，4 场零死亡 |
+
+三轮跨度为 80/80/40，15 个样本不足以把击杀率定到个位数精度；要报稳定值需要更多样本。
+
+推进建议（新会话可按此展开）：
+
+1. 先把 UK 另外两个 boss（凯雷塞斯、斯卡瓦尔德&达隆）也切到 normal5-v1 跑基线——
+   只需照 `mod-raidtest-scenario-heroic-uk-ingvar-n5.conf.dist` 复制场景并指向
+   `normal5-v1` 阵容，不改 boss 与规则。先量出普通装下的实际击杀率，再决定要不要修。
+2. Ingvar 剩余团灭的靶子已经明确且与站位无关：**Dreadful Roar 的全队 6.6k–10.8k 伤害**。
+   run318/seq4 全队以 84/74/77/**50**/94% 血进这一记，法师被 10,766 打死；同期戒律牧师
+   放了 19 次射击（Shoot）、全场**零次群体治疗**。方向是「利用 2 秒读条把队伍垫起来」
+   （预读条群疗或全队套盾），不是继续调站位。
+3. 扩到 UK 以外的英雄本时，逐本重复同一套流程：先建场景 + 跑基线 → 定位死因 →
+   只在 mod-playerbots 修 → 重测 → 记录。**不要**先写策略再找问题。
+
+**避坑（本轮踩过的）**：查 attempt 结果必须等 `raidtest_runs.finished_at` 非空；
+跑动中 attempt 行会显示为 `aborted/0/NULL` 占位值，我据此把 run321 统计成了 2/2，
+实际是 2/3。另外连续 cold start 会触发副本创建限流（`teleport stage timeout`），
+每轮前 `DELETE FROM acore_characters.account_instance_times;`。
+
+接续顺序（历史脉络，供追溯）：
 
 1. Ingvar 提高击杀率（第一轮已实施，见 Ingvar 记录 2026-09-09 两节）。已确认只有 10 码前锥与 5 码斧区域可以靠站位规避；`59709` 的全队 2 秒昏迷（200 码）与 Dreadful Roar（60 码）无站位解法。已实施：远程/治疗外移到 13 码脱离前锥半径、非坦克远程互散 8 码、治疗法力与全员资源的只读采样。结果为 6 场 **4/6 击杀**，与改动前 2/3 在此样本量下无法区分，**不宣称击杀率已提升**；但五次冷启动中 effect-0 再未命中治疗或远程 DPS，失败窗口从第二把斧（102–110 秒）前移到首把斧与首次 `59709`（65–75 秒）。接续顺序：
    1. **（第二轮已完成）** 近战前锥：核心 `WorldObjectSpellConeTargetCheck` 的判定是 `IsWithinBoundaryRadius(target) || isInFront(...)`，而 `IsWithinBoundaryRadius` 对玩家是 **2.0 码且绕过角度**。所以「绕背」从来不是近战的答案，「离开 2.0 码」才是；近战安全带是中心距 (2.0, 5.0)。后弧落点 7.0→3.5 码、贴身清理阈值 1.5→3.0 码后，五场冷启动中盗贼 effect-0 命中 **0 次**（此前 2/5）。两轮合计 11 场 7/11 击杀，仍不宣称击杀率提升。
@@ -47,7 +83,7 @@
 
 入口：[heroic5-v1 配置](testing/fixtures/heroic5-v1/README.md)、[normal5-v1 配置](testing/fixtures/normal5-v1/README.md)、[凯雷塞斯王子记录](testing/bosses/heroic-uk-keleseth/README.md)、[斯卡瓦德&达尔隆](testing/bosses/heroic-uk-skarvald-dalronn/README.md)、[因格瓦尔](testing/bosses/heroic-uk-ingvar/README.md)、[UK 机制审计](testing/bosses/heroic-uk/MECHANICS-AUDIT.md)。
 
-之前的“先复测 Patchwerk”计划暂后移。新会话优先接续五人英雄本台账，并查实际运行是否已结束；不要同时启动另一轮。
+之前的“先复测 Patchwerk”计划暂后移。新会话优先按上面「当前目标」推进，并查实际运行是否已结束；不要同时启动另一轮。
 
 ## 新会话第一轮
 
@@ -58,4 +94,4 @@
 
 ## 可复制给新会话的启动指令
 
-> 接手这个项目。先读根目录 AGENTS.md、docs/START-HERE.md 和 docs/testing/BOSS-LEDGER.md，再检查各仓库状态与当前运行任务。按文档中的下一步推进，区分框架回归和正常规则机制验收；不要自动同步上游或改变基线。只在已验证修复、基线变化或关键验收节点更新文档并提交，不依赖旧聊天。
+> 接手这个项目。先读根目录 AGENTS.md、docs/START-HERE.md 和 docs/testing/BOSS-LEDGER.md，再检查各仓库状态与当前运行任务。目标是**以 normal5-v1 普通五人本毕业装备打通全部英雄五人本**：装备档位固定不变，难度只能靠 bot 策略解决，不得用作弊、难度开关或调装换击杀率。按 START-HERE 的「当前目标」推进，区分框架回归和正常规则机制验收；不要自动同步上游或改变基线。只在已验证修复、基线变化或关键验收节点更新文档并提交，不依赖旧聊天。
