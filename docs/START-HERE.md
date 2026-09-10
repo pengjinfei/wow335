@@ -60,7 +60,7 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
 | boss | 场景 | 结果 | 判定 |
 |---|---|---|---|
 | 泰蕾斯特拉 | `heroic-nexus-telestra-n5` | 7 场 -> 4 击杀 / 1 团灭 / 2 场未进 boss | **完整链路击杀**，稳定性未验收 |
-| 阿诺姆鲁斯 | `heroic-nexus-anomalus-n5` | **5/5 击杀，每场零死亡**（修复后 run356） | **正常规则通关** |
+| 阿诺姆鲁斯 | `heroic-nexus-anomalus-n5` | **10 场 9 击杀、零团灭**（修复后 run356+358） | **正常规则通关** |
 | 奥莫洛克 | `heroic-nexus-ormorok-n5` | 0/5，boss 最低 90% | **策略失败**，守卫组分不开 |
 | 凯利丝塔萨 | `heroic-nexus-keristrasza-n5` | 无法开怪 | **框架阻断**（三球体进度门禁） |
 
@@ -80,9 +80,11 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
 **阿诺姆鲁斯已修好（2026-09-10）**：根因是转火裂隙的判据太晚——只在 boss 挂护盾时才转火，
 而英雄难度每 15 秒生一个裂隙、每个裂隙每 5/10 秒各召一只怨魂，护盾只在所有裂隙死完才解。
 改成「45 码内有存活裂隙就转火」+ 坦克排除 + 让 `dps assist` 在裂隙存活期让路，
-**0/5 → 5/5 每场零死亡**。mod-playerbots 分支 `codex/nexus-anomalus-rift-focus` @ `34886ce1`
-（已推 fork `mine`，未建 PR）。唯一未排除的风险是击杀时长 209–260 秒对 300 秒超时预算
-余量只有 40–90 秒。详见 [阿诺姆鲁斯记录](testing/bosses/heroic-nexus-anomalus/README.md)。
+**0/5 → 10 场 9 击杀、零团灭**。mod-playerbots 分支 `codex/nexus-anomalus-rift-focus`
+@ `34886ce1`（已推 fork `mine`，未建 PR）。唯一非击杀是**框架 300 秒预算超时**
+（boss 停在 2%、只死 1 人）；击杀区间 177–260 秒。要不要把该场景 `TimeoutSeconds`
+提到 420 属基线改动，**需用户决定**，且不得与现有 10 场混算。
+详见 [阿诺姆鲁斯记录](testing/bosses/heroic-nexus-anomalus/README.md)。
 
 ### 环境与基线状态（接手时重新核对）
 
