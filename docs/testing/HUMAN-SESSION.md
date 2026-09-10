@@ -63,11 +63,17 @@ normal5-v1（普通五人本毕业装备，guid 771-775）**：
 
 | guid | 角色名 | 账号 | 种族/职业 | 专精 | 谁来操作 |
 |---|---|---|---|---|---|
-| 771 | Raidteanfive | 52 RAIDTEST0 | 矮人 圣骑士 | paladin_prot | bot（坦克） |
-| 772 | Raidtebnfive | 53 RAIDTEST1 | 矮人 牧师 | priest_disc | bot（治疗） |
-| 773 | **Raidtecnfive** | **54 RAIDTEST2** | 人类 盗贼 | rogue_combat | **真人** |
-| 774 | Raidtednfive | 55 RAIDTEST3 | 人类 法师 | mage_fire | bot |
-| 775 | Raidteenfive | 56 RAIDTEST4 | 德莱尼 萨满 | shaman_elem | bot |
+| 791 | Raidteanfive | 52 RAIDTEST0 | 矮人 圣骑士 | paladin_prot | bot（坦克） |
+| 792 | Raidtebnfive | 53 RAIDTEST1 | 矮人 牧师 | priest_disc | bot（治疗） |
+| 793 | **Raidtecnfive** | **54 RAIDTEST2** | 人类 盗贼 | rogue_combat | **真人** |
+| 794 | Raidtednfive | 55 RAIDTEST3 | 人类 法师 | mage_fire | bot |
+| 795 | Raidteenfive | 56 RAIDTEST4 | 德莱尼 萨满 | shaman_elem | bot |
+
+**guid 会随 `--force-recreate` 变**（账号号与角色名不变）。上表是 2026-09-10 重建后的值；
+按名字登录不受影响，但按 guid 查数据前先核对一次：
+```sql
+SELECT guid, name, account FROM characters WHERE name LIKE 'Raidte_nfive' ORDER BY account;
+```
 
 全员联盟，不需要动 `AllowTwoSide` 的任何开关。
 
@@ -138,11 +144,18 @@ target/hp/strategy/action/values 等）。
 | 项 | 值 | 说明 |
 |---|---|---|
 | 命令 | `.playerbots bot self` | 命令表 `playerbots` → `bot`；`Console::No`，**只能游戏内发，控制台不行** |
-| 权限门槛 | `AiPlayerbot.SelfBotLevel = 1` | 0=禁用，1=**仅 GM**，2=所有玩家，3=登录即自动接管 |
-| 当前账号 | `ADMIN` gmlevel **3** | `CanBeGameMaster()` 走 RBAC `RBAC_PERM_COMMAND_GM`，管理员默认具备 |
+| 权限门槛 | `AiPlayerbot.SelfBotLevel = 2` | 0=禁用，1=仅 GM，**2=所有玩家（当前值）**，3=登录即自动接管 |
+| 真人用的账号 | `RAIDTEST2` gmlevel **0** | 盗贼 `Raidtecnfive` 属于账号 54 |
 
-所以**当前配置下你直接就能用，不需要改任何东西**。如果要让非 GM 账号也能用，把
-`SelfBotLevel` 改成 2；改成 3 会变成每次登录自动接管（多数时候不是你想要的）。
+**注意这里改过一次配置。** 之前是 `SelfBotLevel = 1`（仅 GM），而 RAIDTEST0–24 的 gmlevel
+**全是 0**（`account_access` 里没有行），所以真人登录的 RAIDTEST2 **发这条命令会被拒**：
+`You do not have permission to enable player botAI`。验证过程：`CanBeGameMaster()` 走 RBAC
+权限 id **371**（`RBAC_PERM_COMMAND_GM`），而 371 只挂在「Role: Gamemaster Commands」(197)
+下；把 secId 0 的根组 195 递归展开**不可达 371**，secId 2 才可达。
+
+2026-09-10 已把 `SelfBotLevel` 由 1 改为 **2**（所有玩家），并重启 worldserver 生效。
+这只放开「把自己的角色交给 AI」这一件事，**不授予任何其它 GM 权限**，也不影响 bot 行为
+或测试判据。改成 3 会变成每次登录自动接管，多数时候不是你想要的。
 
 接管后 bot 用的是 `AiFactory` 按你的**专精**给的默认策略，和普通 bot 一路。指挥方式和第 4 节
 一样（`/p attack` 等英文触发器）。

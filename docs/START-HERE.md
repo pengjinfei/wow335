@@ -76,8 +76,15 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
 
 ### 环境与基线状态（接手时重新核对）
 
-- `AiPlayerbot.LogInGroupOnly` 已改回 **1**；`AiPlayerbot.AutoEquipUpgradeLoot` 已改为 **0**
-  并需保持（它会让 bot 捡装备穿上、静默破坏固定装备档，run330 因此报废）。
+- 运行配置本轮改过三处，接手时按此核对
+  （`azerothcore-wotlk/env/dist/etc/modules/playerbots.conf`）：
+  `LogInGroupOnly = 1`（诊断时临时置 0，测完必须改回）、
+  `AutoEquipUpgradeLoot = 0`（**必须保持**，否则 bot 会捡装备穿上、静默破坏固定装备档，
+  run330 因此报废）、`SelfBotLevel = 2`（由 1 改，让真人用的 RAIDTEST 账号也能发
+  `.playerbots bot self` 把自己的角色交给 AI；只放开这一件事，不授予其它 GM 权限，
+  见 [真人流程 4b](testing/HUMAN-SESSION.md)）。`BotCheats = ""` 不变。
+- 角色 guid 会随 `--force-recreate` 变化，当前为 **791–795**（账号号与角色名不变）；
+  按 guid 查数据前先核对。
 - mod-raidtest 已提交三组只读采样（`heal_actions` / `boss_threat` / `curse_watch`，提交
   `14282f3`）与夹具死亡误判修复（`dfc7372`）。采样只回读现成状态，不触发
   `isUseful/isPossible/CheckCast`；对照组 run324 为 3/5，与基线一致。
