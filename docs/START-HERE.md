@@ -1,4 +1,4 @@
-# 新会话接手（更新：2026-09-10）
+# 新会话接手（更新：2026-09-11）
 
 ## 目标与阅读顺序
 
@@ -14,10 +14,15 @@
 
 | 仓库 | 分支 | 最近确认的 HEAD |
 |---|---|---|
-| 管理库 | main | UK 收尾提交（见 `git log -1`） |
-| azerothcore-wotlk | Playerbot | `516b14df1`（map 574 诊断与长路线容量）；**2026-09-11 已推送到 fork `mine`** |
-| modules/mod-playerbots | **codex/bot-drink-out-of-combat** | `f0b090c6`（脱战吃喝阈值修复，叠在 `34886ce1` 阿诺姆鲁斯裂隙转火修复之上；**两个分支都已推送到 fork `mine`**） |
-| modules/mod-raidtest | dev | `9c16bb7`（策略名映射 `"wotlk-nex" -> "nexus"`、四个 `heroic-nexus-*-n5` 场景、开怪时机门禁 `PrerequisiteMinBossDistance` + 延迟恢复自主选怪、清怪阶段只读采样 `interrupt_watch`） |
+| 管理库 | main | `2248145`（清怪控制链三轮实测与方向性更正） |
+| azerothcore-wotlk | **codex/nexus-containment-sphere** | `0ef8ef265`（补上封印球体的使用处理，叠在 `516b14df1` 之上；**已推 fork `mine`**，未建 PR） |
+| modules/mod-playerbots | **codex/bot-drink-out-of-combat** | `eb91552d`（魔枢守卫组的妖术/变形术控制 + `CrowdControlProtectionMultiplier`，叠在 `f0b090c6` 脱战吃喝修复、`34886ce1` 裂隙转火修复之上；**已推 fork `mine`**） |
+| modules/mod-raidtest | dev | `f0dad96`（`cc_watch` 只读采样、纯清怪场景 `heroic-nexus-telestra-trash`、凯利丝塔萨链式前置；叠在 `9c16bb7` 之上） |
+
+> ⚠️ **`eb91552d` 里的控制实现方向是错的，已被实测推翻，接手后不要在它上面继续加**——
+> 正确流程见 [清怪控制链设计](testing/TRASH-CC-PULL-DESIGN.md)。代码保留是因为里面的
+> **动作骨架（继承 `CastSpellAction` 拿到 `CanCastSpell` 保护）与目标判据可以直接复用**，
+> 要换掉的是 `CrowdControlProtectionMultiplier` 的几何判据和「战斗中途插控制」的时机。
 
 **两个源码库都是「origin = 上游、mine = fork」**，分支 upstream 都已固定到 `mine`，直接
 `git push` 即可：
@@ -90,11 +95,33 @@ core 的 fork 建于 2026-09-11，起因是 `516b14df1` 那个寻径容量修复
    (287,-260,-12)。完整链路 8 场 6 击杀 / 0 团灭。详见
    [奥莫洛克记录](testing/bosses/heroic-nexus-ormorok/README.md)。
 
-**清怪战术三个假设全部实测为负（2026-09-11）**：打断治疗（机制本来就有，但宁静在本 build
-打不断、恢复是瞬发）、优先击杀治疗（两组都更差，因果倒置 + DPS 被锁到非坦克目标）、
-控制治疗（变形术/妖术，中性到更差，AoE 压不干净 + 控制者占了 3 个 DPS 里的 2 个）。
-三条都已回退，**别重走**，细节见 [清怪战术记录](testing/bosses/heroic-nexus/TRASH-TACTICS.md)。
-清怪阶段减员仍是泰蕾斯特拉与奥莫洛克的共同瓶颈。
+### 清怪阶段减员是当前唯一的拦路点，方向已更正（2026-09-11 第二轮）
+
+泰蕾斯特拉与奥莫洛克各有一组 4 只等级 80 精英前置怪，**清怪阶段减员会作废整场 attempt**，
+这也是凯利丝塔萨链式跑不完的唯一原因（run383/384 四场全部止步于泰蕾斯特拉那 4 只守卫）。
+
+三个战术假设的实测结论（细节见 [清怪战术记录](testing/bosses/heroic-nexus/TRASH-TACTICS.md)）：
+
+1. **打断治疗：堵死了，不是 bot 的问题。** 机制本来就有且真的打出去了，但宁静(57054) 在本
+   build 的引导标志位不满足核心 `EffectInterruptCast` 的要求、恢复(25058) 是瞬发。**别重走。**
+2. **优先击杀治疗：实测更差。** 两组都变慢、死亡从每场 1 人涨到 2–3 人。原推断因果倒置，
+   而且规则把 DPS 锁到坦克没抓的怪身上、丢掉了坦克保护。**已回退，别重走。**
+3. **控制治疗：方向是对的，但我上一轮的实现形状是错的。**
+
+**第 3 条是接手后的主线，务必先读 [清怪控制链设计](testing/TRASH-CC-PULL-DESIGN.md)。**
+一句话：我上一轮做的是「战斗打起来、AoE 满天飞时插一次控制，再用乘子保护它」，
+拿到了决定性反例——run392/attempt3 里羊上身 **2 毫秒**就被**已经铺在地上**的奉献打掉
+（14.443s 奉献落地 → 14.637s 羊上身 → 14.639s 奉献跳 51 点）。乘子只能压「新的 AoE 施法」，
+压不住存量地面 AoE。
+用户给出的正确流程是**开怪流程**：坦克脱战时先指派（法师羊/萨满妖术/盗贼闷棍）→ 控制落在
+满血未进战斗的怪身上 → 坦克再开怪 → **只要还有控制在就全队不放 AoE** → 单体按序击杀 →
+被控的最后杀、掉了重新上。
+**上游底座大部分已存在**（每 bot 独立的 `rti cc` 图标、`FindNonCcTargetStrategy::IsCcTarget`
+已排除被控目标、`CastPolymorphAction` 已走 `rti cc target`、mod-raidtest 的开怪前 hold
+不阻止施法所以**框架一行不用改**），缺的只有四块，设计文档里逐条列了落点。
+
+**同时要更正一条旧结论**：上游 `CcTargetValue` 里「不要 CC 已经在 AoE 团里的怪」那条排除，
+我此前写成「对这组怪是错误默认」并在副本层绕开——**那条排除是承重的**。
 
 **阿诺姆鲁斯已修好（2026-09-10）**：根因是转火裂隙的判据太晚——只在 boss 挂护盾时才转火，
 而英雄难度每 15 秒生一个裂隙、每个裂隙每 5/10 秒各召一只怨魂，护盾只在所有裂隙死完才解。
@@ -114,6 +141,17 @@ core 的 fork 建于 2026-09-11，起因是 `516b14df1` 那个寻径容量修复
   run330 因此报废）、`SelfBotLevel = 2`（由 1 改，让真人用的 RAIDTEST 账号也能发
   `.playerbots bot self` 把自己的角色交给 AI；只放开这一件事，不授予其它 GM 权限，
   见 [真人流程 4b](testing/HUMAN-SESSION.md)）。`BotCheats = ""` 不变。
+- **本轮用过两个临时诊断开关，结束时都已改回，接手时核对**：
+  `worldserver.conf` 的 `Appender.Auras` / `Logger.spells.aura`（已删除）、
+  `playerbots.conf` 的 `AiPlayerbot.LogInGroupOnly`（已改回 1）。
+  采到的证据副本留在上一轮会话的 scratchpad（`auras-run391/392.log`、`playerbots-run392.log`），
+  **不在管理库里**，需要重新采时按设计文档的说明重开。
+- **新场景 `heroic-nexus-telestra-trash`**（纯清怪测试床，mod-raidtest `f0dad96`）已注册，
+  `raidtest_accounts` 已映射到共用的 guid 796–800。它**不产出任何 boss 结论**，
+  只用于清怪战术的快速 A/B（每场 ≈ 清怪 + 短恢复）。
+  ⚠️ 同期删掉的 `heroic-nexus-ormorok-trash` 是**错误写法**，别再照抄：它把拉怪点放在
+  凯利丝塔萨房间，队伍被拖向奥莫洛克平台，run388/389 每场 boss 本人都造成 12–43k 伤害，
+  两个 A/B 组全部作废。正确写法是**拉怪点与准备点同坐标**。
 - 角色 guid 会随 `--force-recreate` 变化；按 guid 查数据前先核对。UK 的 n5 线是
   **791–795**（`*nfive`），**魔枢四个场景共用 796–800**（`*nfivc`，账号 52–56）——
   按用户要求「一套普通五人本毕业装备只要一套角色」，不再每个场景各建一套；
@@ -248,12 +286,34 @@ core 的 fork 建于 2026-09-11，起因是 `516b14df1` 那个寻径容量修复
 
 ## 可复制给新会话的启动指令
 
-> 接手这个项目。先读根目录 AGENTS.md、docs/START-HERE.md 和 docs/testing/BOSS-LEDGER.md，
-> 再逐库检查仓库状态与当前运行任务。目标是**以 normal5-v1 普通五人本毕业装备打通全部英雄
-> 五人本**：装备档位固定不变，难度只能靠 bot 策略解决，不得用作弊、难度开关或调装换击杀率。
-> **UK 已收尾**（凯雷塞斯、斯卡瓦尔德&达隆通关，因格瓦尔 65% 根因已定位未修）；
-> **第二个副本英雄魔枢首轮已完成**（泰蕾斯特拉完整链路 4/7 击杀，阿诺姆鲁斯 0/5、
-> 奥莫洛克 0/5，凯利丝塔萨被三球体进度门禁挡住无法开怪）。接手后先看 START-HERE 里
-> 「第二个副本」那一节的**两个待用户决定的框架问题**，不要自己扩框架；
-> 可直接推进的策略线是阿诺姆鲁斯。区分框架回归和正常规则机制验收；不要自动同步上游或改变基线。
-> 只在已验证修复、基线变化或关键验收节点更新文档并提交，不依赖旧聊天。
+> 接手这个项目。先读根目录 AGENTS.md、docs/START-HERE.md、docs/testing/BOSS-LEDGER.md，
+> 再读 **docs/testing/TRASH-CC-PULL-DESIGN.md**（这是当前主线），然后逐库检查仓库状态与
+> 当前运行任务。目标是**以 normal5-v1 普通五人本毕业装备打通全部英雄五人本**：
+> 装备档位固定不变，难度只能靠 bot 策略解决，不得用作弊、难度开关或调装换击杀率。
+> **UK 已收尾**；**英雄魔枢四个 boss 里三个已正常规则击杀**（泰蕾斯特拉、阿诺姆鲁斯、
+> 奥莫洛克），凯利丝塔萨的核心侧缺陷已修并推送，但链式跑不完——**唯一拦路点是
+> 泰蕾斯特拉那 4 只守卫的清怪阶段减员**。
+> 清怪的三个战术假设里，打断治疗与优先击杀治疗**已被实测推翻，别重走**；
+> 控制治疗**方向对但上一轮实现形状错了**，正确的「坦克指派 → 开怪 → 不放 AoE → 单体按序
+> 击杀」流程写在 TRASH-CC-PULL-DESIGN.md，接手后按它做，**第一件事是问用户代码放哪**
+> （塞已有文件 = 增量 2 分钟；新建文件 = 近全量重编 40 分钟以上）。
+> 测试床 `heroic-nexus-telestra-trash` 与 `cc_watch` 采样都已就绪，不用再搭。
+> 区分框架回归和正常规则机制验收；不要自动同步上游或改变基线。
+> **编译前必须征得用户同意，且禁止全量编译**；只在已验证修复、基线变化或关键验收节点
+> 更新文档并提交，不依赖旧聊天。
+
+## 新会话第一轮
+
+- 逐库读 git status/branch/HEAD；检查是否有其他测试占用 worldserver
+  （**上一轮会话踩过：杀掉了别的会话的 worldserver**；也踩过用 `TaskStop` 连带杀掉自己刚
+  拉起的 worldserver —— 启动要用 `( nohup ... & )` 这种完全脱离会话进程组的写法）。
+- **构建树是 `azerothcore-wotlk/var/build/obj`**，不是 `cmake-build-debug`（CLion 的独立 debug
+  树，上一轮会话在那里白编了 10 分钟）。增量命令：
+  `cd azerothcore-wotlk && nice -n 10 cmake --build var/build/obj --target worldserver -j4`。
+- worldserver 靠 FIFO `/tmp/ac_world_fifo` 收命令（有一个常驻 `exec 8>` 的写端进程保持它打开），
+  换二进制必须重启，**启动到 ready 约 6 分钟**，这是每轮迭代的主要固定开销，排计划时要算进去。
+- 先读 `raidtest status`，再查询数据库 run 的 finished_at。活动 attempt 行可能暂为
+  aborted/0/NULL，占位行不代表最终失败。
+- 进程、FIFO 和 /tmp 日志均需重新核验，不能依赖上一会话 PID。
+- 提交结果保存在 docs；完整事件在本地 MySQL，角色 TSV 在 worldserver 工作目录。
+  跨机器需另行导出数据/配置/快照；只克隆管理库无法重现全部运行环境。
