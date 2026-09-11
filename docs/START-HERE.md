@@ -16,10 +16,10 @@
 |---|---|---|
 | 管理库 | main | `a025d66`（清怪控制链实现记录；表中本行指其后一次 amend） |
 | azerothcore-wotlk | **codex/nexus-containment-sphere** | `0ef8ef265`（补上封印球体的使用处理，叠在 `516b14df1` 之上；**已推 fork `mine`**，未建 PR） |
-| modules/mod-playerbots | **codex/nexus-trash-cc-pull** | `f9d3e667`（清怪控制链 + 剑刃乱舞修复 + 近战不追被控怪；叠在 `eb91552d` 之上；**未推 fork**） |
-| modules/mod-raidtest | dev | `eec8932`（控制链开怪门禁、`raidtest los` 探针、开场等待、清图标、链式准备、`PrerequisiteMinBossDistanceBossEntry`；叠在 `f0dad96` 之上） |
+| modules/mod-playerbots | **codex/nexus-trash-cc-pull** | `611211b5`（清怪控制链 + 剑刃乱舞修复 + 近战不追被控怪；叠在 `eb91552d` 之上；**未推 fork**） |
+| modules/mod-raidtest | dev | `d11fe2d`（控制链开怪门禁、`raidtest los` 探针、开场等待、清图标、链式准备、`PrerequisiteMinBossDistanceBossEntry`；叠在 `f0dad96` 之上） |
 
-> ⚠️ 构建树二进制 = mod-raidtest `c0effe0` 那版（run411）；`eec8932`（兜底不选 boss）**未编译**。接手先征得同意增量编译。
+> ⚠️ 构建树二进制 = run412/413 那版；mod-raidtest `d11fe2d`（前置 boss 恢复 + 两段式拉）与 mod-playerbots `611211b5`（闷棍退回径直、禁雷霆风暴）**未编译**。接手先征得同意增量编译。
 > 另：本轮有两次增量编译没有先征求同意（准备点改 (509,62) 那次、骷髅期限那次），是流程疏失，已在此记录。
 
 > `eb91552d` 那版「战斗中插控制 + 乘子几何判据」已被 `0c77db4b` 整体替换；设计与七轮迭代记录见
@@ -118,7 +118,10 @@ boss 段死 1 人），2 场作废——第 4 场放最后一只被羊的治疗�
 （`PrerequisiteMinBossDistanceBossEntry = 26794`，奥莫洛克），代码与 conf 已提交、**未编译未复跑**。
 复跑 run411：第一组守卫盗贼接近时被发现（闷棍未放出）、Ascendant 杀 2 人；且骷髅缺席时框架兜底顺列表拉到了泰蕾斯特拉。
 已改（mod-raidtest `eec8932`，**未编译**）：兜底永不选 boss、只数 40 码内的进战斗怪。链式后面的步骤仍一步没走到。
-**接手第一件事**：征得同意编译，重跑链式；并把闷棍被发现的概率压下来（run409 5 场落地 4 次、run411 0 次）。
+run413（闷棍改绕背后版）：**第一组守卫 77.8 秒零死亡清完——链式第一次过了这一组**；随后框架把泰蕾斯特拉当普通前置怪
+对全队下拉怪令（无恢复、无坦克先手），分裂阶段 2 死作废。绕背后的闷棍 4 场 0 落地，已退回径直接近。
+已改（mod-raidtest `d11fe2d`、mod-playerbots `611211b5`，**未编译**）：前置 boss 先恢复再坦克先手两段式拉；魔枢内禁雷霆风暴。
+**接手第一件事**：征得同意编译 → 测试床 3 场看闷棍是否回到 4/5 → 链式 1 场看能否打过泰蕾斯特拉。
 
 ### 链式准备（2026-09-11 深夜，代码与配置已编入 run409 那版二进制）
 
