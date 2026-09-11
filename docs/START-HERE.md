@@ -15,13 +15,24 @@
 | 仓库 | 分支 | 最近确认的 HEAD |
 |---|---|---|
 | 管理库 | main | UK 收尾提交（见 `git log -1`） |
-| azerothcore-wotlk | Playerbot | `516b14df1`（map 574 诊断与长路线容量，本轮未改） |
+| azerothcore-wotlk | Playerbot | `516b14df1`（map 574 诊断与长路线容量）；**2026-09-11 已推送到 fork `mine`** |
 | modules/mod-playerbots | **codex/nexus-anomalus-rift-focus** | `34886ce1`（阿诺姆鲁斯裂隙转火判据修复，基于 `67ac953c`；**已推送到 fork `mine`**） |
 | modules/mod-raidtest | dev | `9c16bb7`（策略名映射 `"wotlk-nex" -> "nexus"`、四个 `heroic-nexus-*-n5` 场景、开怪时机门禁 `PrerequisiteMinBossDistance` + 延迟恢复自主选怪、清怪阶段只读采样 `interrupt_watch`） |
 
-mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-playerbots`（无写权限），
-`mine` 才是 fork `pengjinfei/mod-playerbots`。分支 upstream 已固定到 `mine`，直接 `git push` 即可。
-其余源码提交仍为本地分支提交，未同步或合并上游。`env/dist` 下的日志、角色 TSV 与场景快照为可再生成测试工件，不纳入提交；接手时仍需逐库执行 `git status`。
+**两个源码库都是「origin = 上游、mine = fork」**，分支 upstream 都已固定到 `mine`，直接
+`git push` 即可：
+
+| 仓库 | origin（上游，无写权限） | mine（fork） |
+|---|---|---|
+| mod-playerbots | `mod-playerbots/mod-playerbots` | `pengjinfei/mod-playerbots`（https） |
+| azerothcore-wotlk | `mod-playerbots/azerothcore-wotlk` | `pengjinfei/azerothcore-wotlk`（**ssh**） |
+
+core 的 fork 建于 2026-09-11，起因是 `516b14df1` 那个寻径容量修复**只存在于本机**。
+**core 必须走 SSH**：本机用 HTTPS 推大仓会挂在 `HTTP2 framing layer` /
+`SSL_ERROR_SYSCALL`（小仓 mod-playerbots 走 HTTPS 正常），已把 `mine` 设为
+`git@github.com:pengjinfei/azerothcore-wotlk.git`。
+
+未与上游同步或合并。`env/dist` 下的日志、角色 TSV 与场景快照为可再生成测试工件，不纳入提交；接手时仍需逐库执行 `git status`。
 
 ## 历史基线（英雄档 heroic5-v1，供追溯）
 
