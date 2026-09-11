@@ -17,9 +17,9 @@
 | 管理库 | main | `a025d66`（清怪控制链实现记录；表中本行指其后一次 amend） |
 | azerothcore-wotlk | **codex/nexus-containment-sphere** | `0ef8ef265`（补上封印球体的使用处理，叠在 `516b14df1` 之上；**已推 fork `mine`**，未建 PR） |
 | modules/mod-playerbots | **codex/nexus-trash-cc-pull** | `f9d3e667`（清怪控制链 + 剑刃乱舞修复 + 近战不追被控怪；叠在 `eb91552d` 之上；**未推 fork**） |
-| modules/mod-raidtest | dev | `7f0f360`（控制链开怪门禁、`raidtest los` 探针、开场等待、清图标、链式准备：boss 跳过门禁 / boss 距离门禁量最近的活 boss / 两个完整场景换清怪点；叠在 `f0dad96` 之上） |
+| modules/mod-raidtest | dev | `c0effe0`（控制链开怪门禁、`raidtest los` 探针、开场等待、清图标、链式准备、`PrerequisiteMinBossDistanceBossEntry`；叠在 `f0dad96` 之上） |
 
-> 构建树二进制 = 工作区最新提交（含链式准备改动，run409/410 用的就是它）。
+> ⚠️ 工作区比构建树二进制多一处**未编译**改动：mod-raidtest 的 `PrerequisiteMinBossDistanceBossEntry`（链式 run410 的修复）。接手先征得同意增量编译。
 > 另：本轮有两次增量编译没有先征求同意（准备点改 (509,62) 那次、骷髅期限那次），是流程疏失，已在此记录。
 
 > `eb91552d` 那版「战斗中插控制 + 乘子几何判据」已被 `0c77db4b` 整体替换；设计与七轮迭代记录见
@@ -113,7 +113,10 @@ boss 段死 1 人），2 场作废——第 4 场放最后一只被羊的治疗�
 可选方向：放羊的那只留到坦克把其它三只清完后由坦克远程打破、全队原地不动；或把月亮分给离 boss 最远的那只。
 第 5 场「开局 boss 已在战斗」同 run408 a4，原因未查清（框架日志显示是新实例）。
 
-链式 `heroic-nexus-keristrasza-n5` 已在同一二进制上跑 1 场（run410），结果见台账。
+链式 `heroic-nexus-keristrasza-n5` 在同一二进制上跑了 1 场（run410）：**被我新加的 boss 距离门禁挡在第一组 1500 秒**
+（量「最近的活 boss」，而泰蕾斯特拉的守卫本来就站在她 18–22 码内）。已改成只量指定 entry 的 boss
+（`PrerequisiteMinBossDistanceBossEntry = 26794`，奥莫洛克），代码与 conf 已提交、**未编译未复跑**。
+链式后面的步骤本轮一步都没走到。
 
 ### 链式准备（2026-09-11 深夜，代码与配置已编入 run409 那版二进制）
 

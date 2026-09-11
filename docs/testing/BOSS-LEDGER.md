@@ -2,6 +2,14 @@
 
 更新：2026-09-11。每行结果限定版本、装备、难度和辅助配置；未填不代表支持。
 
+## 英雄魔枢 / 凯利丝塔萨链式 run410：卡在第一组，是我加的门禁把自己挡住了（2026-09-12 凌晨）
+
+`heroic-nexus-keristrasza-n5` 1 场：**1500 秒清怪超时，一只怪都没打**。原因是链式准备里我把 `PrerequisiteMinBossDistance`
+改成量「前置怪到最近的活 boss」，而泰蕾斯特拉的守卫本来就站在她 18–22 码内（`preclear_hold:boss_distance=18.47
+required=24.00` 每 5 秒一条、持续 1500 秒），她并不协助参战。**这是框架配置错误，不是 bot 或机制结论。**
+已改回：默认量场景 boss，新增 `PrerequisiteMinBossDistanceBossEntry`（链式设 26794 只量奥莫洛克）；代码与 conf 已提交，
+**未编译未复跑**。链式其余步骤（跨房间行进、阿诺姆鲁斯、奥莫洛克守卫、三球体）本轮没有走到。
+
 ## 英雄魔枢 / 泰蕾斯特拉完整链路（4 守卫 + boss）套用控制链：run409 五场 3 击杀、2 场作废（2026-09-12 凌晨）
 
 `heroic-nexus-telestra-n5`（清怪点改到守卫西南 (509,62)，`PrerequisiteCcWaitSeconds = 25`，二进制含链式准备改动）：
@@ -470,7 +478,7 @@ run322/attempt1 是唯一非击杀，记为 `prerequisite_failed: natural recove
 | heroic-nexus-telestra-n5，五人 normal5-v1 | run353 2/2 零死亡击杀；run354 2 击杀 / 1 团灭(boss 6%) / 2 场清怪减员未进 boss；**run409（控制链，清怪点 (509,62)）3 击杀 / 0 团灭 / 2 场作废**（放最后一只被羊的怪时 boss 参战 + 其延续） | **完整链路正常规则击杀**（4 只房前守卫 + boss），清怪段三场零死亡 | 修「放出最后一只被控怪时拉到 boss」；补 10 场 |
 | heroic-nexus-anomalus-n5，五人 normal5-v1 | 300 秒档 run356+358 **9 击杀 / 10**、零团灭；**420 秒档**（用户同意的基线改动）run369 **4 击杀 / 1 团灭**、无超时；修复前 run342 为 0/5 | **正常规则通关**（两档不混算） | 420 秒档补 10 场定击杀率 |
 | heroic-nexus-ormorok-n5，五人 normal5-v1 | run367 3/3 + run368 3/5（`1036eb3` + 清怪点 (287,-260,-12)）**6 击杀 / 8 尝试、0 团灭**，六场击杀零死亡 103–124 秒；修复前 run343 为 0/5、boss 最低 90% | **完整链路正常规则击杀**（4 只巡逻精英 + boss） | 压清怪阶段减员（2/8 场因此未进 boss，与泰蕾斯特拉同源） |
-| heroic-nexus-keristrasza-n5，五人 normal5-v1 | 核心补上球体使用处理（`0ef8ef265`，已推 fork）+ 框架 `PrerequisiteGameObjects`（`d535365`）；run378 球体 `selectable=true` 且被成功使用；喝水修好后 run383/384 仍止步**第一组守卫**（零个守卫被打死） | **仍未打过**（端到端放她出来未验证） | 拦路点已收敛为「泰蕾斯特拉的 4 只守卫」，即三个战术假设全败的那个老瓶颈 |
+| heroic-nexus-keristrasza-n5，五人 normal5-v1 | 核心补上球体使用处理（`0ef8ef265`，已推 fork）+ 框架 `PrerequisiteGameObjects`（`d535365`）；run378 球体 `selectable=true` 且被成功使用；run383/384 止步第一组守卫；**run410（控制链 + 清怪点 (509,62)）被我加错的 boss 距离门禁挡在第一组 1500 秒，一只未打，已修未复跑** | **仍未打过**（端到端放她出来未验证） | 编译后复跑 1 场；第一组守卫的控制链在 run409 完整场景里已 3/5 通过 |
 | naxx-loatheb，十人 fixture-v1 | run77/a1,a2、run78/a1；3 次零死亡击杀；框架 8f06a10 | 当前配置编排回归通过；无辅助、同阶段装备及完整机制覆盖未验收 | cheat 审计后建立正常规则对照 |
 | naxx-patchwerk | 已有场景配置和历史测试；未做 8f06a10 固定角色回归 | 待本版本验证 | 完成基线口径核验后复测 |
 | 其他 WLK boss | 仅源码覆盖初查 | 未验收 | 按 WORKFLOW 新建逐 boss 记录 |
