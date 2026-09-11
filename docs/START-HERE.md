@@ -17,7 +17,7 @@
 | 管理库 | main | UK 收尾提交（见 `git log -1`） |
 | azerothcore-wotlk | Playerbot | `516b14df1`（map 574 诊断与长路线容量，本轮未改） |
 | modules/mod-playerbots | **codex/nexus-anomalus-rift-focus** | `34886ce1`（阿诺姆鲁斯裂隙转火判据修复，基于 `67ac953c`；**已推送到 fork `mine`**） |
-| modules/mod-raidtest | dev | `1036eb3`（策略名映射 `"wotlk-nex" -> "nexus"`、四个 `heroic-nexus-*-n5` 场景、开怪时机门禁 `PrerequisiteMinBossDistance` + 延迟恢复自主选怪） |
+| modules/mod-raidtest | dev | `9c16bb7`（策略名映射 `"wotlk-nex" -> "nexus"`、四个 `heroic-nexus-*-n5` 场景、开怪时机门禁 `PrerequisiteMinBossDistance` + 延迟恢复自主选怪、清怪阶段只读采样 `interrupt_watch`） |
 
 mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-playerbots`（无写权限），
 `mine` 才是 fork `pengjinfei/mod-playerbots`。分支 upstream 已固定到 `mine`，直接 `git push` 即可。
@@ -78,6 +78,12 @@ mod-playerbots 有两个 remote：`origin` 是**上游** `mod-playerbots/mod-pla
    把「恢复 bot 自主选怪」推迟到真正开怪那一刻，清怪点用位移探针勘测出
    (287,-260,-12)。完整链路 8 场 6 击杀 / 0 团灭。详见
    [奥莫洛克记录](testing/bosses/heroic-nexus-ormorok/README.md)。
+
+**清怪战术三个假设全部实测为负（2026-09-11）**：打断治疗（机制本来就有，但宁静在本 build
+打不断、恢复是瞬发）、优先击杀治疗（两组都更差，因果倒置 + DPS 被锁到非坦克目标）、
+控制治疗（变形术/妖术，中性到更差，AoE 压不干净 + 控制者占了 3 个 DPS 里的 2 个）。
+三条都已回退，**别重走**，细节见 [清怪战术记录](testing/bosses/heroic-nexus/TRASH-TACTICS.md)。
+清怪阶段减员仍是泰蕾斯特拉与奥莫洛克的共同瓶颈。
 
 **阿诺姆鲁斯已修好（2026-09-10）**：根因是转火裂隙的判据太晚——只在 boss 挂护盾时才转火，
 而英雄难度每 15 秒生一个裂隙、每个裂隙每 5/10 秒各召一只怨魂，护盾只在所有裂隙死完才解。
