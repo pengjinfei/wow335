@@ -2,6 +2,43 @@
 
 更新：2026-09-10。每行结果限定版本、装备、难度和辅助配置；未填不代表支持。
 
+## 英雄魔枢 / 凯利丝塔萨：核心缺陷已修并推送，仍未打过（2026-09-11）
+
+**原判定「框架阻断」要更正为「核心侧缺陷」。** 她默认带 `UNIT_FLAG_NON_ATTACKABLE` +
+冰冻牢笼(47854)，解除条件是三个 ORB 状态全 DONE，而这三个状态只由**使用三个封印球体**
+（188526/188527/188528）置位——**而「使用球体」在本 build 上根本没有实现**（五处核实）：
+`instance_nexus::SetData` 全代码库无调用者；核心 `GameObject::Use` 的 GOOBER 分支不通知
+副本脚本；球体 `ScriptName` 为空；goober `eventId = 0`；`event_scripts` 对应行 0 条；
+脚本树无 containment sphere 的 GO 脚本。**即杀光三个 boss 也放不出她。**
+
+**已修**：core 分支 `codex/nexus-containment-sphere` @ `0ef8ef265`（**已推 fork `mine`**，
+未建 PR）新增 `go_nexus_containment_sphere`（`OnGossipHello` → `instance->SetData(entry)`
+→ 通知她重算 `CanRemovePrison`），`pending_db_world` 的 rev_ SQL 绑定三个球体的
+`ScriptName`（SQL linter 通过）。`GameObject::Use` 开头仍拒绝带 `GO_FLAG_NOT_SELECTABLE`
+的球体，进度门禁没有被绕过。
+框架侧 mod-raidtest `d535365` 新增场景键 `PrerequisiteGameObjects`（清怪后使用 gameobject）。
+
+**实测到哪一步**：run378 里奥莫洛克死后
+`prerequisite_gameobject_use:spawn=65549 entry=188528 selectable=true` 并被成功使用——
+**球体链路通了**；但端到端放她出来仍未验证（需三个球体全用过）。
+
+**链式场景的两个拦路点**（都不是机制问题，`PrerequisiteSpawns` 填三个 boss 的生成点即可，
+不需要新的多遭遇战状态机）：
+(1) **第一场就打不过**——run377 在泰蕾斯特拉处 105 秒 2 死，她那 4 只守卫不在前置列表里
+也会参战（距她 22.1 码），于是变成 run341 测过的「boss + 4 精英」0/5 形态；要连过得把
+两组守卫编进前置，而奥莫洛克那组需要的择时开怪门禁 `PrerequisiteMinBossDistance` 比较的是
+「前置目标到**场景 boss**」的距离，链式场景里场景 boss 是凯利丝塔萨、离得很远，**门禁失效**。
+(2) **boss 之间没有恢复窗口**——run378 只杀一个 boss 就撞 `natural recovery timeout`
+（框架给 120 秒）；真人会在 boss 之间喝水，而「bot 不喝水」的缺陷本台账 2026-09-10 已记根因。
+**下一条安全操作是先修喝水**，否则链式永远卡在第二个 boss 之前。
+
+**顺带修掉一个夹具缺陷**（run376 根因，mod-raidtest `d535365`）：配装前只重置了副本、
+没清 bot 的残留战斗状态，而完整 AI reset 只在 `attemptSeq > 1` 跑，于是上一轮遗留战斗状态的
+bot 在新 run 首场被核心拒绝穿护甲/戒指/饰品（`EQUIP_ERR_NOT_IN_COMBAT = 60`）、
+旧装备已卸下 → **角色被扒光**、整场 `fixture_invalid` 且之后每场重复失败
+（牧师只剩衬衣与三件武器）。修复后 run377 夹具通过。
+详见 [凯利丝塔萨记录](bosses/heroic-nexus-keristrasza/README.md)。
+
 ## 英雄魔枢：清怪战术三个假设（2026-09-11，其中假设 3 测量无效）
 
 泰蕾斯特拉与奥莫洛克的瓶颈都在清怪阶段减员（12 场 3 场、8 场 2 场卡在这里）。
@@ -141,7 +178,7 @@ cheat 一律不变（`normal5-v1` / 英雄 / `BotCheats = ""` / `AutoEquipUpgrad
 | 大魔导师泰蕾斯特拉 | `heroic-nexus-telestra-n5` | run353/354 合计 7 场 -> **4 击杀 / 1 团灭 / 2 场未进到 boss**，四场击杀零死亡 | **完整链路（4 只房前守卫 + boss）正常规则击杀，稳定性未验收** |
 | 阿诺姆鲁斯 | `heroic-nexus-anomalus-n5` | run342 **0 击杀 / 5 团灭**，boss 最低 33% → **修复后 10 场 9 击杀、零团灭**（run356+358，见本文件顶部） | **正常规则通关** |
 | 奥莫洛克 | `heroic-nexus-ormorok-n5` | run343 **0/5**、boss 最低 90% → **修复后完整链路 8 场 6 击杀 / 0 团灭**（run367+368，见本文件顶部） | **完整链路正常规则击杀** |
-| 凯利丝塔萨 | `heroic-nexus-keristrasza-n5` | run337 `pull failed (boss not engaged)`，boss 100% | **框架阻断**：真机制进度门禁，无法隔离测试 |
+| 凯利丝塔萨 | `heroic-nexus-keristrasza-n5` | run337 无法开怪 → **核心缺陷已修**（`0ef8ef265`，球体链路实测已通）；run377 链式卡在第一场 | **仍未打过**，阻塞已从「机制不可能」变为「连不过前三个 boss」 |
 
 **凯利丝塔萨是硬门禁，不是坐标问题**：`boss_keristrasza.cpp:100-120` 里她默认带
 `UNIT_FLAG_NON_ATTACKABLE` + 冰冻牢笼(47854)，解除条件是 `DATA_TELESTRA_ORB`(5) /
@@ -329,7 +366,7 @@ run322/attempt1 是唯一非击杀，记为 `prerequisite_failed: natural recove
 | heroic-nexus-telestra-n5，五人 normal5-v1 | run353 2/2 零死亡击杀；run354 2 击杀 / 1 团灭(boss 6%) / 2 场清怪减员未进 boss | **完整链路正常规则击杀**（4 只房前守卫 + boss），稳定性未验收 | 补 10 场判稳定率；压清怪阶段减员 |
 | heroic-nexus-anomalus-n5，五人 normal5-v1 | 300 秒档 run356+358 **9 击杀 / 10**、零团灭；**420 秒档**（用户同意的基线改动）run369 **4 击杀 / 1 团灭**、无超时；修复前 run342 为 0/5 | **正常规则通关**（两档不混算） | 420 秒档补 10 场定击杀率 |
 | heroic-nexus-ormorok-n5，五人 normal5-v1 | run367 3/3 + run368 3/5（`1036eb3` + 清怪点 (287,-260,-12)）**6 击杀 / 8 尝试、0 团灭**，六场击杀零死亡 103–124 秒；修复前 run343 为 0/5、boss 最低 90% | **完整链路正常规则击杀**（4 只巡逻精英 + boss） | 压清怪阶段减员（2/8 场因此未进 boss，与泰蕾斯特拉同源） |
-| heroic-nexus-keristrasza-n5，五人 normal5-v1 | run337 `pull failed (boss not engaged)`，boss 100%、0 死亡 | **框架阻断**：三球体进度门禁（代码级证据已存） | 需用户决定框架路线（多 boss 链式 或 隔离形态） |
+| heroic-nexus-keristrasza-n5，五人 normal5-v1 | 核心补上球体使用处理（`0ef8ef265`，已推 fork）+ 框架 `PrerequisiteGameObjects`（`d535365`）；run378 球体 `selectable=true` 且被成功使用；run377 链式在泰蕾斯特拉处 105 秒 2 死 | **仍未打过**（端到端放她出来未验证） | 先修「bot 不喝水」，否则链式过不了第二个 boss |
 | naxx-loatheb，十人 fixture-v1 | run77/a1,a2、run78/a1；3 次零死亡击杀；框架 8f06a10 | 当前配置编排回归通过；无辅助、同阶段装备及完整机制覆盖未验收 | cheat 审计后建立正常规则对照 |
 | naxx-patchwerk | 已有场景配置和历史测试；未做 8f06a10 固定角色回归 | 待本版本验证 | 完成基线口径核验后复测 |
 | 其他 WLK boss | 仅源码覆盖初查 | 未验收 | 按 WORKFLOW 新建逐 boss 记录 |
