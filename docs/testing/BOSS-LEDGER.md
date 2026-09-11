@@ -409,7 +409,7 @@ run322/attempt1 是唯一非击杀，记为 `prerequisite_failed: natural recove
 | heroic-nexus-telestra-n5，五人 normal5-v1 | run353 2/2 零死亡击杀；run354 2 击杀 / 1 团灭(boss 6%) / 2 场清怪减员未进 boss | **完整链路正常规则击杀**（4 只房前守卫 + boss），稳定性未验收 | 补 10 场判稳定率；压清怪阶段减员 |
 | heroic-nexus-anomalus-n5，五人 normal5-v1 | 300 秒档 run356+358 **9 击杀 / 10**、零团灭；**420 秒档**（用户同意的基线改动）run369 **4 击杀 / 1 团灭**、无超时；修复前 run342 为 0/5 | **正常规则通关**（两档不混算） | 420 秒档补 10 场定击杀率 |
 | heroic-nexus-ormorok-n5，五人 normal5-v1 | run367 3/3 + run368 3/5（`1036eb3` + 清怪点 (287,-260,-12)）**6 击杀 / 8 尝试、0 团灭**，六场击杀零死亡 103–124 秒；修复前 run343 为 0/5、boss 最低 90% | **完整链路正常规则击杀**（4 只巡逻精英 + boss） | 压清怪阶段减员（2/8 场因此未进 boss，与泰蕾斯特拉同源） |
-| heroic-nexus-keristrasza-n5，五人 normal5-v1 | 核心补上球体使用处理（`0ef8ef265`，已推 fork）+ 框架 `PrerequisiteGameObjects`（`d535365`）；run378 球体 `selectable=true` 且被成功使用；run377 链式在泰蕾斯特拉处 105 秒 2 死 | **仍未打过**（端到端放她出来未验证） | 先修「bot 不喝水」，否则链式过不了第二个 boss |
+| heroic-nexus-keristrasza-n5，五人 normal5-v1 | 核心补上球体使用处理（`0ef8ef265`，已推 fork）+ 框架 `PrerequisiteGameObjects`（`d535365`）；run378 球体 `selectable=true` 且被成功使用；喝水修好后 run383/384 仍止步**第一组守卫**（零个守卫被打死） | **仍未打过**（端到端放她出来未验证） | 拦路点已收敛为「泰蕾斯特拉的 4 只守卫」，即三个战术假设全败的那个老瓶颈 |
 | naxx-loatheb，十人 fixture-v1 | run77/a1,a2、run78/a1；3 次零死亡击杀；框架 8f06a10 | 当前配置编排回归通过；无辅助、同阶段装备及完整机制覆盖未验收 | cheat 审计后建立正常规则对照 |
 | naxx-patchwerk | 已有场景配置和历史测试；未做 8f06a10 固定角色回归 | 待本版本验证 | 完成基线口径核验后复测 |
 | 其他 WLK boss | 仅源码覆盖初查 | 未验收 | 按 WORKFLOW 新建逐 boss 记录 |

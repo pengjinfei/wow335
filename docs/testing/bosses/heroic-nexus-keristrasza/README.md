@@ -80,7 +80,24 @@ run337：`aborted`，`notes = pull failed (boss not engaged)`，boss HP 100%，0
   （`DATA_ORMOROK_EVENT` bit 2 + `DATA_ORMOROK_ORB` bit 7）对不上，**未追查**，
   不作为任何结论的证据。
 
-## 链式场景的两个拦路点（都不是机制问题）
+## 2026-09-11 补测：喝水修好后再跑链式，拦路点收敛成一个
+
+在 mod-playerbots `f0b090c6`（脱战吃喝阈值修复）之后重跑：
+
+| run | 前置列表 | 结果 |
+|---|---|---|
+| 383 | 只有三个 boss | 2 场均止步第一场：38.2 秒 1 死 / 19.0 秒全灭，**三个 boss 一个没死** |
+| 384 | 两组守卫也编进去（守卫→boss→boss→守卫→boss） | 2 场均止步第一组守卫：24.5 秒 2 死 / 40.2 秒 3 死，**零个守卫被打死、零次喝水** |
+
+run384 的 `preclear_target` 采样显示守卫与每个 bot 的距离是 **0.00–0.05 码**（守卫压在队伍
+身上），首个 15 秒采样时已有一名 bot 阵亡。这与独立场景 `heroic-nexus-telestra-n5` 里
+3/5 场的 `prerequisite_failed: group lost` 是**同一个失败**，不是链式引入的新问题。
+
+**结论：链式的拦路点已经收敛成一个——泰蕾斯特拉那 4 只守卫。** 恢复窗口那条（原第 2 条）
+已被喝水修复解决；`PrerequisiteMinBossDistance` 在链式下失效那条仍然成立，但它只影响
+奥莫洛克那组，而队伍现在连第一组都过不去。
+
+## 链式场景原先记录的两个拦路点（第 2 条已解决）
 
 `PrerequisiteSpawns` 本来就是「先杀掉这些生成点再拉 boss」，三个 boss 就是三个 creature
 spawn，**不需要新的多遭遇战状态机**。但：
