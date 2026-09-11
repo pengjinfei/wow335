@@ -8,19 +8,23 @@
   `codex/nexus-containment-sphere` 补上 `go_nexus_containment_sphere` + SQL 绑定 →
   框架加 `PrerequisiteGameObjects`（清怪后使用 gameobject）→ 场景改为链式 →
   实测球体确实变为可选中并被成功使用。
-- 唯一下一步：链式跑不完。卡在**第一场**（泰蕾斯特拉 + 她那 4 只守卫，run377 105 秒 2 死），
-  以及**boss 之间没有恢复窗口**（run378 只杀一个 boss 就
-  `prerequisite_failed: natural recovery timeout`，即台账里「bot 不喝水」那个老缺陷）。
-- 阻塞：不再是机制不可能，而是这套装备档位下能不能连过三个 boss。
+- 唯一下一步：链式跑不完，但拦路点已**收敛成一个**——**泰蕾斯特拉那 4 只守卫**
+  （run383/384 四场全部止步于此，零个守卫被打死）。恢复窗口那条已被喝水修复解决。
+  这 4 只守卫正是三个清怪战术假设全部失败的那个老瓶颈，见
+  [清怪战术记录](../heroic-nexus/TRASH-TACTICS.md)。
+- 阻塞：不再是机制不可能，而是这套装备档位下能不能过掉第一组守卫。
 
 ## 可复现基线
 
 - 装备档位 `normal5-v1`、boss 英雄难度（等级 82、`HealthModifier = 38`）、`BotCheats = ""`。
 - core **`codex/nexus-containment-sphere` @ `0ef8ef265`**（已推 fork `mine`；未建 PR）。
-- mod-raidtest `dev` @ **`d535365`**；mod-playerbots `codex/nexus-anomalus-rift-focus` @ `34886ce1`。
+- mod-raidtest `dev` @ **`d535365`**；mod-playerbots **`codex/bot-drink-out-of-combat` @ `f0b090c6`**
+  （脱战吃喝阈值修复，叠在 `34886ce1` 之上）。
 - 场景（链式）：map 576 / boss 26723 / 英雄 / 5 人 / `TimeoutSeconds = 420` /
   `PrerequisiteTimeoutSeconds = 1500` /
-  `PrerequisiteSpawns = 126480,126599,126663`（泰蕾斯特拉 → 阿诺姆鲁斯 → 奥莫洛克）/
+  `PrerequisiteSpawns = 126470,126465,126456,126464,126480,126599,126445,126444,126606,126605,126663`
+  （泰蕾斯特拉的 4 只守卫 → 泰蕾斯特拉 → 阿诺姆鲁斯 → 奥莫洛克的 4 只守卫 → 奥莫洛克；
+  按组排序还让每组之间队伍脱战、bot 自己补蓝）/
   `PrerequisiteGameObjects = 65547,65548,65549`（三个封印球体）/
   拉怪点 (309.0,-5.5,-15.48)（boss 实测生成点 (301.45,-5.46,-15.48) 正东 7.6 码）/
   准备点 (519.0,110.0,-16.04)（泰蕾斯特拉的清怪点，位移探针验证过）。
@@ -128,11 +132,15 @@ spawn，**不需要新的多遭遇战状态机**。但：
 | 376 / 1 | 链式（首次） | aborted | `fixture_invalid`——牧师残留战斗被拒穿护甲（已修） |
 | 377 / 1 | 链式 | aborted | 105.4 秒 2 死，卡在泰蕾斯特拉 + 4 守卫 |
 | 378 / 1 | 探针（只清奥莫洛克 + 用他的球体） | aborted | 球体 `selectable=true` 且被使用；随后 `natural recovery timeout` |
+| 383 / 1–2 | 链式（前置只列三个 boss），喝水已修 | aborted / wipe | 38.2 秒 1 死 / 19.0 秒全灭，三个 boss 一个没死 |
+| 384 / 1–2 | 链式（两组守卫也编进前置） | aborted ×2 | 24.5 秒 2 死 / 40.2 秒 3 死，**零个守卫被打死、零次喝水**；守卫与每个 bot 距离 0.00–0.05 码 |
 
 ## 交接
 
 - 复现：`raidtest run heroic-nexus-keristrasza-n5 --attempts 1`（需运行 `0ef8ef265` 的核心
   二进制，且 `gameobject_template.ScriptName` 已绑定——SQL 已应用到本机 `acore_world`）。
-- 证据：本地 MySQL `raidtest_events`（run 337 修复前，376/377/378 链式与探针）。
-- 新会话下一条安全操作：**先修「bot 不喝水」**（台账 2026-09-10 条目已有根因），
-  否则链式永远卡在第二个 boss 之前；之后再决定要不要把两组守卫编进前置。
+- 证据：本地 MySQL `raidtest_events`（run 337 修复前，376/377/378/383/384 链式与探针）。
+- 新会话下一条安全操作：**这个 boss 已经没有独立的下一步了**——它现在完全卡在
+  「泰蕾斯特拉 4 只守卫」这个共同瓶颈上（独立场景里也是 3/5 场死在这里）。
+  要推进只能从那个瓶颈入手，而三条直觉战术已被证伪/证无效，见
+  [清怪战术记录](../heroic-nexus/TRASH-TACTICS.md) 末尾的候选方向。
