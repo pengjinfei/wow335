@@ -16,7 +16,7 @@
 |---|---|---|
 | 管理库 | main | UK 收尾提交（见 `git log -1`） |
 | azerothcore-wotlk | Playerbot | `516b14df1`（map 574 诊断与长路线容量）；**2026-09-11 已推送到 fork `mine`** |
-| modules/mod-playerbots | **codex/nexus-anomalus-rift-focus** | `34886ce1`（阿诺姆鲁斯裂隙转火判据修复，基于 `67ac953c`；**已推送到 fork `mine`**） |
+| modules/mod-playerbots | **codex/bot-drink-out-of-combat** | `f0b090c6`（脱战吃喝阈值修复，叠在 `34886ce1` 阿诺姆鲁斯裂隙转火修复之上；**两个分支都已推送到 fork `mine`**） |
 | modules/mod-raidtest | dev | `9c16bb7`（策略名映射 `"wotlk-nex" -> "nexus"`、四个 `heroic-nexus-*-n5` 场景、开怪时机门禁 `PrerequisiteMinBossDistance` + 延迟恢复自主选怪、清怪阶段只读采样 `interrupt_watch`） |
 
 **两个源码库都是「origin = 上游、mine = fork」**，分支 upstream 都已固定到 `mine`，直接
