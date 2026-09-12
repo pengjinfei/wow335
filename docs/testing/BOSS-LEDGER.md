@@ -2,6 +2,55 @@
 
 更新：2026-09-12。每行结果限定版本、装备、难度和辅助配置；未填不代表支持。
 
+## 英雄艾卓-尼鲁布首轮（map 601，2026-09-12 下午）——两个基线 + 三个缺陷
+
+用户指定的第三个副本。原话「英雄安卡赫特（Azjol-Nerub）」中英文指向两个不同的本，已确认取
+**Azjol-Nerub / map 601**（不是安卡赫特古代王国 map 619）。同时按用户要求把**盗贼由战斗改刺杀**。
+
+### 基线结果
+
+| boss | 场景 | run | 结果 | 判定 |
+|---|---|---|---|---|
+| 阿努巴拉克 | `heroic-an-anubarak-n5`（完整遭遇战） | 430 | **0/5**（4 团灭 + 1 超时），boss 最低 75% | 死因已量化 |
+| 哈多诺克斯 | `heroic-an-hadronox-n5`（**隔离形态**） | 432 | **0/5**（5 团灭），boss 43–52% | 死因已定位 |
+| 克里克希尔 | `heroic-an-krikthir-n5`（完整遭遇战） | 424/429/431 | **未进入过 boss 战** | 框架阻断，无战斗结论 |
+
+- **阿努巴拉克**：五场全是坦克第一个死（22–56 秒）。a2 量化：坦克上限 22,784，22 秒内被普攻磨到约 13k，
+  第一次践踏 16,087（=70.6% 上限）直接带走。戒律牧师对坦克的最后一个动作在 8.7 秒，之后 13.8 秒只放了
+  两个团队 buff、零直接治疗。同一牧师同日 run426（魔枢，125.7 秒零死亡击杀）盾 19 次 vs 这里 2–4 次。
+  **死因 = 开场 GCD 被团队 buff 占掉。** 详见 [阿努巴拉克记录](bosses/heroic-an-anubarak/README.md)。
+- **哈多诺克斯**：五场合计全队承伤 1,436,621 全部来自 boss，门里的小怪只有 25,562。按角色分**法师 359k >
+  萨满 347k > 治疗 314k > 坦克 278k** —— 坦克吃得比远程少，是全队 AoE 问题：
+  **蛛网猛拉(59420 ×15) 把远程拉进近身 → 酸液云(59419 ×17) 落在人堆里 → 没人走出去**。
+  `WotlkDungeonANStrategy` 对她一条触发器都没有。详见 [记录](bosses/heroic-an-hadronox/README.md)。
+  ⚠️ 口径是**隔离形态**：完整遭遇战要先打上层三个粉碎者包，而它们是 `spawnId = 0` 的召唤物，
+  `PrerequisiteSpawns` 只收数据库 guid，当前框架表达不了。
+- **克里克希尔**：三次都没进 boss 战，原因是下面第 1、3 条。
+
+### 定位到的三个缺陷
+
+| # | 层 | 缺陷 | 状态 |
+|---|---|---|---|
+| 1 | **核心（上游 AC）** | `CreatureGroup::DespawnFormation` 用 range-for 遍历 `m_members`，而 `DespawnOrUnsummon(0ms)` 会同步 `RemoveFromWorld → RemoveCreatureFromGroup → m_members.erase`，**释放迭代器脚下的红黑树节点**（最后一个成员还会 `delete this`）→ SIGSEGV。指令级证据：崩溃 PC = `DespawnFormation+88` 的 `ldr x9,[x9]`（`__tree_next` 左下降），故障地址 0xf8。**正常玩家让克里克希尔 evade 走同一条路，也会崩。** | **已修已验证**（快照成员表再遍历；`RespawnFormation` 同理）。分支 `codex/an-formation-despawn-crash` |
+| 2 | mod-raidtest | `CombatTrigger::RuntimeStrategyName` 是硬编码表，只有 `wotlk-uk`/`wotlk-nex` 两行。AN 的 `getName()` 是 `azjol'nerub`，对不上键 `wotlk-an` → 每场 `raid_invalid: instance combat strategy inactive before pull`。**换任何新副本都会撞。** | **已修已验证**（按 `*Strategy.h` 补全 15 个副本）。分支 `codex/an-runtime-strategy-names` |
+| 3 | mod-raidtest | `ResetInstance` 第一步对 boss 调 `EnterEvadeMode()`，而 `CreatureAI::EnterEvadeMode` 末尾对带 `CREATURE_FLAG_EXTRA_HARD_RESET(0x80000000)` 的 boss 会 `DespawnOnEvade()` **直接把它下线**，随后的干净检查必然失败（现象：`alive=false`、`death_state=2`、血量却是满的）。本机 WLK 精英里 **19 个**带这个标志；UK 与魔枢的 boss 一个都不带，所以直到第三个副本才暴露。 | **已修已验证**（evade 后检测下线并按原始 DB spawn 重载；哈多诺克斯因此跑通）。同分支 |
+
+### 仍未解决（下一步）
+
+`ResetInstance` 在 **evade 串联**下不收敛：AN 的实例脚本让守望者 evade → boss evade →
+`DespawnFormation` 掉全部守望者，单趟遍历每处理一只就把别的打下去。run 431 日志可见 boss 先判干净、
+9 只守望者逐个重载，等走到 Pull 阶段 boss 已不在地图上（`boss not found on map`，5/5）。
+**建议改法**：`ResetInstance` 拆两趟——先对所有目标只调 `EnterEvadeMode()` 让串联跑完，
+第二趟再逐个恢复/回满/归位并统一校验。本轮新加的 `ResolveOrRestoreSpawn()` 与失败归因日志可直接复用。
+
+### 基线改动：盗贼 战斗 → 刺杀（用户指定）
+
+`TalentSpec = rogue_assassination`；雕文 `399,468,469,715,467,406` → `399,468,469,733,467,791`
+（换掉对刺杀失效的击杀之刃/割裂，换成残忍/毒伤，三个大雕文都对应策略真会放的技能）；
+`RequiredSpells` 加 1329 残忍作为「天赋真落地」的入场证据。武器主副手本就是匕首，毒药本就是迅捷+致命。
+**实机验证**：run426 快照 `spec rogue_assassination` / 71 天赋点 / 雕文逐槽一致，夹具零报错，该场 125.7 秒零死亡击杀；
+战斗日志里盗贼在放残忍(48664/48665/48666)。**此改动改变了 normal5-v1 基线，之后的结果不与之前的战斗档混算。**
+
 ## 英雄魔枢收尾：控制链归位回归 run423 3/3 清完（2026-09-12 中午）
 
 清怪控制链从 `Ai/Dungeon/Nex` 搬到 mod-playerbots 共享层（`000c1bc3`，`TrashCcPullStrategy`，落点见设计文档），

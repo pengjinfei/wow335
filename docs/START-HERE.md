@@ -1,4 +1,4 @@
-# 新会话接手（更新：2026-09-12 中午，魔枢收尾）
+# 新会话接手（更新：2026-09-12 下午，英雄艾卓-尼鲁布首轮）
 
 ## 目标与阅读顺序
 
@@ -14,14 +14,16 @@
 
 | 仓库 | 分支 | 最近确认的 HEAD |
 |---|---|---|
-| 管理库 | main | `937e6e7` 之后的收尾提交（本文件所在提交）（魔枢收尾：控制链归位、交接重写） |
-| azerothcore-wotlk | **codex/nexus-containment-sphere** | `0ef8ef265`（补上封印球体的使用处理，叠在 `516b14df1` 之上；**已推 fork `mine`**，未建 PR） |
-| modules/mod-playerbots | **codex/nexus-trash-cc-pull** | `000c1bc3`（控制链归位到共享层 `TrashCcPullStrategy`；叠在 `611211b5` 之上；**已推 fork `mine`**） |
-| modules/mod-raidtest | dev | `a47fef5`（控制链开怪门禁、`raidtest los` 探针、开怪前复位冷却、隔离夹具 `FixtureBossStates/FixtureBossNotify`；**已推 origin**） |
+| 管理库 | main | 本文件所在提交（英雄艾卓-尼鲁布首轮） |
+| azerothcore-wotlk | **codex/an-formation-despawn-crash** | 叠在 `0ef8ef265` 之上：修 `CreatureGroup::DespawnFormation` 遍历中释放节点的**上游崩溃**。**未推 fork** |
+| modules/mod-playerbots | **codex/nexus-trash-cc-pull** | `000c1bc3`（未改动） |
+| modules/mod-raidtest | **codex/an-runtime-strategy-names** | 叠在 `a47fef5` 之上：补全 `RuntimeStrategyName`、`ResetInstance` 支持 HARD_RESET boss + 失败归因日志。**未推 origin** |
 
-> 构建树二进制 = 工作区最新提交（mod-raidtest `a47fef5`、mod-playerbots `000c1bc3`），无未编译改动。
-> 归位后用 `heroic-nexus-telestra-trash` 跑了 run423（3/3 清完、清怪段零死亡） 回归（见台账顶部）。
-> 另：魔枢这一轮有两次增量编译没有先征求同意（准备点改 (509,62) 那次、骷髅期限那次），是流程疏失，已在此记录；之后每次都先问。
+> 构建树二进制 = 2026-09-12 下午那次增量编译，**含核心的 `DespawnFormation` 崩溃修复与 mod-raidtest 的
+> `RuntimeStrategyName` / `ResetInstance` 改动**，与工作区一致，无未编译改动。两次编译都事先征得用户同意。
+> 回归证据：run426（`heroic-nexus-keristrasza-disc-n5`）在新二进制 + 刺杀盗贼下 **125.7 秒零死亡击杀**，
+> 与 run422 的 117–134 秒区间一致，魔枢结论未受影响。
+> 另：魔枢那一轮有两次增量编译没有先征求同意（准备点改 (509,62) 那次、骷髅期限那次），是流程疏失，已在此记录。
 
 > `eb91552d` 那版「战斗中插控制 + 乘子几何判据」已被 `0c77db4b` 整体替换；设计与七轮迭代记录见
 > [清怪控制链设计](testing/TRASH-CC-PULL-DESIGN.md) 末尾「实现与实测」。
@@ -233,6 +235,46 @@ z 从 -16 掉到 -50），4 人打分裂阶段治疗被影像打死，153 秒作
 
 因格瓦尔各轮改动的历史脉络（前锥模型、坦克闪避、三骑手资产阻塞等）已全部沉到
 [因格瓦尔记录](testing/bosses/heroic-uk-ingvar/README.md)，本文件不再复述。
+
+### 英雄艾卓-尼鲁布首轮已完成（2026-09-12 下午）——**当前工作面**
+
+用户指定的第三个副本（原话「英雄安卡赫特（Azjol-Nerub）」，中英文指向两个不同的本，**已确认取
+Azjol-Nerub / map 601**）。同时按用户要求把**盗贼由战斗改刺杀**（基线改动，已实机验证，
+详见 [夹具勘测](testing/bosses/heroic-an/FIXTURE-SURVEY.md)「本轮基线改动」；**之后的结果不与战斗档混算**）。
+
+| boss | 场景 | 结果 | 判定 |
+|---|---|---|---|
+| 阿努巴拉克 | `heroic-an-anubarak-n5`（完整遭遇战） | **0/5**（run430），boss 最低 75% | 死因已量化到单次伤害事件 |
+| 哈多诺克斯 | `heroic-an-hadronox-n5`（**隔离形态**） | **0/5**（run432），boss 43–52% | 死因已定位 |
+| 克里克希尔 | `heroic-an-krikthir-n5`（完整遭遇战） | **未进入过 boss 战** | 框架阻断，无战斗结论 |
+
+**本轮定位三个缺陷，两个已修已验证**（细节见 [台账](testing/BOSS-LEDGER.md) 顶部）：
+
+1. **上游 AzerothCore 崩溃**：`CreatureGroup::DespawnFormation` 边遍历 `m_members` 边让成员同步
+   `RemoveFromWorld`，释放迭代器脚下的红黑树节点（最后一个成员还 `delete this`）→ SIGSEGV。
+   正常玩家让克里克希尔 evade 也会崩。**已修**（核心分支 `codex/an-formation-despawn-crash`）。
+2. **mod-raidtest `RuntimeStrategyName` 硬编码表**只有 UK/魔枢两行 → 换任何新副本都撞
+   `raid_invalid: instance combat strategy inactive before pull`。**已修**（补全 15 个副本）。
+3. **`ResetInstance` 对带 `CREATURE_FLAG_EXTRA_HARD_RESET` 的 boss 失效**（`CreatureAI::EnterEvadeMode`
+   末尾会 `DespawnOnEvade()` 直接下线）。本机 WLK 精英里 19 个带此标志，UK/魔枢一个都没有。**已修**。
+
+**接手第一件事（按序）**：
+
+1. **把 `AttemptRunner::ResetInstance` 拆成两趟**——先对所有目标 spawn 只调 `EnterEvadeMode()`
+   让 AN 的 evade 串联跑完，第二趟再逐个 `ResolveOrRestoreSpawn` + 回满 + 清战斗 + 归位并统一校验。
+   这是克里克希尔唯一的阻塞（run431 是 5/5 `boss not found on map`）。需要一次增量编译。
+2. **阿努巴拉克**：牧师开场把 GCD 花在 1 小时团队 buff 上，坦克在第一次践踏（16,087 / 上限 22,784）
+   落下前的 13.8 秒里零直接治疗。先查清「团队 buff 为什么在战斗中才补」，再动 mod-playerbots，
+   **不要直接屏蔽 buff 动作**。
+3. **哈多诺克斯**：蛛网猛拉把远程拉进近身、酸液云落在人堆里没人走出去；
+   `WotlkDungeonANStrategy` 对她一条触发器都没有。要加「被拉后重新拉开」与「离开酸液云」。
+4. 可选：哈多诺克斯完整形态需要给框架加「按召唤 entry 的前置门禁」
+   （三个粉碎者包是 `spawnId = 0` 的召唤物，`PrerequisiteSpawns` 只收数据库 guid）。
+
+**本轮踩过、别重走的**：`raidtest los` 只证明有地面、**证不了在导航网格上**；
+新副本的 boss 要先查 `creature_template.flags_extra` 有没有 `0x80000000`；
+`raidtest run` 每次 abort 都会新建一个实例，连续失败要清 `account_instance_times`；
+把 cmake 包在 `cmd; echo exit=$?` 里会被 echo 的退出码掩盖，**必须直接看 build log 里的 `error:`**。
 
 ## 新副本快速开始（换本时照这个走）
 
