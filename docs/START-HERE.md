@@ -1,4 +1,4 @@
-# 新会话接手（更新：2026-09-12 下午，英雄艾卓-尼鲁布首轮）
+# 新会话接手（更新：2026-09-12 傍晚，英雄艾卓-尼鲁布三个 boss 均已跑出基线）
 
 ## 目标与阅读顺序
 
@@ -246,7 +246,7 @@ Azjol-Nerub / map 601**）。同时按用户要求把**盗贼由战斗改刺杀*
 |---|---|---|---|
 | 阿努巴拉克 | `heroic-an-anubarak-n5`（完整遭遇战） | **0/5**（run430），boss 最低 75% | 死因已量化到单次伤害事件 |
 | 哈多诺克斯 | `heroic-an-hadronox-n5`（**隔离形态**） | **0/5**（run432），boss 43–52% | 死因已定位 |
-| 克里克希尔 | `heroic-an-krikthir-n5`（完整遭遇战） | **未进入过 boss 战** | 框架阻断，无战斗结论 |
+| 克里克希尔 | `heroic-an-krikthir-n5`（完整遭遇战） | **0/5**（run436），卡在清怪段 | boss 未开上，无 boss 战结论 |
 
 **本轮定位三个缺陷，两个已修已验证**（细节见 [台账](testing/BOSS-LEDGER.md) 顶部）：
 
@@ -258,11 +258,17 @@ Azjol-Nerub / map 601**）。同时按用户要求把**盗贼由战斗改刺杀*
 3. **`ResetInstance` 对带 `CREATURE_FLAG_EXTRA_HARD_RESET` 的 boss 失效**（`CreatureAI::EnterEvadeMode`
    末尾会 `DespawnOnEvade()` 直接下线）。本机 WLK 精英里 19 个带此标志，UK/魔枢一个都没有。**已修**。
 
+**`ResetInstance` 已改三趟并验证**（① 只 evade，且只对确实需要复位的目标 ② 恢复并清理
+③ 只读校验）；清怪期间 boss 的悬垂 GUID 也已按 entry 重寻址 + 30 秒重生预算。
+克里克希尔因此第一次跑完整个清怪段，结论是**打不过**（见下）。
+
 **接手第一件事（按序）**：
 
-1. **把 `AttemptRunner::ResetInstance` 拆成两趟**——先对所有目标 spawn 只调 `EnterEvadeMode()`
-   让 AN 的 evade 串联跑完，第二趟再逐个 `ResolveOrRestoreSpawn` + 回满 + 清战斗 + 归位并统一校验。
-   这是克里克希尔唯一的阻塞（run431 是 5/5 `boss not found on map`）。需要一次增量编译。
+1. **克里克希尔的清怪**：纳吉尔组 + 加什拉组共 6 只精英在 3–5 秒内一起进战斗
+   （两个守望者相距 15.0 码），四场承伤 424,711、Warrior 单次最高 10,220（布甲上限 14,504），
+   五场只杀掉 2 只。与魔枢守卫组同类，复用 `TrashCcPullStrategy` 三步
+   （见 [清怪控制链](testing/TRASH-CC-PULL-DESIGN.md)）+ 场景加 `PrerequisiteCcWaitSeconds`。
+   **属策略改动，动手前先问用户。**
 2. **阿努巴拉克**：牧师开场把 GCD 花在 1 小时团队 buff 上，坦克在第一次践踏（16,087 / 上限 22,784）
    落下前的 13.8 秒里零直接治疗。先查清「团队 buff 为什么在战斗中才补」，再动 mod-playerbots，
    **不要直接屏蔽 buff 动作**。
@@ -271,7 +277,9 @@ Azjol-Nerub / map 601**）。同时按用户要求把**盗贼由战斗改刺杀*
 4. 可选：哈多诺克斯完整形态需要给框架加「按召唤 entry 的前置门禁」
    （三个粉碎者包是 `spawnId = 0` 的召唤物，`PrerequisiteSpawns` 只收数据库 guid）。
 
-**本轮踩过、别重走的**：`raidtest los` 只证明有地面、**证不了在导航网格上**；
+**本轮踩过、别重走的**：**选准备点必须对「场景内前置怪」和「场景外路怪」两类分别核距离**
+（第一版 (528,690) 只核了前者，距场景外那组只有 12.9 码，冒烟 1.1 秒就被打上）；
+`raidtest los` 只证明有地面、**证不了在导航网格上**；
 新副本的 boss 要先查 `creature_template.flags_extra` 有没有 `0x80000000`；
 `raidtest run` 每次 abort 都会新建一个实例，连续失败要清 `account_instance_times`；
 把 cmake 包在 `cmd; echo exit=$?` 里会被 echo 的退出码掩盖，**必须直接看 build log 里的 `error:`**。
