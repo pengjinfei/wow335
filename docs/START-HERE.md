@@ -312,6 +312,40 @@ Azjol-Nerub / map 601**）。同时按用户要求把**盗贼由战斗改刺杀*
 `raidtest run` 每次 abort 都会新建一个实例，连续失败要清 `account_instance_times`；
 把 cmake 包在 `cmd; echo exit=$?` 里会被 echo 的退出码掩盖，**必须直接看 build log 里的 `error:`**。
 
+### ⚠️ 等待循环的两个坑（2026-09-12 深夜一次卡死了 5 个 shell）
+
+跑测试要反复写「等服务器停」「等这一场跑完」这类 `until` 循环，这两个坑都会让循环**永不退出**：
+
+**坑 1：`ps aux | grep` 匹配到了循环自己的命令行。**
+
+```bash
+# ❌ 永不退出：wrapper 自己的命令行里就含 "apps/worldserver" 这串字符，
+#    ps aux 会把自己列出来，grep 永远匹配成功
+until ! ps aux | grep -q "[a]pps/worldserver$"; do sleep 5; done
+# ❌ 同理
+until ! pgrep -f "obj/src/server/apps/worldserver" > /dev/null; do sleep 5; done
+
+# ✅ 匹配可执行文件名而不是命令行
+until [ "$(pgrep -x worldserver | wc -l)" = "0" ]; do sleep 5; done
+```
+
+`[a]pps` 这种自引用规避只对 `grep` 自身有效，**挡不住调用它的那层 shell**。
+
+**坑 2：等待条件没覆盖终止态。**
+
+```bash
+# ❌ 如果这一场最终就是 aborted，条件永远不成立
+until [ -n "$(mysql ... -e "SELECT 1 FROM raidtest_attempts
+      WHERE run_id=451 AND seq=5 AND result<>'aborted';")" ]; do sleep 60; done
+```
+
+`aborted` 是**合法终态**（`raidtest stop` 掐掉、boss 脱战复位判 `boss lost combat state` 等），
+不是"还在跑"的占位。等一个 run 结束**一律等 `raidtest_runs.finished_at IS NOT NULL`**，
+等单场结束就等该行存在，不要对 `result` 的取值做假设。
+
+收尾时顺手核一遍残留：`ps -eo pid,ppid,command | grep -E "[t]ail -n 0 -f /tmp/ac_world_fifo"`
+应当**只有一个读端**（多个 tail 会互相抢 FIFO 里的命令）。
+
 ## 新副本快速开始（换本时照这个走）
 
 1. **建场景**（不写任何策略）。复制一份官方场景模板，只改 roster：
