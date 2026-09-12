@@ -119,7 +119,25 @@ AoE 区域，下一跳就没了，乘子根本没有介入机会。
 
 ## 实现与实测（2026-09-11 晚，run393–run406）
 
-### 落点（都塞进已有文件，未新增源文件）
+### 落点（2026-09-12 归位后；都塞进已有文件，未新增源文件）
+
+2026-09-12 收尾时把控制链从 `Ai/Dungeon/Nex` 搬到共享层，别的副本要复用只需三步：
+副本策略改为继承 `TrashCcPullStrategy`（`Ai/Base/Strategy/MarkRtiStrategy.h`），在自己的 `InitTriggers`
+里调用 `TrashCcPullStrategy::InitTriggers(triggers)`，构造函数里用 `TrashCcRegisterHealerEntries({...})`
+登记该本「治疗小怪」的 entry（控制优先分给它们；不登记则只按「有法力 > 其它」排）。
+四个动作/触发器的创建器已注册在共享 `ActionContext.h` / `TriggerContext.h`，副本上下文不用再写。
+
+| 块 | 归位后位置 | 原位置（run393–414 时） |
+|---|---|---|
+| 判据（图标枚举、`TrashCcRole` 表、`TrashCcIncapacitated` / `TrashCcIconUnit` / `TrashCcCastTarget` / `TrashCcMarkNeeded` / `TrashCcCollectPack` / `TrashCcPreference` / `TrashCcIconAgeMs`） | `Ai/Base/Value/RtiTargetValue.h/.cpp` | `Ai/Dungeon/Nex/NexTriggers.h/.cpp` |
+| 触发器 `TrashCcMarkTrigger` / `TrashCcCastTrigger` | `Ai/Base/Trigger/GenericTriggers.h/.cpp` | 同上 |
+| 动作 `TrashCcMarkAction` / `TrashCcCastAction`(羊、妖术) / `TrashCcSapAction` | `Ai/Base/Actions/RtiAction.h/.cpp` | `Ai/Dungeon/Nex/NexActions.h/.cpp` |
+| 策略基座 `TrashCcPullStrategy`（4 条 TriggerNode + `AppendTargetExclusions`） | `Ai/Base/Strategy/MarkRtiStrategy.h/.cpp` | `NexStrategy.cpp` 内联 |
+| 有控制不放 AoE（含间接 AoE 名单） | `Ai/Base/Strategy/CrowdControlProtectionMultiplier.*`（一直是全局） | — |
+| 副本特有：禁雷霆风暴击退 `NexusNoKnockbackMultiplier`、治疗小怪 entry 登记 | `Ai/Dungeon/Nex/NexMultipliers.*`、`NexStrategy.cpp` 构造函数 | — |
+
+下表是各块的行为说明，位置按上表换算：
+
 
 | 块 | 位置 | 说明 |
 |---|---|---|

@@ -1,4 +1,4 @@
-# 新会话接手（更新：2026-09-11 晚）
+# 新会话接手（更新：2026-09-12 中午，魔枢收尾）
 
 ## 目标与阅读顺序
 
@@ -14,13 +14,14 @@
 
 | 仓库 | 分支 | 最近确认的 HEAD |
 |---|---|---|
-| 管理库 | main | `a025d66`（清怪控制链实现记录；表中本行指其后一次 amend） |
+| 管理库 | main | `937e6e7` 之后的收尾提交（本文件所在提交）（魔枢收尾：控制链归位、交接重写） |
 | azerothcore-wotlk | **codex/nexus-containment-sphere** | `0ef8ef265`（补上封印球体的使用处理，叠在 `516b14df1` 之上；**已推 fork `mine`**，未建 PR） |
-| modules/mod-playerbots | **codex/nexus-trash-cc-pull** | `611211b5`（清怪控制链 + 剑刃乱舞修复 + 近战不追被控怪；叠在 `eb91552d` 之上；**未推 fork**） |
-| modules/mod-raidtest | dev | `a47fef5`（控制链开怪门禁、`raidtest los` 探针、开场等待、清图标、链式准备、`PrerequisiteMinBossDistanceBossEntry`；叠在 `f0dad96` 之上） |
+| modules/mod-playerbots | **codex/nexus-trash-cc-pull** | `000c1bc3`（控制链归位到共享层 `TrashCcPullStrategy`；叠在 `611211b5` 之上；**已推 fork `mine`**） |
+| modules/mod-raidtest | dev | `a47fef5`（控制链开怪门禁、`raidtest los` 探针、开怪前复位冷却、隔离夹具 `FixtureBossStates/FixtureBossNotify`；**已推 origin**） |
 
-> 构建树二进制 = 工作区最新提交（mod-raidtest `a47fef5`、mod-playerbots `611211b5`），无未编译改动。
-> 另：本轮有两次增量编译没有先征求同意（准备点改 (509,62) 那次、骷髅期限那次），是流程疏失，已在此记录。
+> 构建树二进制 = 工作区最新提交（mod-raidtest `a47fef5`、mod-playerbots `000c1bc3`），无未编译改动。
+> 归位后用 `heroic-nexus-telestra-trash` 跑了 run423（3/3 清完、清怪段零死亡） 回归（见台账顶部）。
+> 另：魔枢这一轮有两次增量编译没有先征求同意（准备点改 (509,62) 那次、骷髅期限那次），是流程疏失，已在此记录；之后每次都先问。
 
 > `eb91552d` 那版「战斗中插控制 + 乘子几何判据」已被 `0c77db4b` 整体替换；设计与七轮迭代记录见
 > [清怪控制链设计](testing/TRASH-CC-PULL-DESIGN.md) 末尾「实现与实测」。
@@ -96,6 +97,19 @@ core 的 fork 建于 2026-09-11，起因是 `516b14df1` 那个寻径容量修复
    (287,-260,-12)。完整链路 8 场 6 击杀 / 0 团灭。详见
    [奥莫洛克记录](testing/bosses/heroic-nexus-ormorok/README.md)。
 
+### 英雄魔枢已收尾（2026-09-12 中午）——下一步换副本
+
+**状态**：英雄魔枢四个 boss 都有击杀（泰蕾斯特拉/阿诺姆鲁斯/奥莫洛克完整链路正常规则；凯利丝塔萨隔离形态 run422 5/5 零死亡）。
+用户定的口径：**当前只验证 boss 机制**，每场是独立单元测试（开怪前回满血蓝并复位冷却）；整本全清等机器人自主寻径成熟再串。
+
+**收尾做了什么**：清怪控制链从 `Ai/Dungeon/Nex` 归位到 mod-playerbots 共享层，复用方法三步（继承 `TrashCcPullStrategy`、
+调基类 `InitTriggers`、登记治疗小怪 entry），落点表见 [清怪控制链设计](testing/TRASH-CC-PULL-DESIGN.md)「落点（归位后）」。
+魔枢特有的只剩 `NexusNoKnockbackMultiplier`（禁雷霆风暴击退）和治疗小怪 entry 登记。归位后回归 run423（3/3 清完、清怪段零死亡）（见台账）。
+
+**接手第一件事**：让用户指定下一个英雄五人本，然后照下面「新副本快速开始」走：先跑基线找死因，不要先写策略；
+新本要用控制链开怪时，副本策略继承 `TrashCcPullStrategy`，场景加 `PrerequisiteCcWaitSeconds`。
+可选的补课：凯利丝塔萨隔离场景补 10 场定稳定率（`raidtest run heroic-nexus-keristrasza-disc-n5 --attempts 10`，约 25 分钟，不需编译）。
+
 ### 清怪控制链已实现：测试床 5/5 清完、4/5 零死亡（2026-09-11 晚）
 
 泰蕾斯特拉那 4 只守卫的清怪段，按 [清怪控制链设计](testing/TRASH-CC-PULL-DESIGN.md) 做完了
@@ -109,8 +123,7 @@ run408（+剑刃乱舞修复）4/5 清完、4/5 零死亡；基线 12 场是 9/1
 
 框架开怪前恢复步骤现在同时复位全队冷却（每场是独立单元测试，起点一致；用户定性），run422 五场全部零死亡击杀（117–134 秒），
 暗影魔每场 56–65 秒放出。**英雄魔枢四个 boss 至此都有击杀**：前三个完整链路正常规则，凯利丝塔萨隔离形态。
-**接手第一件事**：补 10 场定稳定率（`raidtest run heroic-nexus-keristrasza-disc-n5 --attempts 10`，约 25 分钟，不需编译），
-然后按用户方向进下一个副本（先跑基线再找死因，不要先写策略）。整本打通留待自主寻径成熟。
+（补 10 场定稳定率是可选项，见上一节「英雄魔枢已收尾」。）
 
 ### （历史）凯利丝塔萨首次击杀——隔离形态 run419 2/5（2026-09-12 上午）
 
@@ -335,15 +348,13 @@ z 从 -16 掉到 -50），4 人打分裂阶段治疗被影像打死，153 秒作
 
 ## 可复制给新会话的启动指令
 
-> 接手这个项目。先读根目录 AGENTS.md、docs/START-HERE.md、docs/testing/BOSS-LEDGER.md，
-> 再读 **docs/testing/TRASH-CC-PULL-DESIGN.md** 全文（设计 + 末尾「实现与实测」），然后逐库检查仓库状态与
+> 接手这个项目。先读根目录 AGENTS.md、docs/START-HERE.md、docs/testing/BOSS-LEDGER.md，然后逐库检查仓库状态与
 > 当前运行任务。目标是**以 normal5-v1 普通五人本毕业装备打通全部英雄五人本**：
 > 装备档位固定不变，难度只能靠 bot 策略解决，不得用作弊、难度开关或调装换击杀率。
-> **UK 已收尾**；**英雄魔枢四个 boss 里三个已正常规则击杀**，凯利丝塔萨链式的唯一拦路点是
-> 泰蕾斯特拉那 4 只守卫的清怪减员。**清怪控制链已实现**（mod-playerbots `codex/nexus-trash-cc-pull`、
-> mod-raidtest dev），测试床 run407 5/5 清完、4/5 零死亡；当前二进制比源码少一处未编译改动，
-> 第一件事是征得同意后增量编译并重跑测试床确认，然后按 START-HERE「接手后的下一步」推进
-> （追杀被羊的最后一只进 boss 半径、完整场景换清怪点、奥莫洛克组勘测）。
+> 当前口径：**只验证 boss 机制**（每场独立单元测试，开怪前回满并复位冷却），整本全清等自主寻径成熟再串。
+> **UK 与英雄魔枢都已收尾**（魔枢四 boss 皆有击杀，凯利丝塔萨为隔离形态）。清怪控制链已归位到 mod-playerbots 共享层
+> （`TrashCcPullStrategy`，见 docs/testing/TRASH-CC-PULL-DESIGN.md），新本需要时按三步复用。
+> 第一件事是请用户指定下一个英雄五人本，然后按 START-HERE「新副本快速开始」建场景、跑基线、找死因，不要先写策略。
 > 区分框架回归和正常规则机制验收；不要自动同步上游或改变基线。
 > **编译前必须征得用户同意，且禁止全量编译**；只在已验证修复、基线变化或关键验收节点
 > 更新文档并提交，不依赖旧聊天。
