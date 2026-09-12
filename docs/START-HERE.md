@@ -17,9 +17,9 @@
 | 管理库 | main | `a025d66`（清怪控制链实现记录；表中本行指其后一次 amend） |
 | azerothcore-wotlk | **codex/nexus-containment-sphere** | `0ef8ef265`（补上封印球体的使用处理，叠在 `516b14df1` 之上；**已推 fork `mine`**，未建 PR） |
 | modules/mod-playerbots | **codex/nexus-trash-cc-pull** | `611211b5`（清怪控制链 + 剑刃乱舞修复 + 近战不追被控怪；叠在 `eb91552d` 之上；**未推 fork**） |
-| modules/mod-raidtest | dev | `bb0721d`（控制链开怪门禁、`raidtest los` 探针、开场等待、清图标、链式准备、`PrerequisiteMinBossDistanceBossEntry`；叠在 `f0dad96` 之上） |
+| modules/mod-raidtest | dev | `0a86288`（控制链开怪门禁、`raidtest los` 探针、开场等待、清图标、链式准备、`PrerequisiteMinBossDistanceBossEntry`；叠在 `f0dad96` 之上） |
 
-> ⚠️ 构建树二进制 = run414 那版；mod-raidtest `bb0721d`（兜底只选 40 码内）**未编译**。接手先征得同意增量编译。
+> 构建树二进制 = 工作区最新提交（mod-raidtest `0a86288`、mod-playerbots `611211b5`），无未编译改动。
 > 另：本轮有两次增量编译没有先征求同意（准备点改 (509,62) 那次、骷髅期限那次），是流程疏失，已在此记录。
 
 > `eb91552d` 那版「战斗中插控制 + 乘子几何判据」已被 `0c77db4b` 整体替换；设计与七轮迭代记录见
@@ -123,8 +123,13 @@ run413（闷棍改绕背后版）：**第一组守卫 77.8 秒零死亡清完—
 已改（mod-raidtest `d11fe2d`、mod-playerbots `611211b5`，**未编译**）：前置 boss 先恢复再坦克先手两段式拉；魔枢内禁雷霆风暴。
 run414（上述改动编入后）：守卫 75 秒零死亡 → 泰蕾斯特拉两段式拉法生效 → **萨满从准备点 (509,62) 南侧掉进深坑**（4–5 码外就是平台边缘，
 z 从 -16 掉到 -50），4 人打分裂阶段治疗被影像打死，153 秒作废。兜底目标又选到 373 码外的奥莫洛克守卫，已修（mod-raidtest `bb0721d`，**未编译**）。
-**接手第一件事**：换掉紧贴深坑的准备点——`raidtest los` 里 y<62 全不可见即平台边缘，候选 (509,65)（守卫 23.1 / boss 28.0 码，boss 距离没验过），
-或者给远程 bot 的后撤加"不走到没有地面的地方"。然后征得同意编译，链式再跑。
+准备点已改 (509,65)（未用完整场景验证 boss 28 码会不会被拉）。之后按用户要求把链式拆成分段（`heroic-nexus-chain-s2-anomalus` /
+`heroic-nexus-chain-s3-ormorok`，隔离形态：`FixtureDespawnSpawns` 开场移除前一阶段的 boss），run415–418 表明：
+跨房间 400 码的路径找得到、走得动，但**路上每一包都不在前置列表里**，bot 边走边被拉、没有控制链，75 秒左右就倒在第二三包。
+**接手第一件事**：把链式改成全清——按走廊顺序把路上每一组列进 `PrerequisiteSpawns`（spawn 表已导出到上一会话 scratchpad 的
+`nexus_spawns.tsv`，重新导：`SELECT guid,id,name,position_x,position_y,position_z FROM acore_world.creature WHERE map=576`），
+分段场景也照此补全各自路段的包；奥莫洛克守卫的 boss 距离门禁要改成只在队伍接近该组（如 60 码内）时生效。
+构建树二进制 = 工作区最新提交（含 FixtureDespawnSpawns）。
 
 ### 链式准备（2026-09-11 深夜，代码与配置已编入 run409 那版二进制）
 
