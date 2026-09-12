@@ -1,4 +1,4 @@
-# 新会话接手（更新：2026-09-12 傍晚，英雄艾卓-尼鲁布三个 boss 均已跑出基线）
+# 新会话接手（更新：2026-09-12 深夜，克里克希尔已套用清怪控制链）
 
 ## 目标与阅读顺序
 
@@ -16,8 +16,8 @@
 |---|---|---|
 | 管理库 | main | 本文件所在提交（英雄艾卓-尼鲁布首轮） |
 | azerothcore-wotlk | **codex/an-formation-despawn-crash** | 叠在 `0ef8ef265` 之上：修 `CreatureGroup::DespawnFormation` 遍历中释放节点的**上游崩溃**。**未推 fork** |
-| modules/mod-playerbots | **codex/nexus-trash-cc-pull** | `000c1bc3`（未改动） |
-| modules/mod-raidtest | **codex/an-runtime-strategy-names** | 叠在 `a47fef5` 之上：补全 `RuntimeStrategyName`、`ResetInstance` 支持 HARD_RESET boss + 失败归因日志。**未推 origin** |
+| modules/mod-playerbots | **codex/an-trash-cc-shackle** | 叠在 `000c1bc3` 之上：清怪控制链支持亡灵本（牧师束缚亡灵分工、按法术数据判生物类型+机制免疫）。**未推 fork** |
+| modules/mod-raidtest | **codex/an-runtime-strategy-names** | 叠在 `a47fef5` 之上：`RuntimeStrategyName` 补全、`ResetInstance` 三趟、悬垂 GUID 按 entry/spawnId 重绑、清怪期间阵亡不判队伍失效。**未推 origin** |
 
 > 构建树二进制 = 2026-09-12 下午那次增量编译，**含核心的 `DespawnFormation` 崩溃修复与 mod-raidtest 的
 > `RuntimeStrategyName` / `ResetInstance` 改动**，与工作区一致，无未编译改动。两次编译都事先征得用户同意。
@@ -246,7 +246,7 @@ Azjol-Nerub / map 601**）。同时按用户要求把**盗贼由战斗改刺杀*
 |---|---|---|---|
 | 阿努巴拉克 | `heroic-an-anubarak-n5`（完整遭遇战） | **0/5**（run430），boss 最低 75% | 死因已量化到单次伤害事件 |
 | 哈多诺克斯 | `heroic-an-hadronox-n5`（**隔离形态**） | **0/5**（run432），boss 43–52% | 死因已定位 |
-| 克里克希尔 | `heroic-an-krikthir-n5`（完整遭遇战） | **0/5**（run436），卡在清怪段 | boss 未开上，无 boss 战结论 |
+| 克里克希尔 | `heroic-an-krikthir-n5`（完整遭遇战） | **0/5**（run442），但 run437 有过一次 267.8 秒零死亡击杀 | 未通关（12 次尝试 1 次击杀） |
 
 **本轮定位三个缺陷，两个已修已验证**（细节见 [台账](testing/BOSS-LEDGER.md) 顶部）：
 
@@ -264,11 +264,14 @@ Azjol-Nerub / map 601**）。同时按用户要求把**盗贼由战斗改刺杀*
 
 **接手第一件事（按序）**：
 
-1. **克里克希尔的清怪**：纳吉尔组 + 加什拉组共 6 只精英在 3–5 秒内一起进战斗
-   （两个守望者相距 15.0 码），四场承伤 424,711、Warrior 单次最高 10,220（布甲上限 14,504），
-   五场只杀掉 2 只。与魔枢守卫组同类，复用 `TrashCcPullStrategy` 三步
-   （见 [清怪控制链](testing/TRASH-CC-PULL-DESIGN.md)）+ 场景加 `PrerequisiteCcWaitSeconds`。
-   **属策略改动，动手前先问用户。**
+1. ~~克里克希尔的清怪~~ **已套用控制链（2026-09-12 深夜）**，见
+   [台账](testing/BOSS-LEDGER.md) 顶部与 [记录](testing/bosses/heroic-an-krikthir/README.md)。
+   要点：这一本小怪全是**亡灵**，变形/妖术/闷棍按 `TargetCreatureType` 都无效，三个守望者
+   还对**全部控制机制免疫**（`creature_immunities` -361），唯一能用的是新加的
+   **牧师束缚亡灵**，且只能落在蛛魔小怪上。真正把结果从 0/5 抬起来的其实是
+   `PrerequisiteCcWaitSeconds` 连带打开的 **24 码接近上限**（一组一组拉）。
+   现状：run442 仍 0/5，但清怪稳定推进到 6–7/9、130 秒；run437 有过一次 267.8 秒零死亡击杀。
+   **下一步是清怪后半段的战斗强度**，不再有框架阻断。
 2. **阿努巴拉克**：牧师开场把 GCD 花在 1 小时团队 buff 上，坦克在第一次践踏（16,087 / 上限 22,784）
    落下前的 13.8 秒里零直接治疗。先查清「团队 buff 为什么在战斗中才补」，再动 mod-playerbots，
    **不要直接屏蔽 buff 动作**。
