@@ -1,4 +1,4 @@
-# 新会话接手（更新：2026-09-12 深夜，阿努巴拉克首次击杀）
+# 新会话接手（更新：2026-09-12 深夜，阿努巴拉克第二轮优化收尾）
 
 ## 目标与阅读顺序
 
@@ -16,8 +16,8 @@
 |---|---|---|
 | 管理库 | main | 本文件所在提交（英雄艾卓-尼鲁布首轮） |
 | azerothcore-wotlk | **codex/an-formation-despawn-crash** | 叠在 `0ef8ef265` 之上：修 `CreatureGroup::DespawnFormation` 遍历中释放节点的**上游崩溃**。**未推 fork** |
-| modules/mod-playerbots | **codex/an-trash-cc-shackle** | 叠在 `000c1bc3` 之上：清怪控制链支持亡灵本（牧师束缚亡灵分工、按法术数据判生物类型+机制免疫）。**未推 fork** |
-| modules/mod-raidtest | **codex/an-runtime-strategy-names** | 叠在 `a47fef5` 之上：`RuntimeStrategyName` 补全、`ResetInstance` 三趟、悬垂 GUID 按 entry/spawnId 重绑、清怪期间阵亡不判队伍失效。**未推 origin** |
+| modules/mod-playerbots | **codex/an-trash-cc-shackle** | 叠在 `000c1bc3` 之上：清怪控制链支持亡灵本 + 阿努巴拉克躲穿刺。**未推 fork** |
+| modules/mod-raidtest | **codex/an-runtime-strategy-names** | 叠在 `a47fef5` 之上：`RuntimeStrategyName` 补全、`ResetInstance` 三趟、悬垂 GUID 重绑、清怪期间阵亡不判队伍失效、开怪前补齐团队 buff。**未推 origin** |
 
 > 构建树二进制 = 2026-09-12 下午那次增量编译，**含核心的 `DespawnFormation` 崩溃修复与 mod-raidtest 的
 > `RuntimeStrategyName` / `ResetInstance` 改动**，与工作区一致，无未编译改动。两次编译都事先征得用户同意。
@@ -244,7 +244,7 @@ Azjol-Nerub / map 601**）。同时按用户要求把**盗贼由战斗改刺杀*
 
 | boss | 场景 | 结果 | 判定 |
 |---|---|---|---|
-| 阿努巴拉克 | `heroic-an-anubarak-n5`（完整遭遇战） | **1/5 击杀**（run445 a2：249.9 秒零死亡） | 完整遭遇战首次击杀，稳定性未验收 |
+| 阿努巴拉克 | `heroic-an-anubarak-n5`（完整遭遇战） | **1/5 击杀**（run445/448/449 三轮均为 1/5） | 完整遭遇战已有击杀，稳定性未验收 |
 | 哈多诺克斯 | `heroic-an-hadronox-n5`（**隔离形态**） | **0/5**（run432），boss 43–52% | 死因已定位 |
 | 克里克希尔 | `heroic-an-krikthir-n5`（完整遭遇战） | **0/5**（run442），但 run437 有过一次 267.8 秒零死亡击杀 | 未通关（12 次尝试 1 次击杀） |
 
@@ -280,7 +280,13 @@ Azjol-Nerub / map 601**）。同时按用户要求把**盗贼由战斗改刺杀*
    **另记一条方法教训**：`raidtest los` 的 `los` 是从 `z1+2` 量的，必须传**实测地面高度**当 z1，
    不能传"向下找地面"的高起点；它也**看不到战斗中才关的门**。详见
    [阿努巴拉克记录](testing/bosses/heroic-an-anubarak/README.md)。
-   剩下：2 场团灭（20%/54%）、1 场超时（17%）、1 场 boss 脱战复位，先复跑 5 场定稳定率。
+   **第二轮优化已收尾（run445–449）**：团灭后团队 buff 不恢复已修（`RestoreStartingBuffs`）；
+   穿刺闪避已修（上游那条「追踪不到尖刺」的 TODO 前提不成立：它是 creature 29184、有 4 秒
+   预警、半径仅 4 码），穿刺承伤 351.8 → **27.7 伤害每秒（降 13 倍）**，但**击杀率仍 1/5**。
+   **「转火守卫/毒疗者」两种形状都是回归，已回退，反证留档**（15 场一只小怪都没杀掉；
+   原基线里坦克本来就抓着 81% 的守卫伤害）。
+   **瓶颈已从生存转移到输出**：run449 总战斗时长涨到 1,686 秒、两场 480 秒超时停在 46%/73%。
+   下一步先量化队伍对 boss 的实际 DPS 与下潜期空转时长，**不要再动目标选择/仇恨**（本轮已有反证）。
 3. **哈多诺克斯**：蛛网猛拉把远程拉进近身、酸液云落在人堆里没人走出去；
    `WotlkDungeonANStrategy` 对她一条触发器都没有。要加「被拉后重新拉开」与「离开酸液云」。
 4. 可选：哈多诺克斯完整形态需要给框架加「按召唤 entry 的前置门禁」
