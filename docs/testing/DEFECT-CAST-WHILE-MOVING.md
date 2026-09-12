@@ -12,12 +12,19 @@
 
 ## 代码位置
 
-`azerothcore-wotlk/modules/mod-playerbots/src/Bot/PlayerbotAI.cpp:3946`
-（分支 `codex/an-trash-cc-shackle`，函数 `bool PlayerbotAI::CastSpell(uint32 spellId, float x, float y, float z, ...)`）
+仓库 `azerothcore-wotlk/modules/mod-playerbots`，分支 `codex/an-trash-cc-shackle`，
+文件 `src/Bot/PlayerbotAI.cpp`。
+
+**⚠️ 同一段代码有两处，两处都要改，别只改一处：**
+
+| 行号 | 所在重载 |
+|---|---|
+| **3735** | `bool PlayerbotAI::CastSpell(uint32 spellId, Unit* target, Item* itemTarget)`（3575 起）——**治疗走的是这条** |
+| **3948** | `bool PlayerbotAI::CastSpell(uint32 spellId, float x, float y, float z, Item* itemTarget)`（3853 起）——地面目标法术走这条 |
+
+两处代码完全相同：
 
 ```cpp
-    spell->prepare(&targets);
-
     if (bot->isMoving() && spell->GetCastTime())
     {
         // bot->StopMoving();                                  // <-- 被注释掉
@@ -28,13 +35,26 @@
     }
 ```
 
-注意它是在 `spell->prepare()` **之后**才判断的，所以每次都白走一遍施法准备再取消。
+注意它在 `spell->prepare()` **之后**才判断，所以每次都白走一遍施法准备再取消。
 
-调用链：
-`CastSpellAction::Execute`（`src/Ai/Base/Actions/GenericSpellActions.cpp:181`）
-`return botAI->CastSpell(spell, GetTarget());` → 上面那段 → 返回 false
-→ 引擎把该动作记为 `FAILED`，`SetNextCheckDelay(reactDelay)` 后下个 tick 重来；
-如果 bot 还在动，再次 `FAILED`。没有任何机制让它停下来。
+第三个重载 `CastSpell(std::string const name, Unit* target, Item*)`（3561 起）只做
+名字→spellId 解析，然后转调 3575 那条。
+
+调用链（以治疗为例）：
+
+```
+CastSpellAction::Execute            src/Ai/Base/Actions/GenericSpellActions.cpp:180
+  -> botAI->CastSpell(spell, GetTarget())     // string 重载
+  -> PlayerbotAI::CastSpell(uint32, Unit*, Item*)   :3575
+  -> 上面那段 :3735 -> return false
+  -> 引擎记为 FAILED，SetNextCheckDelay(reactDelay)，下个 tick 重来
+     如果还在移动，再次 FAILED。没有任何机制让它停下来。
+```
+
+同一个 `return botAI->CastSpell(spell, GetTarget());` 还出现在
+`GenericSpellActions.cpp:289`（`CastBuffSpellAction::Execute`）与
+`:444`（`CastShootAction::Execute`），即**增益法术也同样受影响**——
+这与上一轮观察到的「团灭后 bot 在战斗中补团队 buff 却总补不上」现象可能同源，修完值得回看。
 
 ## 证据
 
