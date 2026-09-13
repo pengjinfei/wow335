@@ -13,6 +13,6 @@ if [ -n "$OLD" ]; then
 fi
 pkill -f "tail -n 0 -f /tmp/ac_world_fifo"; sleep 1
 if pgrep -x worldserver >/dev/null; then echo "another worldserver alive - aborting"; exit 1; fi
-cp Playerbots.log "$S_ARCHIVE" 2>/dev/null
+[ -n "${S_ARCHIVE:-}" ] && cp Playerbots.log "$S_ARCHIVE" 2>/dev/null
 ( nohup sh -c 'tail -n 0 -f /tmp/ac_world_fifo | ./var/build/obj/src/server/apps/worldserver' > "$LOG" 2>&1 & )
 sleep 3; pgrep -x worldserver | head -1
