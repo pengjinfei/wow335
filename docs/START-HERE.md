@@ -19,8 +19,19 @@
 | modules/mod-playerbots | **codex/an-trash-cc-shackle** | 叠在 `2b2514f6` 之上：清怪控制链支持亡灵本 + 阿努巴拉克躲穿刺 + 践踏改横向侧移出锥。**未推 fork** |
 | modules/mod-raidtest | **codex/an-runtime-strategy-names** | 叠在 `a47fef5` 之上：`RuntimeStrategyName` 补全、`ResetInstance` 三趟、悬垂 GUID 重绑、清怪期间阵亡不判队伍失效、开怪前补齐团队 buff。**未推 origin** |
 
-> 构建树二进制 = 2026-09-12 深夜第三轮最后一次增量编译（回退潜地集火之后），**与三个仓库工作区一致，
-> 无未编译改动**。`AiPlayerbot.LogInGroupOnly` 已确认改回 `1`。两次编译都事先征得用户同意。
+> 构建树二进制 = 2026-09-13 00:34 第二次增量编译（573 TU），**与 mod-playerbots 工作区一致**。
+> **mod-playerbots 工作区有 9 个文件的未提交改动**：共享层「为施法让出走位型移动」（`MovementIntent`、
+> `CanYieldMovementForCast`/`TryYieldMovementForCast`、两处 `CastSpell` + 两处 `CanCastSpell` 的移动闸）。
+> 本日十七次增量编译（详见阿努巴拉克记录第四至九轮）。**二进制 = 2026-09-13 15:00，与 mod-playerbots 工作区一致**
+> （未提交，18 个文件：共享层让路修复 + prepare 结果码日志 + **同层守卫 `IsSameFloorDestination`** + 牧师去盾 +
+> AN 层践踏锥角/距离/按角色躲踏、法师蓝量 Multiplier、远程 DPS 保距（已接入）、西沿护栏（未接入））。
+> 场景加了 `FixtureDespawnSpawns = 132274,132275`；夹具牧师/法师槽各加 33448。
+> 当前阿努巴拉克基线 = run 473：2 击杀 / 3 团灭；掉出平台已归零，法师不再没蓝；剩余团灭 = 第三次潜地前的 DPS 检查
+> 与 187 秒后 30k+ 践踏一击（坦克/牧师，成因待查）。
+> 别重走：让路修复非瓶颈、"不是蓝量"是误读、run 463–468 站位实验、法师换专精、"所有非坦克只看距离就躲踏"（run 472 0/5）。
+> `AiPlayerbot.LogInGroupOnly` 已改回 `1`（运行中进程仍是 0，下次重启生效）。重启用 `scripts/restart_world.sh <logname>`；开跑前清 `account_instance_times`。
+> 夹具已知限制：bot 无背包，约 20 场后拾取物塞满导致 `fixture_invalid: missing supply item`。
+> **接手第一件事**：读阿努巴拉克记录第九轮「下一步」；候选是治疗接入保距、查 30k+ 践踏成因、给 roster 配背包。
 > 回归证据：run426（`heroic-nexus-keristrasza-disc-n5`）在新二进制 + 刺杀盗贼下 **125.7 秒零死亡击杀**，
 > 与 run422 的 117–134 秒区间一致，魔枢结论未受影响。
 > 另：魔枢那一轮有两次增量编译没有先征求同意（准备点改 (509,62) 那次、骷髅期限那次），是流程疏失，已在此记录。
