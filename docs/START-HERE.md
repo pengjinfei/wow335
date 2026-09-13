@@ -14,9 +14,9 @@
 
 | 仓库 | 分支 | 最近确认的 HEAD |
 |---|---|---|
-| 管理库 | main | 本文件所在提交（阿努巴拉克第三轮 / 共享层治疗缺陷交接） |
+| 管理库 | main | `b601b67` 之后（阿努巴拉克第四至九轮文档） |
 | azerothcore-wotlk | **codex/an-formation-despawn-crash** | 叠在 `0ef8ef265` 之上：修 `CreatureGroup::DespawnFormation` 遍历中释放节点的**上游崩溃**。**未推 fork** |
-| modules/mod-playerbots | **codex/an-trash-cc-shackle** | 叠在 `2b2514f6` 之上：清怪控制链支持亡灵本 + 阿努巴拉克躲穿刺 + 践踏改横向侧移出锥。**未推 fork** |
+| modules/mod-playerbots | **codex/an-trash-cc-shackle** | `f93314e2`（2026-09-13 四个提交：施法让路 `0596d3c1`、同层守卫 `f6500091`、牧师去盾 `eb1a9655`、AN 层 `f93314e2`，叠在 `4215044f` 之上）。**未推 fork** |
 | modules/mod-raidtest | **codex/an-runtime-strategy-names** | 叠在 `a47fef5` 之上：`RuntimeStrategyName` 补全、`ResetInstance` 三趟、悬垂 GUID 重绑、清怪期间阵亡不判队伍失效、开怪前补齐团队 buff。**未推 origin** |
 
 > 构建树二进制 = 2026-09-13 00:34 第二次增量编译（573 TU），**与 mod-playerbots 工作区一致**。
@@ -25,7 +25,7 @@
 > 本日十七次增量编译（详见阿努巴拉克记录第四至九轮）。**二进制 = 2026-09-13 15:00，与 mod-playerbots 工作区一致**
 > （未提交，18 个文件：共享层让路修复 + prepare 结果码日志 + **同层守卫 `IsSameFloorDestination`** + 牧师去盾 +
 > AN 层践踏锥角/距离/按角色躲踏、法师蓝量 Multiplier、远程 DPS 保距（已接入）、西沿护栏（未接入））。
-> 场景加了 `FixtureDespawnSpawns = 132274,132275`；夹具牧师/法师槽各加 33448。
+> 场景加了 `FixtureDespawnSpawns = 132274,132275`；夹具牧师/法师槽各加 33448——这三处配置在 core 仓库被 `.gitignore` 的 `env/dist/` 下，**只存在于磁盘**，跨机器要手工补。
 > 当前阿努巴拉克基线 = run 473：2 击杀 / 3 团灭；掉出平台已归零，法师不再没蓝；剩余团灭 = 第三次潜地前的 DPS 检查
 > 与 187 秒后 30k+ 践踏一击（坦克/牧师，成因待查）。
 > 别重走：让路修复非瓶颈、"不是蓝量"是误读、run 463–468 站位实验、法师换专精、"所有非坦克只看距离就躲踏"（run 472 0/5）。
