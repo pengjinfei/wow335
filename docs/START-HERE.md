@@ -17,7 +17,7 @@
 | 管理库 | main | `b601b67` 之后（阿努巴拉克第四至九轮文档） |
 | azerothcore-wotlk | **codex/an-formation-despawn-crash** | 叠在 `0ef8ef265` 之上：修 `CreatureGroup::DespawnFormation` 遍历中释放节点的**上游崩溃**。**未推 fork** |
 | modules/mod-playerbots | **codex/an-trash-cc-shackle** | `c409c7e8`（2026-09-13/14 九个提交：施法让路 `0596d3c1`、同层守卫 `f6500091`、牧师去盾 `eb1a9655`、AN 层 `f93314e2`、践踏圣佑+预盾 `b883188c`、追敌不离主坦 `4b02c3ee`、治疗保距 `f54c55f5`、近战躲踏路径 `32a59e29`、相关性 `c409c7e8`，叠在 `4215044f` 之上）。**未推 fork** |
-| modules/mod-raidtest | **codex/an-runtime-strategy-names** | 叠在 `a47fef5` 之上：`RuntimeStrategyName` 补全、`ResetInstance` 三趟、悬垂 GUID 重绑、清怪期间阵亡不判队伍失效、开怪前补齐团队 buff。**未推 origin** |
+| modules/mod-raidtest | **codex/an-runtime-strategy-names** | 叠在 `a47fef5` 之上：`RuntimeStrategyName` 补全、`ResetInstance` 三趟、悬垂 GUID 重绑、清怪期间阵亡不判队伍失效、开怪前补齐团队 buff；观察层 `51826f1`：ResolveBoss 不再只看 bots[0] 地图（坦克释放灵魂后漏判击杀）。**未推 origin** |
 
 > 构建树二进制 = 2026-09-13 00:34 第二次增量编译（573 TU），**与 mod-playerbots 工作区一致**。
 > **mod-playerbots 工作区有 9 个文件的未提交改动**：共享层「为施法让出走位型移动」（`MovementIntent`、
