@@ -815,7 +815,7 @@ mod-playerbots `4511b131`。第一版只做了"战斗中切回战斗引擎"+ 坦
 
 ## 第二十轮（2026-09-14 傍晚）：法师 AOE 条件放行 + 盗贼刀扇相关性 28 → run 493 1/5（零死亡击杀 276 s）；英勇时机量化
 
-改动（未提交，等旧 boss 回归）：`AnubarakMageManaMultiplier` 对烈焰风暴/暴风雪条件放行（boss 潜地 + 目标 8 码内 ≥3 活小怪 + 法师蓝 >50%，铺炸弹仍归零）；
+改动（mod-playerbots `e3c31f6e`，含回归后对引擎同步的修正——只在有可见 attackers 时强制进战斗引擎）：`AnubarakMageManaMultiplier` 对烈焰风暴/暴风雪条件放行（boss 潜地 + 目标 8 码内 ≥3 活小怪 + 法师蓝 >50%，铺炸弹仍归零）；
 刺杀/通用盗贼策略 `medium aoe → fan of knives` 相关性 15→28（共享层）。
 
 | 指标 | run 492 | **run 493** |
