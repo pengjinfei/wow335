@@ -74,6 +74,32 @@ playerbots 是「每个 tick 只执行一个动作」的引擎，新动作最常
 
 ### 未修（**待办**，价值已量化）
 
+**0. 视线被当成"候选过滤条件"，看不见的队友等于不存在**（2026-09-15 因格瓦尔实测）
+
+`PartyMemberValue::Check`（PartyMemberValue.cpp:113）和 `PartyMemberToHeal::Check`
+（PartyMemberToHeal.cpp:135）都硬性要求 `IsWithinLOS`。后果不是"少治一次"，是**整条链条静默停摆**：
+治疗的 `party member to heal`、法师的 `party member to dispel` 一起返回空 → 不治、不解；
+而所有"走过去"的动作（`reach party member to heal` 等）又都以这同一个值为目标 → **连自救都做不到**。
+实测一次团灭：治疗连续 10 个 tick `no actions executed`、法师同窗口零伤害 14 秒、
+坦克 31 秒没收到任何治疗从满血被磨死。
+
+**上游写过修法但够不到**（`RangeTriggers.cpp:193`）：
+
+```cpp
+bool PartyMemberToHealOutOfSpellRangeTrigger::IsActive()
+{
+    Unit* target = AI_VALUE(Unit*, "party member to heal");
+    if (!target) return false;                    // ← 视线不通时就在这里返回了
+    return ... || !bot->IsWithinLOSInMap(target); // ← 专门为视线写的分支，永远到不了
+}
+```
+
+修法方向：给这个触发器和 `ReachPartyMemberToHealAction` 喂一个**不按视线过滤**的取值
+（施法类动作仍用带视线的那个，免得隔墙施法），并让接近动作在"距离够但看不见"时也 `isUseful`
+（现在它 `IsWithinCombatRange` 就返回 false）。**风险**：共享层、影响所有治疗职业，必须回归三个旧 boss。
+因格瓦尔那一轮先在 boss 层验证了机制（新增 `ingvar regain los` 侧移绕遮挡，靶子指标从 9–17 秒归零），
+共享层版本尚未做。
+
 **1. `PartyMemberToProtect::Calculate()` 第一行是 `return nullptr;`** —— 这是你记得的那条。
 
 `src/Ai/Base/Value/PartyMemberToHeal.cpp:164`，函数整个被上游短路，下面 40 行是够不到的死代码。
@@ -106,7 +132,8 @@ playerbots 是「每个 tick 只执行一个动作」的引擎，新动作最常
 
 | 陷阱 | 后果 | 正确做法 |
 |---|---|---|
-| **死后采样** | bot 阵亡后法力/血量记 0，被当成"没蓝了" | 统计资源时先剔除死亡时刻之后的采样（`tank_mana_baseline.py` 已内置） |
+| **死后采样** | bot 阵亡后法力/血量记 0，被当成"没蓝了"；解咒者死后 `los` 恒为 false，被当成"没视线" | 统计资源/视线时先剔除死亡时刻之后的采样。因格瓦尔上一轮发表的"无视线秒"就踩了这条，重算后有一场团灭从 2 秒变 0 秒 |
+| **转阶段的假空窗** | 因格瓦尔 P1 打死后趴地复活那 15–25 秒谁都打不到，被当成每个人的"输出空窗" | 空窗统计只算"至少有人对 boss 造成伤害"的那些秒（`blackout_stats.py` 已内置），与 AN 的潜地期同理 |
 | **把 boss 不可攻击的时段混进位置统计** | 得出"盗贼 35% 站在践踏锥里"，实际只算浮出期是 19%、中位夹角 116°（本来就在背后） | 位置/站位统计必须排除潜地等 boss 不可选中的时段 |
 | **按伤害事件流算"切换空档"** | 群体技能同刻命中多目标被当成换目标，算出"换目标比同目标出手还快"的荒谬结果 | 该口径作废（脚本头部已标注）。改用 tick 级"推入 vs 轮得到" |
 | **窗口按整秒取** | 死亡记在 90s、致命一击记在 91s，窗口 `[t-10s, t]` 把它漏掉，得出"没挨打却死了" | 死因窗口取 `[t-12s, t+2.5s]` |
@@ -149,5 +176,7 @@ playerbots 是「每个 tick 只执行一个动作」的引擎，新动作最常
 1. **打通 `PartyMemberToProtect`**（共享层，三个职业的保护链，见上）——价值最高且已定位到具体一行。
 2. **近战的 `reach melee` 仍占整 tick**：目标接管之后它没降，是循环里剩下的最大摩擦。
 3. **并行多实例**（提速，先验证 tick 间隔）。
-4. 用新基线重跑其他未通关 boss：因格瓦尔 65%、以及魔枢/AN 其余 boss——目标接管是全副本收益，旧基线已经不可比。
+4. ~~用新基线重跑其他未通关 boss：因格瓦尔 65%~~ —— **已做，结论相反**：目标接管那批改动在因格瓦尔
+   **一点没动**（6/10 对旧 65%）。"共享层收益全副本通用"不成立；每换一个 boss 都必须重测基线，
+   不能拿别的 boss 的收益当预期。魔枢/AN 其余 boss 同理待测。
 5. 阿努巴拉克本身可以考虑按 80% 收尾验收。
