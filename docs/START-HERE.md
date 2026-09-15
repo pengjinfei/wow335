@@ -7,6 +7,7 @@
 验证机器人能否按正常规则处理 WLK 副本机制并通关，必要时在自己的 mod-playerbots/core 开发分支修复。框架不得代选技能、代走位、修改仇恨或削弱 boss。
 
 1. 本文件：当前状态与下一步。
+1.5 [跨 boss 经验与坑](testing/LESSONS.md)：方法、引擎层已修/未修的系统性缺陷、口径陷阱清单、待办。**换 boss 前先读这个。**
 2. [boss 台账](testing/BOSS-LEDGER.md)：哪些结果已证实。
 3. [测试与修复流程](testing/WORKFLOW.md)：新 boss、复现、fork 修复和交接。
 4. [代码覆盖与辅助行为](testing/SOURCE-COVERAGE.md)：不能把策略文件存在当作正常机制通关。
