@@ -1,12 +1,16 @@
-# 新会话接手（更新：2026-09-15 晚，因格瓦尔：新基线 60%，视线链已修、击杀率未动）
+# 新会话接手（更新：2026-09-15 晚，因格瓦尔：视线链 + 治疗自保两项已修，9/10）
 
 > **先读 [交接文档 HANDOVER-2026-09-14](testing/HANDOVER-2026-09-14.md)**：当前基线、今天十轮改动、卡点、下一步候选与操作坑。
 >
-> **当前在做**：英雄乌特加德城堡 · 因格瓦尔（`heroic-uk-ingvar-n5`）。新基线 **6/10**；
-> 视线恢复（`4eade4b7`）把"团灭必有大段无视线"这个特征消掉了（9/12/17 秒 → 全 0），
-> **但击杀率没动**。下一轮靶子已量化：**Dreadful Roar 的全队伤害**占治疗承伤 41%
-> （6k–8.8k 档 22 次共 152k，治疗血上限只有 16,500），戒律牧全场不放群体治疗。
-> 详见 [因格瓦尔记录](testing/bosses/heroic-uk-ingvar/README.md) 2026-09-15 一节。
+> **当前在做**：英雄乌特加德城堡 · 因格瓦尔（`heroic-uk-ingvar-n5`）。新基线 **6/10**。
+> 两项已修：视线恢复（`4eade4b7`，UK 层，团灭场无视线秒 9/12/17 → 全 0，击杀率未动）、
+> **治疗自保（`20e3e2b0`，共享层，治疗阵亡 7/10→2/10 p=0.07，击杀 6/10→9/10 但 p=0.30 不显著）**。
+> 共享层回归 9/9 零死亡。
+> **下一轮第一候选：把萨满补位治疗（`anub'arak offheal`）从 AN 层提到共享层/给 UK 注册**——
+> 本 boss 团灭时治疗死在 89–102 秒而击杀耗时中位 115 秒，最后 15–25 秒全队无治疗。
+> 第二候选：治疗被自己的长读条锁住（`casting=` 只读探针 `44f5947` **已写未编译**，先量再改）。
+> 两条已证伪勿重走：Roar 垫血（命中前血量中位 87%）、圣骑士保护之手（三个致死源全是暗影）。
+> 详见 [因格瓦尔记录](testing/bosses/heroic-uk-ingvar/README.md) 2026-09-15 两节。
 
 ## 目标与阅读顺序
 
@@ -25,12 +29,13 @@
 |---|---|---|
 | 管理库 | main | `b601b67` 之后（阿努巴拉克第四至九轮文档） |
 | azerothcore-wotlk | **codex/an-formation-despawn-crash** | 叠在 `0ef8ef265` 之上：修 `CreatureGroup::DespawnFormation` 遍历中释放节点的**上游崩溃**。**未推 fork** |
-| modules/mod-playerbots | **codex/uk-ingvar-los-recovery** | `4eade4b7`（因格瓦尔视线恢复：散开落点校验视线 + `ingvar regain los`），叠在 `codex/an-trash-cc-shackle` 的 `2fa6cab8` 之上。**未推 fork** |
+| modules/mod-playerbots | **codex/uk-ingvar-los-recovery** | `20e3e2b0`（共享层治疗自保）叠在 `4eade4b7`（因格瓦尔视线恢复）之上，再叠在 `codex/an-trash-cc-shackle` 的 `2fa6cab8`。**未推 fork** |
 | ~~mod-playerbots 上一分支~~ | codex/an-trash-cc-shackle | `2fa6cab8`（2026-09-13/15 十五个提交：施法让路 `0596d3c1`、同层守卫 `f6500091`、牧师去盾 `eb1a9655`、AN 层 `f93314e2`、践踏圣佑+预盾 `b883188c`、追敌不离主坦 `4b02c3ee`、治疗保距 `f54c55f5`、近战躲踏路径 `32a59e29`、相关性 `c409c7e8`、AN 西沿/穿刺/躲踏批次 `5142cc13`、引擎同步+坦克锚点 `4511b131`、引擎同步修正+刀扇+法师AOE `e3c31f6e`、圣骑士坦克接小怪 `b5e416cd`、萨满补位治疗+恳求常驻+英勇时机 `deca7f41`、**共享层目标接管+面向判据 `2fa6cab8`**，叠在 `4215044f` 之上）。**未推 fork** |
-| modules/mod-raidtest | **codex/an-runtime-strategy-names** | 叠在 `a47fef5` 之上：`RuntimeStrategyName` 补全、`ResetInstance` 三趟、悬垂 GUID 重绑、清怪期间阵亡不判队伍失效、开怪前补齐团队 buff；观察层 `51826f1`：ResolveBoss 不再只看 bots[0] 地图；`4beddea`：开怪前清英勇疲惫/嗜血餍足；`22107fd`：打输且 boss 已重置就立刻收尾。**未推 origin** |
+| modules/mod-raidtest | **codex/an-runtime-strategy-names** | `44f5947`（每秒采样加 `casting=`，**已写未编译，当前二进制不含**）叠在 `22107fd` 之上。以下为历史：叠在 `a47fef5` 之上：`RuntimeStrategyName` 补全、`ResetInstance` 三趟、悬垂 GUID 重绑、清怪期间阵亡不判队伍失效、开怪前补齐团队 buff；观察层 `51826f1`：ResolveBoss 不再只看 bots[0] 地图；`4beddea`：开怪前清英勇疲惫/嗜血餍足；`22107fd`：打输且 boss 已重置就立刻收尾。**未推 origin** |
 
-> **二进制 = 2026-09-15 18:22 增量编译（UK 四个 TU + 两个共享上下文），与 mod-playerbots `4eade4b7` 一致**；
-> worldserver 于 18:24 以 `scripts/restart_world.sh r31a` 重启，日志 `/tmp/wow335-worldserver-r31a.log`。
+> **二进制 = 2026-09-15 19:28 增量编译（`PartyMemberToHeal.cpp`），与 mod-playerbots `20e3e2b0` 一致；
+> mod-raidtest 的 `44f5947` 在它之后写入，二进制不含**。
+> worldserver 于 19:29 以 `scripts/restart_world.sh r32a` 重启，日志 `/tmp/wow335-worldserver-r32a.log`。
 > 重启后**第一条 FIFO 命令被吞**（`raidtest run` 没进控制台），重发并用 `raidtest status` 回读才确认——
 > 发完必须回读，这条坑每次重启都可能撞上。
 >
