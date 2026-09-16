@@ -307,3 +307,36 @@ bool PartyMemberToHealOutOfSpellRangeTrigger::IsActive()
 （前置或夹具），别指望"离得远就不会被拉"。
 （想改躲避动作的方向判据是**共享层**改动，**先量头寸**：躲避动作造成的净位移、
 以及位移方向命中未清怪的比例。）
+
+### 7. 乘子归零与施法失败**可以**精确分离——引擎明写了（2026-09-16 斯拉德兰）
+
+LESSONS 第三节那条「`IMPOSSIBLE` 当成'没触发'」说的是 `A:<动作> - IMPOSSIBLE` 分不清成因。
+**但 `LogInGroupOnly=0` 的 `Playerbots.log` 里，被乘子归零时引擎会单独写一行**：
+
+```
+Raidtednfivc Multiplier slad'ran made action blizzard useless
+Raidtednfivc A:blizzard - IMPOSSIBLE
+```
+
+而施法失败写的是 `CanCastSpell Check Failed. - target name: X, spellid: N, ..., result: M`。
+所以只要数 `Multiplier <名字> made action <动作> useless` 就能**精确**得到「被哪个乘子归零了多少次」。
+斯拉德兰那一轮靠它把结论钉死：暴风雪/烈焰风暴/刀扇的 `IMPOSSIBLE` 计数与归零计数**完全相等**
+（101=101、101=101、66=66），**一次施法失败都没有** → 乘子是唯一原因。
+**别再用"IMPOSSIBLE 数量"当归零证据，直接数 Multiplier 行。**
+
+### 8. `raidtest_events` 的 Death 只覆盖登记实体，**统计不了召唤物**（2026-09-16 斯拉德兰，我踩了）
+
+`CombatEventBus::ShouldKeep` 对 `Death` 只保留 `IsMember(e.source)`——bot / boss / 已登记的前置怪。
+boss 召出来的小怪死了**不入库**。我据此写过「boss 召的小怪一只都没死」，**是错的**：
+按「bot 对该 guid 的累计伤害 vs 该 entry 的血量」重算，实际打死了 16–42%。
+
+**做法**：统计召唤物的存活/击杀，用伤害累计 + `creature_template` 的
+`basehp(exp)` × `HealthModifier` × `Rate.Creature.*.HP` 反推，别查 Death 表。
+（Damage 事件是双向都收的，`IsMember(source) || IsMember(target)`，所以 bot → 召唤物的伤害**在库里**。）
+
+### 9. AoE 的头寸要按「命中数」算，不能按单体 DPS 算（2026-09-16 斯拉德兰）
+
+我第一版按单体算：刷怪速率 0.75 只/秒 × 6,517 血 = 4,888 HP/秒，而全队总输出才 4.5–5.5k/秒，
+得出「清不完，AoE 没头寸」。**这是错的**——AoE 的产出随命中数线性放大：
+一发暴风雪对每个目标约 8k，场上常驻 30–50 只，**只要 5 只以上进圈就追平刷怪速率**。
+**算 AoE 的头寸必须带上"同时能命中几个"这个乘数**，否则会把唯一有效的手段算成没用。
