@@ -6,15 +6,15 @@
 > ## 当前状态：英雄古达克（Gundrak，map 604）
 >
 > 装备档 normal5-v1，难度英雄，`BotCheats=""`。**core 一行未改**；mod-playerbots 新分支
-> `codex/gd-sladran-aoe` @ `d29b2aff`（斯拉德兰 AoE 乘子，叠在 `codex/shared-heal-los-recovery` 的 `5ef5adcc` 上，**未推 fork**）；
+> `codex/gd-sladran-aoe` @ `78ad6020`（斯拉德兰 AoE 乘子 `d29b2aff` + 第二刀回退 `78ad6020`，叠在 `codex/shared-heal-los-recovery` 的 `5ef5adcc` 上，**未推 fork**）；
 > mod-raidtest `codex/dtk-scenarios` @ `556c118`（古达克五个场景 conf，**未推 origin**）。
-> **二进制 = 2026-09-16 20:58 增量编译**，含上述 playerbots 改动。
-> worldserver 以 `scripts/restart_world.sh r52a` 启动，日志 `/tmp/wow335-worldserver-r52a.log`，收尾时 IDLE。
+> **二进制 = 2026-09-16 22:19 增量编译**，与 `78ad6020` 一致（= 第一刀生效、第二刀已回退）。
+> worldserver 以 `scripts/restart_world.sh r54a` 启动，日志 `/tmp/wow335-worldserver-r54a.log`，收尾时 IDLE。
 > `AiPlayerbot.LogInGroupOnly` 已改回 1。
 >
 > | boss | 场景 | 本轮结果 | 下一步 |
 > |---|---|---|---|
-> | 斯拉德兰 29304 | 改前 0/5 → 删掉「DPS 全程禁 AoE」后 **2/10**（`codex/gd-sladran-aoe` @ `d29b2aff`，p=0.524 不显著但中间量全面改善） | **第二刀**：删掉「有包裹时禁 `dps assist`」（头寸已量：占 44–46% 的 tick，那些 tick 里 DPS 目标 0% 在 boss 上） |
+> | 斯拉德兰 29304 | 改前 0/5 → 第一刀（删掉「DPS 全程禁 AoE」）后 **2/10**。**第二刀（删掉「有包裹时禁 `dps assist`」）已试、判为净负面、已回退**：占比涨是分母塌了（包裹被打死 3.9→0.8/场，场次时长 −19%，击杀 0/5） | 缺口约 100k。下一批候选都**还没量头寸**：① 包裹处理效率（8.3 个只打死 3.9 个却占 44–46% 的 tick）② 承伤侧（两场击杀都是承伤最低的两场）③ 小怪仍只打死 40% |
 > | 莫拉比 29305 | `heroic-gd-moorabi-n5` | **零个有效样本**，5/5 清怪阶段 boss 自己进战斗 | **先加只读探针查「谁把他拉进战斗」**，别先改坐标 |
 > | 迦尔达拉 29306 | `heroic-gd-galdarah-disc-n5` **5/5 零死亡，64.2–111.9 秒**（run 580）——**古达克第一个打通的 boss**。旧的 2/5（`heroic-gd-galdarah-n5`）是「boss + 竞技场犀牛群」口径，已作废 | 可选：补到 20 场收紧 CI；夹具有一处缺口（载具骑手没被带走，口径偏保守） |
 > | 德拉克瑞巨像 29307 | **未建** | 框架阻塞 | 需要 mod-raidtest 新增「按 entry 指定必须清掉的召唤物」能力（**新增功能**，动手前确认口径） |
