@@ -8,16 +8,16 @@
 > | 巨魔之喉 Trollgore | `heroic-dtk-trollgore-n5` | **10/10 零死亡**（48.9–58.2 秒） | **正常规则通关** |
 > | 召唤者诺沃斯 Novos | `heroic-dtk-novos-n5` | **5 次有效尝试全杀零死亡**（140–148 秒） | **正常规则通关** |
 > | 先知塔隆金 Tharon'ja | `heroic-dtk-tharonja-n5` | **6/6**（81–98 秒） | **正常规则通关** |
-> | **恐怖之王德雷德 King Dred** | `heroic-dtk-dred-n5` | **0 击杀 / 4 团灭 / 1 超时**，血量地板 30–52% | **未通关 ← 靶子** |
+> | **恐怖之王德雷德 King Dred** | `heroic-dtk-dred-n5` | **3 击杀 / 2 团灭**（run 560；击杀 89–91 秒全零死亡） | **未通关 ← 靶子** |
 >
 > 三个通关的 boss **bot 策略一行未改**；唯一的源码改动是 mod-raidtest 的一道开怪门禁（诺沃斯必需）。
 >
-> **下一轮靶子 = King Dred 的恐惧**：Bellowing Roar(22686) 每场 1 次、Fearsome Roar(59422) 每场 3–4 次，
-> 而上游 `DTKStrategy.cpp` 的 King Dred 段只有一行 `// TODO: Fear ward / tremor totem`——
-> 这个 boss 在上游**一个行为都没有**。队里牧师有恐惧结界(6346)、萨满有战栗图腾(8143)：
-> **先开 `LogInGroupOnly=0` 量它们推没推入/执行没执行，再动手**（LESSONS 第一条）。
-> 第二条线索：Grievous Bite(48920) 的叠加受疗降低对治疗量的闸。
-> 承伤分解：boss 本体 44k–84k/场，Raptor Call 从走廊招来的迅猛龙再打 27k–51k。
+> **恐惧这条假设已证伪**（2026-09-16 下午实测）：`fear ward` / `tremor` 在 Playerbots.log 里出现 0 次
+> （引擎里有动作、没有策略推它），**但恐惧次数在击杀场和团灭场完全一样，三场零死亡的击杀同样吃满了恐惧**。
+> **下一轮靶子 = 被 Raptor Call 拽来的迅猛龙活多久**：团灭场它们打 72–74k，击杀场只有 14–40k，
+> 输出差 27%。量法：`LogInGroupOnly=0` 跑 tick 级统计，看目标切换链（`drop target` → `dps assist` → 坦克接怪）
+> 从迅猛龙进场到被接手要几个 tick。**不需要编译。**
+> 另：昨晚的 0/5 已作废（战场里混进两只巡逻精英 + 一只编队队长），夹具三次收紧后才是 3/5。
 > 详见 [德雷德记录](testing/bosses/heroic-dtk-dred/README.md)。
 >
 > **本轮新增的三条通用事实（换场景必读）**：
