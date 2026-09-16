@@ -12,7 +12,8 @@ mod-raidtest 只加了四个场景 conf。详见 [副本勘测](bosses/heroic-gd
 |---|---|---|---|
 | 毒蛇领主斯拉德兰 29304 | `heroic-gd-sladran-disc-n5` | **0/5 全团灭**（70–104 秒，boss 最低 32–51%） | 隔离 boss 战 |
 | 莫拉比 29305 | `heroic-gd-moorabi-n5` | **零个有效样本**：5/5 在清怪阶段 3–10 秒 `boss engaged` 作废 | — |
-| 迦尔达拉 29306 | `heroic-gd-galdarah-n5` | 2/5，**但五场混了两种口径、数字作废**（见下） | 名义上「隔离 boss 战」，实际是「boss + 6 只房怪」 |
+| 迦尔达拉 29306 | `heroic-gd-galdarah-disc-n5` | **5/5 零死亡，64.2–111.9 秒**（run 580，CI 57–100%）——**古达克第一个打通的 boss** | 隔离 boss 战（夹具移除竞技场四组载具犀牛；骑手仍在，2/5 场参战） |
+| ~~迦尔达拉（旧档）~~ | `heroic-gd-galdarah-n5` | 2/5，**混了两种口径、数字作废**（见下） | 实际是「boss + 竞技场犀牛群」 |
 | 德拉克瑞巨像 29307 | **未建** | 框架阻塞：boss 开场 `NON_ATTACKABLE`，要先杀 5 只**召唤**出来的 Living Mojo，而 `PrerequisiteSpawns` 只接 spawn guid | — |
 
 **斯拉德兰的根因已量化**（[记录](bosses/heroic-gd-sladran/README.md)）：AC 的实现里，boss 血量 ≤90% 起
@@ -50,8 +51,19 @@ boss 召的小怪**死亡数为 0**（每场 33–69 只活到团灭），它们
 同时吃掉 60–211k 输出而**一只都没死**（与斯拉德兰同一形状：摊在多目标上、一个也打不死）。
 **不是没蓝**——牧师法力全程没低于 49%，击杀场与团灭场曲线无差别。
 
-→ 下一步：把犀牛群夹具移除重跑 5 场拿干净的 boss 单体基线；真人打法的「先清竞技场犀牛」
-另建完整档，两者分开记。详见 [迦尔达拉记录](bosses/heroic-gd-galdarah/README.md)。
+**已按此重跑（run 580，`heroic-gd-galdarah-disc-n5`）：5/5 零死亡，64.2–111.9 秒。**
+反过来印证了死因判断——那一场里三名**下了马的**骑手 20.8 秒就参战、打出 58.9k（承伤翻倍、
+战斗拖到 111.9 秒）**仍然零死亡击杀**；而 run 578 里**带着载具的**犀牛群打出 97.6–106.9k 就直接团灭。
+牧师法力最低 ≥38%，没接近见底。
+
+⚠ **夹具缺口（首轮回读发现，写在这里免得后人当成已清干净）**：`FixtureDespawnSpawns` 走
+`Creature::DespawnOrUnsummon()`，**并不会**把 `vehicle_template_accessory` 的乘客带走——
+四只载具犀牛消失了，但 Drakkari Battle Rider(29836)×3 与 Drakkari Raider(29982)×3 留在原地存活，
+2/5 场参战。乘客是召唤物、没有 spawn guid，`FixtureDespawnSpawns` 接不了；
+要清干净得给 mod-raidtest 加「按 entry 移除」的夹具能力（与巨像那条待办同族，**新增功能**）。
+当前口径照实写成「移除四组载具犀牛、骑手仍在」——**偏保守**，5/5 的结论不受影响。
+
+详见 [迦尔达拉记录](bosses/heroic-gd-galdarah/README.md)。
 
 ### 本轮的方法教训：`raidtest los` 的 z 用法（LESSONS 已有条目，又踩一次）
 
