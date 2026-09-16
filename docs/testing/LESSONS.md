@@ -74,7 +74,7 @@ playerbots 是「每个 tick 只执行一个动作」的引擎，新动作最常
 
 ### 未修（**待办**，价值已量化）
 
-**0. 视线被当成"候选过滤条件"，看不见的队友等于不存在**（2026-09-15 因格瓦尔实测）
+**0. 视线被当成"候选过滤条件"，看不见的队友等于不存在**（2026-09-15 因格瓦尔实测，**2026-09-16 已修** mod-playerbots `9134211d`，见本条末尾）
 
 `PartyMemberValue::Check`（PartyMemberValue.cpp:113）和 `PartyMemberToHeal::Check`
 （PartyMemberToHeal.cpp:135）都硬性要求 `IsWithinLOS`。后果不是"少治一次"，是**整条链条静默停摆**：
@@ -97,8 +97,19 @@ bool PartyMemberToHealOutOfSpellRangeTrigger::IsActive()
 修法方向：给这个触发器和 `ReachPartyMemberToHealAction` 喂一个**不按视线过滤**的取值
 （施法类动作仍用带视线的那个，免得隔墙施法），并让接近动作在"距离够但看不见"时也 `isUseful`
 （现在它 `IsWithinCombatRange` 就返回 false）。**风险**：共享层、影响所有治疗职业，必须回归三个旧 boss。
-因格瓦尔那一轮先在 boss 层验证了机制（新增 `ingvar regain los` 侧移绕遮挡，靶子指标从 9–17 秒归零），
-共享层版本尚未做。
+因格瓦尔那一轮先在 boss 层验证了机制（新增 `ingvar regain los` 侧移绕遮挡，靶子指标从 9–17 秒归零）。
+
+**共享层版本已做（2026-09-16，`codex/shared-heal-los-recovery` 的 `9134211d`）**，就按上面这个方向：
+新增取值 `party member to heal no los`（同判据去掉 LOS）→ 触发器改用它 →
+`ReachPartyMemberToHealAction` 覆写 `isUseful`/`Execute`，把「距离够但看不见」也算需要移动，
+看不见时先靠到 8 码、已在 10 码内还看不见就靠到 2 码。**施法类动作仍用带视线的取值。**
+
+- **坑**：靠近距离不能用 `distance`（治疗距离 40 码）——`ReachCombatTo` 一进门就判「已经够近」返回 false。
+  第一版写成 `max(8, distance*0.5)` = 20 码，而治疗本来就站在 17–19 码，6 次推入 6 次 FAILED，一步没走。
+- **效果**（英雄达克萨隆要塞 King Dred）：治疗与坦克之间的无视线占比 **22% → 3%**，最长无视线块 27 秒 → 6 秒，
+  治疗频率 0.37 → 0.48 次/秒；击杀 3/5 → **15/16（94%，CI 72–99%）**，Fisher p=0.128（改前只有 5 场，不显著）。
+- **回归 9/9**：凯利丝塔萨 3/3、斯卡瓦尔德&达隆 3/3 零死亡、阿诺玛鲁斯 3/3 零死亡。
+- **未做的同族**：`PartyMemberValue::Check`（法师 `party member to dispel` 等）仍按视线过滤，同样的修法可以照搬。
 
 **0.5 治疗从不给自己留手**（2026-09-15 因格瓦尔实测，**已修** `20e3e2b0`）
 
