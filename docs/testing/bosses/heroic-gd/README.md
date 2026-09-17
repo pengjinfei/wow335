@@ -1,14 +1,14 @@
 # 英雄古达克（Gundrak，map 604）——副本级勘测与场景设计
 
-更新：2026-09-16。第五个副本，接在达克萨隆要塞之后。装备档 normal5-v1（ilvl 上限 187），
-难度英雄，`BotCheats = ""`，无作弊。**本轮 core / mod-playerbots 一行未改**，
-只在 mod-raidtest 加了四个场景 conf。
+更新：2026-09-17。第五个副本，接在达克萨隆要塞之后。装备档 normal5-v1（ilvl 上限 187），
+难度英雄，`BotCheats = ""`，无作弊。当前 core / mod-playerbots **没有保留未合并的改动**；
+mod-raidtest 的场景 conf 只在运行目录（gitignored）。
 
 ## 一、四个 boss 的现状
 
 | boss | entry | 场景 | 本轮结果 |
 |---|---|---|---|
-| 毒蛇领主斯拉德兰 Slad'ran | 29304 | `heroic-gd-sladran-n5`（完整）/ `heroic-gd-sladran-disc-n5`（隔离） | 隔离档 **0/5 全团灭**，boss 最低 32–51%。根因已量化，见 [记录](../heroic-gd-sladran/README.md) |
+| 毒蛇领主斯拉德兰 Slad'ran | 29304 | `heroic-gd-sladran-n5`（完整）/ `heroic-gd-sladran-disc-n5`（隔离） | 合并后 **3/5**；随后「平台下坦克 / 平台上远程」独立样本 **0/5**，已回退。见 [记录](../heroic-gd-sladran/README.md) |
 | 莫拉比 Moorabi | 29305 | `heroic-gd-moorabi-n5` | **场景跑不起来**：5/5 在清怪阶段 3–10 秒内 `boss engaged`。见 [记录](../heroic-gd-moorabi/README.md) |
 | 德拉克瑞巨像 Drakkari Colossus | 29307 | **未建** | 框架阻塞，见下面第四节 |
 | 迦尔达拉 Gal'darah | 29306 | `heroic-gd-galdarah-n5` | **2/5 击杀**（68.4 / 71.9 秒，均零死亡）。见 [记录](../heroic-gd-galdarah/README.md) |
