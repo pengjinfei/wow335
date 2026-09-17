@@ -19,9 +19,10 @@
 > ⚠ 迦尔达拉那 10/10 带口径折扣：夹具移除了竞技场四组载具犀牛，但 `FixtureDespawnSpawns`
 > **删不掉载具乘客**，骑手仍在场且 run 580 里 2/5 场参战。
 >
-> **仓库状态（2026-09-17 上游同步、主干回灌后）**：core 自有主干 `Playerbot` @ `c747f55ca`
-> 已合并 `origin/Playerbot`，并已推 `mine/Playerbot`；mod-playerbots 自有主干 `master` @ `f0e08d97`
-> 已合并 `origin/master`，并已推 `mine/master`。后者冲突以上游 Slad'ran 的包裹分工/收拢/坦克驻留实现为主，
+> **仓库状态（2026-09-17 上游同步、主干回灌后）**：core 自有主干 `main` @ `c747f55ca`
+> 已合并 `origin/Playerbot`，并已推 `mine/main`；mod-playerbots 自有主干 `main` @ `f0e08d97`
+> 已合并 `origin/master`，并已推 `mine/main`。两 fork 的 GitHub 默认分支均已切为 `main`，旧的
+> `Playerbot` / `master` 分支保留。后者冲突以上游 Slad'ran 的包裹分工/收拢/坦克驻留实现为主，
 > 保留本地「DPS 回 boss、包裹优先」触发器。mod-raidtest 本地主干 `main` 已快进到 `556c118`，
 > 待明确确认后推送其 `origin/main`；wow335 管理库 main 有待推 docs 提交。
 > **二进制仍是第十刀回退后重新编译的旧版本**，不含这次两个源码合并；下次测试前须先获授权编译、再重启。
