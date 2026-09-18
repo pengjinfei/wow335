@@ -9,8 +9,8 @@ mod-raidtest 的场景 conf 只在运行目录（gitignored）。
 | boss | entry | 场景 | 本轮结果 |
 |---|---|---|---|
 | 毒蛇领主斯拉德兰 Slad'ran | 29304 | `heroic-gd-sladran-n5`（完整）/ `heroic-gd-sladran-disc-n5`（隔离） | 合并后 **3/5**；随后「平台下坦克 / 平台上远程」独立样本 **0/5**，已回退。见 [记录](../heroic-gd-sladran/README.md) |
-| 莫拉比 Moorabi | 29305 | `heroic-gd-moorabi-n5` | **场景跑不起来**：5/5 在清怪阶段 3–10 秒内 `boss engaged`。见 [记录](../heroic-gd-moorabi/README.md) |
-| 德拉克瑞巨像 Drakkari Colossus | 29307 | **未建** | 框架阻塞，见下面第四节 |
+| 莫拉比 Moorabi | 29305 | `heroic-gd-moorabi-n5` | **8 击杀 / 1 aborted / 1 timeout**（10 个 boss 样本）；仍未稳定。见 [记录](../heroic-gd-moorabi/README.md) |
+| 德拉克瑞巨像 Drakkari Colossus | 29307 | `heroic-gd-colossus-n5` | **5/5 零死亡**，64.374–68.137 秒（run651–652）；隔离 boss 战基线通过，不混作连续副本通关。见 [记录](../heroic-gd-colossus/README.md) |
 | 迦尔达拉 Gal'darah | 29306 | `heroic-gd-galdarah-n5` | **2/5 击杀**（68.4 / 71.9 秒，均零死亡）。见 [记录](../heroic-gd-galdarah/README.md) |
 
 ## 二、地形勘测（`raidtest los` 静态探针，约 1300 个点）
@@ -49,19 +49,25 @@ mod-raidtest 的场景 conf 只在运行目录（gitignored）。
 - 三个 boss 房都没有门；Gal'darah Door(192568) 是 `DOOR_TYPE_ROOM`，战斗中才关，
   队伍是传送进去的，三祭坛的桥（`GO_GUNDRAK_COLLISION` 192633）不影响。
 
-## 四、德拉克瑞巨像：**框架阻塞，本轮未建场景**
+## 四、德拉克瑞巨像：原生 Mojo 开战已建模，隔离口径仍需清房间路怪
 
 `boss_drakkari_colossus.cpp` 的 `Reset()` 里巨像挂 `UNIT_FLAG_NON_ATTACKABLE` + `SPELL_FREEZE_ANIM`，
-并**在自己周围召 5 只 Living Mojo**（`mojoPosition`，x 1663–1681 / y 733–754）。
-必须先把这 5 只召唤物打死，巨像才 `SetInCombatWithZone()` 解除不可攻击。
+并在自身周围召五只临时 Living Mojo（29830；x 1663–1681 / y 733–754）。旧记录的「先打死五只」是错误口径：
+任意一只被玩家真实拉到后，`npc_living_mojoAI::JustEngagedWith()` 会通知巨像 `ACTION_INFORM`；巨像随即
+`SetInCombatWithZone()`、命令五只合并，并在 3.5 秒后解除不可攻击。
 
-框架当前拉不动它：`StartBossPull` 只对 `BossEntry` 下拉怪指令，而 `PrerequisiteSpawns` 只接
-**spawn guid**（`creature.guid`），召唤物没有 spawn guid。房间里另有三只世界刷新的 Living Mojo
-（127076/127077/127078，在 39–51 码外）是路怪，**不是**这 5 只。
+新能力 `EngageTrigger=summon` / `SummonTriggerEntry=29830` 只匹配 `GetSummonerGUID()==bossGuid` 的临时单位，
+不会把同 entry 的世界刷怪混作触发目标。run647–648 发现旧的 20-tick 确认窗口在空载服只过数十毫秒；改为最多
+等待 6 秒的真实时间后，run649 观测到 Mojo 合并、巨像 3.5 秒后解除不可攻击、全队进入其威胁表，原生开战链完整。
 
-要做这个 boss，需要给 mod-raidtest 加一条能力：**按 entry 指定「开怪前必须清掉的召唤物」**
-（例如 `PrerequisitePullEntry` / `PrerequisiteSummonEntry`），或允许 `EngageTrigger` 指向
-boss 半径内的指定 entry。这是**新增框架能力**，不是修缺陷，动手前先确认口径。
+run649 的 23.018 秒全灭（boss 73%）有至少 3 只常驻 Living Mojo 参战；查询显示这类房间怪共有
+127076–127079 四只，且与临时 Mojo 同为 entry 29830。用户确认后，run650 的隔离夹具逐只移除了这 4 只，
+原生链保持完整并取得 89.722 秒零死亡击杀。
+
+run650 仍不是隔离 boss 结论：巨像是两只 Drakkari Golem（127080/127081）的 formation leader，`groupAI=1`，
+两只均参战。经确认后，run651 的夹具在 0ms 移除了 4 只常驻 Mojo 和这 2 只编队石魔；原生临时 Mojo
+仍完成触发、合并与解锁。run651–652 的五场同口径样本均零死亡击杀（64.374–68.137 秒；Wilson 95% CI 57–100%），
+故巨像的隔离 boss 战基线通过。它不等于连续清本；若继续应另建完整房间口径，不能与此样本混算或改装备、难度、cheat、boss 仇恨。
 
 ## 五、上游 mod-playerbots 的 GD 策略覆盖度
 
