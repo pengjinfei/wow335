@@ -100,17 +100,42 @@ run666 的三场失败细节（都**不是**框架问题）：
 ⚠ LESSONS 第六节待办第 0 条（施法型取值补「走过去」链条）管的是**驱散/复活/团队 buff**——
 隔墙放不出去。run666 seq2 不是那条：那里全队对怪 `los=true`，是**看不见队友**，属于另一条链路。
 
+## 前置清怪头寸已量化（2026-09-18 晚，只读，未改代码）
+
+窗口 = `[0, 前置怪最后一只死亡时刻]`。⚠ 不能用「boss 首次伤害」当边界：run664 seq2 的 29305
+在 194ms 就有伤害事件（上一场残留），会把窗口压成 0.2 秒。
+
+| 指标 | kill 组（n=16） | fail 组（n=4） | 判定 |
+|---|---|---|---|
+| 前置怪 DTPS | 1,529 | 1,776 | 不可区分 |
+| heal 采样密度（次/10s） | 5.8 | **6.5** | fail 组治疗反而更多 |
+| 最大 heal 空档 | 7.7s | **5.6s** | fail 组反而更短 |
+| 全队输出 partyDPS | 5,921 | **5,919** | 完全相同 |
+
+**四项全部不可区分或方向相反。** 输出不是瓶颈，「小怪撒着打不死」在这组上也不成立
+（输出按目标分布健康：Earthshaker 29.7%/29.6%、FireWeaver 18.9%、Lancer 16.7%、Inciter 4.9%；
+死亡顺序每场稳定为 Inciter→两只 Earthshaker→Lancer/FireWeaver）。
+
+**真靶子是 29819 Lancer 没被坦克拉住**：它打盗贼 287,689（39.3%）> 打坦克 185,254（25.3%），
+而其余三只（29829 对坦克 496,878、29822 对坦克 159,669）伤害主力都是坦克。
+run666 seq1 盗贼死前 3 秒承伤 12,677、seq5 为 18,519，**100% 来自 Lancer**。
+
+⚠ 同时纠正我自己的两处口径错误：① 用 `actor_entry=797` 统计玩家行为（应用 `source_guid`）；
+② 说「26 秒 heal 空档」——漏看中间采样，实际 17.7 秒且发生在快团灭之后（结果非原因）。
+
 ## 下一步（按序）
 
-1. **接控制链重测前置清怪**（首选单变量，见上）。两步：mod-playerbots 把
-   `WotlkdungeonGDStrategy` 改成继承 `TrashCcPullStrategy` 并调 `TrashCcPullStrategy::InitTriggers`
-   （参照 `NexStrategy` / `ANStrategy`）；场景 conf 加 `PrerequisiteCcWaitSeconds = 25`。
-   需编译，得单独授权。
-2. **boss 阶段 `CanNotReachTarget`（run640 seq4）仍未归因**，本轮未复现，与前两项是不同的事。
+1. **先查 29819 Lancer 为什么没被坦克拉住**（零编译成本）：分清是「无视仇恨的目标选择技能」
+   （22858，前置窗口内 248 次施法、对盗贼 113 次 / 对坦克 95 次）还是「仇恨/嘲讽链缺陷」。
+2. **接控制链**（第二变量，需编译授权）：mod-playerbots 把 `WotlkDungeonGDStrategy` 改成继承
+   `TrashCcPullStrategy` 并调 `TrashCcPullStrategy::InitTriggers`（参照 `NexStrategy` / `ANStrategy`）；
+   场景 conf 加 `PrerequisiteCcWaitSeconds = 25`。注意会拉长清怪时长（魔枢测床 33s→69–81s），
+   莫拉比前置超时 200s、当前 53–75s，余量约 2–3 倍。
+3. **boss 阶段 `CanNotReachTarget`（run640 seq4）仍未归因**，本轮未复现，与前两项是不同的事。
    只有复现该异常时才重接临时日志：启动后、**排队前**执行 `server set loglevel 1 movement.chase 3`，
    在 `TargetedMovementGenerator` 的 accessibility 与 path-failure 分支分别记录源/目标状态与 path type；
    结束立即撤回并重编译。
-3. 不要改装备、难度、cheat、怪物属性或把未死亡 spawn 记为击杀。
+4. 不要改装备、难度、cheat、怪物属性或把未死亡 spawn 记为击杀。
 
 ## 仓库状态
 

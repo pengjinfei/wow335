@@ -29,9 +29,12 @@
 >    复现并验证修复）。
 >
 > **仍未解决（独立待办，不得靠改装备/难度/cheat）**：**前置清怪本身约 1/5 场次会打输**。
-> 与修复前基线统计上不可区分（Fisher p=0.64）。**首选单变量是接控制链**（前置五只 `type=7` Humanoid，
-> 变形/妖术/闷棍都有效；但莫拉比 conf 没 `PrerequisiteCcWaitSeconds`、`GDStrategy` 没继承
-> `TrashCcPullStrategy`）。**boss 阶段的 `CanNotReachTarget`（run640 seq4）本轮未复现、仍未归因。**
+> 与修复前基线统计上不可区分（Fisher p=0.64）。**头寸已量（2026-09-18 晚，只读）**：
+> 前置怪 DTPS、heal 密度、最大 heal 空档、全队 partyDPS **四项在 kill/fail 组间全部不可区分或方向相反**
+> （partyDPS 5,921 vs 5,919）——输出和“治疗停了”都不是瓶颈。**真靶子是 29819 Lancer 没被坦克拉住**
+> （打盗贼 287,689 > 打坦克 185,254；run666 两场盗贼之死的死前 3 秒承伤 100% 来自它）。
+> **首选单变量已从“接控制链”改为“先查 Lancer”**；控制链降为第二变量。
+> **boss 阶段的 `CanNotReachTarget`（run640 seq4）本轮未复现、仍未归因。**
 >
 >
 > **仓库状态（2026-09-17 上游同步、主干回灌后）**：core 自有主干 `main` @ `c747f55ca`
@@ -60,8 +63,9 @@
 > 位置/决策日志证明死亡时的实际站位与动作，再单独评估毒性新星自保，**不要复跑平台阵位**。
 >
 > **接手第一件事：四选一**（按代价排序）——
-> (a) **接控制链改前置清怪**（首选单变量，需编译：`GDStrategy` 继承 `TrashCcPullStrategy` + conf 加
-> `PrerequisiteCcWaitSeconds = 25`，再跑 5 场对照；run637 的「`no_plan` 失败」是旧接近逻辑下的结论，需重测）；
+> (a) **先查 29819 Lancer 没被坦克拉住**（零编译成本，靶子已量化；见上）；其次才是接控制链
+> （`GDStrategy` 继承 `TrashCcPullStrategy` + conf 加 `PrerequisiteCcWaitSeconds = 25`，需编译；
+> run637 的「`no_plan` 失败」是旧接近逻辑下的结论，需重测）；
 > (b) **凶残的艾克**勘测建场景（这一轮的遗漏）；
 > (c) **推 fork** 把未推送提交备份掉（mod-raidtest 新增 `3189b9a`/`aa01349` 两个提交）；
 > (d) **斯拉德兰读日志**（先补位置/决策证据；平台阵位已 0/5 回退）。
