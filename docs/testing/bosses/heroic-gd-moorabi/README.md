@@ -2,14 +2,16 @@
 
 ## 接手摘要
 
-- 更新：2026-09-18（晚）。状态：**前置拉怪缺陷已定位并修复**，run664 在完整遭遇战口径下
-  **5/5 零死亡击杀**（160.7–242.5 秒）；仍需一轮独立复现。
-- 本轮修的是**框架自己的缺陷**，不是 boss 策略：`mod-raidtest` 的 `AttemptRunner` 在普通前置接近时
-  只让坦克探路、其余人留在准备点并压制其 `attack tagged`，把清怪变成了坦克单挑（run659/661 的 3 死与 200 秒超时）。
-  boss 阶段那个 `CanNotReachTarget`（run640 seq4）本轮未复现，**仍未归因**，与本修复是两件事。
+- 更新：2026-09-18（晚）。状态：**前置拉怪缺陷已定位并修复**，run664–667 合计 **16/20 击杀（80%）**，
+  run664 与 run667 各 **5/5 零死亡**；但**前置清怪本身仍有约 1/5 场次会打输**（独立待办，非框架缺陷）。
+- 本轮修的是**框架自己的两个缺陷**，不是 boss 策略：
+  1. `3189b9a` 普通前置接近只让坦克探路 + 压制跟随者 `attack tagged`，把清怪变成坦克单挑（run659/661）；
+  2. `aa01349` 清怪期 boss 重新解析时**没同步事件总线的 `_bossGuid`**，导致「已经把 boss 打死」
+     被记成 `boss lost combat state`（run665 seq2，run667 seq3 正面复现并修复验证）。
+  boss 阶段那个 `CanNotReachTarget`（run640 seq4）本轮未复现，**仍未归因**，与这两项是不同的事。
 - 已完成：地形勘测、场景、只读进战探针、原站位 3 刀作废（run632–634）、北侧无控清怪两刀
   （run635、run639）及控制链接入的门禁时序两刀（run636–637，均已回退）。
-- 当前前置基线：`(1772,875,124.44)`，不启用额外控场策略。
+- 当前前置基线：`(1772,875,124.44)`，**未启用**控制链。
 - ⚠ 环境坑：`scripts/restart_world.sh` 用 `tail` 当 FIFO 读端，**块缓冲会把命令永远吞掉**；
   本轮三次 `raidtest run` 因此没进控制台。改用 `python3 -u /tmp/fifo_relay.py`（`O_RDWR` 自持写端 + 逐行 flush）后正常。
   重启用 `scripts/restart_world.sh <logname>`；开跑前清 `account_instance_times`。
@@ -44,7 +46,7 @@
 
 （带上 127062/127051 是因为 127062 距编队队长 127113 只有 20.2 码 < 英雄小怪 21 码仇恨半径，必然被卷进来。）
 
-## 2026-09-18：前置拉怪缺陷定位与修复（run659/661 → run662–664）
+## 2026-09-18：两个框架缺陷定位与修复（run659/661/665 → run662–667）
 
 交接文档留下的开放问题（「spawn 从未重载」还是「已重载但队伍无法再拉怪」）**两个选项都不成立**。
 run661 的 25 秒 spawnId 重绑等待根本没被触发（没有 spawn 消失）；真正原因是上一轮那两处未提交改动
@@ -86,12 +88,66 @@ run659 的 3 死同一路径。也就是说：**跟随者既没被拉怪指令�
 | 662 | 共同落点 = 最后一个可见点 | 1/1 kill，261.516s 零死亡 |
 | 663 | 同上 | 2/5：seq1 kill 166.732s、seq2 kill 149.097s（均零死亡）；seq3 被卷入西侧那组 3 死超时；seq4 `prerequisite spawn 127062 stayed absent for 25003ms`；seq5 前置减员 |
 | 664 | 共同落点 = **第一个**可见点 | **5/5 kill 零死亡**：160.700 / 201.156 / 213.071 / 242.489 / 216.814 秒 |
+| 665 | 同上 | 4/5：seq2 撞上下面第二个缺陷（实际已打死） |
+| 666 | 同上 | 2/5 + 1 wipe：**前置清怪强度**问题，见下 |
+| 667 | 同上 + 总线修复 | **5/5 kill 零死亡**：174.576 / 180.080 / 220.702 / 139.619 / 137.244 秒 |
 
 run664 细节：每场前置清怪 53.160–74.637 秒（run661 是 200 秒超时）；`prerequisite pull engaged only`
-只出现 1 次（3/5），下一 tick 就补齐并正常推进；五场的 boss 击杀均为零死亡。
+只出现 1 次（3/5），下一 tick 就补齐并正常推进。
 
 ⚠ 口径：完整遭遇战（五个前置 spawn 一个不删）、Heroic / normal5-v1 / `BotCheats=""` / `gear_profile=none`。
-run664 的 Wilson 95% CI = 56.6–100%，**单轮 5/5 还不能宣称稳定**，下一步是独立复现一轮 5 场。
+**修复后（664–667）合计 20 场：16 击杀（80%）、2 场前置有玩家死亡。**
+
+### 第二个缺陷：boss 重新解析时没同步事件总线（`aa01349`）
+
+run665 seq2 暴露。清怪期间 boss 脱战被 `DespawnOnEvade` 下线、按原 spawn 重生后，`AttemptRunner`
+重新寻址到了新对象（`Low 65 → 240`，缺席 19713ms），但**只更新了 `ctx.bossGuid`，没更新
+`CombatEventBus` 的 `_bossGuid`**。新 GUID 既不在 `_bossGuid` 也不在 `_botGuids`，`IsMember` 把 boss 的
+全部事件丢掉：
+
+- `boss_hp` 事件 **0 条**（同轮 kill 场有 3–6 万条）；
+- 真死亡事件的 `source == 新 GUID != _bossGuid`，`_bossDeathSeen` 永不置位；
+- `AttemptObserver` 看到 `hp=0%` 却拿不到死亡确认，40 个采样后记 `boss lost combat state (stuck/reset)`
+  ——**已经把 boss 打死却被记成失败**。同场 `dropped=30350`，kill 场只有 1506–4710。
+
+修复（新增 `CombatEventBus::RebindBoss`，旧 guid 移入 `_observedGuids` 免得复位前的残留事件被过滤）：
+**run667 seq3 在真实触发点上复现了同一个 `Low 65 → 240` 重绑并正常击杀**（`boss_hp` 61,653 条），
+不是只靠「没复现」验证。
+
+## ⚠ 仍未解决：前置清怪本身会打输（独立待办）
+
+| 时段 | 样本 | 前置有玩家死亡 | 击杀率 |
+|---|---|---|---|
+| A `639–654`（提交基线） | 25 | 6 (24%) | 68% |
+| C `662–663`（最后一可见点） | 6 | 3 (50%) | 50% |
+| D `664–667`（本修复） | 20 | 2 (10%) | 80% |
+
+Fisher 检验：前置死亡率 A vs D **p=0.64**，击杀率 A vs D **p=0.50**，**统计上不可区分**。
+本修复把「坦克单挑必输」换回了「正常五人清怪」，**但清怪本身仍有约 1/5 场次会打输**——
+这是修复前基线本来就有的水平。**清怪强度是 bot 策略问题，不得靠改装备/难度/cheat 解决。**
+
+run666 三场失败细节（都不是框架问题）：
+
+- seq1 / seq5：**五只全清完**，在恢复期被 29819 Lancer 连续击倒盗贼（1 死）。
+- seq2：**只清掉 2/5** 就被团灭。治疗(797) 的 heal 采样在 **13.6s–39.5s 之间有 26 秒完全空档**
+  （对照 kill 场前 60s 有 38 个采样），同期全队对目标的 `preclear_target` 采样 `los=true`——
+  **治疗不是看不见怪，是看不见队友**。
+
+### 首选单变量是接控制链，不是 LESSONS 待办第 0 条
+
+前置五只 `creature_template.type = 7`（Humanoid），**变形/妖术/闷棍按类型都有效**（不像艾卓-尼鲁布
+那本全是亡灵、只有束缚亡灵能用）。但目前：
+
+- 莫拉比场景 conf **没有 `PrerequisiteCcWaitSeconds`**（对比克里克希尔/泰蕾斯特拉/奥莫洛克/凯利丝塔萨都是 25）；
+- `GDStrategy.h` 基类是裸 `Strategy`，`GDStrategy.cpp` 里 `// Moorabi` 下面是**空的**——共享层的
+  `TrashCcPullStrategy::InitTriggers` 在古达克**根本没挂**（对照 `NexStrategy` / `ANStrategy` 是 `TrashCcPullStrategy`）。
+
+**run637 那条「接入失败、反复 `no_plan`」的结论不能直接搬来否掉控制链**：那次用的是**旧的接近逻辑**
+（每个 bot 各自找路、只走到 24 码外），而 `no_plan` 的直接成因正是「那个坐标看不到目标」——
+本轮已把接近改成「leader 选共同落点、全队一起走到能开怪的点」。所以接控制链需要**重测**，不是已被否掉。
+
+⚠ LESSONS 第六节待办第 0 条（施法型取值补「走过去」链条）管的是**驱散/复活/团队 buff**——
+隔墙放不出去。run666 seq2 不是那条：那里全队对怪 `los=true`，是**看不见队友**，属于另一条链路。
 
 ## 尝试记录
 
@@ -177,9 +233,11 @@ seq 4 则明确记录到 boss 对主坦 `unreachable=true` 与 `evading_attacks=
 
 ### 下一步（按序）
 
-1. **独立复现一轮 5 场**（`raidtest run heroic-gd-moorabi-n5 --attempts 5`，先清
-   `account_instance_times`）。run664 的 5/5 需要第二个独立样本才能写进台账结论。
-2. **boss 阶段 `CanNotReachTarget`（run640 seq4）仍未归因**，与本轮的前置缺陷是两件事。
+1. **接控制链重测前置清怪**（首选单变量）：mod-playerbots 把 `WotlkDungeonGDStrategy` 改成继承
+   `TrashCcPullStrategy` 并调 `TrashCcPullStrategy::InitTriggers`（参照 `NexStrategy` / `ANStrategy`）；
+   场景 conf 加 `PrerequisiteCcWaitSeconds = 25`。**需编译，得单独授权。**
+   run637 的「`no_plan` 失败」是**旧接近逻辑**下的结果，不能直接搬来否掉控制链。
+2. **boss 阶段 `CanNotReachTarget`（run640 seq4）仍未归因**，本轮未复现，与前两项是不同的事。
    只在复现该异常的样本上重新接临时日志：启动后、**排队前**执行
    `server set loglevel 1 movement.chase 3`，在 `TargetedMovementGenerator` 的 accessibility 与
    path-failure 分支分别记录源/目标状态与 path type。每次结束立即撤回并重编译。
@@ -187,10 +245,13 @@ seq 4 则明确记录到 boss 对主坦 `unreachable=true` 与 `evading_attacks=
 
 ## 交接
 
-场景已注册，当前基线是北侧 `(1772,875,124.44)`；复跑：`raidtest run heroic-gd-moorabi-n5 --attempts 1`。
-当前 boss 证据为 **run639–654 的 12 击杀 / 1 aborted / 1 timeout（14 个 boss 样本）**
-加上 **run662–664 的 8 场击杀 / 0 aborted / 0 timeout**（run663 seq3–5 与 run659/661/645 前置作废不计）。
-run664 在「共同落点 = 第一个可见点」修复后完整链路 5/5 零死亡，但单轮回归不足以声称稳定。
+场景已注册，当前基线是北侧 `(1772,875,124.44)`；复跑：`raidtest run heroic-gd-moorabi-n5 --attempts 5`
+（先清 `account_instance_times`）。
+
+boss 证据：**run639–654 的 12 击杀 / 1 aborted / 1 timeout（14 个 boss 样本）**
+加上 **run662–667 的 20 场中 16 击杀**（run662–663 用旧「最后一个可见点」版本；run664–667 为最终版，
+其中 run665 seq2 为总线 bug 误记，实际已击杀）。run664 与 run667 各 5/5 零死亡。
+**前置清怪本身约 1/5 场次打输，属独立待办，不计入 boss 机制结论。**
 
 ### 环境坑（本轮新踩）
 
