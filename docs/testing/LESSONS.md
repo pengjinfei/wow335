@@ -631,3 +631,41 @@ AoE 是唯一追得上的手段，不能为了优先级关掉。
 
 **附带代价**：强制单体切目标本身是净负面——换一次目标 4 个 tick ≈ 2.8 秒，
 持续到场的目标（13.6–17.6 只/场）会让 bot 一直在切，两组实测总输出各降 34% / 26%。
+
+## 「怪打谁」的承伤里，混着它自己的反伤 / 反伤型 proc
+
+2026-09-18 古达克莫拉比前置清怪踩到，代价是**整条靶子选错了**。
+
+上一轮把「29819 Lancer 打盗贼 287,689 > 打坦克 185,254」读成「Lancer 没被坦克拉住」，
+据此把「查 Lancer 的目标选择」定为**首选单变量**。实际：
+
+- 29819 的 SmartAI 每 12–20 秒给自己上 `40546 Retaliation` aura（5 秒）；
+- 40546 = `SPELL_AURA_PROC_TRIGGER_SPELL(42)` → `TriggerSpell 22858`，
+  `ProcTypeMask 0x28`（**被近战/技能打中就 proc**）、`ProcChance 100`；
+- 22858 是瞬发近战 `WEAPON_DAMAGE`，**目标 = 攻击者**。
+
+⇒ 那 287,689 里 **230,489（80%）是反伤**，真正的普攻只有 57,200。
+「Lancer 打盗贼更多」的真相是**盗贼打 Lancer 更多**（近战 541 次命中 vs 坦克 480），
+被反伤打回来了。而坦克的**真普攻承伤 87,535 本来就高于盗贼的 57,200**——
+**结论方向完全相反。**
+
+**How to apply：**
+- 按 `actor_entry` 统计一只怪「打了谁」之前，先查它的**全部技能**是不是有
+  `SPELL_AURA_PROC_TRIGGER_SPELL` / `SPELL_AURA_DAMAGE_SHIELD` / `SPELL_AURA_MOD_REFLECT` 类
+  **把伤害打回攻击者**的效果。这类伤害的落点由**我方输出分配**决定，**不是**这只怪的仇恨。
+- 落地检查（免费、可复现）：一条 `damage` 事件若能 1:1 配对到某条 **`miss=0` 的
+  `spell` 事件**（同 `rel_ms` + 同 target），它就不是普攻，是 proc。
+  再反查「该 target 在同一时刻是否打过这只怪」——命中率接近 100% 即可定案。
+  脚本：[bosses/heroic-gd-moorabi/evidence/lancer_threat_split.py](bosses/heroic-gd-moorabi/evidence/lancer_threat_split.py)。
+- ⚠ 一个**具体的过滤陷阱**：`raidtest_events.actor_entry` 对**玩家造成**的伤害是 **NULL**
+  （只有 creature 才填）。用 `WHERE actor_entry=<怪>` 过滤时，
+  「这只怪打谁」能查到、「谁打这只怪」查不到——想验证 proc 反查会静默查空。
+  要按 `source_guid`/`target_guid` 查。
+- 同理，**「死因分解」也要先扣掉反伤**，否则会把「谁打得最多」记成「谁被追着打」。
+  莫拉比前置 39 场玩家死亡的主导来源：FireWeaver 13 / Earthshaker 9 /
+  Lancer 普攻 8 / **Lancer 反伤 8**——**没有一个单一主导来源**，
+  而上一轮据此把优先级单点压在 Lancer 上，这个排序本身也来自错口径。
+
+**通用形式**：**先确认「这个数字是谁产生的」，再确认「它代表什么」。**
+承伤/输出类指标一旦混入 proc、反伤、DOT、宠物或残留事件，落点就会从
+「受害者的遭遇」变成「攻击者的行为」，而两者经常指向**相反的结论**。

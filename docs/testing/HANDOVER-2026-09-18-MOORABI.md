@@ -1,4 +1,34 @@
-# 莫拉比交接（2026-09-18 晚收尾）
+# 莫拉比交接（2026-09-18 晚收尾，**当晚第二轮已修正 Lancer 口径**）
+
+> ## ⚠ 2026-09-18 晚第二轮：交接里的「下一步 1（查 Lancer）」已执行完毕，**结论是那个问题不存在**
+>
+> 本文件下面「前置清怪头寸」与「下一步 1」写的是「真靶子是 29819 Lancer 没被坦克拉住」，
+> 依据是「Lancer 打盗贼 287,689 > 打坦克 185,254」。**那个口径错了，结论方向相反。**
+>
+> **22858 不是目标选择技能，是 `40546 Retaliation` aura 的 proc 反伤（谁打我打谁）**：
+> 29819 每 12–20 秒给自己上 `40546`（5 秒）；40546 = `SPELL_AURA_PROC_TRIGGER_SPELL(42)`
+> → `TriggerSpell 22858`，`ProcTypeMask 0x28`（被近战/技能打中就 proc）、`ProcChance 100`；
+> 22858 瞬发近战 `WEAPON_DAMAGE`，**目标 = 攻击者**。22858 `Attributes = 0x00040000`
+> （仅 `DO_NOT_SHEATH`），无目标选择位；`spell_script_names` / `spell_target_position` /
+> `spell_threat` 均无条目。
+>
+> **1:1 事件配对验证**：154 次落地（`miss=0`）的 22858 全部配对到同 `(rel_ms,target)` 的
+> damage；反查「该 target 300ms 内是否打过 Lancer」——**131/131 命中，0 例外**。
+>
+> 修正后（run664–667）：**盗贼那 287,689 里 230,489（80%）是反伤**，真普攻只有 57,200；
+> 坦克真普攻 **87,535 本来就高于盗贼**。真相是**盗贼打 Lancer 更多**（541 vs 480 次命中）
+> 被反伤打回来。逐场「坦克普攻 > 全部非坦克」**5/19 场**（旧口径是 13/19）。
+>
+> **死因也重新分解**（窗口 `[t-12s,t+2.5s]`，n=39 场前置玩家死亡）：FireWeaver 13 /
+> Earthshaker 9 / **Lancer 普攻 8 / Lancer 反伤 8** / Lancer 流血 1——**无单一主导来源**，
+> 「先查 Lancer」这个排序本身来自错口径。
+>
+> ⇒ **新的候选单变量 = 让队伍在 `40546` aura 期间对 Lancer 停手**（对着 450,544 的反伤）；
+> 接控制链降为并列候选。探针/触发器认 **40546**（自身 aura），不是 22858（反伤本体）。
+>
+> 复现脚本：[evidence/lancer_threat_split.py](bosses/heroic-gd-moorabi/evidence/lancer_threat_split.py)；
+> 教训：[LESSONS](LESSONS.md)「怪打谁的承伤里，混着它自己的反伤 / 反伤型 proc」。
+> 本文件以下内容保持原样作为历史记录。
 
 ## 当前结论（一句话）
 
@@ -120,6 +150,8 @@ run666 的三场失败细节（都**不是**框架问题）：seq1 / seq5 是**�
 死亡顺序每场稳定为 Inciter→两只 Earthshaker→Lancer/FireWeaver）。
 
 **真靶子是 29819 Lancer 没被坦克拉住**：它打盗贼 287,689（39.3%）> 打坦克 185,254（25.3%），
+⚠ **这两行已被 2026-09-18 晚第二轮推翻，见文件开头**：那 287,689 里 80% 是 `40546` aura 的
+proc 反伤（谁打我打谁），不是 Lancer 的目标选择；坦克的真普攻承伤（87,535）本来就高于盗贼（57,200）。
 而其余三只（29829 对坦克 496,878、29822 对坦克 159,669）伤害主力都是坦克。
 run666 seq1 盗贼死前 3 秒承伤 12,677、seq5 为 18,519，**100% 来自 Lancer**。
 **稳健性**：逐场看「打盗贼 vs 打坦克」，**19 场里 13 场（68%）打盗贼更多**（中位 13,668 vs 9,542），
@@ -130,14 +162,17 @@ run666 seq1 盗贼死前 3 秒承伤 12,677、seq5 为 18,519，**100% 来自 La
 
 ## 下一步（按序）
 
-1. **先查 29819 Lancer 为什么没被坦克拉住**（零编译成本）：分清是「无视仇恨的目标选择技能」
-   （22858，前置窗口内 248 次施法、对盗贼 113 次 / 对坦克 95 次）还是「仇恨/嘲讽链缺陷」。
-   建议起手：
-   - 查 22858 在 `spell_dbc` 的 `Attributes`/`AttributesEx*` 有没有与目标选择相关的位，
-     以及 `spell_target_position` / `spell_script_names` 里有没有脚本；
-   - 现有 `boss_threat` 只采样场景 boss，**不覆盖小怪**。要看 Lancer 选目标那一刻的
+1. ~~**先查 29819 Lancer 为什么没被坦克拉住**（零编译成本）~~ —— **已执行完毕，结论是「不存在这个问题」**：
+   22858 是 `40546` aura 的 proc 反伤（谁打我打谁），不是无视仇恨的目标选择技能。
+   详见文件开头的第二轮修正。**不需要**再加 threat 采样，也**不需要**开 `LogInGroupOnly=0`。
+   新的候选单变量改为：**让队伍在 `40546` aura 期间对 Lancer 停手**（需编译授权）。
+   ~~分清是「无视仇恨的目标选择技能」（22858，前置窗口内 248 次施法、对盗贼 113 次 / 对坦克 95 次）
+   还是「仇恨/嘲讽链缺陷」。建议起手：~~
+   - ~~查 22858 在 `spell_dbc` 的 `Attributes`/`AttributesEx*` 有没有与目标选择相关的位，
+     以及 `spell_target_position` / `spell_script_names` 里有没有脚本；~~（已查：无）
+   - ~~现有 `boss_threat` 只采样场景 boss，**不覆盖小怪**。要看 Lancer 选目标那一刻的
      threat table，得新加只读采样或开 `LogInGroupOnly=0` 读 `Playerbots.log`
-     （测完必须改回 1）。
+     （测完必须改回 1）。~~（不需要）
 2. **接控制链**（第二变量，需编译授权）：mod-playerbots 把 `WotlkDungeonGDStrategy` 改成继承
    `TrashCcPullStrategy` 并调 `TrashCcPullStrategy::InitTriggers`（参照 `NexStrategy` / `ANStrategy`）；
    场景 conf 加 `PrerequisiteCcWaitSeconds = 25`。注意会拉长清怪时长（魔枢测床 33s→69–81s），

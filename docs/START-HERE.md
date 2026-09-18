@@ -31,9 +31,21 @@
 > **仍未解决（独立待办，不得靠改装备/难度/cheat）**：**前置清怪本身约 1/5 场次会打输**。
 > 与修复前基线统计上不可区分（Fisher p=0.64）。**头寸已量（2026-09-18 晚，只读）**：
 > 前置怪 DTPS、heal 密度、最大 heal 空档、全队 partyDPS **四项在 kill/fail 组间全部不可区分或方向相反**
-> （partyDPS 5,921 vs 5,919）——输出和“治疗停了”都不是瓶颈。**真靶子是 29819 Lancer 没被坦克拉住**
-> （打盗贼 287,689 > 打坦克 185,254；run666 两场盗贼之死的死前 3 秒承伤 100% 来自它）。
-> **首选单变量已从“接控制链”改为“先查 Lancer”**；控制链降为第二变量。
+> （partyDPS 5,921 vs 5,919）——输出和“治疗停了”都不是瓶颈。
+>
+> **⚠ 2026-09-18 晚第二轮修正：原写的「真靶子是 29819 Lancer 没被坦克拉住」不成立，结论方向相反。**
+> 上一轮的依据「Lancer 打盗贼 287,689 > 打坦克 185,254」把 **Retaliation 反伤**算进了目标选择：
+> 29819 每 12–20 秒给自己上 `40546 Retaliation` aura（5 秒），40546 = `SPELL_AURA_PROC_TRIGGER_SPELL`
+> → `TriggerSpell 22858`（`ProcTypeMask 0x28`、`ProcChance 100`），22858 是瞬发近战 `WEAPON_DAMAGE`、
+> **目标 = 攻击者**（22858 无任何目标选择位，也无脚本/threat 条目）。
+> **1:1 事件配对验证**：154 次落地（`miss=0`）的 22858 全部配对到同 `(rel_ms,target)` 的 damage；
+> 反查「该 target 300ms 内是否打过 Lancer」——**131/131 命中，0 例外**。
+> 修正后：盗贼那 287,689 里 **230,489（80%）是反伤**，真普攻只有 57,200；坦克真普攻 **87,535 更高**。
+> 真相是**盗贼打 Lancer 更多**（541 vs 480 次命中）被反伤打回来。逐场「坦克 > 全部非坦克」**5/19 场**。
+> 死因也重分：FireWeaver 13 / Earthshaker 9 / Lancer 普攻 8 / Lancer 反伤 8（n=39）——**无单一主导来源**。
+> ⇒ **新的候选单变量 = 让队伍在 `40546` aura 期间对 Lancer 停手**；接控制链降为并列候选。
+> 脚本 [bosses/heroic-gd-moorabi/evidence/lancer_threat_split.py](testing/bosses/heroic-gd-moorabi/evidence/lancer_threat_split.py)，
+> 教训 [LESSONS](testing/LESSONS.md)「怪打谁的承伤里，混着它自己的反伤 / 反伤型 proc」。
 > **boss 阶段的 `CanNotReachTarget`（run640 seq4）本轮未复现、仍未归因。**
 >
 >
@@ -67,8 +79,9 @@
 > **管理库累计 14 个提交未推 `origin/main`、mod-raidtest 3 个未推**（core / mod-playerbots 为 0）。
 >
 > **接手第一件事：四选一**（按代价排序）——
-> (a) **先查 29819 Lancer 没被坦克拉住**（零编译成本，靶子已量化；见上）；其次才是接控制链
-> （`GDStrategy` 继承 `TrashCcPullStrategy` + conf 加 `PrerequisiteCcWaitSeconds = 25`，需编译；
+> (a) **⚠「先查 Lancer」已答完，答案是不存在这个问题**（见上）；新的首选候选是
+> **让队伍在 `40546` aura 期间对 Lancer 停手**（需编译授权），接控制链并列
+> （`GDStrategy` 继承 `TrashCcPullStrategy` + conf 加 `PrerequisiteCcWaitSeconds = 25`）；
 > run637 的「`no_plan` 失败」是旧接近逻辑下的结论，需重测）；
 > (b) **凶残的艾克**勘测建场景（这一轮的遗漏）；
 > (c) **推 fork** 把未推送提交备份掉（mod-raidtest 新增 `3189b9a`/`aa01349` 两个提交）；
