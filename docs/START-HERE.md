@@ -478,8 +478,10 @@ until [ -n "$(mysql ... -e "SELECT 1 FROM raidtest_attempts
 不是"还在跑"的占位。等一个 run 结束**一律等 `raidtest_runs.finished_at IS NOT NULL`**，
 等单场结束就等该行存在，不要对 `result` 的取值做假设。
 
-收尾时顺手核一遍残留：`ps -eo pid,ppid,command | grep -E "[t]ail -n 0 -f /tmp/ac_world_fifo"`
-应当**只有一个读端**（多个 tail 会互相抢 FIFO 里的命令）。
+收尾时顺手核一遍残留：读端**应当只有一个**（多个读端会互相抢 FIFO 里的命令）。
+⚠ 2026-09-18 起读端已从 `tail` 换成 `scripts/fifo_relay.py`，核对应查
+`ps -eo pid,ppid,command | grep "[f]ifo_relay" | grep -v grep`——**不要**用
+`pgrep -f fifo_relay.py` 数，它会把执行这条命令的 shell 自己也算进去（本轮实测误数成 2 个）。
 
 ## 新副本快速开始（换本时照这个走）
 
@@ -614,7 +616,9 @@ until [ -n "$(mysql ... -e "SELECT 1 FROM raidtest_attempts
 - **构建树是 `azerothcore-wotlk/var/build/obj`**，不是 `cmake-build-debug`（CLion 的独立 debug
   树，上一轮会话在那里白编了 10 分钟）。增量命令：
   `cd azerothcore-wotlk && nice -n 10 cmake --build var/build/obj --target worldserver -j4`。
-- worldserver 靠 FIFO `/tmp/ac_world_fifo` 收命令（有一个常驻 `exec 8>` 的写端进程保持它打开），
+- worldserver 靠 FIFO `/tmp/ac_world_fifo` 收命令（**2026-09-18 起读端是 `scripts/fifo_relay.py`，
+  不再是 `tail`——`tail` 的块缓冲会吞掉短命令，见 [交接](testing/HANDOVER-2026-09-18-MOORABI.md)；
+  `restart_world.sh` 已修好，不用手工起 relay**），
   换二进制必须重启，**启动到 ready 约 6 分钟**，这是每轮迭代的主要固定开销，排计划时要算进去。
 - 先读 `raidtest status`，再查询数据库 run 的 finished_at。活动 attempt 行可能暂为
   aborted/0/NULL，占位行不代表最终失败。

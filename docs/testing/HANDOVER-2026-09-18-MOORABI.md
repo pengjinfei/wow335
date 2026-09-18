@@ -159,8 +159,11 @@ run666 seq1 盗贼死前 3 秒承伤 12,677、seq5 为 18,519，**100% 来自 La
 ## 接手核对清单（新会话第一轮照这个走）
 
 1. 逐库 `git status/branch/HEAD`（四库：管理库 / core / mod-playerbots / mod-raidtest）。
-2. `pgrep -x worldserver` 应只有 1 个；`ps -eo pid,command | grep "[f]ifo_relay"` 应只有 1 组
-   （relay + worldserver，ppid 关系对）。
+2. `pgrep -x worldserver` 应只有 1 个；relay 用 `pgrep -f fifo_relay.py` 数**会把自己算进去**
+   （本轮实测数出 2），要用 `ps -eo pid,ppid,comm | awk '$3=="sh"'` 或
+   `ps -eo pid,ppid,command | grep "[f]ifo_relay" | grep -v grep` 核对，
+   正确形态是 `sh -c python3 ... fifo_relay.py | worldserver` 一条 + 其子 python 一条。
+   ⚠ 这条和 START-HERE「等待循环的两个坑」是同一个 `pgrep -f` 自匹配问题。
 3. 发一条 `raidtest status` 回读（**必须回读**，不能只发）；应为 `state=IDLE`。
 4. 跑测试前清库：
    `DELETE FROM acore_characters.account_instance_times; DELETE FROM acore_characters.instance WHERE map=604;`
