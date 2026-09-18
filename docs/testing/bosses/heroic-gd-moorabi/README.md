@@ -13,7 +13,7 @@
   （run635、run639）及控制链接入的门禁时序两刀（run636–637，均已回退）。
 - 当前前置基线：`(1772,875,124.44)`，**未启用**控制链。
 - ⚠ 环境坑：`scripts/restart_world.sh` 用 `tail` 当 FIFO 读端，**块缓冲会把命令永远吞掉**；
-  本轮三次 `raidtest run` 因此没进控制台。改用 `python3 -u /tmp/fifo_relay.py`（`O_RDWR` 自持写端 + 逐行 flush）后正常。
+  本轮三次 `raidtest run` 因此没进控制台。改用 `scripts/fifo_relay.py`（`O_RDWR` 自持写端 + 逐行 flush）后正常；**`restart_world.sh` 已修好，不用再手工起 relay**。
   重启用 `scripts/restart_world.sh <logname>`；开跑前清 `account_instance_times`。
 
 ## 结构性约束（先看这个，别急着换坐标）
@@ -258,7 +258,8 @@ boss 证据：**run639–654 的 12 击杀 / 1 aborted / 1 timeout（14 个 boss
 `scripts/restart_world.sh` 用 `tail -n 0 -f /tmp/ac_world_fifo | worldserver` 作 FIFO 读端，
 **`tail` 写管道时是块缓冲（16KB）**，`raidtest run` 这类短命令会永远停在缓冲区里——本会话三次
 发命令都没进控制台（日志无任何 `Orchestrator` 行，数据库也无新 run），一度误判为「启动期吞命令」。
-改用 `python3 -u /tmp/fifo_relay.py`（`O_RDWR` 自持写端 + 逐行 flush）后一次即通。
+改用 `scripts/fifo_relay.py`（`O_RDWR` 自持写端 + 逐行 flush）后一次即通。
+**该修复已提交进 `restart_world.sh`（`8396a02`）并实机验证**，下一个会话不必手工起 relay。
 注意：不能用 `perl -e '$|=1; while(<STDIN>){print}'`——它在写端关闭时收到 EOF 就退出。
 
 2026-09-18 run659：队长单独探路、跟随者待命的修复已编译并加载；首轮在前置阶段 86.901 秒出现 3 死，随后一个未记录死亡的前置 spawn 消失，按完整遭遇战不变量作废（`boss_hp_min=100`）。停止余下轮次；它不是 boss 样本，也尚不能宣称前置稳定。

@@ -67,7 +67,8 @@
 > (d) **斯拉德兰读日志**（先补位置/决策证据；平台阵位已 0/5 回退）。
 > 德拉克瑞巨像的召唤触发与房间隔离夹具已打通；run651–652 已在同口径复验 **5/5**。若再继续巨像，应另建“完整房间”口径，不能把它与隔离样本混算。
 > ⚠ **FIFO 坑（本轮新踩）**：`scripts/restart_world.sh` 用 `tail` 当读端，块缓冲会**吞掉**短命令
-> （三次 `raidtest run` 都没进控制台）。改用 `python3 -u /tmp/fifo_relay.py`（`O_RDWR` + 逐行 flush）。
+> （三次 `raidtest run` 都没进控制台）。`restart_world.sh` 已改用 `scripts/fifo_relay.py`
+> （`O_RDWR` + 逐行 flush），**现在开箱可用、不用手工起 relay**。
 >
 > **本轮又踩的坑**（详见 LESSONS）：`raidtest los` 的 z 用法**第三次**踩——批量网格必须**逐点**用
 > 实测地面高度当 z1；第十刀里我还犯了一次**跨场景对比**（`sladran-n5` vs 基线的 `sladran-disc-n5`），

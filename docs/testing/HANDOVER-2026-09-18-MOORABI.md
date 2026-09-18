@@ -124,5 +124,6 @@ run666 的三场失败细节（都**不是**框架问题）：
 `scripts/restart_world.sh` 用 `tail -n 0 -f /tmp/ac_world_fifo | worldserver` 作 FIFO 读端。
 **`tail` 写管道时是块缓冲（16KB）**，`raidtest run` 这类短命令会永远停在缓冲区里——本会话三次发命令
 都没进控制台（日志无 `Orchestrator` 行、数据库无新 run），一度误判为「启动期吞命令」。
-改用 `python3 -u /tmp/fifo_relay.py`（`O_RDWR` 自持写端 + 逐行 flush）后一次即通。
+改用 `scripts/fifo_relay.py`（`O_RDWR` 自持写端 + 逐行 flush）后一次即通。
+**该修复已提交进 `restart_world.sh`（`8396a02`）并实机验证**，下一个会话不必手工起 relay。
 ⚠ 不能用 `perl -e '$|=1; while(<STDIN>){print}'`：写端关闭时它会收到 EOF 并退出。
