@@ -156,6 +156,18 @@ run666 seq1 盗贼死前 3 秒承伤 12,677、seq5 为 18,519，**100% 来自 La
 - 二进制：`azerothcore-wotlk/var/build/obj/.../worldserver` 2026-09-18 16:57 构建，
   **与 mod-raidtest 工作区一致**（源码 16:55）。worldserver 当前 IDLE。
 
+## 接手核对清单（新会话第一轮照这个走）
+
+1. 逐库 `git status/branch/HEAD`（四库：管理库 / core / mod-playerbots / mod-raidtest）。
+2. `pgrep -x worldserver` 应只有 1 个；`ps -eo pid,command | grep "[f]ifo_relay"` 应只有 1 组
+   （relay + worldserver，ppid 关系对）。
+3. 发一条 `raidtest status` 回读（**必须回读**，不能只发）；应为 `state=IDLE`。
+4. 跑测试前清库：
+   `DELETE FROM acore_characters.account_instance_times; DELETE FROM acore_characters.instance WHERE map=604;`
+5. 核对配置三项：`LogInGroupOnly=1`、`AutoEquipUpgradeLoot=0`、`BotCheats=""`。
+6. 二进制 = `azerothcore-wotlk/var/build/obj/src/server/apps/worldserver`（16:57），
+   与 mod-raidtest 工作区一致；**若本轮要改源码，需先获得编译授权**。
+
 ## 环境坑（本轮新踩，影响每次跑测试）
 
 `scripts/restart_world.sh` 用 `tail -n 0 -f /tmp/ac_world_fifo | worldserver` 作 FIFO 读端。
