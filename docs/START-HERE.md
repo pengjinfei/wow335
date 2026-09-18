@@ -63,7 +63,8 @@
 > 位置/决策日志证明死亡时的实际站位与动作，再单独评估毒性新星自保，**不要复跑平台阵位**。
 >
 > **本轮状态（2026-09-18 晚收尾）**：worldserver IDLE、1 个进程；二进制 16:57 与 mod-raidtest
-> 工作区一致；`restart_world.sh` 的 FIFO 坑已修（`8396a02`）；管理库 6 个提交未推 `origin/main`。
+> 工作区一致；`restart_world.sh` 的 FIFO 坑已修（`8396a02`）；
+> **管理库累计 14 个提交未推 `origin/main`、mod-raidtest 3 个未推**（core / mod-playerbots 为 0）。
 >
 > **接手第一件事：四选一**（按代价排序）——
 > (a) **先查 29819 Lancer 没被坦克拉住**（零编译成本，靶子已量化；见上）；其次才是接控制链

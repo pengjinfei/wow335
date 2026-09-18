@@ -150,7 +150,7 @@ run666 seq1 盗贼死前 3 秒承伤 12,677、seq5 为 18,519，**100% 来自 La
 
 ## 仓库状态
 
-- 管理库：`main` `d64e1a1`，本轮 6 个提交**均未推 `origin/main`**。
+- 管理库：`main` `e47537c`，**累计 14 个提交未推 `origin/main`**（`d462bbe` 起到 `e47537c`，全部 2026-09-18）。
 - core：`main` `c747f55ca`，未推送 0；仅有本地运行日志/快照未跟踪（`.gitignore` 含 `*.log`，
   但 core 仓库的忽略规则不覆盖它们，属既有状态，非本轮新增）。
 - mod-playerbots：`codex/gd-takeover` `f0e08d97`，未推送 0，本轮无源码改动。
