@@ -119,6 +119,8 @@ run666 的三场失败细节（都**不是**框架问题）：
 **真靶子是 29819 Lancer 没被坦克拉住**：它打盗贼 287,689（39.3%）> 打坦克 185,254（25.3%），
 而其余三只（29829 对坦克 496,878、29822 对坦克 159,669）伤害主力都是坦克。
 run666 seq1 盗贼死前 3 秒承伤 12,677、seq5 为 18,519，**100% 来自 Lancer**。
+**稳健性**：逐场看「打盗贼 vs 打坦克」，**19 场里 13 场（68%）打盗贼更多**（中位 13,668 vs 9,542），
+不是 run666 的偶发。
 
 ⚠ 同时纠正我自己的两处口径错误：① 用 `actor_entry=797` 统计玩家行为（应用 `source_guid`）；
 ② 说「26 秒 heal 空档」——漏看中间采样，实际 17.7 秒且发生在快团灭之后（结果非原因）。
@@ -127,6 +129,12 @@ run666 seq1 盗贼死前 3 秒承伤 12,677、seq5 为 18,519，**100% 来自 La
 
 1. **先查 29819 Lancer 为什么没被坦克拉住**（零编译成本）：分清是「无视仇恨的目标选择技能」
    （22858，前置窗口内 248 次施法、对盗贼 113 次 / 对坦克 95 次）还是「仇恨/嘲讽链缺陷」。
+   建议起手：
+   - 查 22858 在 `spell_dbc` 的 `Attributes`/`AttributesEx*` 有没有与目标选择相关的位，
+     以及 `spell_target_position` / `spell_script_names` 里有没有脚本；
+   - 现有 `boss_threat` 只采样场景 boss，**不覆盖小怪**。要看 Lancer 选目标那一刻的
+     threat table，得新加只读采样或开 `LogInGroupOnly=0` 读 `Playerbots.log`
+     （测完必须改回 1）。
 2. **接控制链**（第二变量，需编译授权）：mod-playerbots 把 `WotlkDungeonGDStrategy` 改成继承
    `TrashCcPullStrategy` 并调 `TrashCcPullStrategy::InitTriggers`（参照 `NexStrategy` / `ANStrategy`）；
    场景 conf 加 `PrerequisiteCcWaitSeconds = 25`。注意会拉长清怪时长（魔枢测床 33s→69–81s），
@@ -139,10 +147,14 @@ run666 seq1 盗贼死前 3 秒承伤 12,677、seq5 为 18,519，**100% 来自 La
 
 ## 仓库状态
 
-- 管理库：`main`，本交接与 Moorabi 文档、BOSS-LEDGER、START-HERE 已更新。
-- core：`main` `c747f55ca`，仅有本地运行日志/快照未跟踪。
-- mod-playerbots：`codex/gd-takeover` `f0e08d97`，无本轮源码改动。
-- mod-raidtest：`codex/gd-takeover`，本轮两个提交 `3189b9a` + `aa01349`（**未推 fork**）。
+- 管理库：`main` `d64e1a1`，本轮 6 个提交**均未推 `origin/main`**。
+- core：`main` `c747f55ca`，未推送 0；仅有本地运行日志/快照未跟踪（`.gitignore` 含 `*.log`，
+  但 core 仓库的忽略规则不覆盖它们，属既有状态，非本轮新增）。
+- mod-playerbots：`codex/gd-takeover` `f0e08d97`，未推送 0，本轮无源码改动。
+- mod-raidtest：`codex/gd-takeover` `aa01349`，本轮 2 个提交（`3189b9a` 前置拉怪 + `aa01349` 总线换绑），
+  **相对本地 `main` 未推送 3 个**（含上一轮的 `8ec1420`）。
+- 二进制：`azerothcore-wotlk/var/build/obj/.../worldserver` 2026-09-18 16:57 构建，
+  **与 mod-raidtest 工作区一致**（源码 16:55）。worldserver 当前 IDLE。
 
 ## 环境坑（本轮新踩，影响每次跑测试）
 

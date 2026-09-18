@@ -174,6 +174,9 @@ run666 三场失败细节（都不是框架问题）：
 四只小怪里只有 Earthshaker(29829) 与 FireWeaver(29822) 的伤害主力是坦克
 （29829 对坦克 496,878、29822 对坦克 159,669），**Lancer 是唯一一只没被拉住的**。
 
+**稳健性核对**：逐场看 Lancer 的「打盗贼 vs 打坦克」，**19 场里 13 场（68%）打盗贼更多**
+（中位：盗贼 13,668 vs 坦克 9,542）——不是 run666 的偶发，是稳定形态。
+
 ### 输出分配是健康的（不是「撒着打」）
 
 前置窗口内全队输出 6,840,013，按目标分布：EarthshakerA 29.7%、EarthshakerB 29.6%、
@@ -301,7 +304,14 @@ seq 4 则明确记录到 boss 对主坦 `unreachable=true` 与 `evading_attacks=
 ### 下一步（按序）
 
 1. **先查 29819 Lancer 为什么没被坦克拉住**（零编译成本，头寸已量：它打盗贼 39.3%、打坦克 25.3%，
-   run666 seq1/seq5 的盗贼之死全是它）。分清是「无视仇恨的目标选择技能」还是「仇恨/嘲讽链缺陷」。
+   19 场里 13 场打盗贼更多；run666 seq1/seq5 的盗贼之死全是它）。分清是「无视仇恨的目标选择技能」
+   还是「仇恨/嘲讽链缺陷」。**建议起手**：
+   - 查 22858 在 `spell_dbc` 的 `Attributes`/`AttributesEx*`，看是否带
+     `SPELL_ATTR_*` 里与目标选择相关的位（例如 `SPELL_ATTR0_ABILITY`、`SPELL_ATTR5_*`），
+     以及 `spell_target_position` / `spell_script_names` 里有没有脚本；
+   - 若 DBC 查不出，用只读探针记录 Lancer 每次选目标那一刻的 threat table
+     （现有 `boss_threat` 采样只覆盖场景 boss，不覆盖小怪，需要新加只读采样或开
+     `LogInGroupOnly=0` 看 `Playerbots.log`）。
 2. **接控制链**（第二变量，需编译授权）：mod-playerbots 把 `WotlkDungeonGDStrategy` 改成继承
    `TrashCcPullStrategy` 并调 `TrashCcPullStrategy::InitTriggers`（参照 `NexStrategy` / `ANStrategy`）；
    场景 conf 加 `PrerequisiteCcWaitSeconds = 25`。注意：它会拉长清怪时长（魔枢测床 33s→69–81s），
