@@ -213,4 +213,6 @@ Custodian 击杀。该单变量未改善，必须回退，不混入 Gaze/窄 lea
 
 r34 的 LOS-reacquire 是唯一已实现但**未验收**的候选：run760 的 INFO dispatch 为 0，故它既没有被执行，也不能解释 run759 的 smoke kill 或 run760 的 wipe。r32 当前 1/5 lifecycle 也没有把 Protector、Custodian、Stormcaller、Gaze 或治疗选择收敛为单一变量。
 
+Kaddrak 也不是可执行的新变量：core 在 phase 1 后每 **1.5 秒**对 100 码内随机玩家直接施放 Glare（英雄 spell 59870），且前序 phase 能力持续到事件结束；HoS playerbot 没有其专用节点。可是 r32 的 kill/wipe 五场均承受该直接伤害（kill 61,340；wipe 64,234/57,331/68,640/56,741），并无可通过移动、目标选择或 raidtest 干预改变的机制入口。它只能作为持续背景伤害，不能据“没有专用 trigger”提出策略。
+
 因此本轮不以“再跑一场”替代假说：只有出现能限定一个正常规则 playerbot 决策、预先定义执行指标且不与 r34 混淆的新证据，才可构建并先跑排除 lifecycle 的 execution smoke。否则保持 r32、IDLE 和现有 cohort；不得从 `interrupt_watch`、单场死亡窗口或未 dispatch 的 r34 节点反推动作/死因，更不得由 `mod-raidtest` 代打或代选目标。
