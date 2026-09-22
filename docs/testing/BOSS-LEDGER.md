@@ -10,7 +10,7 @@
 |---|---|---|---|---|
 | [英雄岩石大厅](bosses/heroic-hos/README.md) | [Tribunal of Ages](bosses/heroic-hos-tribunal/README.md) | r32 lifecycle **1/5 DONE**（run745）；run746/748/750/751 为有效动态 wipe。Sjonnir 已因同实例前置后的无自主路线、且 raidtest 不可代移而跳过（无战斗样本）。 | **调查中** | 仅在新的单一、可观测证据支持假说下重启 Tribunal 调查；r34 继续排除 lifecycle。 |
 
-运行 server 已恢复 r32、IDLE。Tribunal 的当前增量与诊断边界见 [`HANDOVER-2026-09-21-HOS-TRIBUNAL.md`](HANDOVER-2026-09-21-HOS-TRIBUNAL.md)。
+run761 是隔离 Dark Matter observation/execution smoke：bot action 与 28237 非零命中均已验到，但其 wipe 永久排除 lifecycle，未推断效果；server 已恢复 r32、ready/IDLE。Tribunal 的当前增量与诊断边界见 [`HANDOVER-2026-09-21-HOS-TRIBUNAL.md`](HANDOVER-2026-09-21-HOS-TRIBUNAL.md)。
 
 ## 5 人 campaign 矩阵
 

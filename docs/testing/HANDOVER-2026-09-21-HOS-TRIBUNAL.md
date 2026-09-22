@@ -23,7 +23,7 @@ r32 的同配置复验现为 **1/5 DONE**：run745 的零死完成，run746、ru
 
 cycle 6 已复核运行中的 r32 worldserver：FIFO `raidtest status --json` 为 `idle=true`，无 active attempt；四库状态亦已复核，未触碰 core 的既有生成物或 module 的既有改动。r34 LOS-reacquire 的 execution smoke（run760）全场 dispatch=0，不能作为策略变量或 lifecycle 证据；r32 的 1/5 样本也尚未给出新的单一归因。cycle 8 还排除 Kaddrak：它每 1.5 秒随机直施的 Glare 在 r32 kill 与四场 wipe 均有 56.7–68.6k 总伤害，没有可由正常规则 bot 决策改变的入口；无专用 HoS node 不是策略缺陷证据。
 
-cycle 9 只读形成唯一候选：Marnak 每30秒的 Dark Matter 28237 在5秒后向随机玩家的当时坐标移动，3–4.5秒后自爆；五场均有5.1–14.2k伤害，且 run746 有同次对两人非零命中。它有正常规则 bot 移动入口但尚无HoS node。下一步只能先做隔离、排除 lifecycle 的触发/移动/非零命中验收，不能把它与r34合入同一binary或直接跑生命周期。
+cycle 9 只读形成唯一候选：Marnak 每30秒的 Dark Matter 28237 在5秒后向随机玩家的当时坐标移动，3–4.5秒后自爆；五场均有5.1–14.2k伤害，且 run746 有同次对两人非零命中。它有正常规则 bot 移动入口但尚无HoS node。cycle 10 已在隔离 r32-equivalent playerbots tree 加入唯一的5码 Dark Matter→12码 `MoveAway` 节点及实际 action INFO，`worldserver -j4` 与受控 startup gate 均通过；已启动 run761/attempt `1788427984` 排除 lifecycle 的 execution smoke。cycle 11 只读确认此前置于173.449秒完成、175.582秒仍在 recovery；尚未进入动态段，故没有 `tribunal-dark-matter` INFO 不能作为未执行证据。cycle 12 已入动态 observing，9条 INFO（6 true/3 false；首两条距4.58/3.11）证明 trigger/action/自主移动执行；28237 event 尚未落库（attempt 未终态），仍待 flush 后检验非零命中。cycle 13 终态为 run761/attempt1788427984、497.206秒/5 deaths wipe（永久排除 lifecycle）；INFO 终数11（7 true/4 false），flush 的28237→roster DPS829 伤害为5,197@362.122秒，故三项 execution gate 均通过，但不由此推断效果。cycle 13 随后恢复 r32 binary，受控 restart 后 world ready/FIFO IDLE。它不得与r34合入同一binary或直接跑生命周期。
 
 故不以重复 lifecycle run 替代证据。保持 r32、同一场景/300 秒预算和 IDLE；任何候选须先经不计 lifecycle 的 execution smoke，且不得叠加策略或让 mod-raidtest 代打。
 
