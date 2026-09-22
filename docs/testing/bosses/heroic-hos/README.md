@@ -1,8 +1,19 @@
-# 英雄岩石大厅（HoS，map 599）/ 克莱斯塔卢斯（Krystallus）首轮勘测
+# 英雄岩石大厅（HoS，map 599）/ campaign
 
-## 接手摘要
+## Encounter 矩阵
 
-- 更新：2026-09-21；Krystallus 的现有结论不变：首个隔离冒烟因房内外单位参战而口径无效；其后 20-spawn 证据边界另有有效样本，见下文。Tribunal of Ages 在 r32 同配置为 1/5 Brann lifecycle DONE（run745 491.468 秒零死完成；run746/run748/run750/run751 522.820/463.049/499.753/473.432 秒全灭），尚未稳定，详见[独立 Tribunal 记录](../heroic-hos-tribunal/README.md)。
+| encounter | 当前范围与结论 | 状态 | 记录 | 下一步 |
+|---|---|---|---|---|
+| Krystallus | 20-spawn 证据边界 5/5 kill、总 2 deaths；不等于完整副本。 | 当前配置击杀 | 本文历史记录 | 仅在另行定义完整房间范围时继续。 |
+| Maiden of Grief | 隔离 boss 5/5 kill、1 death；不等于完整房间。 | 当前配置击杀 | [README](../heroic-hos-maiden/README.md) | 仅在另行定义完整房间范围时继续。 |
+| Tribunal of Ages | r32 lifecycle 1/5 DONE；r34 diagnostics 不计分且未验收。 | **调查中（当前）** | [README](../heroic-hos-tribunal/README.md) | 仅以新的单一、可观测假说重启；不得重跑同类诊断。 |
+| Sjonnir the Ironshaper | 无有效 scenario 或战斗样本；同实例 Tribunal 前置后的 playerbot 自主路线不存在，raidtest 不可代移。 | **跳过（框架阻断）** | [README](../heroic-hos-sjonnir/README.md) | 不得用 fixture、状态写入或强制移动绕过。 |
+
+> 用户指示：Tribunal 基线未通过时先转入下一 boss。Sjonnir 已因可复核的 normal-rule 续链框架缺口跳过，且没有下一 boss 可选；因此回归仍未完成的 Tribunal。两项路由决定均不改变 Tribunal 的 1/5 样本口径。
+
+## Krystallus 历史接手摘要
+
+- 更新：2026-09-21；Krystallus 的现有结论不变：首个隔离冒烟因房内外单位参战而口径无效；其后 20-spawn 证据边界另有有效样本，见下文。Tribunal of Ages 在 r32 同配置为 1/5 Brann lifecycle DONE（run745 491.468 秒零死完成；run746/run748/run750/run751 522.820/463.049/499.753/473.432 秒全灭），详见[独立 Tribunal 记录](../heroic-hos-tribunal/README.md)。
 - 固定基线拟定为英雄难度、normal5-v1、5 人、`AiPlayerbot.BotCheats = ""`；运行配置已只读核对
   `AutoEquipUpgradeLoot = 0`、`BotCheats = ""`、`LogInGroupOnly = 1`。
 - 本轮只完成源码/数据库/静态地形审计；没有修改 core、mod-playerbots、mod-raidtest、装备、难度、cheat 或 boss 数值，亦未编译。

@@ -2,22 +2,24 @@
 
 更新：2026-09-21。此文件只保留当前工作面和操作边界；跨副本结果在 [`testing/BOSS-LEDGER.md`](testing/BOSS-LEDGER.md)，文档组织规则在 [`testing/README.md`](testing/README.md)，冻结的旧入口在 [`testing/archive/START-HERE-2026-09-21.md`](testing/archive/START-HERE-2026-09-21.md)。
 
-## 当前 campaign：英雄岩石大厅 / Tribunal of Ages
+## 当前 campaign：英雄岩石大厅 / Tribunal of Ages（回归调查）
 
 先读：
 
 1. [`testing/LESSONS.md`](testing/LESSONS.md)
-2. [`testing/HANDOVER-2026-09-21-HOS-TRIBUNAL.md`](testing/HANDOVER-2026-09-21-HOS-TRIBUNAL.md)
-3. [`testing/bosses/heroic-hos-tribunal/README.md`](testing/bosses/heroic-hos-tribunal/README.md)
-4. [`testing/BOSS-LEDGER.md`](testing/BOSS-LEDGER.md)
+2. [`testing/BOSS-LEDGER.md`](testing/BOSS-LEDGER.md)
+3. [`testing/bosses/heroic-hos/README.md`](testing/bosses/heroic-hos/README.md)
+4. [`testing/bosses/heroic-hos-tribunal/README.md`](testing/bosses/heroic-hos-tribunal/README.md)
+5. [`testing/HANDOVER-2026-09-21-HOS-TRIBUNAL.md`](testing/HANDOVER-2026-09-21-HOS-TRIBUNAL.md)
+6. Sjonnir 的正常规则框架 blocker：[`testing/bosses/heroic-hos-sjonnir/README.md`](testing/bosses/heroic-hos-sjonnir/README.md)
 
 ### 当前事实
 
 - 基线为 r32：Heroic / normal5-v1 / 5 人 / `BotCheats=""` / `GearProfile=none` / 无 fixture / `PrerequisiteTimeoutSeconds=300`。
-- r32 lifecycle 为 **1/5 DONE**：run745 是 491.468 秒零玩家死亡的真实 Brann DONE；run746、run748、run750、run751 是完成前置和两次真实 gossip 后的有效动态 wipe。Tribunal 与 HoS 均未完成。
-- r34 LOS-reacquire 只是一项**未验收候选**。run759 的零死 kill 是预声明不计分 smoke，且没有 dispatch 归因；run760（470.622s 动态 wipe）全场 dispatch telemetry=0，严格 finder/action 未触发。不得把 r34 用于 lifecycle sample，也不得从 run759/run760 推效果。
+- Tribunal r32 lifecycle 为 **1/5 DONE**：run745 是 491.468 秒零玩家死亡的真实 Brann DONE；run746、run748、run750、run751 是完成前置和两次真实 gossip 后的有效动态 wipe。该基线未通过；按用户指示先暂缓 Tribunal，转审 Sjonnir，Tribunal 与 HoS 仍未完成。
+- r34 LOS-reacquire 只是一项**未验收候选**。run759 的零死 kill 是预声明不计分 smoke，且没有 dispatch 归因；run760（470.622s 动态 wipe）全场 dispatch telemetry=0，严格 finder/action 未触发。不得把 r34 用于 lifecycle sample，也不得从 run759/run760 推效果或外推到 Sjonnir。
 - 已恢复 r32，worldserver 应为 ready/IDLE。开始任何命令前重新核对进程、FIFO、`raidtest status` 和 DB `finished_at`。
-- 下一步不是再跑同类诊断或叠加变量；先形成一条新的、单一且可观测的证据支持假说。若无此假说，保持 r32 并只做已界定的 lifecycle 复验。
+- Sjonnir 已**跳过（框架阻断）**、没有策略或战斗样本：同实例 Tribunal 前置后，raidtest 不能代移，playerbots 亦无自主 post-event 路线。不能用 fixture/强制移动绕过。无后续 boss 可选，按 ledger 回归未完成的 Tribunal；保持 r32。
 
 ## 不可变规则
 
@@ -33,7 +35,7 @@
 
 | 仓库 | 期望提交（接手时） |
 |---|---|
-| 管理库 | `8450336` |
+| 管理库 | `7814e0a` |
 | azerothcore-wotlk | `c747f55ca` |
 | mod-playerbots | `a846c3da` |
 | mod-raidtest | `5c1a28f` |

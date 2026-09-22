@@ -8,7 +8,7 @@
 
 | campaign | encounter | 当前证据 | 状态 | 下一步 |
 |---|---|---|---|---|
-| [英雄岩石大厅](bosses/heroic-hos/README.md) | [Tribunal of Ages](bosses/heroic-hos-tribunal/README.md) | r32 lifecycle **1/5 DONE**：run745 491.468s、0 deaths；run746/748/750/751 为有效动态 wipe。r34 LOS-reacquire 的 run759 kill 是不计分 smoke，run760 dispatch telemetry=0，未验收。 | **调查中** | 保持 r32；先建立单一、可观测且受新证据支持的假说，再决定是否实现/运行。 |
+| [英雄岩石大厅](bosses/heroic-hos/README.md) | [Tribunal of Ages](bosses/heroic-hos-tribunal/README.md) | r32 lifecycle **1/5 DONE**（run745）；run746/748/750/751 为有效动态 wipe。Sjonnir 已因同实例前置后的无自主路线、且 raidtest 不可代移而跳过（无战斗样本）。 | **调查中** | 仅在新的单一、可观测证据支持假说下重启 Tribunal 调查；r34 继续排除 lifecycle。 |
 
 运行 server 已恢复 r32、IDLE。Tribunal 的当前增量与诊断边界见 [`HANDOVER-2026-09-21-HOS-TRIBUNAL.md`](HANDOVER-2026-09-21-HOS-TRIBUNAL.md)。
 
@@ -32,7 +32,7 @@
 | 同上 | [德拉克瑞巨像](bosses/heroic-gd-colossus/README.md) | 隔离 boss 战 5/5、零死亡；移除了非机制常驻单位，原生 Mojo 链保留。 | **稳定击杀（隔离）** |
 | 同上 | [迦尔达拉](bosses/heroic-gd-galdarah/README.md) | 隔离 boss 战累计 10/10、零死亡；载具移除后骑手仍可能参战，范围已如实记录。 | **稳定击杀（隔离）** |
 | 同上 | [凶残的艾克](bosses/heroic-gd-eck/README.md) | 正常规则原生召唤链累计有效 10/10 kill、零死；无 DB spawn 的框架问题已另行记录。 | **完成（boss 机制口径）** |
-| [岩石大厅](bosses/heroic-hos/README.md) | Krystallus / [Maiden](bosses/heroic-hos-maiden/README.md) / [Tribunal](bosses/heroic-hos-tribunal/README.md) | Krystallus 5/5（总2 death，证据边界）；Maiden 隔离 5/5（1 death）；Tribunal r32 1/5 DONE。 | **未完成** |
+| [岩石大厅](bosses/heroic-hos/README.md) | Krystallus / [Maiden](bosses/heroic-hos-maiden/README.md) / [Tribunal](bosses/heroic-hos-tribunal/README.md) / [Sjonnir](bosses/heroic-hos-sjonnir/README.md) | Krystallus 5/5（总2 death，证据边界）；Maiden 隔离 5/5（1 death）；Tribunal r32 1/5 DONE、未完成；Sjonnir 因正常规则同实例续链无自主路线而跳过、无战斗样本。 | **未完成** |
 
 ## 团队副本 / 非当前队列
 
