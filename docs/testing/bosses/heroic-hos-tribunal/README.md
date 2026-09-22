@@ -211,6 +211,6 @@ Custodian 击杀。该单变量未改善，必须回退，不混入 Gaze/窄 lea
 
 ## 下一步
 
-1. run747 的 interrupt/死亡时间线已完成：没有把末段 Electrical Overload 或漏断作为靶子。保持 r32 的相同二进制、场景、300 秒前置预算和正常规则基线，再补一个 bounded lifecycle 复验；仅累计 Brann 存活、两次 gossip、`EventCompletionBossState=2 DONE` 的完成样本。
-2. 若再次发生前置减员，先按死者的最后状态/伤害和具体 spawn 对齐；不得从 `interrupt_watch` 候选反推动作未执行或死因。
-3. `mod-raidtest` 不得代打或代选目标；任何新的 `mod-playerbots` 策略改动都须在上述只读结论后单变量验证。
+r34 的 LOS-reacquire 是唯一已实现但**未验收**的候选：run760 的 INFO dispatch 为 0，故它既没有被执行，也不能解释 run759 的 smoke kill 或 run760 的 wipe。r32 当前 1/5 lifecycle 也没有把 Protector、Custodian、Stormcaller、Gaze 或治疗选择收敛为单一变量。
+
+因此本轮不以“再跑一场”替代假说：只有出现能限定一个正常规则 playerbot 决策、预先定义执行指标且不与 r34 混淆的新证据，才可构建并先跑排除 lifecycle 的 execution smoke。否则保持 r32、IDLE 和现有 cohort；不得从 `interrupt_watch`、单场死亡窗口或未 dispatch 的 r34 节点反推动作/死因，更不得由 `mod-raidtest` 代打或代选目标。

@@ -19,9 +19,11 @@ r32 的同配置复验现为 **1/5 DONE**：run745 的零死完成，run746、ru
 - 代码工作树有既有未提交改动：mod-playerbots 的 HoS/GD 文件、mod-raidtest 的 HoS/GD/Eck 框架与场景文件；本轮未改源码、未编译、未提交或推送。
 - 管理库本轮更新：`docs/testing/BOSS-LEDGER.md`、`docs/testing/bosses/heroic-hos/README.md`、`docs/testing/bosses/heroic-hos-tribunal/README.md`、本交接。
 
-## 唯一下一变量
+## 当前下一步
 
-保持 r32 相同二进制、场景与 300 秒前置预算，运行**一个** bounded Tribunal 复验 attempt。仅累计 Brann 存活、两次 gossip 和 DONE 的完成样本；若未完成，按前置/动态阶段分层分析，不能同时叠加新的策略或 mod-raidtest 代打行为。
+cycle 6 已复核运行中的 r32 worldserver：FIFO `raidtest status --json` 为 `idle=true`，无 active attempt；四库状态亦已复核，未触碰 core 的既有生成物或 module 的既有改动。r34 LOS-reacquire 的 execution smoke（run760）全场 dispatch=0，不能作为策略变量或 lifecycle 证据；r32 的 1/5 样本也尚未给出新的单一归因。
+
+故不以重复 lifecycle run 替代证据。保持 r32、同一场景/300 秒预算和 IDLE，等待能限定一个正常规则 playerbot 决策、预先写明执行指标的新假说；任何候选须先经不计 lifecycle 的 execution smoke，且不得叠加策略或让 mod-raidtest 代打。
 
 ### 运行中状态（cycle 1）
 
