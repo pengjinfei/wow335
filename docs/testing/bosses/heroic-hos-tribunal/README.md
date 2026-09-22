@@ -215,4 +215,6 @@ r34 的 LOS-reacquire 是唯一已实现但**未验收**的候选：run760 的 I
 
 Kaddrak 也不是可执行的新变量：core 在 phase 1 后每 **1.5 秒**对 100 码内随机玩家直接施放 Glare（英雄 spell 59870），且前序 phase 能力持续到事件结束；HoS playerbot 没有其专用节点。可是 r32 的 kill/wipe 五场均承受该直接伤害（kill 61,340；wipe 64,234/57,331/68,640/56,741），并无可通过移动、目标选择或 raidtest 干预改变的机制入口。它只能作为持续背景伤害，不能据“没有专用 trigger”提出策略。
 
+Dark Matter 是新的**只读候选**，尚未实施：Marnak 每 30 秒生成 28237，5 秒后向随机玩家当时坐标 `MovePoint`，再在按初始距离确定的 3–4.5 秒后自爆。r32 五场均有其伤害（kill 12,514；wipe 12,682/14,158/9,830/5,083），且同一爆炸可记录多个受击目标（例如 run746 的 346.071 秒对819=4,801、820=4,858）；HoS 没有 Dark Matter node。这支持先测“近 28237 的 bot 是否离开爆点”而非假定伤害归因。若实现，唯一变量只能是**bot 自主**的近距离规避；先在隔离、排除 lifecycle 的 observation/execution smoke 验收触发、移动与非零 Dark Matter 命中，才可评价效果。不得与 r34 同二进制混跑。
+
 因此本轮不以“再跑一场”替代假说：只有出现能限定一个正常规则 playerbot 决策、预先定义执行指标且不与 r34 混淆的新证据，才可构建并先跑排除 lifecycle 的 execution smoke。否则保持 r32、IDLE 和现有 cohort；不得从 `interrupt_watch`、单场死亡窗口或未 dispatch 的 r34 节点反推动作/死因，更不得由 `mod-raidtest` 代打或代选目标。

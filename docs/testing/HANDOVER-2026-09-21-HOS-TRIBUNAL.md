@@ -23,7 +23,9 @@ r32 的同配置复验现为 **1/5 DONE**：run745 的零死完成，run746、ru
 
 cycle 6 已复核运行中的 r32 worldserver：FIFO `raidtest status --json` 为 `idle=true`，无 active attempt；四库状态亦已复核，未触碰 core 的既有生成物或 module 的既有改动。r34 LOS-reacquire 的 execution smoke（run760）全场 dispatch=0，不能作为策略变量或 lifecycle 证据；r32 的 1/5 样本也尚未给出新的单一归因。cycle 8 还排除 Kaddrak：它每 1.5 秒随机直施的 Glare 在 r32 kill 与四场 wipe 均有 56.7–68.6k 总伤害，没有可由正常规则 bot 决策改变的入口；无专用 HoS node 不是策略缺陷证据。
 
-故不以重复 lifecycle run 替代证据。保持 r32、同一场景/300 秒预算和 IDLE，等待能限定一个正常规则 playerbot 决策、预先写明执行指标的新假说；任何候选须先经不计 lifecycle 的 execution smoke，且不得叠加策略或让 mod-raidtest 代打。
+cycle 9 只读形成唯一候选：Marnak 每30秒的 Dark Matter 28237 在5秒后向随机玩家的当时坐标移动，3–4.5秒后自爆；五场均有5.1–14.2k伤害，且 run746 有同次对两人非零命中。它有正常规则 bot 移动入口但尚无HoS node。下一步只能先做隔离、排除 lifecycle 的触发/移动/非零命中验收，不能把它与r34合入同一binary或直接跑生命周期。
+
+故不以重复 lifecycle run 替代证据。保持 r32、同一场景/300 秒预算和 IDLE；任何候选须先经不计 lifecycle 的 execution smoke，且不得叠加策略或让 mod-raidtest 代打。
 
 ### 运行中状态（cycle 1）
 
