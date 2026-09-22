@@ -189,7 +189,6 @@ run666 三场失败细节（都不是框架问题）：
 #### 那反伤为什么专杀盗贼？—— 因为**没人让队伍在 aura 期间停手**
 
 23 次 40546 窗口内，反伤落点稳定偏向**攻击 Lancer 最多的人**：
-
 | 窗口 | 反伤落点 |
 |---|---|
 | run664/s3 @44444 | rogue=22,275(6h) > self=3,822 > tank=1,125 |
@@ -227,19 +226,65 @@ FireWeaver 18.9%、Lancer 16.7%、Inciter 4.9%。四个 dps 职业对每只怪�
 死亡顺序也稳定：**Inciter(队长) → 两只 Earthshaker → Lancer/FireWeaver**，
 每场都是这个顺序，没有目标选择混乱。
 
-### 下一步（2026-09-18 晚第二轮修正后）
+### 下一步（2026-09-18 晚第三轮修正后：候选单变量再次换人）
 
-1. **「查 Lancer 为什么没被坦克拉住」这个问题已经答完，答案是「不存在这个问题」**：
-   22858 是 `40546` aura 的 **proc 反伤**（谁打我打谁），不是无视仇恨的目标选择技能。
-   零编译成本，只读 spell_dbc + SmartAI 即可证；复现脚本见
-   [evidence/lancer_threat_split.py](evidence/lancer_threat_split.py)。
-2. **新的候选单变量 = 让队伍在 `40546` aura 期间对 Lancer 停手**（机制上直接对着 450,544 的反伤）。
-   注意 `40546` 是**自身 aura**、`22858` 才是反伤本体，探针/触发器要认 40546 的
-   `SPELL_AURA_PROC_TRIGGER_SPELL`；DurationIndex 28 = 5000ms。
-   前置五只 `type=7`，控制链（变形/妖术/闷棍）仍有效，但降为并列候选。
-3. 死因分布说明**前置清怪没有一个单一主导来源**（FireWeaver 13 / Earthshaker 9 /
-   Lancer 普攻 8 / Lancer 反伤 8），所以「先查 Lancer」这个优先级本身也来自那个错口径，
-   应当**按新的死因分布重新排序**，不要再默认 Lancer 是唯一靶子。
+> ⚠ **第三轮只读量化推翻了上一节的候选单变量（「40546 期间停手」）。**
+> 三条依据、可复现脚本：`evidence/lancer_retaliation_rate.py`。
+>
+> 1. **代价 30% 输出，收益 4.1% 承伤**：对 Lancer 的 1,395 次命中里落在 5 秒 aura 窗内
+>    **415 次 = 30%**；落回玩家身上的反伤总伤害 **356,048**，只占队伍前置总承伤（8.6M）的 4.1%。
+> 2. **剩下的 70% 命中照样挨打**：窗口内 proc 率实测只 **31.6%**（415 命中 → 131 反伤），
+>    每次 aura 只落地 2–8 次。窗口内 Lancer 对玩家普攻 176 次、反伤 131 次——
+>    **反伤只是 Lancer 那 234,525 普攻伤害的另一种结算形态**，不是能单独关掉的水龙头。
+> 3. **死因里反伤只占一小块**：正确配对复核 run639–667，**限制在前置窗口内**的玩家死亡
+>    是 **14 次**（不是 39——39 是不限制在前置窗口内的口径）：
+>    `29822×4 / Lancer反伤×4 / Lancer普攻×3 / 29829×3`。
+
+**前置窗口内队伍承伤分解（run664–667，按 `(rel_ms,target)` 正确配对）**：
+
+| | 反伤 | Lancer普攻 | 流血 | 29822 | **29829** | 合计 |
+|---|---|---|---|---|---|---|
+| tank | 69,193 | 87,535 | 44,177 | 146,186 | **494,710** | 870,025 |
+| rogue | **230,489** | 57,200 | 0 | 24,563 | 93,981 | 406,634 |
+| mage | 24,523 | 26,722 | 2,984 | 15,920 | 89,099 | 159,248 |
+| shaman | 10,306 | 48,943 | 31,423 | 37,591 | 95,258 | 223,521 |
+| heal | 21,537 | 4,605 | 0 | 41,829 | 46,973 | 114,944 |
+
+单一大头是 29829 打坦克 494,710（占坦克承伤 57%），**但它也不是杠杆**——
+⚠ **本轮一度把「换成 29829」当成新推荐，随后自己否掉了（同一错误的第三种形态）**：
+- 29829 最大生命 **105,894**，其余四只 65,165（29874 只 15,750）——打得多首先是因为**活得久**；
+  总伤害/最大HP 反而最低（29829 = 8，29822 与 Lancer 各 4）。
+- run639–667 按 kill/fail 分组逐来源 **Mann-Whitney U**：**没有一项显著**
+  （29829 **p=0.53** / 反伤 p=0.66 / Lancer 普攻 p=0.06 / 29822 p=0.40 / 29874 p=0.52）；
+  **连队伍总承伤都不可区分**（kill 中位 90,788 / fail 104,022，**p=0.85**）。
+
+⇒ **前置清怪打输不是「某只怪打太多」，「挑一个最大的数字去针对」这条思路已被数据否掉**。
+
+**新排序**：
+1. **接控制链**（**本轮之后的首选**，需编译授权）——它改的是「同时接敌数量与焦点」，
+   不是针对某只怪。
+2. 若仍要单变量，先量**过程**指标（同时接敌数 / 换目标频率 / 焦点集中度）与 kill/fail 的关联，
+   **不要再从承伤排行挑靶子**。
+3. ~~「40546 期间停手」~~ **不推荐**（收益 4.1% 承伤，代价 30% 输出）。
+
+**保留下来的有效结论（第二轮，仍然成立）**：
+- 「查 Lancer 为什么没被坦克拉住」已经答完：**不存在这个问题**。22858 是 `40546` aura 的
+  **proc 反伤**（谁打我打谁），不是无视仇恨的目标选择技能。零编译成本，只读 spell_dbc +
+  SmartAI 即可证；脚本 [evidence/lancer_threat_split.py](evidence/lancer_threat_split.py)。
+- `40546` 是**自身 aura**、`22858` 才是反伤本体，探针/触发器要认 40546 的
+  `SPELL_AURA_PROC_TRIGGER_SPELL`；`DurationIndex 28` = 5000ms（查 `SpellDuration.dbc`）。
+- 坦克**很少嘲讽 Lancer**（19 场里 9 场从未用制裁之手），但嘲讽是有效的，且**反伤不吃嘲讽**。
+- **前置清怪没有单一主导来源**，不要默认 Lancer 是唯一靶子。
+
+**本轮新增两个只读脚本 + 两条口径陷阱**：
+- [evidence/lancer_retaliation_rate.py](evidence/lancer_retaliation_rate.py)：A 段 proc 率 /
+  B 段验证 5 秒时长 / C 段停手收益 / D 段 1:1 反查 / E 段「最大数字≠最大靶子」。
+- [evidence/run_result_source_split.py](evidence/run_result_source_split.py)：kill/fail 逐来源
+  Mann-Whitney U 检验。
+- `raidtest_events` 的 **damage 行 `spell_id` 恒为 0**，不能靠它区分「反伤还是普攻」，
+  必须按 `(rel_ms, target)` 1:1 配对 cast 事件。
+- aura 窗口**必须封顶**：`min(下一次施法, 施法+5000)`；只写「→ 下一次施法」会把
+  输出占比从真实的 30% 夸大成 80%。
 
 ### 另纠正两处我自己的口径错误（已写进 LESSONS 第 21 条）
 
@@ -360,10 +405,17 @@ seq 4 则明确记录到 boss 对主坦 `unreachable=true` 与 `evading_attacks=
    ~~原先建议的起手（查 22858 属性位 / spell_script_names / threat 探针）~~ 已执行，
    结论：22858 `Attributes = 0x00040000`（仅 `DO_NOT_SHEATH`）、无任何脚本或 threat 条目。
    **不需要**再加 threat 采样，也**不需要**开 `LogInGroupOnly=0`。
-2. **新的候选单变量：让队伍在 `40546` aura 期间对 Lancer 停手**（需编译授权）。
-   机制上直接对着 450,544 的反伤。注意探针/触发器要认 **40546**（自身 aura，
-   `SPELL_AURA_PROC_TRIGGER_SPELL`，5 秒），不是 22858（反伤本体，瞬发）。
-3. **接控制链**（并列候选，需编译授权）：mod-playerbots 把 `WotlkDungeonGDStrategy` 改成继承
+2. ~~**新的候选单变量：让队伍在 `40546` aura 期间对 Lancer 停手**（需编译授权）。~~
+   **2026-09-18 晚第三轮已量化并降为不推荐**：代价 30% 输出（1,395 次命中里 415 次落在
+   5 秒窗内），收益只 4.1% 承伤（356,048 / 8.6M），且实测 proc 率只 31.6%。
+   本轮一度改成推荐 **29829 打坦克 494,710**，**随后自己否掉了**：29829 最大生命 105,894
+   （其余四只 65,165），且 run639–667 按 kill/fail 分组逐来源 Mann-Whitney U **全部不显著**
+   （29829 p=0.53，总承伤 p=0.85）——**别再换靶子**。详见上面「下一步（第三轮修正后）」一节与
+   [evidence/lancer_retaliation_rate.py](evidence/lancer_retaliation_rate.py)、
+   [evidence/run_result_source_split.py](evidence/run_result_source_split.py)。
+   保留的有效细节：探针/触发器要认 **40546**（自身 aura，`SPELL_AURA_PROC_TRIGGER_SPELL`，
+   5 秒 = `DurationIndex 28`），不是 22858（反伤本体，瞬发）。
+3. **接控制链**（**第三轮之后的首选**，需编译授权）：mod-playerbots 把 `WotlkDungeonGDStrategy` 改成继承
    `TrashCcPullStrategy` 并调 `TrashCcPullStrategy::InitTriggers`（参照 `NexStrategy` / `ANStrategy`）；
    场景 conf 加 `PrerequisiteCcWaitSeconds = 25`。注意：它会拉长清怪时长（魔枢测床 33s→69–81s），
    莫拉比前置超时是 200s、当前清怪 53–75s，余量约 2–3 倍。
@@ -395,3 +447,102 @@ boss 证据：**run639–654 的 12 击杀 / 1 aborted / 1 timeout（14 个 boss
 2026-09-18 run659：队长单独探路、跟随者待命的修复已编译并加载；首轮在前置阶段 86.901 秒出现 3 死，随后一个未记录死亡的前置 spawn 消失，按完整遭遇战不变量作废（`boss_hp_min=100`）。停止余下轮次；它不是 boss 样本，也尚不能宣称前置稳定。
 
 2026-09-18 run661（修复已重启加载）：旧 GUID 消失后不再立刻以“spawn disappeared without a recorded death”作废，证明 25 秒的 spawnId 重绑等待实际生效；但前置战斗未恢复，200.003 秒后以 `prerequisite_failed: clearing timeout` 结束（坦克 1 死、`boss_hp_min=100`）。因此该修复只消除了错误终态，**没有证明前置清怪稳定**。
+
+### 2026-09-19：莫拉比幻影误判已修复并验证（run672）
+
+`AttemptRunner` 原先把裸 `boss->IsInCombat()` 视作「队伍拉到 boss」。这是错误判据：
+`boss_moorabiAI::Reset()` 从出生起安排 `EVENT_PHANTOM`，而未进战时的独立 `events2`
+每 20–25 秒自施 `55205 Summon Phantom`。该法术没有 `SPELL_ATTR0_NOT_IN_COMBAT`，会让
+boss 本人暂时进战，**不表示队伍碰过 boss**。`AttemptRunner.cpp` 现改为
+`BossEngagedByParty`：仅 boss 的 threat/victim 指向本队成员才作废；清怪阶段与 recovery
+阶段两处均使用该判据。
+
+- 实际构建树 `var/build/obj` 已以 `make -j4 worldserver` 成功链接、重启加载；不要用
+  `cmake-build-debug`（CLion 树重新配置后落到 macOS SDK 的 readline，`rl_done` /
+  `rl_event_hook` 编译失败，与本改动无关）。
+- **run672**：清怪持续完整 260s，boss 自召 **55205 共 11 次**，而没有出现旧的
+  `boss entered combat during recovery` / `boss missing or engaged` 作废；因此修复的目标已被覆盖。
+  该场另有坦克 55.683s、萨满 61.499s 死亡，最终 `prerequisite_failed: clearing timeout`，
+  不能作为控制链击杀率样本。
+- 该场只观察到法师羊 `12826`（20.004/64.188/116.875/170.598/223.627s，均 `miss=0`），
+  **没有妖术或闷棍**。临时加过 `AttemptStartDelaySeconds=45`，但 run672 首轮仍无妖术，已撤回：
+  这不是跨场冷却证据。共享分配固定优先闷棍→羊→妖术且最多控两只；GD 的盗贼闷棍未落地会占用
+  一个名额，下一步应先量清其失败原因/为 GD 做局部角色优先级，而不是改冷却或直接泛化共享顺序。
+
+run673/r8 的只读门禁细节已确认这不是猜测：第一次 `pack_engaged` 时是
+`icon_state=[4:29829:86:combat=1:cc=0,6:29829:87:combat=1:cc=0]`——月亮与十字分别钉在
+两只 Earthshaker，**闷棍确实占了第二个最多两控的名额且两者均未落地**。初次门禁在 10 秒仍
+`icons=0`，随后普通拉怪/接近使 pack 进战；把 no-plan 硬阈值试加到 15 秒仍没有计划、只把
+pack-engaged 推迟到 23.956 秒，已回退。
+
+### 2026-09-19：GD 局部改为羊 + 妖术；动作验证与首组正式样本（run675/676）
+
+共享链新增按 map 禁用控制职业的注册钩子；`WotlkDungeonGDStrategy` 仅对 **map 604** 禁用
+盗贼 Sap，故其它副本仍保留共享 `Sap→Poly→Hex` 分工。原因不是 Earthshaker 类型——它是人形、
+闷棍类型合法——而是控制起点距目标约 27 码且初始无 bot LOS；到盗贼可潜行贴近 11 码之前，
+队伍已进战，而 `TrashCcCastTarget` 对**战斗中的盗贼**无条件拒绝十字。
+
+- run675 smoke：`12826`（法师→86）与 `51514`（萨满→87）均在 **14.6/14.8s** 落地、`miss=0`；
+  不再有 `6770`，证明第二名额已从无法落地的闷棍转给妖术。
+- 清库后 run676（5 场）：seq1 `pull failed (not all followers entered combat)` 作废；seq2/4/5 **kill**
+  （0 death，158.4/261.4/262.9s）；seq3 前置 3/5 后 260s 超时、1 death。即 **3 kill / 1 清怪失败 /
+  1 编排作废**，样本过小且对照不是同一版本，不能宣称提升击杀率。
+- `12826` 在五场均成功；`51514` 在 seq1–4 成功、seq5 未出现，说明妖术跨 attempt 冷却/决策仍须
+  单独测量，不能把“每场双控”写成既成事实。
+
+### 2026-09-19：场景级“第二控制收尾宽限”后首组（run679）
+
+run676 seq5 已证实：妖术并非冷却，而是在 `51514` 读条尚余 599ms 时被外部动作取消；原因是
+门禁在「羊已落、包已进战」时立即放行。新增场景字段 `PrerequisiteCcEngagedGraceSeconds`（默认 0，
+本场 = 5）：仅当**已有至少一控落地、仍有控制未落地且包已进战**时延后普通拉怪；全控落地仍立即
+`cc_ready`，无控制/宽限耗尽仍走旧 `pack_engaged`，不改变 bot 战斗规则。
+
+清库后 **run679**（5 场）：**4 kill / 1 aborted**，无 wipe、无清怪 timeout；4 场 kill 均 0 death，
+160.1–275.8s。唯一作废 seq4 为 `pull failed (not all followers entered combat)`（108.6s、0 death），
+是编排层终态，不能当作策略输掉。五场首包均有 `12826` 与 `51514` 各一次、全部 `miss=0`；门禁五场
+均在 `icons=2 landed=2 ... reason=cc_ready` 放行，**不再有闷棍，且不再出现 run676 seq5 的妖术取消。**
+
+这证明“羊+妖术”动作链与收尾门禁已工作；但 run679 只有五场，且旧 16/20 基线版本不同，不能做显著性
+或声称优于基线。
+
+### `pull failed (not all followers entered combat)` 独立归因（run679 seq4 / run680 seq4）
+
+它不是“follower 没进战”：失败者都是萨满(800)，当时已经 `combat=true`，而是 boss assist 的
+8 秒同步断言要求每人马上可直接攻击 boss。run679 seq4 中萨满持续 `current=none/victim=none`、
+`los=false`，其它三名 follower 均已 assist，8 秒后框架作废。补位置/移动只读字段并复跑 run680：
+同一萨满在 boss-start 首秒再次失败，精确为 `bot_pos=(1772.55,832.85,124.43)`、
+`boss_pos=(1772.48,813.75,129.22)`、`dist=15.94`、`los=false`、`movement=0`；下一秒无需任何
+策略改动即自行 assist，seq4 最终零死击杀。
+
+结论：这是 **engage 点同点传送后的个别落点/遮挡竞态**，不是控制链、仇恨、角色死亡或输出问题；
+当前错误名把“暂时无 LOS 的 combat follower”误记成“未进战”。
+
+修复已实施：仅在 `combat=true && los=false && current/victim=none && valid` 时下核心原生
+`MoveChase(boss, 5)`，下一 tick 仍走真实 `AttackAction`，其它失败仍维持 8 秒作废上限；不设目标、
+不施法、不改仇恨，也不泛化把 combat follower 算作 assist 成功。编译/重启后 run681、682 各 5 场
+**没有复现该 LOS 分支或 pull-failed**，故尚无该新分支的运行命中证据；两组分别 2/5、3/5 boss kill，
+其余均为清怪阶段 roster casualty，必须与 assist 修复分开。保留该精确日志，等分支复现后再宣称修复闭环。
+
+### 前置阵亡独立归因（run681–683）
+
+run681/682 的五场前置阵亡**全是同一死亡形状**：刺杀盗贼(798) 被 29819 Lancer 击杀；不是
+坦克失仇、被追到远处或某只新怪。每次死亡前均有 Lancer `40546`，随后 `22858` 反伤命中盗贼；
+单发约 3.7–5.2k，同一 tick 可连续两发。run683 seq2 的新增只读死亡快照确定了站位：
+盗贼 `(1796.08,864.10,129.19)`、Lancer `(1794.68,865.57,129.18)`，相距约 2 码，二者
+`movement=0`，而 Lancer 的 victim 仍为坦克(796)。因此不是站位脱离队伍或仇恨丢失；盗贼在
+Lancer 的反伤窗口内近战输出、Lancer 同时仍由坦克持有。
+
+该场的时间线：`40546` @85.246s；盗贼继续命中 Lancer 后，@86.635s 连吃 `5221+4981`，
+@86.694s 再吃 `4785` 后死亡。死亡瞬间 current target 已由死亡清空（`none`），但前一 tick 的
+所有攻击均指向 Lancer。此前 FireWeaver(29822) 仍存活，说明这是清怪尾段的并发转火/输出暴露，
+不是“最后一只 Lancer 单独收尾”的正常安全形态。
+
+这重新确认了当前版本的**直接死因**，但尚未证明“全队在每个 40546 窗口停手”是正确修复；旧样本表明
+那会损失大量输出。已实施最窄的 map-604/盗贼/`40546` 窗口动作抑制：仅阻止盗贼对白字和
+`current target` 进攻动作，不影响其它职业、自保、移动或治疗；实际攻击目标优先取 `bot->GetVictim()`。
+
+**run685 回归（修复后二进制）**：5/5 击杀、全场零死亡、无 follower-pull abort；前置 CC 方面 seq1/2/4/5
+均 `12826+51514 miss=0`，seq3 只有 `12826`，因此不能把它称作五场双控链。40546 窗口的盗贼反伤已从
+run681/682 的五场致死形态降为仅 run685 seq3 一次非致死 22858；但 SQL 仍发现 seq1/3 在窗口内各有少量
+盗贼命中（377/202），说明该 multiplier 尚未覆盖所有实际攻击路径。结论只能是该局部策略在这 5 场中
+消除了阵亡、没有扩大 assist 故障；需要补样本并完善未过滤的攻击路径后再宣称稳定。

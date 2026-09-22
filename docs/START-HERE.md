@@ -1,6 +1,10 @@
-# 新会话接手（更新：2026-09-18 晚，**莫拉比两个框架缺陷已修；前置清怪强度仍是独立待办**）
+# 新会话接手（更新：2026-09-21，**英雄岩石大厅 Tribunal 首次真实 DONE；n=1，尚未稳定**）
 
-> **先读 [LESSONS](testing/LESSONS.md)，再读本轮交接 [HANDOVER-2026-09-18-MOORABI](testing/HANDOVER-2026-09-18-MOORABI.md)。**
+> **当前 campaign 先读 [LESSONS](testing/LESSONS.md)，再读最新交接 [HANDOVER-2026-09-21-HOS-TRIBUNAL](testing/HANDOVER-2026-09-21-HOS-TRIBUNAL.md) 与 [Tribunal 记录](testing/bosses/heroic-hos-tribunal/README.md)。**
+> r32/run745 已在正常规则下真实完成 Brann 事件（491.468 秒、零玩家死亡、DONE）；只是一场，下一步是同基线的单场复验，不能宣称 HoS 已完成。
+>
+> 古达克历史交接仍先读 [HANDOVER-2026-09-20-ECK](testing/HANDOVER-2026-09-20-ECK.md)。
+> 莫拉比历史交接仍在 [HANDOVER-2026-09-18-MOORABI](testing/HANDOVER-2026-09-18-MOORABI.md)。
 > 副本级勘测在 [古达克副本勘测](testing/bosses/heroic-gd/README.md)。
 >
 > ## 当前状态：英雄古达克（Gundrak，map 604）——**迦尔达拉稳定；莫拉比 boss 已稳、清怪待改；斯拉德兰仍未稳定**
@@ -11,10 +15,10 @@
 > | # | boss | 场景 | 结果 | 判定 |
 > |---|---|---|---|---|
 > | 1 | 斯拉德兰 29304 | `heroic-gd-sladran-disc-n5` | 合并后 **3/5**；平台阵位 **0/5**（已回退） | 不稳定；别重试平台阵位 |
-> | 2 | 莫拉比 29305 | `heroic-gd-moorabi-n5` | **run664–667 合计 16/20 击杀（80%）**，run664 与 run667 各 **5/5 零死亡** | 两个框架缺陷已修；**前置清怪约 1/5 场次打输，独立待办** |
+> | 2 | 莫拉比 29305 | `heroic-gd-moorabi-n5` | 旧基线 run664–667 **16/20 击杀（80%）**；当前局部修复 run685 **5/5 kill、零死、零 follower-pull abort** | 当前五场通过；40546 过滤仍漏少量攻击、seq3 未落妖术，**不可称稳定或与旧版本合并** |
 > | 3 | 德拉克瑞巨像 29307 | `heroic-gd-colossus-n5` | **5/5 零死亡**，64.374–68.137 秒（run651–652） | **隔离 boss 战基线通过**；不是连续副本通关 |
 > | 4 | 迦尔达拉 29306 | `heroic-gd-galdarah-disc-n5` | **10/10 零死亡**，64.2–111.9 秒 | **正常规则通关** |
-> | 5 | 凶残的艾克 29932（英雄限定） | **未建** | — | **完全未覆盖，连勘测都没做** |
+> | 5 | 凶残的艾克 29932（英雄限定） | `heroic-gd-eck-n5` | **累计有效 **10/10 kill、零死**，68.869–90.714s；run692 连续 5/5 完整召唤链复验通过（保留 run691 seq5 历史无效）** | **正常规则**已验证通过**；累计有效 10/10，保留 1 次历史无效；DB 路径 run693 烟测通过** |
 >
 > ⚠ 迦尔达拉那 10/10 带口径折扣：夹具移除了竞技场四组载具犀牛，但 `FixtureDespawnSpawns`
 > **删不掉载具乘客**，骑手仍在场且 run 580 里 2/5 场参战。
@@ -28,8 +32,8 @@
 >    「已经把 boss 打死」被记成 `boss lost combat state`（run665 seq2；run667 seq3 在真实触发点上
 >    复现并验证修复）。
 >
-> **仍未解决（独立待办，不得靠改装备/难度/cheat）**：**前置清怪本身约 1/5 场次会打输**。
-> 与修复前基线统计上不可区分（Fisher p=0.64）。**头寸已量（2026-09-18 晚，只读）**：
+> **莫拉比交接状态（2026-09-19）**：follower-pull 已归因于已进战 follower 的临时 boss LOS 丢失；run684 证明 MoveChase 无效，现仅在精确 `combat && !los && no-target` 状态放行，run685 未再作废。run681–683 的五个前置阵亡均为刺杀盗贼死于 29819 的 `40546→22858` 反伤；map-604 盗贼局部抑制后的 run685 是 **5/5 kill、零死**。
+> 但 seq3 未落妖术，且 40546 窗口仍有两场残余盗贼伤害，故只能记为“当前通过”，不可称稳定或与旧版本合并。新 boss 前不再改莫拉比；细节及遗留项在其 README/TODO。**历史头寸已量（2026-09-18 晚，只读）**：
 > 前置怪 DTPS、heal 密度、最大 heal 空档、全队 partyDPS **四项在 kill/fail 组间全部不可区分或方向相反**
 > （partyDPS 5,921 vs 5,919）——输出和“治疗停了”都不是瓶颈。
 >
@@ -43,9 +47,29 @@
 > 修正后：盗贼那 287,689 里 **230,489（80%）是反伤**，真普攻只有 57,200；坦克真普攻 **87,535 更高**。
 > 真相是**盗贼打 Lancer 更多**（541 vs 480 次命中）被反伤打回来。逐场「坦克 > 全部非坦克」**5/19 场**。
 > 死因也重分：FireWeaver 13 / Earthshaker 9 / Lancer 普攻 8 / Lancer 反伤 8（n=39）——**无单一主导来源**。
-> ⇒ **新的候选单变量 = 让队伍在 `40546` aura 期间对 Lancer 停手**；接控制链降为并列候选。
+> ⇒ ~~**新的候选单变量 = 让队伍在 `40546` aura 期间对 Lancer 停手**；接控制链降为并列候选。~~
 > 脚本 [bosses/heroic-gd-moorabi/evidence/lancer_threat_split.py](testing/bosses/heroic-gd-moorabi/evidence/lancer_threat_split.py)，
 > 教训 [LESSONS](testing/LESSONS.md)「怪打谁的承伤里，混着它自己的反伤 / 反伤型 proc」。
+>
+> **⚠ 2026-09-18 晚第三轮再次修正：「40546 期间停手」也不推荐，真大头不是 Lancer。**
+> 只读量化（未编译）三条：① 停手要放弃 **30%** 对 Lancer 的输出（1,395 次命中里 415 次落在
+> 5 秒 aura 窗内），只换回 **4.1%** 的队伍承伤（反伤 356,048 / 总承伤 8.6M）；
+> ② 窗口内 proc 率实测只 **31.6%**（415 命中 → 131 反伤），剩下的 70% 命中照样挨打——
+> **反伤只是 Lancer 那 234,525 普攻伤害的另一种结算形态**；
+> ③ 限制在前置窗口内的玩家死亡是 **14 次**（不是 39，39 是不限制窗口的口径）：
+> `29822×4 / Lancer反伤×4 / Lancer普攻×3 / 29829×3`。
+> **单一大头是 29829 Drakkari Earthshaker 打坦克 494,710（占坦克承伤 57%）——但它也不是杠杆。**
+> 本轮一度把它当成新推荐，**随后自己否掉了**（同一错误的第三种形态）：29829 最大生命 **105,894**
+> （其余四只 65,165），打得多首先是因为活得久；run639–667 按 kill/fail 分组逐来源做
+> **Mann-Whitney U，没有一项显著**（29829 **p=0.53** / 反伤 p=0.66 / Lancer 普攻 p=0.06 /
+> 29822 p=0.40），**连队伍总承伤都不可区分**（kill 中位 90,788 / fail 104,022，**p=0.85**）。
+> ⇒ **前置打输不是「某只怪打太多」**，「挑一个最大的数字去针对」这条思路已被数据否掉。
+> 新排序：**① 接控制链**（它改的是「同时接敌数量与焦点」，不是针对某只怪）；② 若仍要单变量，
+> 先量**过程**指标（同时接敌数 / 换目标频率 / 焦点集中度）与 kill/fail 的关联；③ 停手不推荐。
+> 脚本 [evidence/lancer_retaliation_rate.py](testing/bosses/heroic-gd-moorabi/evidence/lancer_retaliation_rate.py)、
+> [evidence/run_result_source_split.py](testing/bosses/heroic-gd-moorabi/evidence/run_result_source_split.py)。
+> 新增两条口径陷阱：**damage 行 `spell_id` 恒为 0**（不能靠它区分反伤/普攻）；
+> **aura 窗口必须 `min(下一次施法, 施法+5000)` 封顶**（否则输出占比从 30% 夸大成 80%）。
 > **boss 阶段的 `CanNotReachTarget`（run640 seq4）本轮未复现、仍未归因。**
 >
 >
@@ -79,11 +103,25 @@
 > **管理库累计 14 个提交未推 `origin/main`、mod-raidtest 3 个未推**（core / mod-playerbots 为 0）。
 >
 > **接手第一件事：四选一**（按代价排序）——
-> (a) **⚠「先查 Lancer」已答完，答案是不存在这个问题**（见上）；新的首选候选是
-> **让队伍在 `40546` aura 期间对 Lancer 停手**（需编译授权），接控制链并列
-> （`GDStrategy` 继承 `TrashCcPullStrategy` + conf 加 `PrerequisiteCcWaitSeconds = 25`）；
-> run637 的「`no_plan` 失败」是旧接近逻辑下的结论，需重测）；
-> (b) **凶残的艾克**勘测建场景（这一轮的遗漏）；
+> (a) **⚠「先查 Lancer」已答完，答案是不存在这个问题**（见上）；
+> **第二、三轮又各反了一次**：停手不推荐，而「换一个单一大头」也已被否掉——
+> **新首选是接控制链**（`GDStrategy` 继承 `TrashCcPullStrategy` +
+> conf 加 `PrerequisiteCcWaitSeconds = 25`；run637 的「`no_plan` 失败」是旧接近逻辑下的结论，需重测）；
+> (b) **凶残的艾克：勘测已完成，阻塞已实测确认（run686）**（不再是「遗漏」）——
+> 准备点 **(1650.0,940.0,107.20)**（对三只 Dweller 全 `los=true`、距艾克开怪点 23.3 码）、
+> 开怪点 (1638.55,919.76,104.95) 已实测勘定；**但艾克没有数据库 spawn**（`creature` 里 29932 = 0 行，
+> 只由副本脚本在 Dweller 编队 127203/127201/127202 全灭后召唤）。
+> run686（attempts=1）**实测**：`result=aborted`、`duration=0ms`、
+> `notes='scene_invalid: reset scope could not be restored'`，日志
+> `boss_found=false spawns_clean=true prerequisites_restored=0/0 snapshot_ok=true`——
+> **除 `boss_found` 外全部通过**。
+> 要推必须先做三条框架改动（**必须一起做**、且需回归全部旧场景）：
+> ① `ResetInstance` 的 `found` 判据不能只看 DB spawn（✅ 已实测）；
+> ② 按 entry 解析临时召唤物（⚠ 推断）；
+> ③ 新增「等 boss 被召唤」阶段（⚠ 推断）。
+> 详见 [艾克记录](testing/bosses/heroic-gd-eck/README.md)。
+> ⚠ 本 boss **不需要隔离夹具**，原生链就是完整遭遇战，正确口径是正常规则。
+> ⚠ 运行副本已放到 `env/dist/etc/modules/`，因此它出现在 `scenario list` 里——**不要拿它记击杀率**。
 > (c) **推 fork** 把未推送提交备份掉（mod-raidtest 新增 `3189b9a`/`aa01349` 两个提交）；
 > (d) **斯拉德兰读日志**（先补位置/决策证据；平台阵位已 0/5 回退）。
 > 德拉克瑞巨像的召唤触发与房间隔离夹具已打通；run651–652 已在同口径复验 **5/5**。若再继续巨像，应另建“完整房间”口径，不能把它与隔离样本混算。

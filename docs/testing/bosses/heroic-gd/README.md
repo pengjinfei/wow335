@@ -80,19 +80,40 @@ run650 仍不是隔离 boss 结论：巨像是两只 Drakkari Golem（127080/127
 | 迦尔达拉 | `whirling slash` → `avoid whirling slash`；`GaldarahMultiplier` | 只有旋刃；冲锋/践踏/穿刺叠加无触发器 |
 | 莫拉比 | **一条没有**（`GDStrategy.cpp` 里是空注释） | 未覆盖 |
 | 巨像 | **一条没有** | 未覆盖 |
-| 凶残的艾克（英雄限定） | **一条没有** | 未覆盖 |
+| 凶残的艾克（英雄限定） | **一条没有** | 上游无策略；**本地已勘测，但被框架能力阻塞（无 DB spawn），无击杀样本** |
 
 `GDStrategy.cpp` 上游自己写着 `// TODO: Might need to add target priority for heroic on the snakes
 or to burn down boss. Will re-test in heroic.`——**英雄难度上游从没测过**。
 
-## 收尾时补记：凶残的艾克（29932，英雄限定）**这一轮完全没碰**
+## 2026-09-20：凶残的艾克**已勘测，被框架能力阻塞**（不再是「遗漏」）
 
-上面的「上游 GD 策略覆盖表」里这一行写的是「一条没有 / 未覆盖」——那说的是
-**上游 mod-playerbots 没有针对它的策略代码**。收尾时才意识到更严重的是：
-**我这一轮连场景都没建、连准备点勘测都没做。**
+上一轮写的是「这一轮连场景都没建、连准备点勘测都没做，是遗漏」。
+**本轮把勘测做了、场景脚手架建了、把阻塞实测确认了，但仍无击杀样本。** 台账状态从「未覆盖（遗漏）」
+改为「**已勘测，被框架能力阻塞**」——仍然不是「测出来打不过」。
 
-这不是「测出来打不过」，是**遗漏**。古达克是 5 个 boss（艾克是英雄限定、在侧厅、
-可跳过但属于本副本），所以「5 个里通了 1 个」这个口径里，艾克算**未覆盖**而不是**失败**。
+**已实测确认（run686 seq1）**：场景能加载，但每场都在 fixture 阶段作废：
+`result=aborted`、`duration=0ms`、`notes='scene_invalid: reset scope could not be restored'`，
+日志 `ResetInstance failed for scenario boss 29932 - boss_found=false spawns_clean=true
+prerequisites_restored=0/0 snapshot_ok=true`。**除 `boss_found` 外全部通过**，孤立地坐实了原因。
 
-下一轮接手时，艾克应该排在斯拉德兰之前——它是全新样本，成本只有建场景；
-而斯拉德兰的瓶颈已经量成硬天花板（治疗 1,237 HPS 对 DTPS 1,819），继续投入的边际收益低。
+三条独立路径都假定 boss 是一个数据库 spawn，而**艾克没有**（`creature` 里 id=29932 = 0 行）：
+
+1. ✅ **已实测**：`AttemptRunner::ResetInstance()` 的 `found` 只在重置目标（集合来自 `GetAllCreatureData()`，
+   只含 DB spawn）里出现 `data->id == BossEntry` 时置真 → 无 DB spawn 则 `ok=false` →
+   每场都在 fixture 阶段 `Abort("scene_invalid: reset scope could not be restored")`，走不到拉怪。
+2. ⚠ 静态推断：`FindBossNear()` 只扫 `map->GetCreatureBySpawnIdStore()`；`Creature::AddToWorld()` 对
+   `m_spawnId==0` 的临时召唤物**不入该索引** → 即使已召唤也解析不到。
+3. ⚠ 静态推断：`EngageTrigger=summon` 解决不了：它是为巨像设计的（boss 一直在场、只是不可攻击），
+   `StartSummonTriggerPull()` 第一行就要求 `ctx.boss` 已存在。
+
+原生机制：`instance_gundrak.cpp:OnUnitDeath`——英雄难度 + 29920 死亡 + **属于编队** +
+整组 `!IsAnyMemberAlive()` → 1 秒后 `SummonCreature(29932, {1624.70, 891.43, 95.08, 1.2})`。
+**只有编队 127203(leader)+127201+127202 全灭才触发**，单体 127204/127205/127206 无关。
+
+地形（`raidtest los` 自探针实读地面）：准备点 **(1650.0, 940.0, 107.20)** 对三只 Dweller
+全 `los=true`、距艾克开怪点 (1638.55, 919.76, 104.95) **23.3 码**（>22 码仇恨半径）；
+艾克对准备点 `los=true`。房间分层：西侧坡道 84–92 / 中央高台 107.2 / 水潭 84–91。
+**本 boss 不需要隔离夹具**——原生链本身就是完整遭遇战，正确口径是正常规则。
+
+唯一未做的一件事：**没有编译任何改动**（不需要：阻塞在配置面就已复现）。
+细节、复现命令与三条框架改动方案见 [艾克记录](../heroic-gd-eck/README.md)。

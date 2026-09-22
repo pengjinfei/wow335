@@ -198,7 +198,10 @@ bool PartyMemberToHealOutOfSpellRangeTrigger::IsActive()
 | **`dropped=NNNNN` 当成丢数据** | 以为承伤统计有缺口 | 那是世界上无关实体的事件被 `ShouldKeep` 过滤，自己人的一条没丢 |
 | **tick 占比当成输出损失** | "42% 的 tick 在切目标"≠"42% 输出没了"——自动攻击不占 tick | 看输出空窗（5 秒窗口无伤害的比例）+ 主技能实际释放次数 |
 | **`find target` 找不到潜地中的 boss** | 判据 fail-open，闸门形同虚设 | 要看不可选中的单位用 `FindNearestCreature(entry, range)` |
-| **血线阈值当成阶段判据** | "可选中且 ≤25%"≠"第三次出土后"：实测 boss 191s 已可选中且 23%，第三次潜地 217s 才开始 | 阶段要用状态机数（如数出土次数），别用血量代替 |
+| **怪打谁的承伤里，混着它自己的反伤 / 反伤型 proc** | 莫拉比把「29819 Lancer 打盗贼 287,689 > 打坦克 185,254」当成「Lancer 没被拉住」，据此把「查 Lancer 选目标」排成首选单变量。真相是 29819 的 `40546 Retaliation` aura 的 proc 反伤(22858) —— **谁打它它打谁**；盗贼那 287,689 里 80% 是反伤，坦克的真普攻承伤(87,535)本来就更高。死因排序也跟着错了一整轮 | 承伤落点里先拆「怪选的」与「它自己弹回来的」：读 `spell_dbc` 看有没有 `SPELL_AURA_PROC_TRIGGER_SPELL(42)` + `TriggerSpell`；**要按 `(rel_ms,target)` 1:1 配对 cast 事件**，别只看聚合值 |
+| **`raidtest_events` 的 damage 行 `spell_id` 恒为 0** | 想按 `spell_id=22858` 认「这一下是反伤」，结果一条都查不到（静默查空），得出了「窗口内技能命中 415 次、反伤 0 次、proc 率 0%」的假结论；同一轮还用它误判了两次死因 | damage 行只带 `source_guid/target_guid/value/actor_entry`，**不携带来源技能**。要归因必须用 cast 事件做 1:1 配对（`lancer_threat_split.py` / `lancer_retaliation_rate.py`）。`WHERE actor_entry=<怪>` 反查「玩家造成的伤害」同理——对玩家造成的伤害 `actor_entry` 是 NULL |
+| **aura 窗口只写「本次施法 → 下一次施法」** | 算「多少输出落在 `40546` 5 秒窗内」时，**最后一次施法之后没有下一次**，于是该场剩下的全部命中都被算进窗口：输出占比从真实的 **30%** 夸大成 **80%** | 窗口上界必须 `min(下一次施法, 施法 + DurationIndex 对应毫秒)`。DBC `DurationIndex` 要查 `SpellDuration.dbc`（28 = 5000ms）而不是猜 |
+| **把「最大的数字」当成「最大的靶子」** | 莫拉比连续三轮换了三个靶子（Lancer 的目标选择 → Lancer 的反伤 → 29829 的承伤），每个都是「当前分解里的最大项」。实际 29829 打坦克 494,710 只是因为它的最大生命是其余四只的 1.6 倍（**105,894 vs 65,165**）；且按 kill/fail 分组逐来源做 Mann-Whitney U，**没有一项显著**（29829 **p=0.53**），**连队伍总承伤都不可区分**（p=0.85） | 挑靶子前先把指标**按 kill/fail 分组做差异检验**——不可区分就无论多大都不是靶子。累计量比较不同单位前先除以暴露量（最大生命/存活秒数/出手次数）。脚本：[bosses/heroic-gd-moorabi/evidence/run_result_source_split.py](bosses/heroic-gd-moorabi/evidence/run_result_source_split.py) |
 
 ---
 
@@ -225,6 +228,14 @@ bool PartyMemberToHealOutOfSpellRangeTrigger::IsActive()
 | `healer_lure_stats.py` / `castmove_stats.py` / `prepare_fail_stats.py` | 治疗被引走、施法与移动冲突、施法失败原因 | 通用 |
 | ~~`target_switch_cost.py`~~ | **口径作废**，脚本头部已注明原因 | — |
 
+莫拉比前置清怪（`bosses/heroic-gd-moorabi/evidence/`，2026-09-18）：
+
+| 脚本 | 用途 | 迁移性 |
+|---|---|---|
+| `lancer_threat_split.py` | 把一只怪的输出拆成「真的选谁」vs「谁打它弹回来的」；含死因分解 | 换 entry + proc 表即可 |
+| `lancer_retaliation_rate.py` | aura 窗口内的 proc 率 / 停手收益 / 1:1 反查 / 「最大数字≠最大靶子」 | 任何 proc 反伤型怪 |
+| `run_result_source_split.py` | 按来源拆承伤后**逐来源做 kill/fail 差异检验** | **通用**：挑靶子前必跑 |
+
 ---
 
 ## 六、待办（按预期价值）
@@ -249,9 +260,17 @@ bool PartyMemberToHealOutOfSpellRangeTrigger::IsActive()
    而且把清怪窗口按 kill/fail 分组比对后，heal 密度（5.8 vs 6.5）、最大空档（7.7s vs 5.6s）
    **fail 组反而更好**，四项指标全部不可区分或方向相反。
    **所以这条不再是莫拉比前置清怪的解释**，降为低优先级。
-   ⚠ 当前真靶子是：**29819 Lancer 没被坦克拉住**（它打盗贼 287,689 > 打坦克 185,254，
-   run666 两场盗贼之死的死前 3 秒承伤 100% 来自它；其余三只怪伤害主力都是坦克）。
-   先分清是「无视仇恨的目标选择技能」还是「仇恨/嘲讽链缺陷」，再决定修哪里。
+   ⚠ ~~当前真靶子是：**29819 Lancer 没被坦克拉住**（它打盗贼 287,689 > 打坦克 185,254……）~~
+   —— **已答完，答案是「不存在这个问题」**（见上面第 21 条）：22858 是 `40546` aura 的
+   proc 反伤（谁打我打谁），盗贼那 287,689 里 80% 是反伤。
+
+0.7. **莫拉比前置清怪：不要再从承伤排行挑靶子**（2026-09-18 晚第三轮，头寸已量）。
+   同一轮里靶子换了三次（Lancer 目标选择 → Lancer 反伤 → 29829 承伤），**每次都是「当前分解里的最大项」**，
+   每次都错。真正缺的是**过程指标**：同时接敌数量 / 换目标频率 / 焦点集中度。
+   **下一步**：先把这三个量与 kill/fail 分组关联量出来（**零编译成本**，复用现有事件流），
+   再选单变量。已排除的：前置怪 DTPS / heal 密度 / 最大空档 / partyDPS / 逐来源承伤 / 总承伤
+   （全部不可区分）。见台账「承伤口径第三轮」与
+   [run_result_source_split.py](bosses/heroic-gd-moorabi/evidence/run_result_source_split.py)。
 1. ~~**打通 `PartyMemberToProtect`**~~ —— **2026-09-16 已做**（mod-playerbots `715eb7c8`），
    搬到上面的「已修」表。要点见下面第 13 条；**在斯拉德兰上未测出效果**（频率只有 0.29 次/场）。
    下一个单变量是**阈值**（死代码里是坦克 ≤10% / 其他 ≤30%，卡得太晚）。
@@ -669,3 +688,102 @@ AoE 是唯一追得上的手段，不能为了优先级关掉。
 **通用形式**：**先确认「这个数字是谁产生的」，再确认「它代表什么」。**
 承伤/输出类指标一旦混入 proc、反伤、DOT、宠物或残留事件，落点就会从
 「受害者的遭遇」变成「攻击者的行为」，而两者经常指向**相反的结论**。
+
+### 续：拆完之后还要问「拆掉它划不划算」（同轮第二次踩，方向又反了一次）
+
+第二轮拆出「反伤 = 450,544 / 总承伤」后，把「**让队伍在 40546 期间对 Lancer 停手**」
+写成了下一个候选单变量。第三轮只读量化后**又反了一次**，三条：
+
+1. **停手要放弃 30% 输出，只换回 4.1% 承伤**：对 Lancer 的 1,395 次命中里落在 5 秒 aura
+   窗内 415 次 = 30%；而反伤总伤害 356,048 只占队伍前置总承伤（8.6M）的 4.1%。
+2. **剩下 70% 的命中照样挨打**：窗口内 proc 率实测只 **31.6%**（415 命中 → 131 反伤），
+   每次 aura 只落地 2–8 次。窗口内 Lancer 对玩家普攻 176 次、反伤 131 次——**反伤只是
+   Lancer 那 234,525 普攻伤害的另一种结算形态**，不是一个能单独关掉的水龙头。
+3. **死因里反伤只占一小块**：正确配对复核 run639–667，前置窗口内玩家死亡 14 次：
+   `29822×4 / Lancer反伤×4 / Lancer普攻×3 / 29829×3`。
+
+**重新量完整分解后，单一大头根本不是 Lancer**：`29829 Drakkari Earthshaker` 打坦克
+**494,710（占坦克承伤 57%）**。
+
+**How to apply**：
+- 把一个来源拆出来之后，**下一步必须量「关掉它的代价」与「它占总量的比例」**，
+  而不是直接把它当靶子。比例 <5% 而代价是 30% 输出的，就不是候选单变量。
+- **两个脚本各踩了一次窗口口径**：
+  - `damage` 行的 `spell_id` **恒为 0**（不是 NULL，是 0）——按 `spell_id=22858` 查反伤
+    会静默查空，得出「proc 率 0%」的假结论。只能按 `(rel_ms, target)` 1:1 配对 cast 事件。
+  - aura 窗口**必须封顶**：`min(下一次施法, 施法 + 5000)`。只写「→ 下一次施法」时，
+    最后一次施法后面没有下一次，该场剩下的全部命中都被算进窗口，占比 30% → 80%。
+    `DurationIndex` 要去 `SpellDuration.dbc` 查（28 = 5000ms），不能猜。
+- 复现脚本：[bosses/heroic-gd-moorabi/evidence/lancer_retaliation_rate.py](bosses/heroic-gd-moorabi/evidence/lancer_retaliation_rate.py)
+  （A 段 proc 率 / B 段验证时长 / C 段停手收益 / D 段 1:1 反查 / E 段「最大数字≠最大靶子」）。
+
+### 续二：**「挑一个最大的数字去针对」本身就是错的**（同一轮第三次踩）
+
+拆完反伤、量完停手代价后，本轮又想把「换成承伤单一大头」当新推荐——
+前置窗口内 `29829 Drakkari Earthshaker` 打坦克 **494,710**（占坦克承伤 **57%**），
+看起来是个完美靶子。**结果第三次反了**，因为：
+
+- **它打得多首先是因为它活得久**：29829 最大生命 **105,894**，其余四只都是 **65,165**
+  （29874 只 15,750）。归一化后它反而**最低**（总伤害/最大HP：29829 = 8，29822 与 Lancer 各 4）。
+  —— **累计伤害是「强度 × 存活时间」的乘积**，不看分母就会把「最耐打的」认成「最狠的」。
+- **它不判别输赢**：run639–667 按 kill/fail 分组逐来源做 Mann-Whitney U，
+  **没有一项显著**（29829 **p=0.53** / 反伤 p=0.66 / Lancer 普攻 p=0.06 / 29822 p=0.40）；
+  **连队伍总承伤都不可区分**（kill 中位 90,788 / fail 104,022，**p=0.85**）。
+
+**How to apply：**
+- 挑靶子之前**先把指标按 kill/fail 分组做一次差异检验**。如果 kill 组与 fail 组在这个指标上
+  不可区分，它**无论多大都不是靶子**（它就是「大家都会挨的打」）。这个检验很便宜，
+  而且是**唯一**能防住「最大数字谬误」的一步。
+- 累计量（总伤害/总承伤/总输出）比较不同单位前，**先除以它的暴露量**（最大生命、存活秒数、
+  出手次数）。莫拉比这三轮里，每一次「单一大头」换了名字，但都没换过这条错误。
+- 前置清怪打输的判别量**不在承伤里**。要动的是**过程**：同时接敌数量 / 换目标频率 /
+  焦点集中度。下一个单变量应该从这三个里选，并且**先量它们与 kill/fail 的关联**，再动手。
+- 复现：[bosses/heroic-gd-moorabi/evidence/run_result_source_split.py](bosses/heroic-gd-moorabi/evidence/run_result_source_split.py)。
+
+**一句话**：*「最大的数字」往往是「活得最久的单位」或「大家都会挨的打」，
+而不是「最该动的东西」。先分组检验，再挑靶子。*
+
+---
+
+## 「建不了场景」有两种，先把框架前置条件审计一遍再动手（2026-09-20 艾克）
+
+凶残的艾克（29932，英雄限定）此前在台账里记的是「完全未覆盖，连勘测都没做」，看起来只是缺一次勘测。
+实际做下去发现**勘测能做、场景建不了**，而且原因不在 boss 身上，在**框架的前置假设**里。
+
+**框架的所有编排路径都假定「boss 是一个数据库 spawn」。** 艾克不是——`creature` 表里
+`id=29932` 的 spawn 数是 **0**（`30939` 也是 0），他只由副本脚本在运行时召唤
+（`instance_gundrak.cpp:OnUnitDeath` → `SummonCreature`）。于是三条**互相独立**的路径全部失效：
+
+| 路径 | 假设 | 失效方式 |
+|---|---|---|
+| `AttemptRunner::ResetInstance()` | 重置目标集合来自 `GetAllCreatureData()`（只含 DB spawn），且 `found` 只在其中出现 `data->id == BossEntry` 时置真 | 无 DB spawn ⇒ `found` 恒 false ⇒ `ok=false` ⇒ 每场 `Abort("scene_invalid: reset scope could not be restored")`，**走不到拉怪** |
+| `FindBossNear()` | 只扫 `map->GetCreatureBySpawnIdStore()` | `Creature::AddToWorld()` 对 `m_spawnId==0` 的临时召唤物**不入该索引** ⇒ 即使已召唤也解析不到 |
+| `EngageTrigger=summon` | `StartSummonTriggerPull()` 第一行 `if (!entry \|\| !ctx.boss)` ⇒ 要求 boss **已存在** | 它是为巨像设计的（boss 一直在场、只是不可攻击），语义相反：艾克是**一开始不存在**、要靠清怪召出来 |
+
+**How to apply：**
+- **「未覆盖」要先分两种**：① 只是没测（成本 = 建场景 + 跑）；② 框架承载不了（成本 = 改框架 + 回归全部旧场景）。
+  台账里两者都写成「未覆盖」，但代价差一个量级。**接新 boss 的第一个动作应该是审计框架前置条件，不是勘测。**
+- 具体审计清单（本副本适用的三条，其他副本按同理推）：
+  1. **boss 在 `creature` 表里有 spawn 吗？** `SELECT COUNT(*) FROM creature WHERE id=<entry>`。
+     为 0 ⇒ 整个 `ResetInstance`/`FindBossNear` 链不成立。
+  2. **boss 是一直在场，还是运行时才出现？** 后者需要「等 boss 出现」的阶段，现有
+     `summon` 触发器不够（它要求 `ctx.boss` 已存在）。
+  3. **进战是 boss 自己开，还是靠玩家打？** `REACT_PASSIVE` + `MovePoint` 型的 boss
+     到达指定点前不可攻击，准备点必须对**开怪点**（不是生成点）量 LOS。
+- **别把两个 boss 的 `summon` 语义混为一谈**：巨像 = 「boss 在场但不可攻击，要打它召出的小怪解锁」；
+  艾克 = 「boss 不存在，要靠清怪把他召出来」。同一个键名装不下两种语义。
+- 勘测本身仍值得做，而且**这轮勘测有一个独立发现**：房间地形是分层的
+  （西侧坡道 84–92 / 中央高台 107.2 / 水潭 84–91），**用统一 z 扫网格会得出「到处是 void」的假结果**。
+  这条是「`raidtest los` 的 z 必须逐点实测地面」的**第三次**复现（前两次在斯拉德兰/莫拉比），
+  已在 START-HERE 记过，这里只重申：**批量网格探针 = 先自探针读地面，再用该 z 量 LOS**。
+- 复现：[bosses/heroic-gd-eck/README.md](bosses/heroic-gd-eck/README.md)（含三条框架改动方案与复现 SQL/命令）。
+
+**一句话**：*「没测过」和「测不了」是两个完全不同的成本档；
+接新 boss 时先花十分钟审计框架的前置假设，能省掉一整轮白跑。*
+
+**补记（同日，实测确认）**：上面第 1 条与 `ResetInstance` 的关系已用 run686 实测坐实——
+`boss_found=false spawns_clean=true prerequisites_restored=0/0 snapshot_ok=true`，
+`result=aborted, duration_ms=0`。**除 `boss_found` 外全部通过**，所以这是一个
+「只因为 boss 没有 DB spawn 就作废」的孤立归因，不是多条原因混在一起。
+另：第 2、3 条（`FindBossNear` 不入 `GetCreatureBySpawnIdStore`、`summon` 触发器要求 `ctx.boss` 已存在）
+仍是**静态推断**——要跨过第 1 条才能测到，已在 boss 记录里明确标为推断而非实测。
