@@ -8,9 +8,9 @@
 
 | campaign | encounter | 当前证据 | 状态 | 下一步 |
 |---|---|---|---|---|
-| [英雄岩石大厅](bosses/heroic-hos/README.md) | [Tribunal of Ages](bosses/heroic-hos-tribunal/README.md) | r32 lifecycle **1/5 DONE**（run745）；run746/748/750/751 为有效动态 wipe。Sjonnir 已因同实例前置后的无自主路线、且 raidtest 不可代移而跳过（无战斗样本）。 | **调查中** | 仅在新的单一、可观测证据支持假说下重启 Tribunal 调查；r34 继续排除 lifecycle。 |
+| [英雄岩石大厅](bosses/heroic-hos/README.md) | [Tribunal of Ages](bosses/heroic-hos-tribunal/README.md) | r32 lifecycle **1/5 DONE**（run745）；run746/748/750/751 为有效动态 wipe。Dark Matter action/hit execution gate 已通过；固定二进制的独立 effect cohort 已关闭于 **0/4 DONE**（run762/run764/run766/run771，action coverage合格；第五候选排除）。Sjonnir 已因同实例前置后的无自主路线、且 raidtest 不可代移而跳过（无战斗样本）。 | **候选未验收** | 只跑预声明的 Dark Matter cohort；r32/r34 均不混算。 |
 
-run761 是隔离 Dark Matter observation/execution smoke：bot action 与 28237 非零命中均已验到，但其 wipe 永久排除 lifecycle，未推断效果；server 已恢复 r32、ready/IDLE。Tribunal 的当前增量与诊断边界见 [`HANDOVER-2026-09-21-HOS-TRIBUNAL.md`](HANDOVER-2026-09-21-HOS-TRIBUNAL.md)。
+run761 是隔离 Dark Matter observation/execution smoke：bot action 与 28237 非零命中均已验到，但其 wipe 永久排除 lifecycle，未推断效果；cohort run762 是合格的首场动态 wipe；run763 是前置超时诊断，未入 cohort 分母；run764 是合格的第2场动态 wipe；其28237伤害为0，未从n=2推断效果；run765 是第二个前置超时诊断，未入 cohort 分母；run766 为合格第3场动态wipe（5 deaths；action 11=8 true/3 false；28237 damage 6,994），n=3不推断效果；run767为第三个preclear timeout diagnostic（1 death/action=0），未入cohort；已定位死亡bot使共同接近预检提前return的前置框架候选；已build survivor-only retry；diagnostic server启动中，run768 smoke在1 death后五次survivor retry并完成前置（171.392秒），终态因roster casualty aborted；执行通过，仍不入Dark Matter cohort；恢复固定原binary后run769为0ms teleport-stage diagnostic，未入cohort；run770重复0ms teleport-stage diagnostic；已定位为`CANNOT_ENTER_TOO_MANY_INSTANCES`；已清五个测试账号instance times；run771为合格动态wipe（12 action，28237伤害5,038），effect cohort为0/4；run772为preclear casualty diagnostic，固定cohort候选预算耗尽且效果未验收；若继续须从clean modules重建单变量版本化binary后，再以零开始的新cohort；clean retry binary曾因ENOSPC失败；空间已恢复，正继续隔离构建，尚未启动验证。Tribunal 的当前增量与诊断边界见 [`HANDOVER-2026-09-21-HOS-TRIBUNAL.md`](HANDOVER-2026-09-21-HOS-TRIBUNAL.md)。
 
 ## 5 人 campaign 矩阵
 
