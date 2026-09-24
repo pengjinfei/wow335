@@ -260,3 +260,12 @@ run437 因此打出**首次完整击杀：267.8 秒、零死亡、boss 0%**。
 - **更上游的触发**：run864 记录 `preclear_boss_proximity: dist=21.99 aggro=22.00 target=52`——清 Silthik 组时，被打的前置怪距 boss 恰在 22 码仇恨边缘；三组守望者本就刷在 boss 17.6–27 码内（Gashra 17.6、Silthik 23.6、Narjil 27.0），清 Silthik 组时 boss 被带上或引发 evade 连锁，是 837/839/864 的共同背景。evade 的具体发起者现有日志未记录，未确认。
 - **已做**：`kPrerequisiteRebindBudgetMs` 25→60 秒，`re-bound` 日志加实际等待毫秒（raidtest，SHA `f008f668…`）。验证 run861–865 未再触发整组重置，故**重绑放宽尚未被实战覆盖**。
 - **未做**：Silthik 组的开怪位置/拉怪方向（让战斗离开 boss 22 码仇恨圈）。`PrerequisiteMinBossDistance` 为巡逻怪设计，Gashra 刷在 boss 17.6 码内会永远不满足，不适用。
+
+### 2026-09-24 站位修正两次尝试（均回退）
+
+对照：h5g 在 60 秒重绑下 run861–870 共 10 次启动 5 kill / 5 前置中止（超时、spawn 消失、boss 提前参战、roster 减员各类）。
+
+1. **框架接近净空** `PrerequisiteApproachBossClearance = 27`（raidtest，截断编排层全队接近落点）：run866–870 **0 次截断**，2/5 kill。说明进入 boss 仇恨圈的是 bot 自身接怪/追怪（坦克 856 在 (515,670) 一带坦 Narjil 组、盗贼 858 追怪），不是编排层接近；此前把 run837 归为“接近带入”的判断有误。已回退，未提交。
+2. **bot 退离** `krik'thir keep clear`（AN 策略，ACTION_RAID+6；boss 未参战且 bot 距 boss < 24.5 码时背离退到 27 码）：run871–875 **1/5 kill**（2 次 boss 提前参战、1 次超时、1 次 spawn 消失），5 场触发 530 次、盗贼一人 300 次——退离与近战追目标来回抖动，且拖怪移动疑似引发更多 evade。**净负面，已回退**；补丁存 `/tmp/mod-playerbots-krikthir-keep-clear-rejected.patch`。
+- 60 秒重绑在 run866–870 期间成功 7 次（等待 0–49 秒），保留。
+- 结论：守望者刷在 boss 12–27 码内，前置阶段的稳定性卡在 bot 接怪位置与 boss 仇恨/evade 连锁的几何关系上；简单的“离 boss 远一点”规则会与近战追击冲突。可行方向是按组把怪拉回门口（需要为坦克设计“拉离后再接”的站位，而非全员退离），留待后续单独设计。合格样本仍全部 kill（h5g 合计 10/10：838/840/841/842/861/862/863/868/869/873）。
