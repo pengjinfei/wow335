@@ -63,7 +63,6 @@
 
 - **结论**：raidtest 在 `ModifyPeriodicDamageAurasTick` / `ModifySpellDamageTaken` / `ModifyMeleeDamage` 记 (攻击者, 受害者) 法术提示，`OnDamage` 取用写入 `spell_id`（近战 0，50 ms 过期，表封顶 4096）；哈多诺克斯 59419/59417/59420 已正确入库。
 
-### 10. 副本内相邻 boss 的节点作用域审计（bot，待查）
+### 10. 副本内相邻 boss 的节点作用域审计（bot，已完成 2026-09-25）
 
-- **问题**：AN 的克里克希尔节点只按「可见范围里有无该 boss」判定，在楼下哈多诺克斯平台上劫持了 DPS。其他副本的 dungeon 策略可能有同类写法：未击杀的前置 boss 在隔离场景里一直“可见”。
-- **方向**：审计各 `Ai/Dungeon/*` 中以 `possible targets no los` / `find target` 判定 boss 存在的 trigger/multiplier，加同层/距离作用域；已知受影响场景需要重跑。克里克希尔自身场景需抽查无回归。
+- **结论**：审计 `Ai/Dungeon/*` 中所有按 `possible targets no los`（100 码、无视线/楼层）或大半径 `FindNearestCreature` 判定存在的 trigger/multiplier。仅 AN 克里克希尔两处会跨房间生效（已修 `b42f27d1`）；其余均由 `find target`（只查 bot 自身仇恨列表，即已交战单位）先门控（AK Nadox/Jedoga、HoL Bjarngrim 等）、只影响该 boss 专用动作（FoS Bronjahm）、或半径内不可能有别的 boss（AN 阿努巴拉克 200 码，最近的其他 boss 约 600 码）。克里克希尔自身回归检查无回归（boss 战 3/3，盗贼输出持平）。
