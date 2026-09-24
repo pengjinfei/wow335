@@ -35,10 +35,9 @@
 - **问题**：隔离基线 5 场均无 Iron Sludge 27981 事件；未确认是高 DPS 跳过阶段还是软泥不造成伤害而未被记录。
 - **证据**：[Sjonnir README](bosses/heroic-hos-sjonnir/README.md)「2026-09-24 隔离 boss 战基线」。
 
-### 5. run 行已建但 orchestrator 未启动（框架，待查）
+### 5. run 行已建但 orchestrator 未启动（框架，已完成 2026-09-24）
 
-- **问题**：莫拉比 h5g run859 在 DB 有 `raidtest_runs` 行（`finished_at` 为空），日志无任何启动记录，`raidtest status` 仍为上一 run 的终态；批量脚本因此卡住 40 分钟。
-- **证据**：[莫拉比 README](bosses/heroic-gd-moorabi/README.md)「ilvl 200 装备档复跑」。
+- **结论**：run id 读回竞态——`InsertThenSelectId` 异步 INSERT 后「队列排空」即 SELECT 同场景最新行，读到上一 run 的 id；新 run 的 attempt/结果写进上一 run，新行永不收尾（run859、run892）。raidtest `fbd6bd9` 改为 `DirectExecute` 后读回，已验证 run893 id 一致。历史错挂：attempt 1788428082→run859、1788428115→run892。
 
 ### 6. Tribunal normal5 档的剩余杠杆（bot，待设计，低优先）
 
@@ -50,7 +49,7 @@
 
 - **问题**：完整形态 ilvl 200 档 0/5（boss 最低 20–95%），隔离形态 normal5 0/5；每场酸液云 59419 与蛛网猛拉 59420 各 6–13 次，阵亡者多死在原地。AN 策略对她没有任何节点。
 - **方向**：先量化每次酸液云落点与受伤 bot 的停留时间、蛛网猛拉后远程被拉入近身的比例，再分别加「离开酸液云」「猛拉后回到远程距离」两个单变量。
-- **进展 2026-09-24**：根因是全 bot 队伍没有启用标准 `avoid aoe`（见第 8 条）；raidtest `MasterlessAvoidAoe=1` 后酸液云承伤明显下降，1/5 kill。剩余承伤转为粉碎者包与战斗时长；蛛网猛拉伤害仅 2.4%，不再是优先项。
+- **进展 2026-09-24**：根因是全 bot 队伍没有启用标准 `avoid aoe`（见第 8 条）；`MasterlessAvoidAoe=1` 后 1/5，时限 900 秒 1/5，再加粉碎者阶段法师群攻归零（playerbots `e955cc80`）2/5。剩余失败都在 300 秒后的 boss 阶段；蛛网猛拉伤害仅 2.4%，不再是优先项。
 - **证据**：[哈多诺克斯 README](bosses/heroic-an-hadronox/README.md)。
 
 ### 8. 全部场景是否启用 MasterlessAvoidAoe（框架/基线，待决策）
@@ -58,3 +57,8 @@
 - **问题**：mod-playerbots 只给有真人 master 的 bot 默认加 `avoid aoe`；raidtest 所有历史样本都在没有通用躲 AoE 的条件下测得。哈多诺克斯开启后酸液云承伤明显下降并拿到首杀。
 - **方向**：真人带队时这是默认策略，按“正常规则、真人同等配置”应逐场景开启，但会改变每个场景的基线。建议先在仍不稳定、且有地面持续 AoE 的 boss 上开启并重跑，再决定是否作为全局默认；已稳定的 boss 抽查确认无回归。
 - **证据**：raidtest `MasterlessAvoidAoe`（见哈多诺克斯 README「第 7 条：酸液云」）。
+
+### 9. 伤害事件缺技能 id（观测，待设计）
+
+- **问题**：`CombatEventBus` 的伤害来自 `UnitScript::OnDamage`，不带 SpellInfo，`raidtest_events.spell_id` 恒为 0；哈多诺克斯只能按伤害数值分桶区分酸液云/吸血毒/猛拉，被护盾部分吸收的跳数会被分错。
+- **方向**：补接带 SpellInfo 的 hook（如 `ModifyPeriodicDamageAurasTick`、`ModifySpellDamageTaken`）记录周期/法术伤害的 spell id，纯观测。
