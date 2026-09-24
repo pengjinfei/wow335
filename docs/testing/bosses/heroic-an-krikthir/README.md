@@ -252,3 +252,11 @@ run437 因此打出**首次完整击杀：267.8 秒、零死亡、boss 0%**。
 
 - 场景 `heroic-an-krikthir-h5g`：由原 normal5 场景复制，**仅** `RosterFile` 换为 `mod-raidtest-roster-heroic5gear-n5talents-v1.conf`（天赋/雕文/补给同 normal5-v1，装备 17 件全 ilvl 200 已回读核对）。binary：playerbots `7e77a827`、raidtest `35ca8f5`（SHA `d3fbfef4…`）。
 - 结果：**4/4 kill、0 死**（run838/840/841/842；7 次启动预算内 run836/837/839 三次 `prerequisite_invalid: spawn disappeared without a recorded death` 中止，只得 4 个合格样本）。对照 normal5 仅一次 kill。不与 normal5 任何 cohort 合算。
+
+### 2026-09-24 h5g 前置中止调查
+
+- **现象**：h5g 12 次启动中 5 次前置中止——run836/837/839 `spawn disappeared without a recorded death`、run864 `boss missing or engaged before clearing completed`（5 死）、run865 `roster casualty before boss pull`。合格样本全部 kill（run838/840/841/842 + 新 binary 的 run861/862/863，共 7/7、0 死）。
+- **机制链（源码核实）**：守望者/蛛魔任一 evade → `instance_azjol_nerub::OnCreatureEvade` → 克里克希尔 `EnterEvadeMode` → 对三组阵型 `DespawnFormation(0s, 20s)`：9 只立刻下线，强制 20 秒后以新对象重生（DB `spawntimesecs=7200` 被覆盖）。框架已有按 spawnId 重绑，但预算 25 秒；历史日志从未出现一次成功 `re-bound`。run836 实为前置期 5 人阵亡（Mirror Image 与法师先后倒下），消失报错只是表象。
+- **更上游的触发**：run864 记录 `preclear_boss_proximity: dist=21.99 aggro=22.00 target=52`——清 Silthik 组时，被打的前置怪距 boss 恰在 22 码仇恨边缘；三组守望者本就刷在 boss 17.6–27 码内（Gashra 17.6、Silthik 23.6、Narjil 27.0），清 Silthik 组时 boss 被带上或引发 evade 连锁，是 837/839/864 的共同背景。evade 的具体发起者现有日志未记录，未确认。
+- **已做**：`kPrerequisiteRebindBudgetMs` 25→60 秒，`re-bound` 日志加实际等待毫秒（raidtest，SHA `f008f668…`）。验证 run861–865 未再触发整组重置，故**重绑放宽尚未被实战覆盖**。
+- **未做**：Silthik 组的开怪位置/拉怪方向（让战斗离开 boss 22 码仇恨圈）。`PrerequisiteMinBossDistance` 为巡逻怪设计，Gashra 刷在 boss 17.6 码内会永远不满足，不适用。

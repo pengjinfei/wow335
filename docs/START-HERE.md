@@ -49,7 +49,7 @@
 | 管理库 | `main` 最新 |
 | azerothcore-wotlk | `c747f55ca` |
 | mod-playerbots | `7e77a827`（分支 `codex/gd-takeover`） |
-| mod-raidtest | `17bd066`（分支 `codex/gd-takeover`） |
+| mod-raidtest | `31b903c`（分支 `codex/gd-takeover`） |
 
 运行日志、`raidtest-rosters/`、`raidtest-scenes/` 等 core 未跟踪生成物不等同源码改动，仍须如实报告，不能删除他人资产。
 
