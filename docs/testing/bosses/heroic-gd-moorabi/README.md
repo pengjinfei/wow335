@@ -546,3 +546,9 @@ Lancer 的反伤窗口内近战输出、Lancer 同时仍由坦克持有。
 run681/682 的五场致死形态降为仅 run685 seq3 一次非致死 22858；但 SQL 仍发现 seq1/3 在窗口内各有少量
 盗贼命中（377/202），说明该 multiplier 尚未覆盖所有实际攻击路径。结论只能是该局部策略在这 5 场中
 消除了阵亡、没有扩大 assist 故障；需要补样本并完善未过滤的攻击路径后再宣称稳定。
+
+
+## 2026-09-24 ilvl 200 装备档复跑（独立 cohort）
+
+- 场景 `heroic-gd-moorabi-h5g`：由原 normal5 场景复制，**仅** `RosterFile` 换为 `mod-raidtest-roster-heroic5gear-n5talents-v1.conf`（天赋/雕文/补给同 normal5-v1，装备 17 件全 ilvl 200 已回读核对）。binary：playerbots `7e77a827`、raidtest `35ca8f5`（SHA `d3fbfef4…`）。
+- 结果：**5/5 kill、0 死**（run855–858、860，141–161 秒；run854 准备点对怪组无 LOS 的 cc gate 中止；run859 DB 行已建但 orchestrator 未启动、无日志，均不计）。对照 normal5 16/20 旧 cohort。不与 normal5 任何 cohort 合算。

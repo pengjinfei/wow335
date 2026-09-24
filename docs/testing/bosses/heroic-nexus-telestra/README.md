@@ -79,3 +79,9 @@
 - `raidtest run heroic-nexus-telestra-n5 --attempts 5` 可直接复现。
 - 证据在本地 MySQL（run 334/338/341/348/353/354）。
 - 新会话下一条安全操作：补 10 场同配置样本，把「4/7」变成有意义的稳定率。
+
+
+## 2026-09-24 ilvl 200 装备档复跑（独立 cohort）
+
+- 场景 `heroic-nexus-telestra-h5g`：由原 normal5 场景复制，**仅** `RosterFile` 换为 `mod-raidtest-roster-heroic5gear-n5talents-v1.conf`（天赋/雕文/补给同 normal5-v1，装备 17 件全 ilvl 200 已回读核对）。binary：playerbots `7e77a827`、raidtest `35ca8f5`（SHA `d3fbfef4…`）。
+- 结果：**5/5 kill、0 死**（run844–848，181–222 秒；run843 前置 boss 提前参战中止，不计）。对照 normal5 当前配置击杀。不与 normal5 任何 cohort 合算。

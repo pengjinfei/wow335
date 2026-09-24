@@ -1116,3 +1116,9 @@ tick 级（1820 个 tick）：毁伤被推入 **303 次只有 17% 轮得到**，
 
 本副本这边不要再动目标选择/仇恨（已有四条反证），也不要再在践踏上花时间（不是瓶颈）。
 本副本这边不要再动目标选择/仇恨（已有四条反证），也不要再在践踏上花时间（不是瓶颈）。
+
+
+## 2026-09-24 ilvl 200 装备档复跑（独立 cohort）
+
+- 场景 `heroic-an-anubarak-h5g`：由原 normal5 场景复制，**仅** `RosterFile` 换为 `mod-raidtest-roster-heroic5gear-n5talents-v1.conf`（天赋/雕文/补给同 normal5-v1，装备 17 件全 ilvl 200 已回读核对）。binary：playerbots `7e77a827`、raidtest `35ca8f5`（SHA `d3fbfef4…`）。
+- 结果：**4/5 kill、0 死**（run830/831/834/835 kill；run832 480 秒 timeout 时 boss 11%；run833 boss 脱战卡住中止，不计）。对照 normal5 调查中。不与 normal5 任何 cohort 合算。

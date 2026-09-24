@@ -1451,3 +1451,9 @@ AN 层那份 `anub'arak offheal` 原样不动，避免扰动它的基线。
 
 建议由用户决定：(a) 继续在本 boss 上找第三个杠杆；(b) 按"隔离 boss 战、normal5-v1、当前配置 73%（30 场）"
 收尾，转下一个副本。**注意三骑手前置仍被导航网格阻塞**，无论哪种选择都不能记成完整链路通关。
+
+
+## 2026-09-24 ilvl 200 装备档复跑（独立 cohort）
+
+- 场景 `heroic-uk-ingvar-h5g`：由原 normal5 场景复制，**仅** `RosterFile` 换为 `mod-raidtest-roster-heroic5gear-n5talents-v1.conf`（天赋/雕文/补给同 normal5-v1，装备 17 件全 ilvl 200 已回读核对）。binary：playerbots `7e77a827`、raidtest `35ca8f5`（SHA `d3fbfef4…`）。
+- 结果：**5/5 kill、1 死**（run825–829，98–107 秒）。对照 normal5 22/30。不与 normal5 任何 cohort 合算。

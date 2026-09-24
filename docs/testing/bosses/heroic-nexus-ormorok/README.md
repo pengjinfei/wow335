@@ -129,3 +129,9 @@
 - 复现：`raidtest run heroic-nexus-ormorok-n5 --attempts 5`。
 - 证据：本地 MySQL `raidtest_events`（run 336/343 修复前，349–363 夹具迭代，367/368 修复后）。
 - 新会话下一条安全操作：与泰蕾斯特拉一起处理「清怪阶段减员」这个共同瓶颈。
+
+
+## 2026-09-24 ilvl 200 装备档复跑（独立 cohort）
+
+- 场景 `heroic-nexus-ormorok-h5g`：由原 normal5 场景复制，**仅** `RosterFile` 换为 `mod-raidtest-roster-heroic5gear-n5talents-v1.conf`（天赋/雕文/补给同 normal5-v1，装备 17 件全 ilvl 200 已回读核对）。binary：playerbots `7e77a827`、raidtest `35ca8f5`（SHA `d3fbfef4…`）。
+- 结果：**5/5 kill、1 死**（run849–853，77–92 秒）。对照 normal5 完整链路 6/8。不与 normal5 任何 cohort 合算。

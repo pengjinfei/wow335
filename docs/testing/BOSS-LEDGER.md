@@ -18,17 +18,17 @@ run761 是隔离 Dark Matter observation/execution smoke：bot action 与 28237 
 |---|---|---|---|
 | [乌特加德城堡](bosses/heroic-uk/MECHANICS-AUDIT.md) | [凯雷塞斯](bosses/heroic-uk-keleseth/README.md) | 完整遭遇战，run322 4 kill、0 wipe、零死亡；冰墓实际被全队转火。 | **完成** |
 | 同上 | [斯卡瓦尔德&达隆](bosses/heroic-uk-skarvald-dalronn/README.md) | 完整遭遇战（10 前置 + 双 boss），run323 5/5、零死亡。 | **完成** |
-| 同上 | [因格瓦尔](bosses/heroic-uk-ingvar/README.md) | 隔离 boss 战当前构建累计 22/30 kill（73%，CI 56–86%）；不能等同完整副本。 | **调查中** |
-| [魔枢](bosses/heroic-nexus/FIXTURE-SURVEY.md) | [泰蕾斯特拉](bosses/heroic-nexus-telestra/README.md) | 完整链路已有击杀；run409 控制链 3 kill、2 作废。 | **当前配置击杀** |
+| 同上 | [因格瓦尔](bosses/heroic-uk-ingvar/README.md) | 隔离 boss 战当前构建累计 22/30 kill（73%，CI 56–86%）；不能等同完整副本。 **ilvl 200 档：5/5 kill、1 死**。 | **调查中** |
+| [魔枢](bosses/heroic-nexus/FIXTURE-SURVEY.md) | [泰蕾斯特拉](bosses/heroic-nexus-telestra/README.md) | 完整链路已有击杀；run409 控制链 3 kill、2 作废。 **ilvl 200 档：5/5 kill、0 死**。 | **当前配置击杀** |
 | 同上 | [阿诺姆鲁斯](bosses/heroic-nexus-anomalus/README.md) | 正常规则；300s 档 9/10，420s 档 4/5（不同预算 cohort）。 | **完成** |
-| 同上 | [奥莫洛克](bosses/heroic-nexus-ormorok/README.md) | 完整链路 6/8，0 boss-stage wipe；2 场清怪减员。 | **当前配置击杀** |
+| 同上 | [奥莫洛克](bosses/heroic-nexus-ormorok/README.md) | 完整链路 6/8，0 boss-stage wipe；2 场清怪减员。 **ilvl 200 档：5/5 kill、1 死**。 | **当前配置击杀** |
 | 同上 | [凯利丝塔萨](bosses/heroic-nexus-keristrasza/README.md) | 隔离形态（三球体 DONE fixture）run422 5/5、零死亡；端到端链式未验。 | **稳定击杀（隔离）** |
-| [艾卓-尼鲁布](bosses/heroic-an/README.md) | [阿努巴拉克](bosses/heroic-an-anubarak/README.md) | 完整遭遇战有 kill；历史优化与共享层证据见 README。 | **调查中** |
+| [艾卓-尼鲁布](bosses/heroic-an/README.md) | [阿努巴拉克](bosses/heroic-an-anubarak/README.md) | 完整遭遇战有 kill；历史优化与共享层证据见 README。 **ilvl 200 档：4/5 kill、0 死**。 | **调查中** |
 | 同上 | [哈多诺克斯](bosses/heroic-an-hadronox/README.md) | 隔离形态基线 0/5；完整前置含 spawnId=0 召唤物，框架尚不能表达。 | **框架阻断 / 策略待审计** |
-| 同上 | [克里克希尔](bosses/heroic-an-krikthir/README.md) | 完整遭遇战有一次 kill；清怪稳定性未验。 | **调查中** |
+| 同上 | [克里克希尔](bosses/heroic-an-krikthir/README.md) | 完整遭遇战有一次 kill；清怪稳定性未验。 **ilvl 200 档：4/4 kill、0 死**。 | **调查中** |
 | [达克萨隆要塞](bosses/heroic-dtk-trollgore/README.md) | Trollgore / [Novos](bosses/heroic-dtk-novos/README.md) / [Tharon'ja](bosses/heroic-dtk-tharonja/README.md) / [King Dred](bosses/heroic-dtk-dred/README.md) | 四 boss 均已有正常规则隔离 boss 战通过；Dred 经共享 LOS 修复后 15/16。 | **完成（boss 机制口径）** |
-| [古达克](bosses/heroic-gd/README.md) | [斯拉德兰](bosses/heroic-gd-sladran/README.md) | 隔离 boss 战合并后 3/5；平台阵位 0/5 已回退。 | **调查中** |
-| 同上 | [莫拉比](bosses/heroic-gd-moorabi/README.md) | 完整遭遇；旧 cohort 16/20，当前局部修复 run685 5/5、零死；不可与旧样本合并称稳定。 | **当前配置击杀** |
+| [古达克](bosses/heroic-gd/README.md) | [斯拉德兰](bosses/heroic-gd-sladran/README.md) | 隔离 boss 战合并后 3/5；平台阵位 0/5 已回退。 **ilvl 200 档：5/5 kill、0 死**。 | **调查中** |
+| 同上 | [莫拉比](bosses/heroic-gd-moorabi/README.md) | 完整遭遇；旧 cohort 16/20，当前局部修复 run685 5/5、零死；不可与旧样本合并称稳定。 **ilvl 200 档：5/5 kill、0 死**。 | **当前配置击杀** |
 | 同上 | [德拉克瑞巨像](bosses/heroic-gd-colossus/README.md) | 隔离 boss 战 5/5、零死亡；移除了非机制常驻单位，原生 Mojo 链保留。 | **稳定击杀（隔离）** |
 | 同上 | [迦尔达拉](bosses/heroic-gd-galdarah/README.md) | 隔离 boss 战累计 10/10、零死亡；载具移除后骑手仍可能参战，范围已如实记录。 | **稳定击杀（隔离）** |
 | 同上 | [凶残的艾克](bosses/heroic-gd-eck/README.md) | 正常规则原生召唤链累计有效 10/10 kill、零死；无 DB spawn 的框架问题已另行记录。 | **完成（boss 机制口径）** |

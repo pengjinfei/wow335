@@ -1331,3 +1331,9 @@ tick N+2 : focus boss(55) 又亮起 → 再拉走
 （−34% / −26%），因为换目标要 4 个 tick ≈ 2.8 秒，而红蛇 13.6–17.6 只/场持续到场。
 斯拉德兰的瓶颈仍然是**治疗上限 1,237 HPS 对 DTPS 1,819**，而承伤的大头（boss 140.3k/场）
 不受小怪优先级影响。
+
+
+## 2026-09-24 ilvl 200 装备档复跑（独立 cohort）
+
+- 场景 `heroic-gd-sladran-disc-h5g`：由原 normal5 场景复制，**仅** `RosterFile` 换为 `mod-raidtest-roster-heroic5gear-n5talents-v1.conf`（天赋/雕文/补给同 normal5-v1，装备 17 件全 ilvl 200 已回读核对）。binary：playerbots `7e77a827`、raidtest `35ca8f5`（SHA `d3fbfef4…`）。
+- 结果：**5/5 kill、0 死**（run820–824，48–68 秒）。对照 normal5 隔离 3/19。不与 normal5 任何 cohort 合算。

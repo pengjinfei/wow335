@@ -246,3 +246,9 @@ run437 因此打出**首次完整击杀：267.8 秒、零死亡、boss 0%**。
 2. **`DespawnFormation` 导致的作废**：按 spawnId 重绑只能救「已经重生回来」的情形；
    整组被下线且还没重生时仍然作废。可考虑等待重生（类似 boss 的 30 秒预算）而不是立即作废。
 3. 清怪段 bot 死光记为 `wipe`（已比之前准确），但「清怪失败」与「boss 战团灭」在台账里仍需人工区分。
+
+
+## 2026-09-24 ilvl 200 装备档复跑（独立 cohort）
+
+- 场景 `heroic-an-krikthir-h5g`：由原 normal5 场景复制，**仅** `RosterFile` 换为 `mod-raidtest-roster-heroic5gear-n5talents-v1.conf`（天赋/雕文/补给同 normal5-v1，装备 17 件全 ilvl 200 已回读核对）。binary：playerbots `7e77a827`、raidtest `35ca8f5`（SHA `d3fbfef4…`）。
+- 结果：**4/4 kill、0 死**（run838/840/841/842；7 次启动预算内 run836/837/839 三次 `prerequisite_invalid: spawn disappeared without a recorded death` 中止，只得 4 个合格样本）。对照 normal5 仅一次 kill。不与 normal5 任何 cohort 合算。
