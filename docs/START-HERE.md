@@ -18,6 +18,7 @@
 - **装备才是 Tribunal 的主杠杆。** normal5-v1（ilvl≈183）下 Holy Shield uptime、r35 远程补视线两个单变量均 0/5（已关闭）；换用 `heroic5gear-n5talents-v1`（ilvl 200，天赋/雕纹/补给与 normal5 相同，刺杀贼换两把 ilvl 200 匕首）后，场景 `heroic-hos-tribunal-event-h5g` 两轮 **2/5 + 3/5 = 5/10 DONE**（第一轮含跟随修正回归 run802）。独立记账，不与 normal5 合算。
 - 已提交：playerbots `7e77a827`（r35 远程补视线 + 远程空转 probe，注销未 dispatch 的 r34）；raidtest `c40a0d6`（EventFollowStarter 只在 starter 走动或 bot 掉队 >20 码时跟随，战斗中不再钉住 bot）、`41e385d`（脚本事件有人阵亡且残存者脱战 45 秒判 wipe，避免 900 秒 timeout）、`f2c8a50`（新阵容与场景 .conf.dist）。
 - 运行中 binary 由隔离树 `/tmp/azerothcore-tribunal-retry-src`（模块软链到 `/tmp/mod-playerbots-tribunal-hs`、`/tmp/mod-raidtest-tribunal-r32`）构建；`41e385d` 已编译（SHA `d3fbfef4…`），其停滞判定尚未在实战中触发验证。
+- **Sjonnir 隔离 boss 战 5/5**（场景 `heroic-hos-sjonnir-iso-n5`，normal5，run814–818）；正常规则续链仍框架阻断。岩石大厅四个 boss 均已有结论：Krystallus 5/5、Maiden 隔离 5/5、Tribunal normal5 不稳定 / ilvl 200 档 5/10、Sjonnir 隔离 5/5。
 - 下一步候选：h5g 档继续积累样本；在 ilvl 200 档复跑其他英雄本 boss 基线。详见 Tribunal README 末尾各节。
 
 ### 当前事实（2026-09-23 暂停前，历史）
@@ -47,7 +48,7 @@
 | 管理库 | `main` 最新 |
 | azerothcore-wotlk | `c747f55ca` |
 | mod-playerbots | `7e77a827`（分支 `codex/gd-takeover`） |
-| mod-raidtest | `f2c8a50`（分支 `codex/gd-takeover`） |
+| mod-raidtest | `35ca8f5`（分支 `codex/gd-takeover`） |
 
 运行日志、`raidtest-rosters/`、`raidtest-scenes/` 等 core 未跟踪生成物不等同源码改动，仍须如实报告，不能删除他人资产。
 

@@ -1,6 +1,6 @@
 # 英雄岩石大厅 / 斯约尼尔·塑铁者（Sjonnir the Ironshaper）
 
-状态：**跳过（框架阻断）**。Tribunal 后转入本 boss 的路由已经完成可复核审计；这不是 Sjonnir 策略或战斗失败，因为没有有效战斗样本。
+状态：**稳定击杀（隔离）** —— 2026-09-24 隔离 boss 战基线 **5/5 击杀**（run814–818，1 次死亡）。正常规则同实例续链仍为框架阻断（见下文原审计），本结论只代表隔离形态。
 
 ## 接手摘要
 
@@ -42,3 +42,12 @@
 
 - running server：r32，已由 FIFO `raidtest status --json` 确认为 IDLE；本 encounter 尚无活动 run。
 - 证据边界与仓库状态以 [`../../BOSS-LEDGER.md`](../../BOSS-LEDGER.md)、[`../heroic-hos-tribunal/README.md`](../heroic-hos-tribunal/README.md) 和当前会话检查为准。
+
+
+## 2026-09-24 隔离 boss 战基线（用户选定隔离形态）
+
+- **场景** `heroic-hos-sjonnir-iso-n5`：Heroic / normal5-v1 / 5 人 / `BotCheats=""` / `GearProfile=none`；`FixtureBossStates = 2:3,5:3`（Tribunal DONE、BRANN_DOOR DONE，仅经 `SetBossState`，未调用 `SetData`）；准备/开怪点门内房间中线 (1262,667,189.61)，距 boss 33 码、vmap 两遍法确认 LOS。binary 同 Tribunal 当前（playerbots `7e77a827`、raidtest `f2c8a50`，SHA `d3fbfef4…`）。
+- **场景验证（不计分）**：run812 开怪点 (1255,667) 距 boss 40.2 码 > 治疗 leash 38.5，坦克 `reach-leash` 拒绝接近 → `pull failed`；挪到 33 码后 run813 74.292s kill、0 死。
+- **基线 5/5 kill**：run814 71.462s（1 死：盗贼）、815 70.319s、816 90.626s、817 77.210s、818 71.813s，均 0 死以外无减员。run819 因脚本合格判据误用 Tribunal 小怪而多启动，81.770s kill，**超出预声明 5 场不计**。
+- **机制覆盖（每场）**：Lightning Ring 59848 施放 1–2 次，对队员 0 次命中；Frenzy 28747 1 次；Chain Lightning 6–8 次；Forged Iron Trogg 27979 2–4 只；敌对矮人 27982 1 只；友方矮人 27980 3 只（Tribunal DONE 下 Brann 修好机器的正常行为，完整链路同样如此）。**Iron Sludge 27981 五场均未记录**，50% 软泥阶段是否因高 DPS 跳过或软泥不造成伤害而未入库尚未确认。
+- 口径：隔离形态、fixture 直写实例状态，不等于正常规则全链；不得与 Tribunal lifecycle 合算。
