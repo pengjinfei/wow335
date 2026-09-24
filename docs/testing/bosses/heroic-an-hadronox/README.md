@@ -95,3 +95,10 @@
 
 - run 432 全部事件在本地 MySQL（attempt_id 1788427048–1788427052）。
 - 下一条安全操作：先做「蛛网猛拉后拉开 + 离开酸液云」的策略设计，再复跑 5 场对照。
+
+## 2026-09-24 完整遭遇形态（框架阻断已解除）
+
+- **框架**：raidtest `125ccc2` 新增 `SummonTriggerRadius`（召唤物检索半径）与 `EngageConfirmBossState=<id>:<value>`（以实例状态确认遭遇开始；状态保持期间 observer 不把 boss 爬坡当作卡住/复位）。场景 `heroic-an-hadronox-full-n5/-h5g`：`EngageTrigger=summon`、`SummonTriggerEntry=28922`（她 `Reset()` 召出的第 1 包粉碎者，spawnId=0，距坑底约 57 码）、`SummonTriggerRadius=80`、`EngageConfirmBossState=1:1`（DATA_HADRONOX=IN_PROGRESS）；准备点平台 (530,580,733.92)，距第 1 包 32.9 码、vmap 两遍法 LOS，距她最终落点 (530.4,560) 约 20 码；Timeout 540。
+- **原生链路（run876–881 全部复现）**：5.1–7.3 秒确认 IN_PROGRESS；三只粉碎者与三包随从（29117/29118/29119）；三扇门持续刷怪 49–61 只（29062/29063/29064）；她爬上平台参战，每场酸液云 59419 6–13 次、蛛网猛拉 59420 6–12 次。
+- **ilvl 200 档基线（heroic5gear-n5talents-v1）0/5**：run877 175s（91%）、878 224s（85%）、879 340s（95%）、880 282s（79%）、881 309s（**20%**），均 5 死 wipe；run876 为框架 smoke（211s，88%）不计。boss 本体每场造成 121–196 万伤害，门怪 19–31 万；阵亡者多死在准备点原地（run876 四人 pos=(530,580)），与隔离形态结论一致：**没有 bot 离开酸液云 / 被蛛网猛拉后拉开**，AN 策略对她无任何节点。
+- 下一步（bot 层，见 BACKLOG）：「离开酸液云」「被蛛网猛拉后拉开」两个触发器，先量化再实现。

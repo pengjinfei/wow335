@@ -20,10 +20,10 @@
 - **方向**：只针对坦克的“拉离再接”——开怪后坦克先退到门口安全点（距 boss ≥30 码、同层有地面），怪跟随后再原地坦；近战与远程跟随坦克/目标，不加通用退离。执行门槛：前置阶段 `preclear_boss_proximity` 与 boss 提前参战次数下降；效果看前置中止率。
 - **证据**：[克里克希尔 README](bosses/heroic-an-krikthir/README.md) 末尾「h5g 前置中止调查」「站位修正两次尝试」。
 
-### 2. 召唤物作为前置（框架，待设计）
+### 2. 召唤物作为前置（框架，已完成 2026-09-24）
 
-- **问题**：`PrerequisiteSpawns` 只接 spawn guid；哈多诺克斯的完整前置含 spawnId=0 召唤物，德拉克瑞巨像需先杀 5 只召唤的 Living Mojo 才可攻击。
-- **证据**：[哈多诺克斯](bosses/heroic-an-hadronox/README.md)、[德拉克瑞巨像](bosses/heroic-gd-colossus/README.md)。
+- **结论**：德拉克瑞巨像此前已由 `EngageTrigger=summon` 解决（隔离 5/5），本条原写法有误。哈多诺克斯由 raidtest `125ccc2`（`SummonTriggerRadius` + `EngageConfirmBossState`）解除阻断，完整遭遇原生链路全部复现；ilvl 200 档基线 0/5（最好 20%），剩余问题转为第 7 条。
+- **证据**：[哈多诺克斯](bosses/heroic-an-hadronox/README.md)「完整遭遇形态」。
 
 ### 3. 脚本事件后续阶段 EventFollowup（框架 + bot，待设计）
 
@@ -45,3 +45,9 @@
 - **问题**：normal5（ilvl≈183）下 Holy Shield、r35 远程补视线均中间量达标但 0/5；约 200 秒叠波崩溃由总输出/生存总量决定。ilvl 200 档已 5/10。
 - **方向**：若仍需 normal5 口径，只考虑能明显提高全队总输出或总治疗的组合改动，并单独记 cohort。
 - **证据**：[Tribunal README](bosses/heroic-hos-tribunal/README.md)。
+
+### 7. 哈多诺克斯：离开酸液云 / 被蛛网猛拉后拉开（bot，待设计）
+
+- **问题**：完整形态 ilvl 200 档 0/5（boss 最低 20–95%），隔离形态 normal5 0/5；每场酸液云 59419 与蛛网猛拉 59420 各 6–13 次，阵亡者多死在原地。AN 策略对她没有任何节点。
+- **方向**：先量化每次酸液云落点与受伤 bot 的停留时间、蛛网猛拉后远程被拉入近身的比例，再分别加「离开酸液云」「猛拉后回到远程距离」两个单变量。
+- **证据**：[哈多诺克斯 README](bosses/heroic-an-hadronox/README.md)。
