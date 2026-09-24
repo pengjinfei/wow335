@@ -11,6 +11,7 @@
 | 新建 5 人或团队 campaign | [`CAMPAIGN-TEMPLATE.md`](CAMPAIGN-TEMPLATE.md) → [`BOSS-TEMPLATE.md`](BOSS-TEMPLATE.md) → [`WORKFLOW.md`](WORKFLOW.md) |
 | 查历史论证 | `archive/` 的冻结入口，或对应 boss README 的历史章节 |
 | 查跨 boss 缺陷/方法 | [`LESSONS.md`](LESSONS.md)、[`SOURCE-COVERAGE.md`](SOURCE-COVERAGE.md) |
+| 查已识别、未排期的后续优化项 | [`BACKLOG.md`](BACKLOG.md) |
 
 ## 信息分层
 
@@ -20,7 +21,8 @@
 4. **encounter README**（例如 `bosses/heroic-hos-tribunal/README.md`）：唯一的实验叙事、假说、样本、决策与下一步。
 5. **HANDOVER**：一次会话的紧凑增量；下一次交接应把仍有效的结论折回 encounter README，而不是无限增长。
 6. **LESSONS**：仅可迁移的方法/缺陷；不能复制某个 boss 的逐 run 叙事。
-7. **archive/**：冻结的旧入口和被替换的大型历史台账，只读追溯，不作为当前事实来源。
+7. **BACKLOG**：已识别但未排期的后续优化项，每项一句问题 + 证据链接 + 方向；排期后移入设计文档或 encounter README。
+8. **archive/**：冻结的旧入口和被替换的大型历史台账，只读追溯，不作为当前事实来源。
 
 ## 状态词（全项目统一）
 

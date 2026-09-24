@@ -1,0 +1,47 @@
+# 后续优化项（跨 boss 待办索引）
+
+更新：2026-09-24。这里只登记**已识别、尚未排期**的后续工作：每项一句问题、证据入口和建议方向。
+实验叙事与样本仍写在对应 encounter README；项目被排期后，把设计写成独立设计文档或写进 encounter README 的“下一步”，并在此标为「已排期」或删除。
+
+## 条目格式
+
+| 字段 | 内容 |
+|---|---|
+| 层 | `bot`（mod-playerbots 行为）/ `框架`（mod-raidtest 编排）/ `场景`（conf、准备点） |
+| 状态 | 待设计 / 已排期 / 已完成（完成后保留一行结论与提交） |
+| 证据 | 触发它的 run 与 encounter README 链接 |
+
+## 待办
+
+### 1. 克里克希尔：坦克按组把守望者拉回门口再接（bot，待设计）
+
+- **问题**：三组守望者刷在 boss 12–27 码内（Gashra 17.6、Silthik 23.6、Narjil 27.0），坦克/近战原地接怪会站到 boss 22 码仇恨边缘，带上 boss 或引发 evade → 三组整体 `DespawnFormation`。ilvl 200 档 boss 战 10/10 kill，但前置阶段约一半启动中止。
+- **已否定**：框架层“接近净空”（0 次触发，进圈的不是编排层移动）；全员“离 boss 24.5 码就退离”（与近战追击抖动，1/5，已回退）。
+- **方向**：只针对坦克的“拉离再接”——开怪后坦克先退到门口安全点（距 boss ≥30 码、同层有地面），怪跟随后再原地坦；近战与远程跟随坦克/目标，不加通用退离。执行门槛：前置阶段 `preclear_boss_proximity` 与 boss 提前参战次数下降；效果看前置中止率。
+- **证据**：[克里克希尔 README](bosses/heroic-an-krikthir/README.md) 末尾「h5g 前置中止调查」「站位修正两次尝试」。
+
+### 2. 召唤物作为前置（框架，待设计）
+
+- **问题**：`PrerequisiteSpawns` 只接 spawn guid；哈多诺克斯的完整前置含 spawnId=0 召唤物，德拉克瑞巨像需先杀 5 只召唤的 Living Mojo 才可攻击。
+- **证据**：[哈多诺克斯](bosses/heroic-an-hadronox/README.md)、[德拉克瑞巨像](bosses/heroic-gd-colossus/README.md)。
+
+### 3. 脚本事件后续阶段 EventFollowup（框架 + bot，待设计）
+
+- **问题**：Tribunal DONE 后同实例续打 Sjonnir 需要多阶段场景（第二次真实 gossip、`BRANN_DOOR=DONE` 门控、重绑 followup boss），且 playerbots 没有事件后自主前往 Sjonnir 的路线；raidtest 不可代移。当前 Sjonnir 只有隔离 5/5。
+- **证据**：[Sjonnir README](bosses/heroic-hos-sjonnir/README.md)「最小多阶段设计」。
+
+### 4. Sjonnir 50% 软泥阶段未入库（观测，待查）
+
+- **问题**：隔离基线 5 场均无 Iron Sludge 27981 事件；未确认是高 DPS 跳过阶段还是软泥不造成伤害而未被记录。
+- **证据**：[Sjonnir README](bosses/heroic-hos-sjonnir/README.md)「2026-09-24 隔离 boss 战基线」。
+
+### 5. run 行已建但 orchestrator 未启动（框架，待查）
+
+- **问题**：莫拉比 h5g run859 在 DB 有 `raidtest_runs` 行（`finished_at` 为空），日志无任何启动记录，`raidtest status` 仍为上一 run 的终态；批量脚本因此卡住 40 分钟。
+- **证据**：[莫拉比 README](bosses/heroic-gd-moorabi/README.md)「ilvl 200 装备档复跑」。
+
+### 6. Tribunal normal5 档的剩余杠杆（bot，待设计，低优先）
+
+- **问题**：normal5（ilvl≈183）下 Holy Shield、r35 远程补视线均中间量达标但 0/5；约 200 秒叠波崩溃由总输出/生存总量决定。ilvl 200 档已 5/10。
+- **方向**：若仍需 normal5 口径，只考虑能明显提高全队总输出或总治疗的组合改动，并单独记 cohort。
+- **证据**：[Tribunal README](bosses/heroic-hos-tribunal/README.md)。
