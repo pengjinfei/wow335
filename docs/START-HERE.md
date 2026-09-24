@@ -49,7 +49,7 @@
 | 管理库 | `main` 最新 |
 | azerothcore-wotlk | `c747f55ca` |
 | mod-playerbots | `e955cc80`（分支 `codex/gd-takeover`） |
-| mod-raidtest | `fbd6bd9`（分支 `codex/gd-takeover`） |
+| mod-raidtest | `fbd6bd9`（分支 `codex/gd-takeover`）；隔离 worktree `/tmp/mod-raidtest-tribunal-r32` 另有 `1b7d35d`（伤害 spell id），因主树 `CombatEventBus.cpp` 有他人未提交改动未快进，合并前须先处理该改动 |
 
 运行日志、`raidtest-rosters/`、`raidtest-scenes/` 等 core 未跟踪生成物不等同源码改动，仍须如实报告，不能删除他人资产。
 
