@@ -58,7 +58,6 @@
 - **方向**：真人带队时这是默认策略，按“正常规则、真人同等配置”应逐场景开启，但会改变每个场景的基线。建议先在仍不稳定、且有地面持续 AoE 的 boss 上开启并重跑，再决定是否作为全局默认；已稳定的 boss 抽查确认无回归。
 - **证据**：raidtest `MasterlessAvoidAoe`（见哈多诺克斯 README「第 7 条：酸液云」）。
 
-### 9. 伤害事件缺技能 id（观测，待设计）
+### 9. 伤害事件缺技能 id（观测，已完成 2026-09-24）
 
-- **问题**：`CombatEventBus` 的伤害来自 `UnitScript::OnDamage`，不带 SpellInfo，`raidtest_events.spell_id` 恒为 0；哈多诺克斯只能按伤害数值分桶区分酸液云/吸血毒/猛拉，被护盾部分吸收的跳数会被分错。
-- **方向**：补接带 SpellInfo 的 hook（如 `ModifyPeriodicDamageAurasTick`、`ModifySpellDamageTaken`）记录周期/法术伤害的 spell id，纯观测。
+- **结论**：raidtest 在 `ModifyPeriodicDamageAurasTick` / `ModifySpellDamageTaken` / `ModifyMeleeDamage` 记 (攻击者, 受害者) 法术提示，`OnDamage` 取用写入 `spell_id`（近战 0，50 ms 过期，表封顶 4096）；哈多诺克斯 59419/59417/59420 已正确入库。
