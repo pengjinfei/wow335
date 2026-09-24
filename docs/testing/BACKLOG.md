@@ -45,11 +45,12 @@
 - **方向**：若仍需 normal5 口径，只考虑能明显提高全队总输出或总治疗的组合改动，并单独记 cohort。
 - **证据**：[Tribunal README](bosses/heroic-hos-tribunal/README.md)。
 
-### 7. 哈多诺克斯：离开酸液云 / 被蛛网猛拉后拉开（进行中）
+### 7. 哈多诺克斯：离开酸液云 / 被蛛网猛拉后拉开（已完成 2026-09-25）
 
 - **问题**：完整形态 ilvl 200 档 0/5（boss 最低 20–95%），隔离形态 normal5 0/5；每场酸液云 59419 与蛛网猛拉 59420 各 6–13 次，阵亡者多死在原地。AN 策略对她没有任何节点。
 - **方向**：先量化每次酸液云落点与受伤 bot 的停留时间、蛛网猛拉后远程被拉入近身的比例，再分别加「离开酸液云」「猛拉后回到远程距离」两个单变量。
 - **进展 2026-09-24**：根因是全 bot 队伍没有启用标准 `avoid aoe`（见第 8 条）；`MasterlessAvoidAoe=1` 后 1/5，时限 900 秒 1/5，再加粉碎者阶段法师群攻归零（playerbots `e955cc80`）2/5。剩余失败都在 300 秒后的 boss 阶段；蛛网猛拉伤害仅 2.4%，不再是优先项。
+- **结论 2026-09-25**：真正根因是克里克希尔节点在哈多诺克斯平台上劫持 DPS（盗贼 30/31 场零输出）；限定作用域后 5/5、0 死（playerbots `b42f27d1`）。
 - **证据**：[哈多诺克斯 README](bosses/heroic-an-hadronox/README.md)。
 
 ### 8. 全部场景是否启用 MasterlessAvoidAoe（框架/基线，待决策）
@@ -61,3 +62,8 @@
 ### 9. 伤害事件缺技能 id（观测，已完成 2026-09-24）
 
 - **结论**：raidtest 在 `ModifyPeriodicDamageAurasTick` / `ModifySpellDamageTaken` / `ModifyMeleeDamage` 记 (攻击者, 受害者) 法术提示，`OnDamage` 取用写入 `spell_id`（近战 0，50 ms 过期，表封顶 4096）；哈多诺克斯 59419/59417/59420 已正确入库。
+
+### 10. 副本内相邻 boss 的节点作用域审计（bot，待查）
+
+- **问题**：AN 的克里克希尔节点只按「可见范围里有无该 boss」判定，在楼下哈多诺克斯平台上劫持了 DPS。其他副本的 dungeon 策略可能有同类写法：未击杀的前置 boss 在隔离场景里一直“可见”。
+- **方向**：审计各 `Ai/Dungeon/*` 中以 `possible targets no los` / `find target` 判定 boss 存在的 trigger/multiplier，加同层/距离作用域；已知受影响场景需要重跑。克里克希尔自身场景需抽查无回归。

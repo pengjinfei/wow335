@@ -24,7 +24,7 @@ run761 是隔离 Dark Matter observation/execution smoke：bot action 与 28237 
 | 同上 | [奥莫洛克](bosses/heroic-nexus-ormorok/README.md) | 完整链路 6/8，0 boss-stage wipe；2 场清怪减员。 **ilvl 200 档：5/5 kill、1 死**。 | **当前配置击杀** |
 | 同上 | [凯利丝塔萨](bosses/heroic-nexus-keristrasza/README.md) | 隔离形态（三球体 DONE fixture）run422 5/5、零死亡；端到端链式未验。 | **稳定击杀（隔离）** |
 | [艾卓-尼鲁布](bosses/heroic-an/README.md) | [阿努巴拉克](bosses/heroic-an-anubarak/README.md) | 完整遭遇战有 kill；历史优化与共享层证据见 README。 **ilvl 200 档：4/5 kill、0 死**。 | **调查中** |
-| 同上 | [哈多诺克斯](bosses/heroic-an-hadronox/README.md) | 隔离形态基线 0/5（normal5）；**完整遭遇已可表达**（raidtest `125ccc2`：召唤物开怪 + 实例状态确认），ilvl 200 档完整形态 0/5（boss 最低 20–95%），死因为酸液云/蛛网猛拉无 bot 应对。 开 `MasterlessAvoidAoe` 后 1/5；再加粉碎者阶段法师群攻归零 **2/5**。 | **调查中（策略待实现）** |
+| 同上 | [哈多诺克斯](bosses/heroic-an-hadronox/README.md) | 完整遭遇（召唤物开怪 + 实例状态确认），ilvl 200 档 + MasterlessAvoidAoe + 坦克离云 + 克里克希尔节点作用域修正：**5/5、0 死，144–189 秒**（run915–919）。此前各 cohort 在 DPS 被克里克希尔节点劫持下测得，已作废。 | **稳定击杀（ilvl 200 档）** |
 | 同上 | [克里克希尔](bosses/heroic-an-krikthir/README.md) | 完整遭遇战有一次 kill；清怪稳定性未验。 **ilvl 200 档：4/4 kill、0 死**。 | **调查中** |
 | [达克萨隆要塞](bosses/heroic-dtk-trollgore/README.md) | Trollgore / [Novos](bosses/heroic-dtk-novos/README.md) / [Tharon'ja](bosses/heroic-dtk-tharonja/README.md) / [King Dred](bosses/heroic-dtk-dred/README.md) | 四 boss 均已有正常规则隔离 boss 战通过；Dred 经共享 LOS 修复后 15/16。 | **完成（boss 机制口径）** |
 | [古达克](bosses/heroic-gd/README.md) | [斯拉德兰](bosses/heroic-gd-sladran/README.md) | 隔离 boss 战合并后 3/5；平台阵位 0/5 已回退。 **ilvl 200 档：5/5 kill、0 死**。 | **调查中** |
