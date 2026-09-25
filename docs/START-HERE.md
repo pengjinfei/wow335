@@ -16,6 +16,7 @@
 ### 最新状态（2026-09-24，优先于下方历史事实）
 
 - **第二台开发机 my-mac（2026-09-25）**：`ssh my-mac`，根目录 `/Users/pengjinfei/IdeaProjects/github/wow335`，三个源码库在 `mymac/dev`（基于 core `69f271af6` / playerbots `aabfd58f` / raidtest `61f345d`）。**my-mac 的 run id 从 100000 起**（attempts 3000000000、events 1e12 起），与本机样本天然区分。环境回归 `heroic-gd-sladran-disc-h5g` run100000–100004 **5/5 击杀 0 死**（48.6–63.6 秒，本机 run932–936 为 53.0–66.7 秒）。搭建细节见 [环境手册 §10](02-环境搭建手册-macOS.md)。
+- **克里克希尔前置阶段（2026-09-25）**：根因是两组守望者同时打队伍（框架在 boss 自派下一组时抢拉）；raidtest `4790175` 的 `PrerequisiteRepullDelaySeconds=20` 后 h5g 10/12 kill（原 15/30），另加只读 `creature_engage`/`creature_evade` 事件。剩余 boss 自身 evade 待复现。MySQL 已 `skip-log-bin` 关闭 binlog；`raidtest_events` 只保留 run≥900。
 - **上游同步（2026-09-25，用户指示）**：core `main` 合并 origin/Playerbot 231 个提交（`69f271af6`），playerbots 合并 origin/master（`aabfd58f`；AN/GD/Nex 策略头冲突保留本地 TrashCcPullStrategy 与 GD 闷棍禁用，采用上游改名 `wotlk-an`/`wotlk-gd`/`wotlk-nex`），raidtest `61f345d` 跟随改名（`RuntimeStrategyName` 恒等）并补 `PlayerbotsDatabase.h`。启动应用 62 条 SQL 更新。备份：旧 binary `/tmp/wow335-worldserver-before-upstream-merge`，四库 dump `/tmp/wow335-db-backup-before-upstream-merge/`。ilvl 200 回归 **15/15 击杀**：哈多诺克斯完整 5/5（run927–931，1 死）、斯拉德兰 5/5（run932–936，0 死）、因格瓦尔 5/5（run937–941，2 死）。上游同步是基线变化，此后新样本单独分 cohort。
 
 - **装备才是 Tribunal 的主杠杆。** normal5-v1（ilvl≈183）下 Holy Shield uptime、r35 远程补视线两个单变量均 0/5（已关闭）；换用 `heroic5gear-n5talents-v1`（ilvl 200，天赋/雕纹/补给与 normal5 相同，刺杀贼换两把 ilvl 200 匕首）后，场景 `heroic-hos-tribunal-event-h5g` 两轮 **2/5 + 3/5 = 5/10 DONE**（第一轮含跟随修正回归 run802）。独立记账，不与 normal5 合算。
@@ -52,7 +53,7 @@
 | 管理库 | `main` 最新 |
 | azerothcore-wotlk | `69f271af6`（`main`，上游同步合并） |
 | mod-playerbots | `aabfd58f`（分支 `codex/gd-takeover`，上游同步合并） |
-| mod-raidtest | `61f345d`（分支 `codex/gd-takeover`） |
+| mod-raidtest | `4790175`（分支 `codex/gd-takeover`） |
 
 运行日志、`raidtest-rosters/`、`raidtest-scenes/` 等 core 未跟踪生成物不等同源码改动，仍须如实报告，不能删除他人资产。
 
