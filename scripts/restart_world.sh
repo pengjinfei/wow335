@@ -8,7 +8,7 @@
 # worldserver 的 stdin 就断了。详见 fifo_relay.py 头部注释。
 set -u
 SELF_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-cd /Users/nowcoder/IdeaProjects/github/wow335/azerothcore-wotlk
+cd "$SELF_DIR/../azerothcore-wotlk"
 LOG=/tmp/wow335-worldserver-$1.log
 OLD=$(pgrep -x worldserver | head -1)
 if [ -n "$OLD" ]; then

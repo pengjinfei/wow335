@@ -18,7 +18,7 @@
 # 不带 --apply 时只打印将要做的改动（dry run）。
 set -e
 
-ROOT=/Users/nowcoder/IdeaProjects/github/wow335/azerothcore-wotlk
+ROOT=${0:A:h:h}/azerothcore-wotlk
 MYSQL=/opt/homebrew/opt/mysql@8.4/bin/mysql
 FIFO=/tmp/ac_world_fifo
 ROGUE_ACCOUNT=54          # RAIDTEST2，拥有 753 raidtechfivc（人类盗贼）
