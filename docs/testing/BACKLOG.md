@@ -74,14 +74,14 @@
 - **历史回查**（旧口径下 `boss lost combat state` 且 boss 掉过血）：阿努巴拉克 h5g 5 次、h5g-aoe 2 次、n5 4 次（n5 共 286 条记录，击杀率几乎不变）；莫拉比 2 次为血量 0（不属此类）；naxx 早期 run2–36 共 28 次属框架初期开怪问题，不在现行台账。数据库原始行不改，重算只写进文档。
 - **证据**：[阿努巴拉克 README](bosses/heroic-an-anubarak/README.md)「“卡住中止”的真相」及其后一节。
 
-### 12. 前置阵亡改为等队友复活（框架，已实现待自然触发 2026-09-25）
+### 12. 前置阵亡改为等队友复活（框架已实现；bot 侧阻断，2026-09-26）
 
-- **改动**：raidtest `3c26d3d`：恢复阶段遇到阵亡成员不再立即 `roster casualty before boss pull` 作废，而是记 `recovery_wait:dead` 并等最多 180 秒让 bot 自己复活（playerbots 牧师/萨满/圣骑士/德鲁伊有脱战“队友死亡→复活”触发）；超时记 `casualty not revived during recovery`。框架不代为复活。
-- **待确认**：Tribunal run1039–1045 前置无人阵亡，新路径未触发。任何场景出现 `recovery_wait:dead` 时核对是否被复活、复活后是否正常开 boss。
+- **改动**：raidtest `3c26d3d`：恢复阶段遇到本场有死亡记录的成员时记 `recovery_wait:dead` 并等最多 180 秒让 bot 自己复活；超时记 `casualty not revived during recovery`。无死亡记录的死者直接判 `scene_invalid`（`73cc994`）。框架不代为复活。
+- **首次触发（Tribunal run1084）**：盗贼 74.5 秒前置阵亡后**立即释放灵魂**，以鬼魂回到副本外墓地（map 571），牧师全程未施放复活——等满 180 秒中止。原因在 playerbots：无真人 master 时 `DeadStrategy` 的 "auto release" 立即释放，真人会躺着等复活。
+- **方向（bot，待设计）**：无 master 的队伍里，若有存活且带复活技能的队友，延后释放灵魂（例如脱战后仍等一段时间或直到队友施放复活）；否则保持现状。改后此条框架路径才有意义；在此之前每次前置阵亡多耗 180 秒。
 - **动机**：Tribunal cohort3 7 次启动中 2 次因盗贼前置阵亡作废（run1033/1035）。
 
-### 13. 环境致死不产生死亡事件（观测，待补）
+### 13. 环境致死不产生死亡事件（观测，已补 2026-09-26）
 
-- **问题**：闪电大厅沃尔坎下层准备点，bot 传送落地即死，但 raidtest 既无伤害事件也无死亡事件（run1057–1060）；推测是熔岩/坠落等环境致死走 `Player::EnvironmentalDamage` / `KillPlayer`，不经过 `UnitScript::OnDamage` / `OnUnitDeath`。这类死亡会被记成“无记录的死亡”（现由开场核对与恢复阶段判 `scene_invalid`，不会误计入样本）。
-- **方向**：补 `PlayerScript` 的环境伤害/死亡钩子（如 `OnPlayerKilledByCreature` 之外的环境类），把环境致死记入死亡事件并标注类型。
-- **证据**：[闪电大厅 README](bosses/heroic-hol/README.md)「场景要点 / Volkhan」。
+- **结论**：raidtest `6569786` 加 `PlayerScript::OnPlayerJustDied` 兜底（所有玩家死亡最终都经 `Player::KillPlayer`）：同一玩家 2 秒内已由 `OnUnitDeath` 记过则跳过，否则补一条死亡事件，detail 带 `via=player_just_died`、位置与出界标志。正常死亡不重复（run1084 盗贼只记 1 条）。
+- **未复现的部分**：旧沃尔坎下层准备点诊断 run1078–1080 三场均无人死亡，环境致死本身没能复现，兜底对它的效果待自然出现时核对。
