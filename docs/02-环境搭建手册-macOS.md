@@ -215,6 +215,23 @@ cd azerothcore-wotlk && ./acore.sh compiler compile   # 仅编译，不重跑 cm
 增量编译（只改模块）约 1~2 分钟。配合 `ccache`（`./acore.sh compiler
 ccacheShowStats` 看命中率）。
 
+## 10. 第二台开发机（my-mac，2026-09-25）
+
+用于并行开发，不共享本机的数据库或构建目录。做法与差异：
+
+- **源码**：直接从 fork clone（core `mine/main`、playerbots `mine/main`、raidtest `origin/dev`），各自新建 `mymac/<主题>` 分支开发。
+- **MySQL**：my-mac 原有 `/opt/homebrew/var/mysql` 是 9.0.1 初始化的数据目录，8.4 无法打开，**不要动它**。另建独立实例：
+  配置 `/opt/homebrew/etc/my-wow335.cnf`（datadir `/opt/homebrew/var/mysql@8.4`、关 binlog），
+  `mysqld --defaults-file=... --initialize-insecure` 初始化，`mysqld_safe --defaults-file=... &` 启动（**不开机自启**，重启后需手动拉起）。
+- **数据库**：从本机 `mysqldump --single-transaction` 导入四个库；`raidtest_events` 只带表结构。之后把 raidtest 自增起点改开，避免两台机器 run 号相撞：
+  `raidtest_runs`=100000、`raidtest_attempts`=3000000000、`raidtest_events`=1e12。
+  `acore_auth.realmlist` 改成 my-mac 的局域网 IP。
+- **客户端数据**：`rsync -a data/world my-mac:...`（macOS 自带 rsync 不认 `--info`，会直接报错退出）。
+- **配置**：拷 `conf/config.sh` 与 `env/dist/etc`，把 `worldserver.conf` 的 `DataDir` 改成 my-mac 路径；`raidtest-rosters/`、`raidtest-scenes/` 是逐 run 输出，不拷。
+- **编译**：`var/build/build.sh`（显式 cmake 参数与本机 CMakeCache 一致，只编 `worldserver authserver`）；机器空闲时 `-j12` 全量约 8 分钟。
+  产物链接的是 `mysql@8.4` 的 `libmysqlclient`（`otool -L` 核对；`isSameClientDB` 要求编译头与运行库版本号完全一致）。
+- **启动**：先 `mkfifo /tmp/ac_world_fifo`，再 `scripts/restart_world.sh <日志名>`；日志在 `/tmp/wow335-worldserver-<日志名>.log`。
+
 ## 常见问题
 
 | 症状 | 处理 |
