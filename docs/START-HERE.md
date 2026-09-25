@@ -1,6 +1,6 @@
 # 新会话接手
 
-更新：2026-09-24。此文件只保留当前工作面和操作边界；跨副本结果在 [`testing/BOSS-LEDGER.md`](testing/BOSS-LEDGER.md)，文档组织规则在 [`testing/README.md`](testing/README.md)，冻结的旧入口在 [`testing/archive/START-HERE-2026-09-21.md`](testing/archive/START-HERE-2026-09-21.md)。
+更新：2026-09-25。此文件只保留当前工作面和操作边界；跨副本结果在 [`testing/BOSS-LEDGER.md`](testing/BOSS-LEDGER.md)，文档组织规则在 [`testing/README.md`](testing/README.md)，冻结的旧入口在 [`testing/archive/START-HERE-2026-09-21.md`](testing/archive/START-HERE-2026-09-21.md)。
 
 ## 当前 campaign：英雄岩石大厅 / Tribunal of Ages（回归调查）
 
@@ -14,6 +14,8 @@
 6. Sjonnir 的正常规则框架 blocker：[`testing/bosses/heroic-hos-sjonnir/README.md`](testing/bosses/heroic-hos-sjonnir/README.md)
 
 ### 最新状态（2026-09-24，优先于下方历史事实）
+
+- **上游同步（2026-09-25，用户指示）**：core `main` 合并 origin/Playerbot 231 个提交（`69f271af6`），playerbots 合并 origin/master（`aabfd58f`；AN/GD/Nex 策略头冲突保留本地 TrashCcPullStrategy 与 GD 闷棍禁用，采用上游改名 `wotlk-an`/`wotlk-gd`/`wotlk-nex`），raidtest `61f345d` 跟随改名（`RuntimeStrategyName` 恒等）并补 `PlayerbotsDatabase.h`。启动应用 62 条 SQL 更新。备份：旧 binary `/tmp/wow335-worldserver-before-upstream-merge`，四库 dump `/tmp/wow335-db-backup-before-upstream-merge/`。ilvl 200 回归 **15/15 击杀**：哈多诺克斯完整 5/5（run927–931，1 死）、斯拉德兰 5/5（run932–936，0 死）、因格瓦尔 5/5（run937–941，2 死）。上游同步是基线变化，此后新样本单独分 cohort。
 
 - **装备才是 Tribunal 的主杠杆。** normal5-v1（ilvl≈183）下 Holy Shield uptime、r35 远程补视线两个单变量均 0/5（已关闭）；换用 `heroic5gear-n5talents-v1`（ilvl 200，天赋/雕纹/补给与 normal5 相同，刺杀贼换两把 ilvl 200 匕首）后，场景 `heroic-hos-tribunal-event-h5g` 两轮 **2/5 + 3/5 = 5/10 DONE**（第一轮含跟随修正回归 run802）。独立记账，不与 normal5 合算。
 - 已提交：playerbots `7e77a827`（r35 远程补视线 + 远程空转 probe，注销未 dispatch 的 r34）；raidtest `c40a0d6`（EventFollowStarter 只在 starter 走动或 bot 掉队 >20 码时跟随，战斗中不再钉住 bot）、`41e385d`（脚本事件有人阵亡且残存者脱战 45 秒判 wipe，避免 900 秒 timeout）、`f2c8a50`（新阵容与场景 .conf.dist）。
@@ -47,9 +49,9 @@
 | 仓库 | 期望提交（接手时） |
 |---|---|
 | 管理库 | `main` 最新 |
-| azerothcore-wotlk | `c747f55ca` |
-| mod-playerbots | `b42f27d1`（分支 `codex/gd-takeover`） |
-| mod-raidtest | `fbd6bd9`（分支 `codex/gd-takeover`）；隔离 worktree `/tmp/mod-raidtest-tribunal-r32` 另有 `1b7d35d`（伤害 spell id），因主树 `CombatEventBus.cpp` 有他人未提交改动未快进，合并前须先处理该改动 |
+| azerothcore-wotlk | `69f271af6`（`main`，上游同步合并） |
+| mod-playerbots | `aabfd58f`（分支 `codex/gd-takeover`，上游同步合并） |
+| mod-raidtest | `61f345d`（分支 `codex/gd-takeover`） |
 
 运行日志、`raidtest-rosters/`、`raidtest-scenes/` 等 core 未跟踪生成物不等同源码改动，仍须如实报告，不能删除他人资产。
 
