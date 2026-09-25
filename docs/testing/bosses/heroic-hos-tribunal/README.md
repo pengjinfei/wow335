@@ -293,3 +293,11 @@ binary 同 smoke（SHA `2159cd83…`，含 survivor-retry，不与 r32 合算）
 - **跟随修正 v2 验证**：五场动态段前 30 秒无任何 bot 距 Brann 点 >60 码（cohort 1 的 run802 掉队未再出现）。
 - **装备档合计**：cohort1 2/5（含 run802 框架回归）+ cohort2 3/5 = **5/10 DONE**，全部首死/崩溃点右移到 230–257s；对比 normal5 同期（Holy Shield / r35 等）0/15。两 cohort 框架版本不同，分别记账。
 - **待办（框架）**：事件失败重置（小怪消失、boss state 退回）而仍有存活者时应立即判 wipe，避免 900s 超时。
+
+### 2026-09-25 上游同步后 ilvl 200 档复测（cohort 3，0/5）
+
+- binary：core `69f271af6`、playerbots `aabfd58f`、raidtest `f92961f`；场景 `heroic-hos-tribunal-event-h5g` 不变（未开 `MasterlessAvoidAoe`）。
+- **结果 0/5 DONE**：run1032/1034/1036/1037/1038 均动态段 5 死 wipe（412–473 秒）；run1033/1035 前置 roster casualty 中止（不入分母），两次都是**盗贼**约 75 秒被 27971/27972 打死。
+- **不是回归**：按 cohort1/2 同一口径（首次 27983–27985 伤害起 150 秒、831–835 对非玩家伤害），本轮 639–672k/场，旧 666k；首死在 gossip1 后 226–267 秒，旧 230–257 秒。三个 cohort 合计 **5/15**，上游合并后击杀率的差异在噪声内（0/5 在 1/3 基率下约 13%）。
+- **承伤分解（动态段，4 场均值）**：Dark Rune Protector 27983 近战+顺劈+冲锋 **约 52%**，其中 **53.5% 落在非坦克**（萨满 19%、盗贼 12%、法师 12%、牧师 10%）；Stormcaller 闪电箭 13.6%；Kaddrak 注视 12.7%（不可躲）；可躲地面 AoE（Searing Gaze 6.7% + Dark Matter 4.4%）约 11%——`MasterlessAvoidAoe` 上限小，暂不作为单变量。
+- 下一步候选：先量 Protector 打非坦克是 AoE 仇恨（坦克拿不住）还是坦克够不着（多门刷怪）；run749 已否定简单 TankTarget 强制优先级。
