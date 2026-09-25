@@ -1143,3 +1143,11 @@ binary：上游同步后（core `69f271af6`、playerbots `aabfd58f`）+ raidtest
 - raidtest `0abf76b` 把“掉过血后 evade 复位、无人死亡”判为 Wipe（BACKLOG 11）。验证 run1000–1007：7 kill + 1 wipe（run1004，17% 复位，`encounter reset mid-fight (no deaths)`）。
 - **ilvl 200 档合计（按启动）：30 kill / 37 启动（81%）**；失败 = 6 次潜地复位（833/962/984/991/999 旧记 aborted，1004 新记 wipe）+ 1 次超时（832）。进入潜地复位前 boss 血量 12–47%。
 - 下一步候选（bot）：潜地期间别让全队脱战——需先确认 AC 下真人是否同样会复位，再决定改 playerbots 还是接受为遭遇难点。
+
+### 2026-09-25 潜地复位定位（未闭合，已转下一个 boss）
+
+- **不是召唤物触发**：脚本 `SummonedCreatureEvade → EnterEvadeMode(OTHER)` 看似可疑，但 raidtest 当前 binary 在 boss evade 时列出 150 码内同时处于 evade 的生物，run1009 复位时一个都没有。
+- **触发路径**：`Creature::SelectVictim()` 在仇恨表里选不到可攻击目标时直接 `AI()->EnterEvadeMode()`（默认 OTHER，与 reason=4 一致）。复位瞬间 0/5 成员在战斗中，即玩家与 boss 的战斗引用已断开。raidtest/playerbots 在战斗中都不会调用 `CombatStop`；`RevalidateCombat` 只在解除魅惑时调用，`EndCombatBeyondRange` 在副本内不执行。断开的原因未找到。
+- **击杀场基线**（boss_state 新增仇恨采样）：三次潜地全程 boss combat=true、engaged=true、5/5 成员与 boss 在战斗、仇恨条目全部在线（5–12，含宠物）。
+- **未复现**：换上带仇恨采样的 binary 后 run1012–1031 连续 **20/20 kill**（此前约 1/6 复位，偶然概率约 3%）。采样只读，原因可能是巧合，也可能是观察者效应；下次复现时直接看 `boss_state` 中 `members_with_boss` 何时从 5 掉到 0，必要时撤掉采样对照。按用户指示转下一个 boss。
+- **本 boss ilvl 200 档累计（按启动）：53 kill / 61 启动（87%）**；失败 7 次潜地复位 + 1 次超时。

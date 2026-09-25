@@ -23,7 +23,7 @@ run761 是隔离 Dark Matter observation/execution smoke：bot action 与 28237 
 | 同上 | [阿诺姆鲁斯](bosses/heroic-nexus-anomalus/README.md) | 正常规则；300s 档 9/10，420s 档 4/5（不同预算 cohort）。 | **完成** |
 | 同上 | [奥莫洛克](bosses/heroic-nexus-ormorok/README.md) | 完整链路 6/8，0 boss-stage wipe；2 场清怪减员。 **ilvl 200 档：5/5 kill、1 死**。 | **当前配置击杀** |
 | 同上 | [凯利丝塔萨](bosses/heroic-nexus-keristrasza/README.md) | 隔离形态（三球体 DONE fixture）run422 5/5、零死亡；端到端链式未验。 | **稳定击杀（隔离）** |
-| [艾卓-尼鲁布](bosses/heroic-an/README.md) | [阿努巴拉克](bosses/heroic-an-anubarak/README.md) | 完整遭遇战有 kill；历史优化与共享层证据见 README。 **ilvl 200 档：30 kill / 37 启动（81%）**；失败为 6 次潜地期间全员脱战致 boss 复位（口径已修，raidtest `0abf76b`）+ 1 次超时；躲 AoE 无收益。 | **调查中** |
+| [艾卓-尼鲁布](bosses/heroic-an/README.md) | [阿努巴拉克](bosses/heroic-an-anubarak/README.md) | 完整遭遇战有 kill；历史优化与共享层证据见 README。 **ilvl 200 档：53 kill / 61 启动（87%）**；失败为 7 次潜地期间全员脱战致 boss 复位（`SelectVictim` 无目标 evade，战斗引用断开原因未找到，最近 20 场未复现）+ 1 次超时；躲 AoE 无收益。 | **调查中** |
 | 同上 | [哈多诺克斯](bosses/heroic-an-hadronox/README.md) | 完整遭遇（召唤物开怪 + 实例状态确认），ilvl 200 档 + MasterlessAvoidAoe + 坦克离云 + 克里克希尔节点作用域修正：**5/5、0 死，144–189 秒**（run915–919）。此前各 cohort 在 DPS 被克里克希尔节点劫持下测得，已作废。 | **稳定击杀（ilvl 200 档）** |
 | 同上 | [克里克希尔](bosses/heroic-an-krikthir/README.md) | 完整遭遇（含 9 只前置守望者）。ilvl 200 档 + 开怪门禁 `PrerequisiteRepullDelaySeconds=20`（raidtest `4790175`）：**17/20 启动 kill**（run950–982，原 15/30）；进入 boss 战后全部击杀。剩余中止为全员脱战时 boss 自身 evade。 | **基本稳定（ilvl 200 档）** |
 | [达克萨隆要塞](bosses/heroic-dtk-trollgore/README.md) | Trollgore / [Novos](bosses/heroic-dtk-novos/README.md) / [Tharon'ja](bosses/heroic-dtk-tharonja/README.md) / [King Dred](bosses/heroic-dtk-dred/README.md) | 四 boss 均已有正常规则隔离 boss 战通过；Dred 经共享 LOS 修复后 15/16。 | **完成（boss 机制口径）** |
