@@ -282,3 +282,9 @@ playerbots `b42f27d1` 把 `krik'thir watchers` trigger 与 `KrikthirMultiplier` 
 - **修正（raidtest `4790175`）**：场景键 `PrerequisiteRepullDelaySeconds`：最近一只前置怪死后 N 秒内不下达新开怪；任一存活前置怪已在战斗（正被派来）时也不开（最多再等 30 秒），派来的怪由 bot 自己接。只决定开怪时机，不改 bot 战斗决策。h5g 设 20。
 - **结果**：执行门槛每场均有 `preclear_repull_hold`；run950–957 **6/8 kill**，run958–961 **4/4 kill**（0 死），合计 **10/12**（对照 h5g 60 秒重绑下 30 次启动 15 kill）。boss 战阶段仍全部击杀。
 - **剩余两次中止**：950（72.6 秒）与 956（39 秒）都是**全员刚脱战、最近 bot 距 boss 22.6–23 码时 boss 自身 evade**（reason=4），带下三组；没有任何小怪 evade 记录在前。956 重绑后继续，但 Silthik 被派出后长时间处于战斗却不过来，门禁的「在战斗则等」又多等至 200 秒超时。`creature_engage` 已就位，下一次复现即可看到 boss 被谁、在多远拉进战斗。另见外围非前置怪 127229/127235 偶发被拉（北侧通道，对结果无影响）。
+
+### 2026-09-25 补跑到 20 次启动
+
+- run975–982：7/8 kill；合计门禁后 **17/20 启动 kill（85%）**，进入 boss 战后全部击杀。
+- 新失败方式 run977：门禁正常等待，boss 于 57 秒派来 Silthik 组，盗贼（class 4）冲出迎击，途经 (520.7,677.8) 时距 Gashra 组小怪 18.5 码被拉上（`creature_engage` victim=盗贼），两组同打全灭。属 bot 行为（近战迎击而非门口等），未修；出现 1/20。
+- 这 20 次里 boss 自身 evade（950/956 那类）未再出现。

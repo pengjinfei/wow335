@@ -16,7 +16,7 @@
 ### 1. 克里克希尔前置阶段中止（框架，主因已修 2026-09-25）
 
 - **结论**：主因不是站位，而是框架在 boss 自己派下一组时抢拉另一组，两组同打队伍（击杀场几乎无重叠，中止场 5–21 个 5 秒桶重叠；阵亡都在门口）。raidtest `4790175` 的 `PrerequisiteRepullDelaySeconds=20` 后 10/12 kill（原 15/30）。原“坦克拉回门口”方向作废。
-- **剩余**：全员脱战时 boss 自身 evade 带下三组（950/956），原因待 `creature_engage` 复现后定位；Silthik 被派出后不过来时门禁多等至超时（956）。
+- **剩余**：全员脱战时 boss 自身 evade 带下三组（950/956），原因待 `creature_engage` 复现后定位；Silthik 被派出后不过来时门禁多等至超时（956）；近战（盗贼）冲出去迎击派来的组、路过未清组 18 码内把它拉上（977）。补跑后合计 **17/20 启动 kill**。
 - **证据**：[克里克希尔 README](bosses/heroic-an-krikthir/README.md)「前置阶段根因：两组同时打队伍」。
 
 ### 2. 召唤物作为前置（框架，已完成 2026-09-24）
@@ -54,6 +54,8 @@
 
 ### 8. 全部场景是否启用 MasterlessAvoidAoe（框架/基线，待决策）
 
+- **2026-09-25 数据点**：阿努巴拉克开启后 4/5 有效样本，对基线 5/5，无收益；哈多诺克斯开启后明显改善。结论仍是逐 boss 决定。
+
 - **问题**：mod-playerbots 只给有真人 master 的 bot 默认加 `avoid aoe`；raidtest 所有历史样本都在没有通用躲 AoE 的条件下测得。哈多诺克斯开启后酸液云承伤明显下降并拿到首杀。
 - **方向**：真人带队时这是默认策略，按“正常规则、真人同等配置”应逐场景开启，但会改变每个场景的基线。建议先在仍不稳定、且有地面持续 AoE 的 boss 上开启并重跑，再决定是否作为全局默认；已稳定的 boss 抽查确认无回归。
 - **证据**：raidtest `MasterlessAvoidAoe`（见哈多诺克斯 README「第 7 条：酸液云」）。
@@ -65,3 +67,9 @@
 ### 10. 副本内相邻 boss 的节点作用域审计（bot，已完成 2026-09-25）
 
 - **结论**：审计 `Ai/Dungeon/*` 中所有按 `possible targets no los`（100 码、无视线/楼层）或大半径 `FindNearestCreature` 判定存在的 trigger/multiplier。仅 AN 克里克希尔两处会跨房间生效（已修 `b42f27d1`）；其余均由 `find target`（只查 bot 自身仇恨列表，即已交战单位）先门控（AK Nadox/Jedoga、HoL Bjarngrim 等）、只影响该 boss 专用动作（FoS Bronjahm）、或半径内不可能有别的 boss（AN 阿努巴拉克 200 码，最近的其他 boss 约 600 码）。克里克希尔自身回归检查无回归（boss 战 3/3，盗贼输出持平）。
+
+### 11. boss 半血复位被记成 aborted（框架口径，待决策）
+
+- **问题**：观察器“boss 脱战且无人死亡 → aborted（卡住）”这条规则，同样吞掉了真实的中途复位。阿努巴拉克 ilvl 200 档 5 次“boss lost combat state”全是潜地期间全员脱战导致 boss evade（run999 诊断日志 `evade=true engaged=false hp=12%`），被排除在样本外，击杀率从 79%（23/29 启动）虚高成 100%。
+- **方向**：hp < 100% 且 boss 进入 evade 的无死亡结局判 Wipe（notes 区分 `encounter reset mid-fight`），开怪未落地（满血脱战）仍判 aborted。改前要回查其他 boss 历史 aborted 里有多少属于这一类，并重算受影响台账。
+- **证据**：[阿努巴拉克 README](bosses/heroic-an-anubarak/README.md)「“卡住中止”的真相」。

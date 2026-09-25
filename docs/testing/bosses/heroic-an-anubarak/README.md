@@ -1122,3 +1122,18 @@ tick 级（1820 个 tick）：毁伤被推入 **303 次只有 17% 轮得到**，
 
 - 场景 `heroic-an-anubarak-h5g`：由原 normal5 场景复制，**仅** `RosterFile` 换为 `mod-raidtest-roster-heroic5gear-n5talents-v1.conf`（天赋/雕文/补给同 normal5-v1，装备 17 件全 ilvl 200 已回读核对）。binary：playerbots `7e77a827`、raidtest `35ca8f5`（SHA `d3fbfef4…`）。
 - 结果：**4/5 kill、0 死**（run830/831/834/835 kill；run832 480 秒 timeout 时 boss 11%；run833 boss 脱战卡住中止，不计）。对照 normal5 调查中。不与 normal5 任何 cohort 合算。
+
+## 2026-09-25 ilvl 200 复测、躲 AoE 对照与“卡住中止”的真相
+
+binary：上游同步后（core `69f271af6`、playerbots `aabfd58f`）+ raidtest `4790175`/`50d83cf`。
+
+| 场景 | kill | timeout | wipe | “boss lost combat state”中止 |
+|---|---|---|---|---|
+| `heroic-an-anubarak-h5g`（run830–835、962–999） | **23** | 1（832） | 0 | **5**（833/962/984/991/999） |
+| `heroic-an-anubarak-h5g-aoe`（仅加 `MasterlessAvoidAoe=1`，run968–974） | 4 | 0 | 1（971，潜地小怪杀 3 人） | 2（968/972） |
+
+- **躲 AoE 无收益**：4/5 有效样本对基线 5/5，差异在噪声内；本 boss 不开。
+- **“卡住”中止其实是真实复位**：raidtest `50d83cf` 在中止日志打印 boss 状态，run999 中止瞬间 `in_combat=false engaged=false evade=true`、hp 12%。时序一致：潜地（53421）后队伍清完小怪、全员脱战，boss 仇恨表清空 → evade 复位；各次均发生在潜地中（hp 39–47%，run999 为第三次潜地 12%）。击杀场潜地期间一直有小怪缠住队伍。输出越高、小怪清得越快越容易撞上。
+- 中间走过的弯路：先按“框架误判”改观察器（认 `IsEngaged()`、中途空闲 60 秒宽限），run984/991 证伪后已撤回，只保留诊断日志。每秒一次的 `boss_state` 采样在这些时段显示 combat=true，与判定矛盾——采样不可作为判定依据，原因未查。
+- **口径**：这 5 次应计为失败。按“启动”计：23 kill / 29 启动（79%）；原先把它们排除在样本外算成的 4/5、5/5 偏高。
+- **待决策（BACKLOG 第 11 条）**：观察器把“boss 半血 evade 复位且无人死亡”判为 Wipe（`encounter reset mid-fight`），而不是 aborted；bot 侧可考虑潜地期间保持战斗（例如留一只小怪或不脱战），需先确认真人在 AC 下是否同样会复位。
