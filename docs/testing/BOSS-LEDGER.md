@@ -38,6 +38,7 @@ run761 是隔离 Dark Matter observation/execution smoke：bot action 与 28237 
 | [灵魂洪炉](bosses/heroic-fos/README.md) | Bronjahm / Devourer of Souls | **仅 ilvl 200 档**：Bronjahm **0/3**（最好 25%：二阶段碎片回血 34%→61%，BACKLOG 16）、Devourer **0/2**（最好 22%：哀嚎之魂站位，BACKLOG 17）；均**跳过待确认**。 | **未通过（跳过待确认）** |
 | [萨隆矿坑](bosses/heroic-pos/README.md) | Garfrost / Ick / Tyrannus | **仅 ilvl 200 档**：Garfrost **1/3**（不驱散永冻+远程躲岩石后首杀；近战/坦克叠层仍致死，BACKLOG 19）；Ick 开怪失败 **跳过待确认**（载具 boss，BACKLOG 18）；Tyrannus 未建场景（载具乘客 + AT 开战 + Rimefang，见 SURVEY）。 | **未通过（跳过待确认）** |
 | [紫罗兰监狱](bosses/heroic-vh/README.md) | Moragg / Erekem / Ichoron / Lavanthor / Xevozz / Zuramat / Cyanigosa | **仅 ilvl 200 档，隔离（夹具放出牢房 boss）**：Ichoron / Lavanthor / Moragg / Erekem / Zuramat 各 **5/5**（0 死），Xevozz **4/5**；Cyanigosa 未建（第 18 波才出现）。 | **6/7 完成（ilvl 200 档，隔离）** |
+| [净化斯坦索姆](bosses/heroic-cos/README.md) | Meathook / Salramm / Epoch / Mal'Ganis / Infinite Corruptor | **仅 ilvl 200 档，隔离（夹具召出，跳过护送与波次）**：五个 boss 各 **5/5**（0 死）；Mal'Ganis 用投降判据。 | **完成（ilvl 200 档，隔离）** |
 | [岩石大厅](bosses/heroic-hos/README.md) | Krystallus / [Maiden](bosses/heroic-hos-maiden/README.md) / [Tribunal](bosses/heroic-hos-tribunal/README.md) / [Sjonnir](bosses/heroic-hos-sjonnir/README.md) | Krystallus 5/5（总2 death，证据边界）；Maiden 隔离 5/5（1 death）；Tribunal r32 1/5 DONE、未完成；Sjonnir **隔离 boss 战 5/5**（fixture 预置 Tribunal DONE+开门；正常规则续链仍框架阻断）；Tribunal ilvl 200 档 5/10。 | **完成（boss 机制口径；Maiden/Sjonnir 隔离，Tribunal 需 ilvl 200 档）** |
 
 ## 团队副本 / 非当前队列
