@@ -33,7 +33,7 @@ run761 是隔离 Dark Matter observation/execution smoke：bot action 与 28237 
 | 同上 | [迦尔达拉](bosses/heroic-gd-galdarah/README.md) | 隔离 boss 战累计 10/10、零死亡；载具移除后骑手仍可能参战，范围已如实记录。 | **稳定击杀（隔离）** |
 | 同上 | [凶残的艾克](bosses/heroic-gd-eck/README.md) | 正常规则原生召唤链累计有效 10/10 kill、零死；无 DB spawn 的框架问题已另行记录。 | **完成（boss 机制口径）** |
 | [安卡赫特：古代王国](bosses/heroic-ak/README.md)（my-mac） | 纳多克斯 / 塔达拉姆 / 耶戈达 / 阿曼尼塔 / 沃拉兹 | **仅 ilvl 200 档**（用户指定）：纳多克斯 **10/10、0 死**；沃拉兹 **10/10、0 死**；阿曼尼塔 boss 阶段 6/6 kill（含坦克修复前 4 场），但清怪不稳，已定位并修复坦克被被动蘑菇勾走（共享层，待回归）；塔达拉姆场景未打通（清怪路线/连通性）；耶戈达未建（开场信徒是召唤物，需框架支持）。 | **调查中** |
-| [闪电大厅](bosses/heroic-hol/README.md) | Bjarngrim / Volkhan / Ionar / Loken | **仅 ilvl 200 档**：Loken **5/5**（1 死）、Volkhan **5/5**（0 死）、Ionar **5/5**（0 死），均隔离 boss 战、机制已核对触发；Bjarngrim 巡逻型场景未建。 | **3/4 完成（ilvl 200 档）** |
+| [闪电大厅](bosses/heroic-hol/README.md) | Bjarngrim / Volkhan / Ionar / Loken | **仅 ilvl 200 档**：Bjarngrim **5/5**（0 死，核心脚本副官重召死循环已修 `4048589b3`）、Volkhan **5/5**（0 死）、Ionar **5/5**（0 死）、Loken **5/5**（1 死），均隔离 boss 战、机制已核对触发。 | **完成（ilvl 200 档）** |
 | [岩石大厅](bosses/heroic-hos/README.md) | Krystallus / [Maiden](bosses/heroic-hos-maiden/README.md) / [Tribunal](bosses/heroic-hos-tribunal/README.md) / [Sjonnir](bosses/heroic-hos-sjonnir/README.md) | Krystallus 5/5（总2 death，证据边界）；Maiden 隔离 5/5（1 death）；Tribunal r32 1/5 DONE、未完成；Sjonnir **隔离 boss 战 5/5**（fixture 预置 Tribunal DONE+开门；正常规则续链仍框架阻断）；Tribunal ilvl 200 档 5/10。 | **完成（boss 机制口径；Maiden/Sjonnir 隔离，Tribunal 需 ilvl 200 档）** |
 
 ## 团队副本 / 非当前队列

@@ -16,7 +16,7 @@
 ### 最新状态（2026-09-24，优先于下方历史事实）
 
 - **第二台开发机 my-mac（2026-09-25）**：`ssh my-mac`，根目录 `/Users/pengjinfei/IdeaProjects/github/wow335`，三个源码库在 `mymac/dev`（基于 core `69f271af6` / playerbots `aabfd58f` / raidtest `61f345d`）。**my-mac 的 run id 从 100000 起**（attempts 3000000000、events 1e12 起），与本机样本天然区分。环境回归 `heroic-gd-sladran-disc-h5g` run100000–100004 **5/5 击杀 0 死**（48.6–63.6 秒，本机 run932–936 为 53.0–66.7 秒）。搭建细节见 [环境手册 §10](02-环境搭建手册-macOS.md)。
-- **闪电大厅（2026-09-26）**：ilvl 200 档 Loken/Volkhan/Ionar 各 5/5，Bjarngrim（巡逻）待建；框架修正 raidtest `73cc994`（下线前复活、开场核对存活/在图）。环境致死无事件记为 BACKLOG 13。
+- **闪电大厅（2026-09-26）**：ilvl 200 档四个 boss 均 5/5（Bjarngrim 需核心修复 `4048589b3`：副官每 tick 重召死循环），副本完成；框架修正 raidtest `73cc994`（下线前复活、开场核对存活/在图）。环境致死无事件记为 BACKLOG 13。
 - **2026-09-25 晚**：因格瓦尔、斯拉德兰按 ilvl 200 档口径结项（用户确认）；Tribunal ilvl 200 档合计 10/22，暂按能力边缘记账；前置阵亡改为等队友复活（BACKLOG 12，未触发）。下一副本：英雄闪电大厅（Halls of Lightning），ilvl 200 档。
 - **阿努巴拉克潜地复位（2026-09-25）**：触发路径为 `Creature::SelectVictim` 无目标 evade，玩家↔boss 战斗引用断开原因未找到；带仇恨采样后 20 场未复现，按用户指示转下一个 boss（Tribunal ilvl 200 档）。ilvl 200 档累计 53/61。复位口径已修（raidtest `0abf76b`，BACKLOG 11）。
 - **克里克希尔前置阶段（2026-09-25）**：根因是两组守望者同时打队伍（框架在 boss 自派下一组时抢拉）；raidtest `4790175` 的 `PrerequisiteRepullDelaySeconds=20` 后 h5g 10/12 kill（原 15/30），另加只读 `creature_engage`/`creature_evade` 事件。剩余 boss 自身 evade 待复现。MySQL 已 `skip-log-bin` 关闭 binlog；`raidtest_events` 只保留 run≥900。
@@ -54,9 +54,9 @@
 | 仓库 | 期望提交（接手时） |
 |---|---|
 | 管理库 | `main` 最新 |
-| azerothcore-wotlk | `69f271af6`（`main`，上游同步合并） |
+| azerothcore-wotlk | `4048589b3`（`main`，上游同步后 + HoL Bjarngrim 脚本修复） |
 | mod-playerbots | `aabfd58f`（分支 `codex/gd-takeover`，上游同步合并） |
-| mod-raidtest | `73cc994`（分支 `codex/gd-takeover`） |
+| mod-raidtest | `7796ab9`（分支 `codex/gd-takeover`） |
 
 运行日志、`raidtest-rosters/`、`raidtest-scenes/` 等 core 未跟踪生成物不等同源码改动，仍须如实报告，不能删除他人资产。
 
