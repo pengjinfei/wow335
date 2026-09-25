@@ -73,3 +73,9 @@
 - **结论**：raidtest `0abf76b`：无人死亡、boss 脱战的结局里，boss 本 attempt 掉过血且此刻 evade（或已回满血）→ **Wipe**，notes `encounter reset mid-fight (no deaths)`；从未掉血（开怪没落地）仍 aborted；掉过血但未 evade、未满血（如血量读 0 的死亡判定竞态，莫拉比 run640/665）仍 aborted 待人工核对。验证 run1000–1007：run1004 于 17% 复位记为 wipe，其余 7 场 kill。
 - **历史回查**（旧口径下 `boss lost combat state` 且 boss 掉过血）：阿努巴拉克 h5g 5 次、h5g-aoe 2 次、n5 4 次（n5 共 286 条记录，击杀率几乎不变）；莫拉比 2 次为血量 0（不属此类）；naxx 早期 run2–36 共 28 次属框架初期开怪问题，不在现行台账。数据库原始行不改，重算只写进文档。
 - **证据**：[阿努巴拉克 README](bosses/heroic-an-anubarak/README.md)「“卡住中止”的真相」及其后一节。
+
+### 12. 前置阵亡改为等队友复活（框架，已实现待自然触发 2026-09-25）
+
+- **改动**：raidtest `3c26d3d`：恢复阶段遇到阵亡成员不再立即 `roster casualty before boss pull` 作废，而是记 `recovery_wait:dead` 并等最多 180 秒让 bot 自己复活（playerbots 牧师/萨满/圣骑士/德鲁伊有脱战“队友死亡→复活”触发）；超时记 `casualty not revived during recovery`。框架不代为复活。
+- **待确认**：Tribunal run1039–1045 前置无人阵亡，新路径未触发。任何场景出现 `recovery_wait:dead` 时核对是否被复活、复活后是否正常开 boss。
+- **动机**：Tribunal cohort3 7 次启动中 2 次因盗贼前置阵亡作废（run1033/1035）。
