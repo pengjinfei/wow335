@@ -79,3 +79,9 @@
 - **改动**：raidtest `3c26d3d`：恢复阶段遇到阵亡成员不再立即 `roster casualty before boss pull` 作废，而是记 `recovery_wait:dead` 并等最多 180 秒让 bot 自己复活（playerbots 牧师/萨满/圣骑士/德鲁伊有脱战“队友死亡→复活”触发）；超时记 `casualty not revived during recovery`。框架不代为复活。
 - **待确认**：Tribunal run1039–1045 前置无人阵亡，新路径未触发。任何场景出现 `recovery_wait:dead` 时核对是否被复活、复活后是否正常开 boss。
 - **动机**：Tribunal cohort3 7 次启动中 2 次因盗贼前置阵亡作废（run1033/1035）。
+
+### 13. 环境致死不产生死亡事件（观测，待补）
+
+- **问题**：闪电大厅沃尔坎下层准备点，bot 传送落地即死，但 raidtest 既无伤害事件也无死亡事件（run1057–1060）；推测是熔岩/坠落等环境致死走 `Player::EnvironmentalDamage` / `KillPlayer`，不经过 `UnitScript::OnDamage` / `OnUnitDeath`。这类死亡会被记成“无记录的死亡”（现由开场核对与恢复阶段判 `scene_invalid`，不会误计入样本）。
+- **方向**：补 `PlayerScript` 的环境伤害/死亡钩子（如 `OnPlayerKilledByCreature` 之外的环境类），把环境致死记入死亡事件并标注类型。
+- **证据**：[闪电大厅 README](bosses/heroic-hol/README.md)「场景要点 / Volkhan」。
