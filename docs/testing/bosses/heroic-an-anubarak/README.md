@@ -1137,3 +1137,9 @@ binary：上游同步后（core `69f271af6`、playerbots `aabfd58f`）+ raidtest
 - 中间走过的弯路：先按“框架误判”改观察器（认 `IsEngaged()`、中途空闲 60 秒宽限），run984/991 证伪后已撤回，只保留诊断日志。每秒一次的 `boss_state` 采样在这些时段显示 combat=true，与判定矛盾——采样不可作为判定依据，原因未查。
 - **口径**：这 5 次应计为失败。按“启动”计：23 kill / 29 启动（79%）；原先把它们排除在样本外算成的 4/5、5/5 偏高。
 - **待决策（BACKLOG 第 11 条）**：观察器把“boss 半血 evade 复位且无人死亡”判为 Wipe（`encounter reset mid-fight`），而不是 aborted；bot 侧可考虑潜地期间保持战斗（例如留一只小怪或不脱战），需先确认真人在 AC 下是否同样会复位。
+
+### 2026-09-25 复位口径修正后
+
+- raidtest `0abf76b` 把“掉过血后 evade 复位、无人死亡”判为 Wipe（BACKLOG 11）。验证 run1000–1007：7 kill + 1 wipe（run1004，17% 复位，`encounter reset mid-fight (no deaths)`）。
+- **ilvl 200 档合计（按启动）：30 kill / 37 启动（81%）**；失败 = 6 次潜地复位（833/962/984/991/999 旧记 aborted，1004 新记 wipe）+ 1 次超时（832）。进入潜地复位前 boss 血量 12–47%。
+- 下一步候选（bot）：潜地期间别让全队脱战——需先确认 AC 下真人是否同样会复位，再决定改 playerbots 还是接受为遭遇难点。

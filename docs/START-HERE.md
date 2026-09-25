@@ -16,7 +16,7 @@
 ### 最新状态（2026-09-24，优先于下方历史事实）
 
 - **第二台开发机 my-mac（2026-09-25）**：`ssh my-mac`，根目录 `/Users/pengjinfei/IdeaProjects/github/wow335`，三个源码库在 `mymac/dev`（基于 core `69f271af6` / playerbots `aabfd58f` / raidtest `61f345d`）。**my-mac 的 run id 从 100000 起**（attempts 3000000000、events 1e12 起），与本机样本天然区分。环境回归 `heroic-gd-sladran-disc-h5g` run100000–100004 **5/5 击杀 0 死**（48.6–63.6 秒，本机 run932–936 为 53.0–66.7 秒）。搭建细节见 [环境手册 §10](02-环境搭建手册-macOS.md)。
-- **暂停点（2026-09-25 下午，用户要求暂停）**：服务器 IDLE，未排队任何 run。运行中的 binary 含已撤回的观察器试验（认 `IsEngaged()`、中途空闲宽限），与已提交源码（raidtest `50d83cf`）不同；下次编译部署即恢复一致。结果：克里克希尔门禁后 17/20 启动 kill；阿努巴拉克 ilvl 200 档 23/29 启动 kill，躲 AoE 无收益；阿努巴拉克的“卡住中止”实为真实复位，框架口径待改（BACKLOG 11）。下一步候选：BACKLOG 11（口径）→ 回查其他 boss 的 aborted。
+- **复位口径（2026-09-25）**：raidtest `0abf76b` 把无人死亡的中途复位记为 Wipe（BACKLOG 11 完成）；阿努巴拉克 ilvl 200 档按启动 30/37（81%）；克里克希尔门禁后 17/20。运行中的 binary 与已提交源码一致。下一步候选：阿努巴拉克潜地复位（bot 侧）、克里克希尔近战迎击拉错组、BACKLOG 8。
 - **克里克希尔前置阶段（2026-09-25）**：根因是两组守望者同时打队伍（框架在 boss 自派下一组时抢拉）；raidtest `4790175` 的 `PrerequisiteRepullDelaySeconds=20` 后 h5g 10/12 kill（原 15/30），另加只读 `creature_engage`/`creature_evade` 事件。剩余 boss 自身 evade 待复现。MySQL 已 `skip-log-bin` 关闭 binlog；`raidtest_events` 只保留 run≥900。
 - **上游同步（2026-09-25，用户指示）**：core `main` 合并 origin/Playerbot 231 个提交（`69f271af6`），playerbots 合并 origin/master（`aabfd58f`；AN/GD/Nex 策略头冲突保留本地 TrashCcPullStrategy 与 GD 闷棍禁用，采用上游改名 `wotlk-an`/`wotlk-gd`/`wotlk-nex`），raidtest `61f345d` 跟随改名（`RuntimeStrategyName` 恒等）并补 `PlayerbotsDatabase.h`。启动应用 62 条 SQL 更新。备份：旧 binary `/tmp/wow335-worldserver-before-upstream-merge`，四库 dump `/tmp/wow335-db-backup-before-upstream-merge/`。ilvl 200 回归 **15/15 击杀**：哈多诺克斯完整 5/5（run927–931，1 死）、斯拉德兰 5/5（run932–936，0 死）、因格瓦尔 5/5（run937–941，2 死）。上游同步是基线变化，此后新样本单独分 cohort。
 
@@ -54,7 +54,7 @@
 | 管理库 | `main` 最新 |
 | azerothcore-wotlk | `69f271af6`（`main`，上游同步合并） |
 | mod-playerbots | `aabfd58f`（分支 `codex/gd-takeover`，上游同步合并） |
-| mod-raidtest | `50d83cf`（分支 `codex/gd-takeover`） |
+| mod-raidtest | `0abf76b`（分支 `codex/gd-takeover`） |
 
 运行日志、`raidtest-rosters/`、`raidtest-scenes/` 等 core 未跟踪生成物不等同源码改动，仍须如实报告，不能删除他人资产。
 

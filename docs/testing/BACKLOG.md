@@ -68,8 +68,8 @@
 
 - **结论**：审计 `Ai/Dungeon/*` 中所有按 `possible targets no los`（100 码、无视线/楼层）或大半径 `FindNearestCreature` 判定存在的 trigger/multiplier。仅 AN 克里克希尔两处会跨房间生效（已修 `b42f27d1`）；其余均由 `find target`（只查 bot 自身仇恨列表，即已交战单位）先门控（AK Nadox/Jedoga、HoL Bjarngrim 等）、只影响该 boss 专用动作（FoS Bronjahm）、或半径内不可能有别的 boss（AN 阿努巴拉克 200 码，最近的其他 boss 约 600 码）。克里克希尔自身回归检查无回归（boss 战 3/3，盗贼输出持平）。
 
-### 11. boss 半血复位被记成 aborted（框架口径，待决策）
+### 11. boss 半血复位被记成 aborted（框架口径，已完成 2026-09-25）
 
-- **问题**：观察器“boss 脱战且无人死亡 → aborted（卡住）”这条规则，同样吞掉了真实的中途复位。阿努巴拉克 ilvl 200 档 5 次“boss lost combat state”全是潜地期间全员脱战导致 boss evade（run999 诊断日志 `evade=true engaged=false hp=12%`），被排除在样本外，击杀率从 79%（23/29 启动）虚高成 100%。
-- **方向**：hp < 100% 且 boss 进入 evade 的无死亡结局判 Wipe（notes 区分 `encounter reset mid-fight`），开怪未落地（满血脱战）仍判 aborted。改前要回查其他 boss 历史 aborted 里有多少属于这一类，并重算受影响台账。
-- **证据**：[阿努巴拉克 README](bosses/heroic-an-anubarak/README.md)「“卡住中止”的真相」。
+- **结论**：raidtest `0abf76b`：无人死亡、boss 脱战的结局里，boss 本 attempt 掉过血且此刻 evade（或已回满血）→ **Wipe**，notes `encounter reset mid-fight (no deaths)`；从未掉血（开怪没落地）仍 aborted；掉过血但未 evade、未满血（如血量读 0 的死亡判定竞态，莫拉比 run640/665）仍 aborted 待人工核对。验证 run1000–1007：run1004 于 17% 复位记为 wipe，其余 7 场 kill。
+- **历史回查**（旧口径下 `boss lost combat state` 且 boss 掉过血）：阿努巴拉克 h5g 5 次、h5g-aoe 2 次、n5 4 次（n5 共 286 条记录，击杀率几乎不变）；莫拉比 2 次为血量 0（不属此类）；naxx 早期 run2–36 共 28 次属框架初期开怪问题，不在现行台账。数据库原始行不改，重算只写进文档。
+- **证据**：[阿努巴拉克 README](bosses/heroic-an-anubarak/README.md)「“卡住中止”的真相」及其后一节。
