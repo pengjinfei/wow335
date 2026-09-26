@@ -15,7 +15,7 @@
 
 ### 最新状态（2026-09-26 晚，优先于下方所有条目）
 
-- **按用户指示逐副本推进（ilvl 200 档 `-h5g`）已走完 16 个 WotLK 副本的第一轮**。各 boss 结果以 [ledger](testing/BOSS-LEDGER.md) 为准；待用户确认的项集中在 [BACKLOG](testing/BACKLOG.md) 14、19–23。本轮新增：紫罗兰监狱 7/7（Cyanigosa 6/6）、净化斯坦索姆 5/5、魔环 3/4、冠军的试炼 4/4（大勇士只有地面阶段）、灵魂洪炉 Bronjahm 4/5 / Devourer 3/5、萨隆矿坑 Ick 5/5 / Tyrannus 5/6、映像大厅 Frostsworn General 5/5 / Falric 3/18。
+- **按用户指示逐副本推进（ilvl 200 档 `-h5g`）已走完 16 个 WotLK 副本的第一轮**。各 boss 结果以 [ledger](testing/BOSS-LEDGER.md) 为准；开放项和建议顺序见 [BACKLOG「开放项总览」](testing/BACKLOG.md#开放项总览2026-09-26-收尾新对话从这里挑)，新对话从那里挑。本轮新增：紫罗兰监狱 7/7（Cyanigosa 6/6）、净化斯坦索姆 5/5、魔环 3/4、冠军的试炼 4/4（大勇士只有地面阶段）、灵魂洪炉 Bronjahm 4/5 / Devourer 3/5、萨隆矿坑 Ick 5/5 / Tyrannus 5/6、映像大厅 Frostsworn General 5/5 / Falric 3/18。
 - **核心 fork**：`12c3ed4b7`（HoR 反射体 IMMUNE_TO_PC 修复），已推 `mine/main`。
 - **构建**：增量构建树 `/private/tmp/azerothcore-tribunal-retry-build`，源码是核心 worktree `/private/tmp/azerothcore-tribunal-retry-src`（**核心源码不与主树共享**，改核心要先在主树提交再 `checkout <sha>`）；两个模块软链到主树 `azerothcore-wotlk/modules/`。`libscripts.a`/`libmodules.a` 各约 5–6G，磁盘紧时先 `--target modules` 再 `--target worldserver`，失败会留下 `modules/libmodules.a.XXXXXX` 临时文件。编完用 `strings worldserver | grep` 或看 mtime 确认新代码在里面。
 - **分支（2026-09-26 已整理）**：三个源码库都直接在主干上工作——core `main`（→ `mine`）、playerbots `main`（→ `mine`，推送走 SSH `git@github.com:pengjinfei/mod-playerbots.git`）、raidtest `dev`（→ `origin`，fork 默认分支）。旧的 `codex/gd-takeover` 已快进合入主干、内容相同。未合并的只有 playerbots 实验分支 `exp/boost-on-boss`（BACKLOG 22）。
