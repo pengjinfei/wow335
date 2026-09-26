@@ -120,7 +120,13 @@
 - **剩余问题**：脚本对近战距离内的目标永远施加永冻，run1138 盗贼 53 跳 13.2 万、坦克 63 跳 11.7 万，两场团灭都是近战先死。
 - **方向**：近战 DPS 高层数时退到岩石后清层再回来；坦克需要带 boss 绕岩石或交替。需要先确认真人打法再设计。
 
-### 20. 魔环 Eregos / 龙战（bot，跳过待确认 2026-09-26）
+### 20. 魔环 Eregos / 龙战（bot，管线已通、战术待做 2026-09-26）
+
+- **已完成**（playerbots `0d8ea9d3`、raidtest `bc45826`）：无 master 上龙（Eregos 可攻击时；精华以 Drakos DONE 为前提）、飞到 Eregos 45 码、自行开怪（框架 `EngageTrigger=self`）；龙技能轮换放不出时顺延；翡翠龙优先 Dream Funnel；`CastVehicleSpell` 对友方目标不再转身（之前 Dream Funnel 一次都放不出）；飞行载具豁免同层守卫。无 master 时编队 3 琥珀 / 2 翡翠。
+- **结果**：heroic Eregos 隔离 0/9，最好 37%（run1311）；最近几场都在 54–58% 附近团灭（Planar Shift 阶段）。
+- **剩余问题**：Planar Shift 期间召出的 Planar Anomaly 15 秒后 Planar Blast，龙不会躲（`OccFlyingMultiplier` 压掉了其它移动）；Eregos 盯着一条翡翠龙打（run1312 一条龙吃 12.9 万）。需要骑龙时的躲避和威胁/承伤分担，属于中到大改。
+
+#### 原记录
 
 - **问题**：Eregos 在 z≈655 飞行，只能骑龙打；Varos、Urom 的设计形态也是龙战。playerbots `wotlk-occ` 里上龙、下龙、骑龙飞行的 trigger 全都依赖 master，全 bot 队伍永远不会上龙；骑上后移动也只跟随 master。另据源码推断，龙的单体技能打到不会飞的敌对目标时脚本会杀死骑手（`oculus.cpp:400-411`），需真人 GM 先验证一次。
 - **方向**：playerbots 无 master 时的上龙/飞行/龙技能轮换；框架侧骑乘战的开怪与观察口径。
