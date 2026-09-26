@@ -144,3 +144,16 @@
 
 - **问题**：骑乘阶段不能按正常规则跳过；bot 没有践踏（骑马压下马的冠军）逻辑，冠军会反复上马。只做地面阶段也需要框架补“三只都投降才算完成”的判据，并清掉上一场投降的旧冠军（否则会被绑定、误判击杀）。
 - **证据**：[冠军的试炼 SURVEY](bosses/heroic-toc5/SURVEY.md) §1。
+
+### 22. 共享层：单个 5 人本 boss 上所有爆发技能都不放（bot，待确认 2026-09-26）
+
+- **问题**：`BoostTrigger`（34 个爆发技能共用：英勇/嗜血、急速射击、冰冷血脉、鲁莽等）只在 `balance <= 50` 时触发。`balance` = 存活队员等级和 ÷ 敌方等级和（精英 ×3）。单个 82 级精英 boss（rank 1，5 人本 boss 基本都是）对满员 5 人是 400/246 = 162%，剩 2 人也有 65%，**永远达不到 50%**。所以隔离 boss 战里这些技能从不施放，只有同时来 3 只以上精英时才放（映像大厅 Falric：英勇每场都交在第 1 波小怪上）。
+- **现状**：只在映像大厅做了窄修（playerbots `wotlk-hor`：波次期间压住英勇、Falric/Marwyn 可攻击后萨满直接放）。
+- **方向**：`BoostTrigger::IsActive` 在当前目标 `IsDungeonBoss() || isWorldBoss()` 时也算触发（`DebuffOnBossTrigger` 已有同样判据）。影响所有职业所有 boss，属共享层行为变化，需要全量回归，**先待确认**。
+
+### 23. 映像大厅 Falric / Marwyn / 巫妖王逃亡（bot + 框架，待确认 2026-09-26）
+
+- **Falric**：ilvl 200 档 3/18。4 波灵魂（英雄伤害 ×13）加 Falric 本体；Defiling Horror（惊骇，驱不掉）每场约 23 万，Hopelessness 把 11% 以下的伤害/治疗砍 60%，多数团灭停在 0–5%，也有死在波次里。英勇改到 boss 上（`0fc1b7ad`）后击杀率不变。像 Tribunal 一样是装备/总量问题（见 memory「装备才是杠杆」），bot 侧没有明确的机制杠杆。
+- **Marwyn**：要链式（先过 Falric，`_falricPhaseComplete` 不持久化），受 Falric 通过率限制。
+- **巫妖王逃亡**：框架要改 gossip 调用（`sScriptMgr->OnGossipSelect`）并等领袖挂 gossip 标志（S）；bot 要不打不死的巫妖王、跟领袖跑、打冰墙波次，还要躲 LK 身后 20 码的持续伤害（L）。
+- **证据**：[映像大厅 README](bosses/heroic-hor/README.md)、[SURVEY](bosses/heroic-hor/SURVEY.md)。

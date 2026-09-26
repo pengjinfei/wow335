@@ -41,6 +41,7 @@ run761 是隔离 Dark Matter observation/execution smoke：bot action 与 28237 
 | [净化斯坦索姆](bosses/heroic-cos/README.md) | Meathook / Salramm / Epoch / Mal'Ganis / Infinite Corruptor | **仅 ilvl 200 档，隔离（夹具召出，跳过护送与波次）**：五个 boss 各 **5/5**（0 死）；Mal'Ganis 用投降判据。 | **完成（ilvl 200 档，隔离）** |
 | [魔环](bosses/heroic-oculus/README.md) | Drakos / Varos / Urom / Eregos | **仅 ilvl 200 档**：Drakos **5/5**（完整）；Varos **5/5**（地面隔离，非龙战）；Urom **5/5**（内环本体战隔离）；Eregos 跳过待确认（骑龙，BACKLOG 20）。 | **3/4（ilvl 200 档）** |
 | [冠军的试炼](bosses/heroic-toc5/README.md) | Grand Champions / Eadric / Paletress / Black Knight | **仅 ilvl 200 档，隔离**：Eadric **5/5**；Paletress **5/5**（反射护盾修复 `647c9c66` 后，修前 0/3）；Black Knight **5/5**（副本事件开战，正常规则）；Grand Champions 地面阶段 **6/6**（隔离，跳过骑乘，`KillOnInstanceData`）；骑乘阶段待确认（BACKLOG 21）。 | **4/4（ilvl 200 档，隔离；骑乘阶段未覆盖）** |
+| [映像大厅](bosses/heroic-hor/README.md) | Falric / Marwyn / Frostsworn General / 巫妖王逃亡 | **仅 ilvl 200 档**：Frostsworn General **5/5**（隔离；核心反射体免疫修复 `12c3ed4b7`）；Falric **3/18**（波次 + Hopelessness 总吞吐，BACKLOG 23）；Marwyn、巫妖王逃亡未建（链式/大改）。 | **1/4；其余待确认** |
 | [岩石大厅](bosses/heroic-hos/README.md) | Krystallus / [Maiden](bosses/heroic-hos-maiden/README.md) / [Tribunal](bosses/heroic-hos-tribunal/README.md) / [Sjonnir](bosses/heroic-hos-sjonnir/README.md) | Krystallus 5/5（总2 death，证据边界）；Maiden 隔离 5/5（1 death）；Tribunal r32 1/5 DONE、未完成；Sjonnir **隔离 boss 战 5/5**（fixture 预置 Tribunal DONE+开门；正常规则续链仍框架阻断）；Tribunal ilvl 200 档 5/10。 | **完成（boss 机制口径；Maiden/Sjonnir 隔离，Tribunal 需 ilvl 200 档）** |
 
 ## 团队副本 / 非当前队列
