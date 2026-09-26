@@ -1,6 +1,6 @@
 # 新会话接手
 
-更新：2026-09-25。此文件只保留当前工作面和操作边界；跨副本结果在 [`testing/BOSS-LEDGER.md`](testing/BOSS-LEDGER.md)，文档组织规则在 [`testing/README.md`](testing/README.md)，冻结的旧入口在 [`testing/archive/START-HERE-2026-09-21.md`](testing/archive/START-HERE-2026-09-21.md)。
+更新：2026-09-26。此文件只保留当前工作面和操作边界；跨副本结果在 [`testing/BOSS-LEDGER.md`](testing/BOSS-LEDGER.md)，文档组织规则在 [`testing/README.md`](testing/README.md)，冻结的旧入口在 [`testing/archive/START-HERE-2026-09-21.md`](testing/archive/START-HERE-2026-09-21.md)。
 
 ## 当前 campaign：英雄岩石大厅 / Tribunal of Ages（回归调查）
 
@@ -12,6 +12,14 @@
 4. [`testing/bosses/heroic-hos-tribunal/README.md`](testing/bosses/heroic-hos-tribunal/README.md)
 5. [`testing/HANDOVER-2026-09-21-HOS-TRIBUNAL.md`](testing/HANDOVER-2026-09-21-HOS-TRIBUNAL.md)
 6. Sjonnir 的正常规则框架 blocker：[`testing/bosses/heroic-hos-sjonnir/README.md`](testing/bosses/heroic-hos-sjonnir/README.md)
+
+### 最新状态（2026-09-26 晚，优先于下方所有条目）
+
+- **按用户指示逐副本推进（ilvl 200 档 `-h5g`）已走完 16 个 WotLK 副本的第一轮**。各 boss 结果以 [ledger](testing/BOSS-LEDGER.md) 为准；待用户确认的项集中在 [BACKLOG](testing/BACKLOG.md) 14、19–23。本轮新增：紫罗兰监狱 7/7（Cyanigosa 6/6）、净化斯坦索姆 5/5、魔环 3/4、冠军的试炼 4/4（大勇士只有地面阶段）、灵魂洪炉 Bronjahm 4/5 / Devourer 3/5、萨隆矿坑 Ick 5/5 / Tyrannus 5/6、映像大厅 Frostsworn General 5/5 / Falric 3/18。
+- **核心 fork**：`12c3ed4b7`（HoR 反射体 IMMUNE_TO_PC 修复），已推 `mine/main`。
+- **构建**：增量构建树 `/private/tmp/azerothcore-tribunal-retry-build`，源码是核心 worktree `/private/tmp/azerothcore-tribunal-retry-src`（**核心源码不与主树共享**，改核心要先在主树提交再 `checkout <sha>`）；两个模块软链到主树 `azerothcore-wotlk/modules/`。`libscripts.a`/`libmodules.a` 各约 5–6G，磁盘紧时先 `--target modules` 再 `--target worldserver`，失败会留下 `modules/libmodules.a.XXXXXX` 临时文件。编完用 `strings worldserver | grep` 或看 mtime 确认新代码在里面。
+- **playerbots 工作分支是 `codex/gd-takeover`**，推送用 `git push git@github.com:pengjinfei/mod-playerbots.git HEAD:main`；本地 `main` 分支是很旧的，**不要 checkout 它**。实验分支 `exp/boost-on-boss`（BACKLOG 22，未合并）。
+- AK（安卡赫特）在 my-mac 上另一条工作线，有未推送提交，本机未接手。
 
 ### 最新状态（2026-09-24，优先于下方历史事实）
 
@@ -55,15 +63,6 @@
 | 仓库 | 期望提交（接手时） |
 |---|---|
 | 管理库 | `main` 最新 |
-| azerothcore-wotlk | `4048589b3`（`main`，上游同步后 + HoL Bjarngrim 脚本修复） |
-| mod-playerbots | `bef4c908`（分支 `codex/gd-takeover`，上游同步合并） |
-| mod-raidtest | `414b712`（分支 `codex/gd-takeover`） |
-
-运行日志、`raidtest-rosters/`、`raidtest-scenes/` 等 core 未跟踪生成物不等同源码改动，仍须如实报告，不能删除他人资产。
-
-## 常用操作纪律
-
-- worldserver 控制 FIFO 是 `/tmp/ac_world_fifo`；读端为 `scripts/fifo_relay.py`。发送后必须以 `raidtest status` 回读。
-- 每轮前按场景需要清 `account_instance_times` 与对应 map instance；这不是规则变更。
-- 新 boss：先用 [`testing/CAMPAIGN-TEMPLATE.md`](testing/CAMPAIGN-TEMPLATE.md) 建副本矩阵，再依 [`testing/WORKFLOW.md`](testing/WORKFLOW.md) 建场景、跑基线、量化假说。
-- 新团队副本：另固定 raid size、roster、分组、锁定/CD 复位和验收范围；不可拿五人 roster 或独立 boss 结论外推。
+| azerothcore-wotlk | `12c3ed4b7`（`main`，= `mine/main`） |
+| mod-playerbots | `0fc1b7ad`（分支 `codex/gd-takeover`，= fork `main`） |
+| mod-raidtest | `abc4941`（分支 `codex/gd-takeover`） |
