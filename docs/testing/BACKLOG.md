@@ -103,18 +103,18 @@
 - **问题**：Ritual of the Sword 把一名队员传送到祭坛，3 只 Channeler 25 秒内不打掉就献祭致死；bot 无优先打 Channeler 的逻辑（run1095/1106 各 1 死）。
 - **方向**：UP 策略加 trigger（Channeler 存在）→ DPS 切目标。
 
-### 16. 灵魂洪炉 Bronjahm：碎片回血与二阶段（bot，跳过待确认 2026-09-26）
+### 16. 灵魂洪炉 Bronjahm：碎片回血与二阶段（**已改善 4/5**，playerbots `fdd4ff99`，2026-09-26）
 
 - **问题**：ilvl 200 档 3 场 0 击杀（run1114 小怪卷入超时、run1120 47%、run1125 25%）。run1125 二阶段开始时（171 秒，boss 34%）一只 Corrupted Soul Fragment（36535）没被打死，172.97 秒走到 boss 身上，boss 回到 61%；随后二阶段牧师被 Magic's Bane（69050）与 Shadow Bolt（69049）点杀。run1120 另有牧师 147.5–188.6 秒完全不施法的空窗，run1125 未复现。
 - **方向**：Corrupt Soul 目标应远离 boss 再让碎片出生（现 `MoveFromBronjahmAction` 只在 boss 读条时逃 15 码）；碎片存在时 DPS 强制切目标（现只挂骷髅标记）；二阶段治疗站位。
 - **证据**：[灵魂洪炉 README](bosses/heroic-fos/README.md)。
 
-### 17. 灵魂洪炉 Devourer：哀嚎之魂站位（bot，跳过待确认 2026-09-26）
+### 17. 灵魂洪炉 Devourer：哀嚎之魂站位（**已改善 3/5**，playerbots `fdd4ff99`，2026-09-26）
 
 - **问题**：run1115 38%、run1121 22% 两场团灭。开 `MasterlessAvoidAoe` 后灵魂之井（36536）伤害从集中在一人（10.6 万）变为分散，但哀嚎之魂（70324）一场仍约 13 万，幽灵冲击（70322）压坦克。现有策略只处理 Mirrored Soul（非坦克背对 boss）。
 - **方向**：Wailing Souls（68899 读条 / 68912 选目标）期间非坦克站到 boss 背后；幽灵冲击可打断的职业打断。
 
-### 18. 萨隆矿坑 Ick：载具 boss 开怪（框架/bot，跳过待确认 2026-09-26）
+### 18. 萨隆矿坑 Ick：载具 boss 开怪（**已解决 5/5**，raidtest `862dc13`：治疗站在追击拴绳外，开怪点移到 20 码，2026-09-26）
 
 - **问题**：Ick（36476）是载具，Krick 坐在上面。去掉前置怪后 3 场全部 `pull failed (tank did not establish aggro)`：坦克引擎日志每 tick `reach melee`/`reach spell` 为 USELESS、`melee` FAILED，实际距离 42 码，8 秒无一次伤害。前置怪 202156 距 Ick 8 码，会连带拉起 boss（run1123/1124）。
 - **方向**：查 bot 对载具目标的 `current target` 与距离判定（是否取到了 Krick 或载具座位位置）；框架可考虑把坦克先带到 Ick 身边再拉。
@@ -139,6 +139,8 @@
 - **证据**：[魔环 SURVEY](bosses/heroic-oculus/SURVEY.md) §4、§5。
 
 ### 21. 冠军的试炼 Grand Champions（bot + 框架，待确认 2026-09-26）
+
+- **进展**：地面阶段隔离场景已建，6/6（raidtest `049620f`，`KillOnInstanceData=4:6`）。剩下骑乘阶段。
 
 - **问题**：骑乘阶段不能按正常规则跳过；bot 没有践踏（骑马压下马的冠军）逻辑，冠军会反复上马。只做地面阶段也需要框架补“三只都投降才算完成”的判据，并清掉上一场投降的旧冠军（否则会被绑定、误判击杀）。
 - **证据**：[冠军的试炼 SURVEY](bosses/heroic-toc5/SURVEY.md) §1。

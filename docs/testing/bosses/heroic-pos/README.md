@@ -5,17 +5,19 @@
 
 | boss | 场景 | 结果 | 状态 |
 |---|---|---|---|
-| Forgemaster Garfrost | `heroic-pos-garfrost-h5g` | 改前 0/6（42%、25%、36%、72%、43%、77%）；改后 1/3（run1137 击杀；run1138 21%、run1139 55%） | 跳过待确认（BACKLOG 19） |
-| Ick + Krick | `heroic-pos-ick-h5g` | 0 次开战：前置怪连带拉 boss（run1123/1124），去掉前置后开怪失败（run1134–1136） | 跳过待确认（BACKLOG 18） |
+| Forgemaster Garfrost | `heroic-pos-garfrost-h5g` | 改前 0/6（42%、25%、36%、72%、43%、77%）；改后 1/3（run1137 击杀；run1138 21%、run1139 55%）；试过近战也躲岩石 0/5（run1288–1292），已撤回 | 跳过待确认（BACKLOG 19） |
+| Ick + Krick | `heroic-pos-ick-h5g` | 改前 0 次开战；开怪点移到 Ick 20 码处（raidtest `862dc13`）后 **5/5**（run1283–1287，零死亡，99–106 秒） | **完成** |
 | Tyrannus | 未建 | 载具乘客 + AT 5633 开战 + Rimefang | 未开始 |
 
 ## Garfrost
 
 - **驱散死循环**（run1122）：永冻（70336）每 2 秒在有视线时重挂，牧师前 47 秒几乎只放驱散魔法 988，盗贼整场只挨 1.6 万也死了。playerbots 把 permafrost 加进不驱散名单。
 - **躲岩石**：脚本 `spell_garfrost_permafrost` 跳过非近战、且萨隆岩石（GO 196485）在其与 boss 连线 4 码内的目标。第一版远程+治疗都躲（run1131）：治疗在岩石后看不见坦克，整场 14 个法术，72%。第二版只让远程 DPS 6 层起躲，run1137 击杀，法师永冻降到 12–24 跳。
+- **近战也躲**（8 层起，run1288–1292）：0/5，比只让远程躲的 1/3 更差，已撤回并在代码注释里记下结果。
 - **剩余**：近战与坦克躲不掉，run1138 盗贼 13.2 万、坦克 11.7 万永冻，两场团灭都是近战先死。
 
 ## Ick
 
 - 前置怪 202156 距 Ick 8 码，清它会拉起 boss；改为全部 despawn（5 只 Horror）。
-- 之后三场 8 秒内坦克无伤害：引擎日志每 tick `reach melee`/`reach spell` USELESS、`melee` FAILED，实际距离 42 码。Ick 是载具（GUID 类型 Vehicle），疑似 bot 对载具目标的距离/目标取值有误，待查。
+- 之后三场 8 秒内坦克无伤害：引擎日志每 tick `reach melee`/`reach spell` USELESS、`melee` FAILED，实际距离 42 码。
+- **真因不是载具**：共享层的追击拴绳在治疗（坦克的锚点）离目标超过治疗距离时拒绝追击，而治疗站在 42 码外的旧开怪点。开怪点移到 Ick 20 码处后 5/5。
