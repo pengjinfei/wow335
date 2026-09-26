@@ -22,12 +22,20 @@
 | ✗ | 15 | Svala 献祭期间打 Ritual Channeler | bot | 基线 5/5 0 死；改后 5/5 2 死，未合入 | **待确认**：只让远程打 / 关闭本条（见 15） | S |
 | ⏸ | 19 | Garfrost 近战/坦克永冻叠层 | bot | 基线 0/5 | **待确认**：用户选的“坦克带怪绕岩石”在 AC 脚本下无效（见 19） | M |
 | ✓ | 20 | Eregos 龙战 | bot | **已合入**（playerbots `d1181635`）：躲 Planar Anomaly 后 0/5 → 2/5 | 剩余团灭在 20–30%（雏龙+Arcane Barrage，输出/承伤） | M |
-| 6 | 23 | Falric / Marwyn / 巫妖王逃亡 | bot+框架 | Falric 3/18，另两个未建 | 逃亡：框架 gossip 走 `sScriptMgr->OnGossipSelect` + 等 gossip 标志（S），再看 bot | L |
-| 7 | 21 | 大勇士骑乘阶段 | bot+框架 | 地面阶段 6/6 | 驾驶（25 码外 MoveTo）+ 践踏步行冠军 | L |
+| ◐ | 23 | Falric / Marwyn / 巫妖王逃亡 | bot+框架 | 逃亡已建、**已合入**，0/5（3 次到第 4 面墙）；Falric 3/18；Marwyn 未建 | 第 4 面墙的输出/生存（3 憎恶 + 4 巫医） | L |
+| ✓ | 21 | 大勇士骑乘阶段 | bot+框架 | **完整遭遇 2/5，已合入** | 补样本；看团灭场的骑乘阶段承伤 | L |
 | — | 22 | 单 boss 爆发技能不放 | bot（共享层） | 实验分支 `exp/boost-on-boss`：生效但不涨击杀 | 决定是否作为正确打法合入；合入要全量回归 | S+回归 |
 | — | 16/17 | Bronjahm 4/5、Devourer 3/5 | bot | 已改善 | 需要时补样本、看剩余团灭 | S |
 | — | 8 | 全场景默认 MasterlessAvoidAoe | 基线决策 | 逐 boss 决定 | 待用户决策 | — |
 | — | 3/4/6 | Sjonnir 续链、软泥阶段、Tribunal normal5 | 框架/观测/bot | 低优先 | — | M–L |
+
+### 待用户确认（2026-09-27 这一轮留下）
+
+1. **#14 Skadi**：“非坦克落后坦克”无效（1/5 对 2/5）。真因是坦克被框架带着走过走廊时不拉怪。二选一或组合：a) bot 侧坦克逐组拉怪再前进；b) 场景不再整队走到开怪点，由坦克自己推进。都改变走位方式。
+2. **#15 Svala**：试验为负（英雄 Channeler 反噬近战）。只让远程打，还是关闭本条？当前装备下献祭不致死，基线 5/5 0 死。
+3. **#19 Garfrost**：你选的“坦克带怪绕岩石清层”在 AC 脚本下无效（近战距离内永冻必中）。剩下的方向：近战高层数离开近战（试过 0/4）、按装备/能力边缘记账、或别的想法。
+4. **#23 逃亡**：第 4 面墙是输出/生存问题，是否继续投入（例如 AoE 与击杀顺序），还是先按“管线通、能力边缘”记账。
+5. 旧项不变：#22 `exp/boost-on-boss` 暂不合入（本轮确认）；#8 维持逐 boss 决定（本轮确认）。
 
 ## 待办
 
@@ -186,7 +194,14 @@
 - **方向**：playerbots 无 master 时的上龙/飞行/龙技能轮换；框架侧骑乘战的开怪与观察口径。
 - **证据**：[魔环 SURVEY](bosses/heroic-oculus/SURVEY.md) §4、§5。
 
-### 21. 冠军的试炼 Grand Champions（bot + 框架，待确认 2026-09-26）
+### 21. 冠军的试炼 Grand Champions（**完整遭遇已打通 2/5**，2026-09-27）
+
+- **框架**（raidtest `d089c46`、`50188bd`）：`EventStarterGossipAction`（gossip 按客户端路径先走 `CreatureScript::OnGossipSelect`）、`EventStarterRequireVehicle`（等坦克自己上马，播报员只对骑在载具上的玩家给选项）、`EventStarterGossipWaitSeconds`；脚本事件可以用 `KillOnInstanceData` 判完成（ToC 没有 boss state）。场景 `heroic-toc5-champions-h5g`：选“跳过剧情”（1002，只省喊话和 escort），完成 = `GetData(4) >= 6`，无夹具。
+- **bot**（playerbots `c88c9d6d`、`9b9bafa3`、`f8f227df`）：骑马时 80 码内有下马步行的冠军（NON_ATTACKABLE、无坐骑模型、带步行标志、未被晕）就骑过去践踏；拼枪逻辑改为目标有 Defend 时先退到约 14 码用 Shield-Breaker 破盾，盾破后 8–25 码 Charge、贴身 Thrust，技能都放不出时驾驶坐骑贴近。原逻辑只放技能不移动：smoke run1432 骑乘小怪清了约 330 秒，Shield-Breaker 一千多次 TOO_CLOSE，冠军从未下马。
+- **结果**：run1437 击杀（407 秒 1 死，践踏 145 次）、run1439–1442 为 1/4（run1442 0 死 254 秒），合计 **2/5**。
+- 骑乘阶段治疗不能施法（游戏规则），团灭场都在冠军骑乘阶段。
+
+#### 更早记录
 
 - **进展**：地面阶段隔离场景已建，6/6（raidtest `049620f`，`KillOnInstanceData=4:6`）。剩下骑乘阶段。
 
@@ -200,7 +215,13 @@
 - **方向**：`BoostTrigger::IsActive` 在当前目标 `IsDungeonBoss() || isWorldBoss()` 时也算触发（`DebuffOnBossTrigger` 已有同样判据）。影响所有职业所有 boss，属共享层行为变化，需要全量回归，**先待确认**。
 - **实验（2026-09-26，playerbots 本地分支 `exp/boost-on-boss`，未合并）**：按上面的方向改后，单 boss 阶段的爆发确实放出来了（Falric 阶段真言术：注入每场 0 → 1–2 次，复仇之怒 1/4 → 4/4 场），但击杀率不变：Falric 1/5（改前 1/5）、Garfrost 0/5（改前 1/3）、Skadi 3/5（改前 3/6）、Tribunal 3/5（改前 11/29）。另外修正上面的说法：**带精英小怪的战斗（Garfrost 6 只 Siegesmith、Skadi、Tribunal）改前就会放爆发**，只有纯单 boss 才完全不放。结论：不是这几个卡住 boss 的杠杆；是否作为“打法更正确”的通用修正合入，需要回归后由用户决定。
 
-### 23. 映像大厅 Falric / Marwyn / 巫妖王逃亡（bot + 框架，待确认 2026-09-26）
+### 23. 映像大厅 Falric / Marwyn / 巫妖王逃亡（**逃亡已建，0/5**，2026-09-27）
+
+- **逃亡场景** `heroic-hor-escape-h5g`（隔离：`FixtureInstanceData=5:3,7:3` 跳过前三战与对峙剧情；领袖 gossip 走 `EventStarterGossipAction`，等 gossip 标志 45 秒）。新角色 886–890 补了进本任务 24710/24712（与 851–855 同样处理）。骷髅标记先巫医 36941。
+- **bot**（playerbots `e799d2dc`、`9b9bafa3`）：逃亡巫妖王 36954 不作为可选目标（`AttackersValue`，只排除这一个 entry）；逃亡进行中（巫妖王在战斗或带 Remorseless Winter）时，落到他身后 12 码以内、或本墙召唤物已清而离领袖超过 15 码，就跑到领袖身边。
+- **结果**：smoke run1433 76 秒领袖死（bot 起跑时没跟上，已修）；之后 run1434、1438、1443–1446 **0/5**：3 场倒在第 4 面墙（3 憎恶 + 4 巫医 + 两批食尸鬼），2 场倒在第 2 面墙；没有 Zap 致死、没有领袖被追上。剩余是墙前的输出/生存（巫医暗影箭雨 70184、憎恶顺劈 40505）。
+
+#### 更早记录
 
 - **Falric**：ilvl 200 档 3/18。4 波灵魂（英雄伤害 ×13）加 Falric 本体；Defiling Horror（惊骇，驱不掉）每场约 23 万，Hopelessness 把 11% 以下的伤害/治疗砍 60%，多数团灭停在 0–5%，也有死在波次里。英勇改到 boss 上（`0fc1b7ad`）后击杀率不变。像 Tribunal 一样是装备/总量问题（见 memory「装备才是杠杆」），bot 侧没有明确的机制杠杆。
 - **Marwyn**：要链式（先过 Falric，`_falricPhaseComplete` 不持久化），受 Falric 通过率限制。

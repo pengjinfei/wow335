@@ -13,7 +13,13 @@
 5. [`testing/HANDOVER-2026-09-21-HOS-TRIBUNAL.md`](testing/HANDOVER-2026-09-21-HOS-TRIBUNAL.md)
 6. Sjonnir 的正常规则框架 blocker：[`testing/bosses/heroic-hos-sjonnir/README.md`](testing/bosses/heroic-hos-sjonnir/README.md)
 
-### 最新状态（2026-09-26 晚，优先于下方所有条目）
+### 最新状态（2026-09-27，优先于下方所有条目）
+
+- **BACKLOG 一轮**（分支 `backlog/2026-09-27`，有效项已快进合回主干）：#12 无 master 延后释放灵魂 **已合入**；#20 Eregos 躲 Planar Anomaly **0/5 → 2/5**；#21 大勇士完整遭遇（骑乘+地面）**2/5**；#23 巫妖王逃亡场景已建，**0/5**（3 次到第 4 面墙）；#14 Skadi、#15 Svala 试验无效未合入（分支 `exp/skadi-behind-tank`、`exp/svala-channeler`）；#19 Garfrost 用户选的方案在 AC 脚本下无效。**待确认项见 [BACKLOG「待用户确认」](testing/BACKLOG.md#待用户确认2026-09-27-这一轮留下)**。
+- 框架新键（raidtest `0404fac`）：`EventStarterGossipAction`、`EventStarterGossipWaitSeconds`、`EventStarterRequireVehicle`；脚本事件可用 `KillOnInstanceData` 判完成。
+- 新角色 886–890（逃亡场景）补了映像大厅进本任务 24710/24712。
+
+### 最新状态（2026-09-26 晚）
 
 - **按用户指示逐副本推进（ilvl 200 档 `-h5g`）已走完 16 个 WotLK 副本的第一轮**。各 boss 结果以 [ledger](testing/BOSS-LEDGER.md) 为准；开放项和建议顺序见 [BACKLOG「开放项总览」](testing/BACKLOG.md#开放项总览2026-09-26-收尾新对话从这里挑)，新对话从那里挑。本轮新增：紫罗兰监狱 7/7（Cyanigosa 6/6）、净化斯坦索姆 5/5、魔环 3/4、冠军的试炼 4/4（大勇士只有地面阶段）、灵魂洪炉 Bronjahm 4/5 / Devourer 3/5、萨隆矿坑 Ick 5/5 / Tyrannus 5/6、映像大厅 Frostsworn General 5/5 / Falric 3/18。
 - **核心 fork**：`12c3ed4b7`（HoR 反射体 IMMUNE_TO_PC 修复），已推 `mine/main`。
@@ -64,5 +70,5 @@
 |---|---|
 | 管理库 | `main` 最新 |
 | azerothcore-wotlk | `12c3ed4b7`（`main`，= `mine/main`） |
-| mod-playerbots | `0fc1b7ad`（`main`，= `mine/main`） |
-| mod-raidtest | `abc4941`（`dev`，= `origin/dev`） |
+| mod-playerbots | `f8f227df`（`main`，= `mine/main`） |
+| mod-raidtest | `0404fac`（`dev`，= `origin/dev`） |
