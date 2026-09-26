@@ -20,7 +20,14 @@
 | Erekem | `heroic-vh-erekem-h5g` | **5/5**，0 死 | 52–69 秒 | 2 名 Erekem Guard 参战 |
 | Xevozz | `heroic-vh-xevozz-h5g` | **4/5**（run1166 团灭，5 人 50–54 秒内阵亡） | 57–59 秒 | Ethereal Sphere 召出 |
 | Zuramat | `heroic-vh-zuramat-h5g` | **5/5**，0 死 | 46–55 秒 | 虚空球召出 |
-| Cyanigosa | 未建 | — | — | 第 18 波才召出，无 DB spawn、无波数写入口，暂缓 |
+| Cyanigosa | `heroic-vh-cyanigosa-h5g` | **6/6**（run1364–1369） | 0 死，72–85 秒 | 隔离：房间中央直接召出（见下） |
 
 - run1148 开怪失败：boss 进战后 8 秒内目标不是坦克，疑为门口友方守卫与放出的 boss 互殴（勘察已提示），6 个 boss 共 31 次开战中只此 1 次。
 - Xevozz 的团灭是英雄模式 Ethereal Sphere 与 boss 合体叠 Arcane Power，bot 没有风筝球的逻辑（勘察记为缺口）。
+
+## Cyanigosa（隔离）
+
+- 原流程：第 18 波 Sinclari 召出、跳到房间中央 (1892.29, 805.70, 38.44)，10 秒后施 58668（光环 56，只换模型），再 2.5 秒去 `NON_ATTACKABLE`。
+- 场景：`FixtureSummonCreature` 在房间中央召出（夹具同样去掉不可攻击/免疫并置主动），少了换模型；script 模式、pull 开战。跳过 18 波与两个牢房 boss。
+- 技能都出现了：Arcane Vacuum 58694（拉人 + 清仇恨）、英雄 Mana Destruction 59374、Blizzard、Tail Sweep、Uncontrollable Energy。
+- 第一次冒烟开怪点 z 配成 37，bot 站到地板下看不到 boss（run1363 `pull failed`）；los 探针实测地面 38.65 后修正。
