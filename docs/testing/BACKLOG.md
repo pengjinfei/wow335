@@ -17,11 +17,11 @@
 
 | 建议顺序 | # | 项 | 层 | 现状 | 建议第一步 | 规模 |
 |---|---|---|---|---|---|---|
-| 1 | 12 | 无 master 队伍阵亡后立即释放灵魂 | bot | 框架等复活已实现，bot 侧阻断 | `DeadStrategy` auto release：有带复活技能的存活队友时延后释放 | S–M |
-| 2 | 14 | Skadi 推进节奏 | bot/框架 | 鱼叉链已通，3/6 | 量团灭时全队与坦克的前后距离；试“非坦克跟坦克、不超前” | M |
-| 3 | 15 | Svala 献祭期间打 Ritual Channeler | bot | 5/5 但每场 1 死 | UP 策略加 Channeler 存在 → DPS 切目标 | S |
-| 4 | 19 | Garfrost 近战/坦克永冻叠层 | bot | 1/3（近战也躲 0/5 已撤回） | 先查真人打法（坦克绕岩石？）；量坦克被治疗覆盖率 | M |
-| 5 | 20 | Eregos 龙战 | bot | 管线通，0/9、最好 37% | 骑龙躲 Planar Anomaly；威胁分担 | M–L |
+| ✓ | 12 | 无 master 队伍阵亡后立即释放灵魂 | bot | **已合入**（playerbots `ce22678c`，2026-09-27） | 自然前置阵亡出现时核对 recovery_wait 走通 | — |
+| ⏸ | 14 | Skadi 推进节奏 | bot/框架 | 基线 2/5；“非坦克落后坦克”1/5 未合入 | **待确认**：坦克逐组拉怪 或 框架改走位（见 14） | M |
+| ✗ | 15 | Svala 献祭期间打 Ritual Channeler | bot | 基线 5/5 0 死；改后 5/5 2 死，未合入 | **待确认**：只让远程打 / 关闭本条（见 15） | S |
+| ⏸ | 19 | Garfrost 近战/坦克永冻叠层 | bot | 基线 0/5 | **待确认**：用户选的“坦克带怪绕岩石”在 AC 脚本下无效（见 19） | M |
+| ✓ | 20 | Eregos 龙战 | bot | **已合入**（playerbots `d1181635`）：躲 Planar Anomaly 后 0/5 → 2/5 | 剩余团灭在 20–30%（雏龙+Arcane Barrage，输出/承伤） | M |
 | 6 | 23 | Falric / Marwyn / 巫妖王逃亡 | bot+框架 | Falric 3/18，另两个未建 | 逃亡：框架 gossip 走 `sScriptMgr->OnGossipSelect` + 等 gossip 标志（S），再看 bot | L |
 | 7 | 21 | 大勇士骑乘阶段 | bot+框架 | 地面阶段 6/6 | 驾驶（25 码外 MoveTo）+ 践踏步行冠军 | L |
 | — | 22 | 单 boss 爆发技能不放 | bot（共享层） | 实验分支 `exp/boost-on-boss`：生效但不涨击杀 | 决定是否作为正确打法合入；合入要全量回归 | S+回归 |
@@ -92,7 +92,12 @@
 - **历史回查**（旧口径下 `boss lost combat state` 且 boss 掉过血）：阿努巴拉克 h5g 5 次、h5g-aoe 2 次、n5 4 次（n5 共 286 条记录，击杀率几乎不变）；莫拉比 2 次为血量 0（不属此类）；naxx 早期 run2–36 共 28 次属框架初期开怪问题，不在现行台账。数据库原始行不改，重算只写进文档。
 - **证据**：[阿努巴拉克 README](bosses/heroic-an-anubarak/README.md)「“卡住中止”的真相」及其后一节。
 
-### 12. 前置阵亡改为等队友复活（框架已实现；bot 侧阻断，2026-09-26）
+### 12. 前置阵亡改为等队友复活（**已完成 2026-09-27**，playerbots `ce22678c`）
+
+- **改动**：`AutoReleaseSpiritAction` 在副本里、无真人 master 时，只要同图还有存活且会复活技能（牧师 Resurrection / 圣骑 Redemption / 萨满 Ancestral Spirit / 德鲁伊 Revive、Rebirth，按技能链查）的队友就不释放；全队无复活者或死满 5 分钟才释放。日志 `holds release` / `releases:`。
+- **验证**：Tribunal h5g run1391–1395 共 **3/5**（上一 cohort 3/5，无回退）；4 次阵亡都打出 `holds release`，死者原地躺着。5 场里没有出现前置阵亡，恢复阶段的 `recovery_wait:dead → 牧师复活` 链路**尚未被自然触发**，下次出现时核对。raidtest 没有杀 bot 的控制台命令，确定性 smoke 未做。
+
+#### 原记录
 
 - **改动**：raidtest `3c26d3d`：恢复阶段遇到本场有死亡记录的成员时记 `recovery_wait:dead` 并等最多 180 秒让 bot 自己复活；超时记 `casualty not revived during recovery`。无死亡记录的死者直接判 `scene_invalid`（`73cc994`）。框架不代为复活。
 - **首次触发（Tribunal run1084）**：盗贼 74.5 秒前置阵亡后**立即释放灵魂**，以鬼魂回到副本外墓地（map 571），牧师全程未施放复活——等满 180 秒中止。原因在 playerbots：无真人 master 时 `DeadStrategy` 的 "auto release" 立即释放，真人会躺着等复活。
@@ -104,7 +109,14 @@
 - **结论**：raidtest `6569786` 加 `PlayerScript::OnPlayerJustDied` 兜底（所有玩家死亡最终都经 `Player::KillPlayer`）：同一玩家 2 秒内已由 `OnUnitDeath` 记过则跳过，否则补一条死亡事件，detail 带 `via=player_just_died`、位置与出界标志。正常死亡不重复（run1084 盗贼只记 1 条）。
 - **未复现的部分**：旧沃尔坎下层准备点诊断 run1078–1080 三场均无人死亡，环境致死本身没能复现，兜底对它的效果待自然出现时核对。
 
-### 14. 乌特加德之巅 Skadi：鱼叉链（bot，已实现；推进节奏待做 2026-09-26）
+### 14. 乌特加德之巅 Skadi：鱼叉链（bot，已实现；推进节奏待确认 2026-09-27）
+
+- **2026-09-27 基线**（run1401–1405）：**2/5**。原记录“法师先死”不准确：3 场团灭都是**第 10–11 秒一人被 4–5 只 Ymirjar Warrior（26690，英雄 4–5k/下）同一瞬间打死**，首死是牧师（2 场）或盗贼。当时牧师在坦克身后 2–5 码，并没有超前。
+- **试验“非坦克落后坦克 2–20 码”**（playerbots `exp/skadi-behind-tank`，未合入）：run1426–1430 **1/5**。非坦克确实落后了 30 码，但第 11 秒照样有一人被 4–5 只战士秒掉（盗贼 x≈387）。
+- **真实原因**：坦克是被框架 `MovePoint`（AT 触发后“走到开怪点”）带着走过走廊的，**路过 x≈392–394 的战士点位时不进战斗、不拉怪**；等后面的人走到这些点位，几只战士一起扑上去。
+- **待确认（改动面较大）**：a) bot 侧“坦克逐组拉怪”：飞行阶段坦克走到下一个未交战的怪点、先拿仇恨再前进（M）；b) 场景/框架：开怪点改回准备点（不整队穿走廊），由坦克自己推进（需 a 配合）。两者都要改变现有走位方式，先等用户确认。
+
+#### 已完成部分
 
 - **已完成**：playerbots `21fcad00`：DPS 捡 Harpoon GO → 在 Grauf 东端悬停时对发射器用物品（CMSG_USE_ITEM，走锁校验）；持鱼叉者守在发射器旁。raidtest `场景 heroic-up-skadi-h5g`：AT 4991 开战，全队走到三台发射器之间。
 - **结果**：完整遭遇 3/6 击杀（run1317/1320/1321，212–399 秒）。
@@ -116,7 +128,13 @@
 - **方向**：参考 Ulduar `RazorscaleHarpoonAction`（`UldActions.cpp:930`）实现“捡鱼叉 → 窗口内用发射器”。
 - **证据**：[乌特加德之巅 SURVEY](bosses/heroic-up/SURVEY.md)「Skadi」。
 
-### 15. 乌特加德之巅 Svala：献祭期间优先打 Ritual Channeler（bot，待设计）
+### 15. 乌特加德之巅 Svala：献祭期间优先打 Ritual Channeler（**试验为负，未合入** 2026-09-27）
+
+- **基线**（run1396–1400）：**5/5、0 死**。被献祭者在 ilvl 200 档扛得住（Channeler 每场只打出 0.2–1 万），Channeler 从来没被打死，25 秒后被脚本 despawn。原来“每场 1 死”的问题在当前装备下已经不出现。
+- **试验**（playerbots `exp/svala-channeler`）：非治疗切 Channeler，run1421–1425 **5/5、2 死**，Channeler 仍然 0 击杀、对全队伤害升到 1.5–2.7 万。死的是盗贼：英雄 Channeler 带 Shadows in the Dark（59407，受击触发 59408），近战打它被反噬约 2.4 万。
+- **待确认**：只让远程打 Channeler（收益预计很小）或直接关闭本条。
+
+#### 原记录
 
 - **问题**：Ritual of the Sword 把一名队员传送到祭坛，3 只 Channeler 25 秒内不打掉就献祭致死；bot 无优先打 Channeler 的逻辑（run1095/1106 各 1 死）。
 - **方向**：UP 策略加 trigger（Channeler 存在）→ DPS 切目标。
@@ -138,13 +156,25 @@
 - **方向**：查 bot 对载具目标的 `current target` 与距离判定（是否取到了 Krick 或载具座位位置）；框架可考虑把坦克先带到 Ick 身边再拉。
 - **证据**：[萨隆矿坑 README](bosses/heroic-pos/README.md)。
 
-### 19. 萨隆矿坑 Garfrost：近战/坦克的永冻叠层（bot，跳过待确认 2026-09-26）
+### 19. 萨隆矿坑 Garfrost：近战/坦克的永冻叠层（bot，**待确认** 2026-09-27）
+
+- **2026-09-27 基线**（run1406–1410）：**0/5**，boss 最低 10–62%。
+- **用户选的打法（坦克带 boss 到岩石后清层）在 AC 脚本下无效**：`spell_garfrost_permafrost::FilterTargets` 对 Garfrost **近战距离内**的目标一律施加永冻，岩石只过滤近战距离外、且被岩石挡在 4 码线内的目标。boss 会一直追到坦克的近战距离，坦克和近战的层数清不掉。零售服务器按视线判定，这里的实现不一样。
+- **待确认**：可行方向只剩 a) 近战高层数时离开近战到岩石后清层（09-26 试过 0/4 已撤回）；b) 治疗/输出总量（装备档位问题）；c) 暂按能力边缘记账。
+
+#### 原记录
 
 - **现状**：playerbots `eb2aadb5`：永冻不再驱散（牧师曾前 47 秒只放驱散魔法）；远程 DPS 6 层起躲到萨隆岩石背面直到光环消失，治疗不躲（岩石会挡住到坦克的视线，run1131 牧师整场只放 14 个法术）。ilvl 200 档改前 0/6、改后 1/3（run1137 击杀，4 死）。
 - **剩余问题**：脚本对近战距离内的目标永远施加永冻，run1138 盗贼 53 跳 13.2 万、坦克 63 跳 11.7 万，两场团灭都是近战先死。
 - **方向**：近战 DPS 高层数时退到岩石后清层再回来；坦克需要带 boss 绕岩石或交替。需要先确认真人打法再设计。
 
-### 20. 魔环 Eregos / 龙战（bot，管线已通、战术待做 2026-09-26）
+### 20. 魔环 Eregos / 龙战（**躲 Planar Anomaly 已合入** playerbots `d1181635`，2026-09-27）
+
+- **基线**（run1411–1415）：**0/5**，五场都停在 57–59%（第一次 Planar Shift 在 60%）。团灭来源是 Anomaly：Planar Distortion 59380 约 5.6 万、Planar Blast 57976（15.5 秒后 20 码 1.4 万）约 2.9 万。
+- **改动**：骑龙时 28 码内有 Planar Anomaly（30879）就按远离方向飞 40 码（离 Eregos 超过 80 码时改为绕他侧飞），期间不放龙技能（引导会让龙停下）。
+- **结果**（run1416–1420）：**2/5**（该 boss 首杀，run1416 0 死 87 秒），另外 3 场在 20–30% 团灭；Anomaly 伤害降为 0。剩余团灭是第二次 Planar Shift 之后被 Eregos Arcane Barrage（59382）和雏龙磨死，属输出/承伤问题。
+
+#### 更早记录
 
 - **已完成**（playerbots `0d8ea9d3`、raidtest `bc45826`）：无 master 上龙（Eregos 可攻击时；精华以 Drakos DONE 为前提）、飞到 Eregos 45 码、自行开怪（框架 `EngageTrigger=self`）；龙技能轮换放不出时顺延；翡翠龙优先 Dream Funnel；`CastVehicleSpell` 对友方目标不再转身（之前 Dream Funnel 一次都放不出）；飞行载具豁免同层守卫。无 master 时编队 3 琥珀 / 2 翡翠。
 - **结果**：heroic Eregos 隔离 0/9，最好 37%（run1311）；最近几场都在 54–58% 附近团灭（Planar Shift 阶段）。
