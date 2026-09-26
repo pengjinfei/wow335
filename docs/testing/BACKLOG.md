@@ -150,6 +150,7 @@
 - **问题**：`BoostTrigger`（34 个爆发技能共用：英勇/嗜血、急速射击、冰冷血脉、鲁莽等）只在 `balance <= 50` 时触发。`balance` = 存活队员等级和 ÷ 敌方等级和（精英 ×3）。单个 82 级精英 boss（rank 1，5 人本 boss 基本都是）对满员 5 人是 400/246 = 162%，剩 2 人也有 65%，**永远达不到 50%**。所以隔离 boss 战里这些技能从不施放，只有同时来 3 只以上精英时才放（映像大厅 Falric：英勇每场都交在第 1 波小怪上）。
 - **现状**：只在映像大厅做了窄修（playerbots `wotlk-hor`：波次期间压住英勇、Falric/Marwyn 可攻击后萨满直接放）。
 - **方向**：`BoostTrigger::IsActive` 在当前目标 `IsDungeonBoss() || isWorldBoss()` 时也算触发（`DebuffOnBossTrigger` 已有同样判据）。影响所有职业所有 boss，属共享层行为变化，需要全量回归，**先待确认**。
+- **实验（2026-09-26，playerbots 本地分支 `exp/boost-on-boss`，未合并）**：按上面的方向改后，单 boss 阶段的爆发确实放出来了（Falric 阶段真言术：注入每场 0 → 1–2 次，复仇之怒 1/4 → 4/4 场），但击杀率不变：Falric 1/5（改前 1/5）、Garfrost 0/5（改前 1/3）、Skadi 3/5（改前 3/6）、Tribunal 3/5（改前 11/29）。另外修正上面的说法：**带精英小怪的战斗（Garfrost 6 只 Siegesmith、Skadi、Tribunal）改前就会放爆发**，只有纯单 boss 才完全不放。结论：不是这几个卡住 boss 的杠杆；是否作为“打法更正确”的通用修正合入，需要回归后由用户决定。
 
 ### 23. 映像大厅 Falric / Marwyn / 巫妖王逃亡（bot + 框架，待确认 2026-09-26）
 
