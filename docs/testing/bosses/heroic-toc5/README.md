@@ -12,7 +12,7 @@ Eadric / Paletress 用 `FixtureSummonCreature` 召到副本召唤点 (746.88, 63
 |---|---|---|---|
 | Eadric the Pure | `heroic-toc5-eadric-h5g` | **5/5**，0 死（另冒烟 1/1） | 83–91 秒 |
 | Argent Confessor Paletress | `heroic-toc5-paletress-h5g` | 修复前 **0/3**（24%、23%、23%）；修复后 **5/5**（2 死） | 93–115 秒 |
-| The Black Knight | 未建 | 借副本事件可建，每个 run 只能打一次 | — |
+| The Black Knight | `heroic-toc5-blackknight-h5g` | **5/5**（3 死）：`1:3,6:0` 走副本自己的事件（狮鹫落地、杀播报员、自行进战），战斗本体按正常规则；三阶段、两次假死都走到 | 107–115 秒 |
 | Grand Champions | 未建 | 骑乘阶段需要践踏等 bot 逻辑（大改），地面阶段需小框架改动 | BACKLOG 21 |
 
 ## Paletress：反射护盾
