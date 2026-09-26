@@ -86,7 +86,13 @@
 - **结论**：raidtest `6569786` 加 `PlayerScript::OnPlayerJustDied` 兜底（所有玩家死亡最终都经 `Player::KillPlayer`）：同一玩家 2 秒内已由 `OnUnitDeath` 记过则跳过，否则补一条死亡事件，detail 带 `via=player_just_died`、位置与出界标志。正常死亡不重复（run1084 盗贼只记 1 条）。
 - **未复现的部分**：旧沃尔坎下层准备点诊断 run1078–1080 三场均无人死亡，环境致死本身没能复现，兜底对它的效果待自然出现时核对。
 
-### 14. 乌特加德之巅 Skadi：鱼叉链（bot，跳过待确认 2026-09-26）
+### 14. 乌特加德之巅 Skadi：鱼叉链（bot，已实现；推进节奏待做 2026-09-26）
+
+- **已完成**：playerbots `21fcad00`：DPS 捡 Harpoon GO → 在 Grauf 东端悬停时对发射器用物品（CMSG_USE_ITEM，走锁校验）；持鱼叉者守在发射器旁。raidtest `场景 heroic-up-skadi-h5g`：AT 4991 开战，全队走到三台发射器之间。
+- **结果**：完整遭遇 3/6 击杀（run1317/1320/1321，212–399 秒）。
+- **剩余**：团灭都是开战后全队一次走到东端时穿过第一波（走廊里 13 只），法师每场第 10 秒左右先死，DPS 不够时鱼叉只能打出 2 发。需要“坦克在前、逐段推进”的节奏：框架分段导航或 bot 跟随坦克推进（中改）。
+
+#### 原记录
 
 - **问题**：打下 Grauf 需要玩家捡 Harpoon GO 192539（Harpooner 26692 死亡召出）→ 得物品 37372 → 在 Grauf 飞到东端悬停的 10 秒窗口内使用发射器 192175–192177，三发打下后 Skadi 才可攻击。playerbots UP 策略里是 TODO；通用拾取只处理有 loot 表的 GO。另 Skadi HARD_RESET、框架坦克仇恨校验需调整。
 - **方向**：参考 Ulduar `RazorscaleHarpoonAction`（`UldActions.cpp:930`）实现“捡鱼叉 → 窗口内用发射器”。
