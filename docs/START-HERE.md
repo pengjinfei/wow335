@@ -18,7 +18,7 @@
 - **按用户指示逐副本推进（ilvl 200 档 `-h5g`）已走完 16 个 WotLK 副本的第一轮**。各 boss 结果以 [ledger](testing/BOSS-LEDGER.md) 为准；待用户确认的项集中在 [BACKLOG](testing/BACKLOG.md) 14、19–23。本轮新增：紫罗兰监狱 7/7（Cyanigosa 6/6）、净化斯坦索姆 5/5、魔环 3/4、冠军的试炼 4/4（大勇士只有地面阶段）、灵魂洪炉 Bronjahm 4/5 / Devourer 3/5、萨隆矿坑 Ick 5/5 / Tyrannus 5/6、映像大厅 Frostsworn General 5/5 / Falric 3/18。
 - **核心 fork**：`12c3ed4b7`（HoR 反射体 IMMUNE_TO_PC 修复），已推 `mine/main`。
 - **构建**：增量构建树 `/private/tmp/azerothcore-tribunal-retry-build`，源码是核心 worktree `/private/tmp/azerothcore-tribunal-retry-src`（**核心源码不与主树共享**，改核心要先在主树提交再 `checkout <sha>`）；两个模块软链到主树 `azerothcore-wotlk/modules/`。`libscripts.a`/`libmodules.a` 各约 5–6G，磁盘紧时先 `--target modules` 再 `--target worldserver`，失败会留下 `modules/libmodules.a.XXXXXX` 临时文件。编完用 `strings worldserver | grep` 或看 mtime 确认新代码在里面。
-- **playerbots 工作分支是 `codex/gd-takeover`**，推送用 `git push git@github.com:pengjinfei/mod-playerbots.git HEAD:main`；本地 `main` 分支是很旧的，**不要 checkout 它**。实验分支 `exp/boost-on-boss`（BACKLOG 22，未合并）。
+- **分支（2026-09-26 已整理）**：三个源码库都直接在主干上工作——core `main`（→ `mine`）、playerbots `main`（→ `mine`，推送走 SSH `git@github.com:pengjinfei/mod-playerbots.git`）、raidtest `dev`（→ `origin`，fork 默认分支）。旧的 `codex/gd-takeover` 已快进合入主干、内容相同。未合并的只有 playerbots 实验分支 `exp/boost-on-boss`（BACKLOG 22）。
 - AK（安卡赫特）在 my-mac 上另一条工作线，有未推送提交，本机未接手。
 
 ### 最新状态（2026-09-24，优先于下方历史事实）
@@ -64,5 +64,5 @@
 |---|---|
 | 管理库 | `main` 最新 |
 | azerothcore-wotlk | `12c3ed4b7`（`main`，= `mine/main`） |
-| mod-playerbots | `0fc1b7ad`（分支 `codex/gd-takeover`，= fork `main`） |
-| mod-raidtest | `abc4941`（分支 `codex/gd-takeover`） |
+| mod-playerbots | `0fc1b7ad`（`main`，= `mine/main`） |
+| mod-raidtest | `abc4941`（`dev`，= `origin/dev`） |
