@@ -13,7 +13,12 @@
 5. [`testing/HANDOVER-2026-09-21-HOS-TRIBUNAL.md`](testing/HANDOVER-2026-09-21-HOS-TRIBUNAL.md)
 6. Sjonnir 的正常规则框架 blocker：[`testing/bosses/heroic-hos-sjonnir/README.md`](testing/bosses/heroic-hos-sjonnir/README.md)
 
-### 最新状态（2026-09-27，优先于下方所有条目）
+### 最新状态（2026-09-27 第二轮，优先于下方所有条目）
+
+- **核心按官方机制对齐**（用户授权）：`11411ee0a` Svala Ritual Strike 落在祭坛（按 TC）、`9c3e797ea` Garfrost 永冻岩石判定对近战也生效。Garfrost 加坦克绕岩石后 **0/5 → 4/5**；Skadi 坦克逐只拉怪合入（2/5，秒杀消失）；Svala 远程打 Channeler、逃亡英勇保留两项无效未合入。详见 BACKLOG 14/15/19/23。
+- **⚠ 构建环境丢失**：机器重启清空了 `/private/tmp`，增量构建树 `/private/tmp/azerothcore-tribunal-retry-build` 和核心 worktree `/private/tmp/azerothcore-tribunal-retry-src` 都没了。下次编译需要先重建（从主树 `git worktree add` 核心、重新 cmake，相当于一次全量编译，需用户同意）。主树 `var/build/obj` 的二进制是最后部署的版本（含本轮全部已测代码，另含未合入的 Svala/HoR 改动），worldserver 当前未运行。
+
+### 最新状态（2026-09-27 第一轮）
 
 - **BACKLOG 一轮**（分支 `backlog/2026-09-27`，有效项已快进合回主干）：#12 无 master 延后释放灵魂 **已合入**；#20 Eregos 躲 Planar Anomaly **0/5 → 2/5**；#21 大勇士完整遭遇（骑乘+地面）**2/5**；#23 巫妖王逃亡场景已建，**0/5**（3 次到第 4 面墙）；#14 Skadi、#15 Svala 试验无效未合入（分支 `exp/skadi-behind-tank`、`exp/svala-channeler`）；#19 Garfrost 用户选的方案在 AC 脚本下无效。**待确认项见 [BACKLOG「待用户确认」](testing/BACKLOG.md#待用户确认2026-09-27-这一轮留下)**。
 - 框架新键（raidtest `0404fac`）：`EventStarterGossipAction`、`EventStarterGossipWaitSeconds`、`EventStarterRequireVehicle`；脚本事件可用 `KillOnInstanceData` 判完成。
@@ -69,6 +74,6 @@
 | 仓库 | 期望提交（接手时） |
 |---|---|
 | 管理库 | `main` 最新 |
-| azerothcore-wotlk | `12c3ed4b7`（`main`，= `mine/main`） |
-| mod-playerbots | `f8f227df`（`main`，= `mine/main`） |
-| mod-raidtest | `0404fac`（`dev`，= `origin/dev`） |
+| azerothcore-wotlk | `9c3e797ea`（`main`，= `mine/main`） |
+| mod-playerbots | `e925b1b3`（`main`，= `mine/main`） |
+| mod-raidtest | `e5d2390`（`dev`，= `origin/dev`） |
