@@ -14,6 +14,8 @@ run761 是隔离 Dark Matter observation/execution smoke：bot action 与 28237 
 
 ## 5 人 campaign 矩阵
 
+**cohort 边界（2026-09-28）**：所有 `-h5g` 场景改用 `heroic5gear-n5talents-v2` 阵容（刺杀贼大雕纹 破甲 → 饥渴之血），同时 playerbots `410f8ffc` 起元素萨/刺杀贼循环和萨满大地图腾按搭配选择（见 [DPS-BENCHMARK](DPS-BENCHMARK.md)）。此前的 h5g 结果不与之后合算。
+
 | 副本 / campaign README | encounter | 当前结果与范围 | 状态 |
 |---|---|---|---|
 | [乌特加德城堡](bosses/heroic-uk/MECHANICS-AUDIT.md) | [凯雷塞斯](bosses/heroic-uk-keleseth/README.md) | 完整遭遇战，run322 4 kill、0 wipe、零死亡；冰墓实际被全队转火。 | **完成** |
