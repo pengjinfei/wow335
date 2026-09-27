@@ -15,8 +15,9 @@
 
 ### 最新状态（2026-09-27 第二轮，优先于下方所有条目）
 
+- Skadi 躲冰霜吐息合入（`6c69e81e`，吐息伤害降 70–85%，仍 2/5）；`scripts/restart_world.sh` 现在会在 FIFO 缺失时自建（重启机器后踩到）。
 - **核心按官方机制对齐**（用户授权）：`11411ee0a` Svala Ritual Strike 落在祭坛（按 TC）、`9c3e797ea` Garfrost 永冻岩石判定对近战也生效。Garfrost 加坦克绕岩石后 **0/5 → 4/5**；Skadi 坦克逐只拉怪合入（2/5，秒杀消失）；Svala 远程打 Channeler、逃亡英勇保留两项无效未合入。详见 BACKLOG 14/15/19/23。
-- **⚠ 构建环境丢失**：机器重启清空了 `/private/tmp`，增量构建树 `/private/tmp/azerothcore-tribunal-retry-build` 和核心 worktree `/private/tmp/azerothcore-tribunal-retry-src` 都没了。下次编译需要先重建（从主树 `git worktree add` 核心、重新 cmake，相当于一次全量编译，需用户同意）。主树 `var/build/obj` 的二进制是最后部署的版本（含本轮全部已测代码，另含未合入的 Svala/HoR 改动），worldserver 当前未运行。
+- **构建环境已迁出 tmp（2026-09-27，用户同意）**：核心 worktree `/Users/nowcoder/IdeaProjects/github/wow335-build/core-src`（detached，改核心先在主树提交再 `git -C .../core-src checkout <sha>`；`modules/` 下两个模块软链到主树），构建树 `/Users/nowcoder/IdeaProjects/github/wow335-build/obj`（RelWithDebInfo、static、ccache、`CMAKE_INSTALL_PREFIX` = 主树 `env/dist`，`TOOLS_BUILD=none`），日志在 `.../wow335-build/logs/`。增量：`cmake --build .../obj --target worldserver -j4`；部署仍是复制到主树 `var/build/obj/src/server/apps/worldserver` 再 `scripts/restart_world.sh`。旧的 `/private/tmp/azerothcore-tribunal-retry-*` 已随重启消失。
 
 ### 最新状态（2026-09-27 第一轮）
 
@@ -28,7 +29,7 @@
 
 - **按用户指示逐副本推进（ilvl 200 档 `-h5g`）已走完 16 个 WotLK 副本的第一轮**。各 boss 结果以 [ledger](testing/BOSS-LEDGER.md) 为准；开放项和建议顺序见 [BACKLOG「开放项总览」](testing/BACKLOG.md#开放项总览2026-09-26-收尾新对话从这里挑)，新对话从那里挑。本轮新增：紫罗兰监狱 7/7（Cyanigosa 6/6）、净化斯坦索姆 5/5、魔环 3/4、冠军的试炼 4/4（大勇士只有地面阶段）、灵魂洪炉 Bronjahm 4/5 / Devourer 3/5、萨隆矿坑 Ick 5/5 / Tyrannus 5/6、映像大厅 Frostsworn General 5/5 / Falric 3/18。
 - **核心 fork**：`12c3ed4b7`（HoR 反射体 IMMUNE_TO_PC 修复），已推 `mine/main`。
-- **构建**：增量构建树 `/private/tmp/azerothcore-tribunal-retry-build`，源码是核心 worktree `/private/tmp/azerothcore-tribunal-retry-src`（**核心源码不与主树共享**，改核心要先在主树提交再 `checkout <sha>`）；两个模块软链到主树 `azerothcore-wotlk/modules/`。`libscripts.a`/`libmodules.a` 各约 5–6G，磁盘紧时先 `--target modules` 再 `--target worldserver`，失败会留下 `modules/libmodules.a.XXXXXX` 临时文件。编完用 `strings worldserver | grep` 或看 mtime 确认新代码在里面。
+- **构建**（2026-09-26 旧位置，已失效，见上）：增量构建树 `/private/tmp/azerothcore-tribunal-retry-build`，源码是核心 worktree `/private/tmp/azerothcore-tribunal-retry-src`（**核心源码不与主树共享**，改核心要先在主树提交再 `checkout <sha>`）；两个模块软链到主树 `azerothcore-wotlk/modules/`。`libscripts.a`/`libmodules.a` 各约 5–6G，磁盘紧时先 `--target modules` 再 `--target worldserver`，失败会留下 `modules/libmodules.a.XXXXXX` 临时文件。编完用 `strings worldserver | grep` 或看 mtime 确认新代码在里面。
 - **分支（2026-09-26 已整理）**：三个源码库都直接在主干上工作——core `main`（→ `mine`）、playerbots `main`（→ `mine`，推送走 SSH `git@github.com:pengjinfei/mod-playerbots.git`）、raidtest `dev`（→ `origin`，fork 默认分支）。旧的 `codex/gd-takeover` 已快进合入主干、内容相同。未合并的只有 playerbots 实验分支 `exp/boost-on-boss`（BACKLOG 22）。
 - AK（安卡赫特）在 my-mac 上另一条工作线，有未推送提交，本机未接手。
 
@@ -75,5 +76,5 @@
 |---|---|
 | 管理库 | `main` 最新 |
 | azerothcore-wotlk | `9c3e797ea`（`main`，= `mine/main`） |
-| mod-playerbots | `e925b1b3`（`main`，= `mine/main`） |
+| mod-playerbots | `6c69e81e`（`main`，= `mine/main`） |
 | mod-raidtest | `e5d2390`（`dev`，= `origin/dev`） |
