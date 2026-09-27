@@ -13,7 +13,13 @@
 5. [`testing/HANDOVER-2026-09-21-HOS-TRIBUNAL.md`](testing/HANDOVER-2026-09-21-HOS-TRIBUNAL.md)
 6. Sjonnir 的正常规则框架 blocker：[`testing/bosses/heroic-hos-sjonnir/README.md`](testing/bosses/heroic-hos-sjonnir/README.md)
 
-### 最新状态（2026-09-27 第二轮，优先于下方所有条目）
+### 最新状态（2026-09-28，优先于下方所有条目）
+
+- **输出基准与循环修正**：新场景 `bench-dummy-h5g`（Heroic Training Dummy，83 级），方法和结果见 [DPS-BENCHMARK](testing/DPS-BENCHMARK.md)。已合入 playerbots `3d93638d`：元素萨熔岩爆裂优先（+12%）、元素掌握修正、刺杀贼饥渴之血/切割/破甲按职业搭配（+1%，加爆发技能后 +7.6%）；全队木桩 DPS 约 9600 → 10180。真实 boss 回归（Loken/Ingvar/Svala 各 2/2，击杀都更快）无退步。新阵容 `heroic5gear-n5talents-v2`（刺杀贼饥渴之血雕纹），目前只给木桩用。
+- **机器休眠会毁掉样本**：run1491、run1506 都是跑到一半机器空闲休眠，时长变成 900–1100 秒；现在 worldserver 运行时挂着 `caffeinate -ims -w <pid>`。
+- Skadi 旋风斩沿走廊躲（1/5、超时）未合入。
+
+### 最新状态（2026-09-27 第二轮）
 
 - Skadi 躲冰霜吐息合入（`6c69e81e`，吐息伤害降 70–85%，仍 2/5）；`scripts/restart_world.sh` 现在会在 FIFO 缺失时自建（重启机器后踩到）。
 - **核心按官方机制对齐**（用户授权）：`11411ee0a` Svala Ritual Strike 落在祭坛（按 TC）、`9c3e797ea` Garfrost 永冻岩石判定对近战也生效。Garfrost 加坦克绕岩石后 **0/5 → 4/5**；Skadi 坦克逐只拉怪合入（2/5，秒杀消失）；Svala 远程打 Channeler、逃亡英勇保留两项无效未合入。详见 BACKLOG 14/15/19/23。
@@ -76,5 +82,5 @@
 |---|---|
 | 管理库 | `main` 最新 |
 | azerothcore-wotlk | `9c3e797ea`（`main`，= `mine/main`） |
-| mod-playerbots | `6c69e81e`（`main`，= `mine/main`） |
-| mod-raidtest | `e5d2390`（`dev`，= `origin/dev`） |
+| mod-playerbots | `3d93638d`（`main`，= `mine/main`） |
+| mod-raidtest | `7c3b76a`（`dev`，= `origin/dev`） |
