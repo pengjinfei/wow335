@@ -19,6 +19,8 @@ if [ -n "$OLD" ]; then
   echo "old $OLD exited"
 fi
 pkill -f "tail -n 0 -f /tmp/ac_world_fifo"; pkill -f "fifo_relay.py"; sleep 1
+# /tmp 在机器重启后被清空（2026-09-27）：没有 FIFO 时 fifo_relay.py 打开失败直接退出，worldserver 就收不到命令。
+[ -p /tmp/ac_world_fifo ] || { rm -f /tmp/ac_world_fifo; mkfifo /tmp/ac_world_fifo; }
 if pgrep -x worldserver >/dev/null; then echo "another worldserver alive - aborting"; exit 1; fi
 [ -n "${S_ARCHIVE:-}" ] && cp Playerbots.log "$S_ARCHIVE" 2>/dev/null
 ( nohup sh -c "python3 -u $SELF_DIR/fifo_relay.py | ./var/build/obj/src/server/apps/worldserver" > "$LOG" 2>&1 & )
