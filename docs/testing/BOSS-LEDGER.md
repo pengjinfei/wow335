@@ -51,6 +51,7 @@ run761 是隔离 Dark Matter observation/execution smoke：bot action 与 28237 
 | campaign | 当前结论 | 状态 |
 |---|---|---|
 | [纳克萨玛斯 10 人：帕奇维克](bosses/naxx10-patchwerk/README.md) | **ilvl 200 档，raid10 阵容**：**5/5**（2026-09-28，183–188 秒；副坦不嘲讽主坦 + 近战等副坦 `254e2e67`；大厅小怪按「已清」移除）。 | **完成（ilvl 200 档）** |
+| [纳克萨玛斯 10 人：格罗布鲁斯](bosses/naxx10-grobbulus/README.md) | **ilvl 200 档，raid10 阵容**：**5/5**（2026-09-28，231–293 秒，bot 未改；场景移除缝合巨人）。注射爆炸站位可优化。 | **完成（ilvl 200 档）** |
 | Naxxramas：Loatheb 等其余 boss | Loatheb 仅 fixture 编排历史证据；其余未建。 | **待做** |
 
 ## 口径规则
