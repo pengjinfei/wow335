@@ -15,6 +15,7 @@
 
 ### 最新状态（2026-09-28，优先于下方所有条目）
 
+- **10 人阵容与木桩（2026-09-28）**：阵容 `raid10-ilvl200-v1`（防骑/血 DK、戒律/神圣骑、刺杀贼/火法/元素萨/毁灭术/平衡德/生存猎），场景 `bench-dummy-raid10`（纳克萨玛斯入口平台），全队木桩约 22.6k；逐职业核对循环，修了血 DK 填充（灵界打击，+15%，`d90081b1`）。下一步：纳克萨玛斯 10 人，先帕奇维克。见 [DPS-BENCHMARK](testing/DPS-BENCHMARK.md)。
 - **输出基准与循环修正**：新场景 `bench-dummy-h5g`（Heroic Training Dummy，83 级），方法和结果见 [DPS-BENCHMARK](testing/DPS-BENCHMARK.md)。已合入 playerbots `3d93638d`：元素萨熔岩爆裂优先（+12%）、元素掌握修正、刺杀贼饥渴之血/切割/破甲按职业搭配（+1%，加爆发技能后 +7.6%）；全队木桩 DPS 约 9600 → 10180。真实 boss 回归（Loken/Ingvar/Svala 各 2/2，击杀都更快）无退步。新阵容 `heroic5gear-n5talents-v2`（刺杀贼饥渴之血雕纹），目前只给木桩用。
 - **机器休眠会毁掉样本**：run1491、run1506 都是跑到一半机器空闲休眠，时长变成 900–1100 秒；现在 worldserver 运行时挂着 `caffeinate -ims -w <pid>`。
 - Skadi 旋风斩沿走廊躲（1/5、超时）未合入。
@@ -36,7 +37,7 @@
 - **按用户指示逐副本推进（ilvl 200 档 `-h5g`）已走完 16 个 WotLK 副本的第一轮**。各 boss 结果以 [ledger](testing/BOSS-LEDGER.md) 为准；开放项和建议顺序见 [BACKLOG「开放项总览」](testing/BACKLOG.md#开放项总览2026-09-26-收尾新对话从这里挑)，新对话从那里挑。本轮新增：紫罗兰监狱 7/7（Cyanigosa 6/6）、净化斯坦索姆 5/5、魔环 3/4、冠军的试炼 4/4（大勇士只有地面阶段）、灵魂洪炉 Bronjahm 4/5 / Devourer 3/5、萨隆矿坑 Ick 5/5 / Tyrannus 5/6、映像大厅 Frostsworn General 5/5 / Falric 3/18。
 - **核心 fork**：`12c3ed4b7`（HoR 反射体 IMMUNE_TO_PC 修复），已推 `mine/main`。
 - **构建**（2026-09-26 旧位置，已失效，见上）：增量构建树 `/private/tmp/azerothcore-tribunal-retry-build`，源码是核心 worktree `/private/tmp/azerothcore-tribunal-retry-src`（**核心源码不与主树共享**，改核心要先在主树提交再 `checkout <sha>`）；两个模块软链到主树 `azerothcore-wotlk/modules/`。`libscripts.a`/`libmodules.a` 各约 5–6G，磁盘紧时先 `--target modules` 再 `--target worldserver`，失败会留下 `modules/libmodules.a.XXXXXX` 临时文件。编完用 `strings worldserver | grep` 或看 mtime 确认新代码在里面。
-- **分支（2026-09-26 已整理）**：三个源码库都直接在主干上工作——core `main`（→ `mine`）、playerbots `main`（→ `mine`，推送走 SSH `git@github.com:pengjinfei/mod-playerbots.git`）、raidtest `dev`（→ `origin`，fork 默认分支）。旧的 `codex/gd-takeover` 已快进合入主干、内容相同。未合并的只有 playerbots 实验分支 `exp/boost-on-boss`（BACKLOG 22）。
+- **分支（2026-09-26 已整理）**：三个源码库都直接在主干上工作——core `main`（→ `mine`）、playerbots `main`（→ `mine`，推送走 SSH `git@github.com:pengjinfei/mod-playerbots.git`）、raidtest `dev`（→ `origin`，fork 默认分支）。旧的 `codex/gd-takeover` 已快进合入主干、内容相同。BACKLOG 22（爆发技能对 boss 生效）已于 2026-09-28 合入 `73c33b43`。
 - AK（安卡赫特）在 my-mac 上另一条工作线，有未推送提交，本机未接手。
 
 ### 最新状态（2026-09-24，优先于下方历史事实）
@@ -82,5 +83,5 @@
 |---|---|
 | 管理库 | `main` 最新 |
 | azerothcore-wotlk | `9c3e797ea`（`main`，= `mine/main`） |
-| mod-playerbots | `3d93638d`（`main`，= `mine/main`） |
-| mod-raidtest | `7c3b76a`（`dev`，= `origin/dev`） |
+| mod-playerbots | `d90081b1`（`main`，= `mine/main`） |
+| mod-raidtest | `2f9c29a`（`dev`，= `origin/dev`） |
