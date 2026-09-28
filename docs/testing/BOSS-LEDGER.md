@@ -56,6 +56,7 @@ run761 是隔离 Dark Matter observation/execution smoke：bot action 与 28237 
 | [纳克萨玛斯 10 人：塔迪乌斯](bosses/naxx10-thaddius/README.md) | **0/1，跳过待决定**：宠物阶段远程在坦克拿仇恨前开打、坦克不先贴近；另需宠物击杀同步与极性阶段。 | **跳过（待用户决定）** |
 | [纳克萨玛斯 10 人：阿努布雷坎](bosses/naxx10-anubrekhan/README.md) | **4/5**（2026-09-28，161–219 秒，bot 未改；准备点必须在治疗距离内）。 | **基本稳定（ilvl 200 档）** |
 | [纳克萨玛斯 10 人：黑女巫法琳娜](bosses/naxx10-faerlina/README.md) | **4/5**（2026-09-28，121–130 秒，bot 未改；房间小怪按「已清」移除）。寡妇之拥未利用。 | **基本稳定（ilvl 200 档）** |
+| [纳克萨玛斯 10 人：迈克斯纳](bosses/naxx10-maexxna/README.md) | **0/4，跳过待决定**：坏死毒液驱不过来、主坦早死；被缠者在墙上时 boss 够不到而回血。实验分支未合入。 | **跳过（待用户决定）** |
 | Naxxramas：Loatheb 等其余 boss | Loatheb 仅 fixture 编排历史证据；其余未建。 | **待做** |
 
 ## 口径规则
