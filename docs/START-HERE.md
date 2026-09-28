@@ -15,7 +15,7 @@
 
 ### 最新状态（2026-09-28，优先于下方所有条目）
 
-- **10 人阵容与木桩（2026-09-28）**：阵容 `raid10-ilvl200-v1`（防骑/血 DK、戒律/神圣骑、刺杀贼/火法/元素萨/毁灭术/平衡德/生存猎），场景 `bench-dummy-raid10`（纳克萨玛斯入口平台），全队木桩约 22.6k；逐职业核对循环，修了血 DK 填充（灵界打击，+15%，`d90081b1`）。下一步：纳克萨玛斯 10 人，先帕奇维克。见 [DPS-BENCHMARK](testing/DPS-BENCHMARK.md)。
+- **10 人阵容与木桩（2026-09-28）**：阵容 `raid10-ilvl200-v1`（防骑/血 DK、戒律/神圣骑、刺杀贼/火法/元素萨/毁灭术/平衡德/生存猎），场景 `bench-dummy-raid10`（纳克萨玛斯入口平台），全队木桩约 22.6k；逐职业核对循环，修了血 DK 填充（灵界打击，+15%，`d90081b1`）。见 [DPS-BENCHMARK](testing/DPS-BENCHMARK.md)。**帕奇维克 10 人 5/5**（[记录](testing/bosses/naxx10-patchwerk/README.md)）；下一步纳克萨玛斯其余 boss。
 - **输出基准与循环修正**：新场景 `bench-dummy-h5g`（Heroic Training Dummy，83 级），方法和结果见 [DPS-BENCHMARK](testing/DPS-BENCHMARK.md)。已合入 playerbots `3d93638d`：元素萨熔岩爆裂优先（+12%）、元素掌握修正、刺杀贼饥渴之血/切割/破甲按职业搭配（+1%，加爆发技能后 +7.6%）；全队木桩 DPS 约 9600 → 10180。真实 boss 回归（Loken/Ingvar/Svala 各 2/2，击杀都更快）无退步。新阵容 `heroic5gear-n5talents-v2`（刺杀贼饥渴之血雕纹），目前只给木桩用。
 - **机器休眠会毁掉样本**：run1491、run1506 都是跑到一半机器空闲休眠，时长变成 900–1100 秒；现在 worldserver 运行时挂着 `caffeinate -ims -w <pid>`。
 - Skadi 旋风斩沿走廊躲（1/5、超时）未合入。
@@ -83,5 +83,5 @@
 |---|---|
 | 管理库 | `main` 最新 |
 | azerothcore-wotlk | `9c3e797ea`（`main`，= `mine/main`） |
-| mod-playerbots | `d90081b1`（`main`，= `mine/main`） |
-| mod-raidtest | `2f9c29a`（`dev`，= `origin/dev`） |
+| mod-playerbots | `254e2e67`（`main`，= `mine/main`） |
+| mod-raidtest | `5c8ca12`（`dev`，= `origin/dev`） |
