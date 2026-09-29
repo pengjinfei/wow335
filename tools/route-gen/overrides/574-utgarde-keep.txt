@@ -1,0 +1,9 @@
+# Hand fixes for the Utgarde Keep route draft (routegen.py --overrides). One line per pack, keyed by any spawn in it:
+#   pack <spawnId> [along=<yd>] [side=<0|1>]
+#
+# Forge room: the three Dragonflayer Forge Masters must die in forge order 1 -> 2 -> 3
+# (npc_dragonflayer_forge_master: engaging a later forge before the previous one is DONE evades at once).
+# The draft marked forges 1 and 2 as side packs (42 / 55 yd off the skeleton) and met forge 3 first; the tank
+# pulled it over and over while it evaded (first full run, 2026-09-29).
+pack 125904 along=196 side=0
+pack 125905 along=205 side=0

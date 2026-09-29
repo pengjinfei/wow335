@@ -2,6 +2,7 @@
 """Draft a dungeon route from the world DB and the playerbots travel-node graph.
 
 Usage: routegen.py <map_id> <travel node chain, comma separated> <out file> [--link 12] [--side 30]
+                   [--overrides overrides/<map>-<name>.txt]
 
 - Skeleton: playerbots_travelnode_path points along the given node chain (entrance -> boss -> ... -> last boss),
   downsampled to about one node every 15 yd.
@@ -29,7 +30,14 @@ def main():
     ap.add_argument('out')
     ap.add_argument('--link', type=float, default=12.0)
     ap.add_argument('--side', type=float, default=30.0)
+    ap.add_argument('--overrides', help='hand fixes: lines "pack <spawnId> [along=<yd>] [side=<0|1>]"')
     a = ap.parse_args()
+    overrides = {}
+    if a.overrides:
+        for line in open(a.overrides):
+            fields = line.split('#', 1)[0].split()
+            if len(fields) >= 2 and fields[0] == 'pack':
+                overrides[int(fields[1])] = dict(f.split('=', 1) for f in fields[2:])
     chain = [int(x) for x in a.chain.split(',')]
 
     names = {int(r[0]): r[1] for r in query('acore_playerbots',
@@ -82,7 +90,14 @@ def main():
         j = min(range(len(skel)), key=lambda i: math.dist(skel[i], c))
         radius = max(math.dist(s['p'], c) for s in members)
         bosses = [s for s in members if s['name'] in boss_names or s['script'].startswith('boss_')]
-        items.append((cum[j], math.dist(skel[j], c), c, radius, members, bosses))
+        along, off = cum[j], math.dist(skel[j], c)
+        for s in members:
+            fix = overrides.get(s['guid'])
+            if fix:
+                along = float(fix.get('along', along))
+                if 'side' in fix:
+                    off = 0.0 if fix['side'] == '0' else a.side + 1.0
+        items.append((along, off, c, radius, members, bosses))
     items.sort(key=lambda it: it[0])
 
     with open(a.out, 'w') as out:
