@@ -15,6 +15,8 @@
 
 ### 最新状态（2026-09-28，优先于下方所有条目）
 
+- **下一阶段规划（2026-09-29，用户确认）**：纳克萨玛斯收尾（四骑士进行中）后做「整本通关」场景，从 5 人本开始做坦克自动寻路、指挥链与分工、真人跟随 AI 通关。设计见 [08-整本通关与AI带队-设计](08-整本通关与AI带队-设计.md)。
+
 - **10 人阵容与木桩（2026-09-28）**：阵容 `raid10-ilvl200-v1`（防骑/血 DK、戒律/神圣骑、刺杀贼/火法/元素萨/毁灭术/平衡德/生存猎），场景 `bench-dummy-raid10`（纳克萨玛斯入口平台），全队木桩约 22.6k；逐职业核对循环，修了血 DK 填充（灵界打击，+15%，`d90081b1`）。见 [DPS-BENCHMARK](testing/DPS-BENCHMARK.md)。**纳克萨玛斯 10 人（2026-09-28/29）**：击杀 13/15——帕奇维克、格罗布鲁斯、诺斯、希尔盖、拉苏维奥斯、塔迪乌斯（`24f94443`）、萨菲隆、迈克斯纳（`1c2bf120`/`ffdd3da3`）5/5，阿努布雷坎、法琳娜、洛欧塞布、克尔苏加德、格拉斯（两坦轮换 `633f2949`）4/5；跳过待用户决定 1 个（四骑士，原因见 BOSS-LEDGER / BACKLOG 5–9），哥特克未尝试。本轮合入：playerbots 副坦不嘲讽主坦 + 帕奇维克近战等副坦（`254e2e67`）、萨满有 DK 时放石肤（`dad73387`）、坦克开怪不受追敌上限约束（`4a8e3660`）；raidtest 按槽位准备点、`KillOnBossState`、`PullWaitAttackableSeconds`、普通开怪可用 `EngageConfirmBossState`、拿仇恨窗口不计坦克远距跑动。共享层新增 `LiftSunkenDestination`：短移动的目标 z 陷在地面下（取自陷进地面的 boss）时抬回 bot 所在层，修掉迈克斯纳走穿蛛网；raidtest 新增只读 `fall_detect` 诊断。经验：准备点离 boss 要 < 38.5 码或靠开怪豁免（`prep-within-heal-range` 记忆）。
 - **输出基准与循环修正**：新场景 `bench-dummy-h5g`（Heroic Training Dummy，83 级），方法和结果见 [DPS-BENCHMARK](testing/DPS-BENCHMARK.md)。已合入 playerbots `3d93638d`：元素萨熔岩爆裂优先（+12%）、元素掌握修正、刺杀贼饥渴之血/切割/破甲按职业搭配（+1%，加爆发技能后 +7.6%）；全队木桩 DPS 约 9600 → 10180。真实 boss 回归（Loken/Ingvar/Svala 各 2/2，击杀都更快）无退步。新阵容 `heroic5gear-n5talents-v2`（刺杀贼饥渴之血雕纹），目前只给木桩用。
 - **机器休眠会毁掉样本**：run1491、run1506 都是跑到一半机器空闲休眠，时长变成 900–1100 秒；现在 worldserver 运行时挂着 `caffeinate -ims -w <pid>`。
