@@ -7,7 +7,8 @@ Usage: routegen.py <map_id> <travel node chain, comma separated> <out file> [--l
 - Skeleton: playerbots_travelnode_path points along the given node chain (entrance -> boss -> ... -> last boss),
   downsampled to about one node every 15 yd.
 - Packs: hostile, non-critter, non-flying spawns on the map, joined by creature_formations (same floor) and by
-  distance (<= --link yd, |dz| < 6). Packs with a waypoint patroller are side packs: they come to the party. Each pack is placed at its nearest skeleton point; packs farther than --side yd from
+  distance (<= --link yd, |dz| < 6). (Marking every pack with a waypoint walker as a side pack skipped the forge
+  room workers, who walk between anvils, and the leader pulled the room at once - run 1782.) Each pack is placed at its nearest skeleton point; packs farther than --side yd from
   the skeleton are marked side=1 (optional to clear).
 - Bosses: packs holding a creature with a boss_* script or named like a node of the travel chain
   (dungeon bosses are rank 1 in creature_template, so rank does not tell).
@@ -95,9 +96,6 @@ def main():
         radius = max(math.dist(s['p'], c) for s in members)
         bosses = [s for s in members if s['name'] in boss_names or s['script'].startswith('boss_')]
         along, off = cum[j], math.dist(skel[j], c)
-        # Patrols come to the party; never walk after one (side=1).
-        if not bosses and any(s['patrol'] for s in members):
-            off = max(off, a.side + 1.0)
         for s in members:
             fix = overrides.get(s['guid'])
             if fix:
