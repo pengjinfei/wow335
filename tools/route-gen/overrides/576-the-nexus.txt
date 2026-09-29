@@ -8,3 +8,7 @@ pack 126453 along=2514
 object 2505 281.9 -25.5 -16.9 entry=188526 # Telestra's Containment Sphere
 object 2506 322.2 14.7 -16.8 entry=188527 # Anomalus' Containment Sphere
 object 2507 281.8 15.2 -16.6 entry=188528 # Ormorok's Containment Sphere
+# The two Chaotic Rift packs beside the path to Anomalus are more than 30 yd off the skeleton, but the group fights
+# right next to them and the rifts keep summoning Mana-Wraiths: 20 wraiths and 3 surges wiped it (run 1822). Clear them.
+pack 126434 side=0
+pack 126439 side=0
