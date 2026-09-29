@@ -90,7 +90,7 @@ def main():
         out.write(f"# chain: {' -> '.join(names.get(n, str(n)) for n in chain)}; "
                   f"skeleton {cum[-1]:.0f} yd, {len(spawns)} hostile spawns, {len(items)} packs\n")
         out.write("# node <along_yd> <x> <y> <z>\n# pack <along_yd> <x> <y> <z> radius=<yd> side=<0|1> elite=<n> "
-                  "spawns=<guid,...> # names\n# boss <along_yd> <x> <y> <z> entry=<entry,...> # names\n")
+                  "spawns=<guid,...> # names\n# boss <along_yd> <x> <y> <z> radius=<yd> entry=<entry,...> spawns=<guid,...> # names\n")
         next_node = 0.0
         pi = 0
         for i, p in enumerate(skel):
@@ -98,8 +98,9 @@ def main():
                 along, off, c, radius, members, bosses = items[pi]
                 label = ', '.join(f"{v}x{k}" for k, v in collections.Counter(s['name'] for s in members).items())
                 if bosses:
-                    out.write(f"boss {along:.0f} {c[0]:.1f} {c[1]:.1f} {c[2]:.1f} "
-                              f"entry={','.join(str(s['entry']) for s in bosses)} # {label}\n")
+                    out.write(f"boss {along:.0f} {c[0]:.1f} {c[1]:.1f} {c[2]:.1f} radius={radius:.1f} "
+                              f"entry={','.join(str(s['entry']) for s in bosses)} "
+                              f"spawns={','.join(str(s['guid']) for s in members)} # {label}\n")
                 else:
                     elite = sum(1 for s in members if s['rank'] >= 1)
                     out.write(f"pack {along:.0f} {c[0]:.1f} {c[1]:.1f} {c[2]:.1f} radius={radius:.1f} "
