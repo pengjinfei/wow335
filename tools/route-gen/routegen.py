@@ -6,8 +6,8 @@ Usage: routegen.py <map_id> <travel node chain, comma separated> <out file> [--l
 
 - Skeleton: playerbots_travelnode_path points along the given node chain (entrance -> boss -> ... -> last boss),
   downsampled to about one node every 15 yd.
-- Packs: hostile, non-critter, non-flying spawns on the map, joined by creature_formations and by distance
-  (<= --link yd, |dz| < 6). Each pack is placed at its nearest skeleton point; packs farther than --side yd from
+- Packs: hostile, non-critter, non-flying spawns on the map, joined by creature_formations (same floor) and by
+  distance (<= --link yd, |dz| < 6). Packs with a waypoint patroller are side packs: they come to the party. Each pack is placed at its nearest skeleton point; packs farther than --side yd from
   the skeleton are marked side=1 (optional to clear).
 - Bosses: packs holding a creature with a boss_* script or named like a node of the travel chain
   (dungeon bosses are rank 1 in creature_template, so rank does not tell).
@@ -54,7 +54,8 @@ def main():
         cum.append(cum[-1] + math.dist(skel[i - 1], skel[i]))
 
     rows = query('acore_world', f"""
-        SELECT c.guid, c.id, t.name, t.rank, c.position_x, c.position_y, c.position_z, IFNULL(f.leaderGUID, 0), t.ScriptName
+        SELECT c.guid, c.id, t.name, t.rank, c.position_x, c.position_y, c.position_z, IFNULL(f.leaderGUID, 0), t.ScriptName,
+               c.MovementType
         FROM creature c JOIN creature_template t ON t.entry = c.id
         LEFT JOIN creature_template_movement m ON m.CreatureId = t.entry
         LEFT JOIN creature_formations f ON f.memberGUID = c.guid
@@ -62,7 +63,7 @@ def main():
           AND IFNULL(m.Flight, 0) = 0 AND t.faction NOT IN (35, 31, 188)""")
     spawns = [dict(guid=int(r[0]), entry=int(r[1]), name=r[2], rank=int(r[3]),
                    p=(float(r[4]), float(r[5]), float(r[6])), leader=int(r[7]),
-                   script=r[8] if len(r) > 8 else '') for r in rows]
+                   script=r[8] if len(r) > 8 else '', patrol=len(r) > 9 and r[9] == '2') for r in rows]
     parent = {s['guid']: s['guid'] for s in spawns}
 
     def find(x):
@@ -72,8 +73,11 @@ def main():
         return x
 
     by_guid = {s['guid']: s for s in spawns}
+    # Formations join only on one floor: a patrolling leader spawned on the floor above (Utgarde Keep geist 125874
+    # at z 109 over a pack at z 66) otherwise drags the whole pack's target out of reach.
     for s in spawns:
-        if s['leader'] in by_guid:
+        leader = by_guid.get(s['leader'])
+        if leader and abs(leader['p'][2] - s['p'][2]) < 6:
             parent[find(s['guid'])] = find(s['leader'])
     for i, s in enumerate(spawns):
         for t in spawns[i + 1:]:
@@ -91,6 +95,9 @@ def main():
         radius = max(math.dist(s['p'], c) for s in members)
         bosses = [s for s in members if s['name'] in boss_names or s['script'].startswith('boss_')]
         along, off = cum[j], math.dist(skel[j], c)
+        # Patrols come to the party; never walk after one (side=1).
+        if not bosses and any(s['patrol'] for s in members):
+            off = max(off, a.side + 1.0)
         for s in members:
             fix = overrides.get(s['guid'])
             if fix:
