@@ -21,7 +21,7 @@ run761 是隔离 Dark Matter observation/execution smoke：bot action 与 28237 
 | [乌特加德城堡](bosses/heroic-uk/MECHANICS-AUDIT.md) | [凯雷塞斯](bosses/heroic-uk-keleseth/README.md) | 完整遭遇战，run322 4 kill、0 wipe、零死亡；冰墓实际被全队转火。 | **完成** |
 | 同上 | [斯卡瓦尔德&达隆](bosses/heroic-uk-skarvald-dalronn/README.md) | 完整遭遇战（10 前置 + 双 boss），run323 5/5、零死亡。 | **完成** |
 | 同上 | [因格瓦尔](bosses/heroic-uk-ingvar/README.md) | 隔离 boss 战当前构建累计 22/30 kill（73%，CI 56–86%）；不能等同完整副本。 **ilvl 200 档：10/10 kill**（上游同步前 5/5、后 5/5）。 | **完成（ilvl 200 档口径，2026-09-25 用户确认）；normal5 73%** |
-| 同上 | [整本通关](bosses/heroic-uk-run/README.md) | **首次整本通关**（run 1788，35.2 分钟、死 1 人）：全 bot 队伍由坦克的 `dungeon run` 沿路线自行推进、开怪；单次样本。 | **进行中（阶段 2）** |
+| 同上 | [整本通关](bosses/heroic-uk-run/README.md) | **整本通关 2/3**（1788、1799 各约 35 分钟、死 1 人；1798 两组精英同上团灭）：全 bot 队伍由坦克的 `dungeon run` 沿路线自行推进、开怪。 | **进行中（阶段 2）** |
 | [魔枢](bosses/heroic-nexus/FIXTURE-SURVEY.md) | [泰蕾斯特拉](bosses/heroic-nexus-telestra/README.md) | 完整链路已有击杀；run409 控制链 3 kill、2 作废。 **ilvl 200 档：5/5 kill、0 死**。 | **当前配置击杀** |
 | 同上 | [阿诺姆鲁斯](bosses/heroic-nexus-anomalus/README.md) | 正常规则；300s 档 9/10，420s 档 4/5（不同预算 cohort）。 | **完成** |
 | 同上 | [奥莫洛克](bosses/heroic-nexus-ormorok/README.md) | 完整链路 6/8，0 boss-stage wipe；2 场清怪减员。 **ilvl 200 档：5/5 kill、1 死**。 | **当前配置击杀** |
