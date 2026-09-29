@@ -86,5 +86,5 @@
 |---|---|
 | 管理库 | `main` 最新 |
 | azerothcore-wotlk | `9c3e797ea`（`main`，= `mine/main`） |
-| mod-playerbots | `95640bb7`（`main`，= `mine/main`） |
-| mod-raidtest | `63fb7572`（`dev`，= `origin/dev`） |
+| mod-playerbots | `5ca3f2f7`（`main`，= `mine/main`） |
+| mod-raidtest | `69e91293`（`dev`，= `origin/dev`） |

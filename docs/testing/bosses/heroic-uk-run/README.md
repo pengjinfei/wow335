@@ -7,7 +7,8 @@
 - **2026-09-29：首次整本通关成功**——run 1788，全 bot 队伍从入口自行寻路、开怪、打掉 3 个 boss，**35.2 分钟、死亡 1 人**，
   完成判据 `KillOnInstanceData = 2:3` 命中。单次样本，尚未复跑。
 - 需要的共享层改动：同层守卫放行真实楼梯（`a1ba94e9`）、bot 像客户端一样上报副本区域触发（`2fb7d2b2`，配置
-  `AiPlayerbot.EmulateAreaTriggers`，默认关）。
+  `AiPlayerbot.EmulateAreaTriggers`，默认关）。合并前回归：阿努巴拉克 h5g 3/3 零死亡；迈克斯纳先 1/2（抬高判定对已陷进蛛网
+  6 码以上的 bot 放弃，又有人走穿）→ 容差放宽到 10 码（`5ca3f2f7`）后 4/4 零死亡、下坠 0。已合入 playerbots `main` / raidtest `dev`。
 
 ## 机制
 
