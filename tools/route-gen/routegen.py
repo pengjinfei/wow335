@@ -48,7 +48,11 @@ def main():
         pts = query('acore_playerbots', f"SELECT x, y, z FROM playerbots_travelnode_path "
                     f"WHERE node_id={s} AND to_node_id={t} ORDER BY nr")
         if not pts:
-            raise SystemExit(f'no travel path {s} -> {t}')
+            # Only the other direction is stored for some links (Nexus: Anomalus -> Telestra); walk it backwards.
+            pts = query('acore_playerbots', f"SELECT x, y, z FROM playerbots_travelnode_path "
+                        f"WHERE node_id={t} AND to_node_id={s} ORDER BY nr DESC")
+        if not pts:
+            raise SystemExit(f'no travel path {s} -> {t} in either direction')
         skel += [tuple(map(float, p)) for p in pts]
     cum = [0.0]
     for i in range(1, len(skel)):
@@ -111,25 +115,32 @@ def main():
                   f"skeleton {cum[-1]:.0f} yd, {len(spawns)} hostile spawns, {len(items)} packs\n")
         out.write("# node <along_yd> <x> <y> <z>\n# pack <along_yd> <x> <y> <z> radius=<yd> side=<0|1> elite=<n> "
                   "spawns=<guid,...> # names\n# boss <along_yd> <x> <y> <z> radius=<yd> entry=<entry,...> spawns=<guid,...> # names\n")
+        def write_item(item):
+            along, off, c, radius, members, bosses = item
+            label = ', '.join(f"{v}x{k}" for k, v in collections.Counter(s['name'] for s in members).items())
+            if bosses:
+                out.write(f"boss {along:.0f} {c[0]:.1f} {c[1]:.1f} {c[2]:.1f} radius={radius:.1f} "
+                          f"entry={','.join(str(s['entry']) for s in bosses)} "
+                          f"spawns={','.join(str(s['guid']) for s in members)} # {label}\n")
+            else:
+                elite = sum(1 for s in members if s['rank'] >= 1)
+                out.write(f"pack {along:.0f} {c[0]:.1f} {c[1]:.1f} {c[2]:.1f} radius={radius:.1f} "
+                          f"side={int(off > a.side)} elite={elite} "
+                          f"spawns={','.join(str(s['guid']) for s in members)} # {label}\n")
+
         next_node = 0.0
         pi = 0
         for i, p in enumerate(skel):
             while pi < len(items) and items[pi][0] <= cum[i]:
-                along, off, c, radius, members, bosses = items[pi]
-                label = ', '.join(f"{v}x{k}" for k, v in collections.Counter(s['name'] for s in members).items())
-                if bosses:
-                    out.write(f"boss {along:.0f} {c[0]:.1f} {c[1]:.1f} {c[2]:.1f} radius={radius:.1f} "
-                              f"entry={','.join(str(s['entry']) for s in bosses)} "
-                              f"spawns={','.join(str(s['guid']) for s in members)} # {label}\n")
-                else:
-                    elite = sum(1 for s in members if s['rank'] >= 1)
-                    out.write(f"pack {along:.0f} {c[0]:.1f} {c[1]:.1f} {c[2]:.1f} radius={radius:.1f} "
-                              f"side={int(off > a.side)} elite={elite} "
-                              f"spawns={','.join(str(s['guid']) for s in members)} # {label}\n")
+                write_item(items[pi])
                 pi += 1
             if cum[i] >= next_node or i == len(skel) - 1:
                 out.write(f"node {cum[i]:.0f} {p[0]:.1f} {p[1]:.1f} {p[2]:.1f}\n")
                 next_node = cum[i] + 15.0
+        # Items an override placed past the last node (a final boss back at the hub) go at the end.
+        while pi < len(items):
+            write_item(items[pi])
+            pi += 1
     print(f"wrote {a.out}: {len(items)} packs, skeleton {cum[-1]:.0f} yd")
 
 

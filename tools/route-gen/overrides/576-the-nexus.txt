@@ -1,0 +1,5 @@
+# Hand fixes for the Nexus route draft (routegen.py --overrides).
+# Chain: entrance -> hub (Keristrasza) -> Telestra -> Anomalus -> Ormorok -> Azure Magus -> hub.
+# Keristrasza sits in the hub the route passes first; her sphere opens only when Telestra, Anomalus and Ormorok are
+# dead, so she goes last (the leader's target filter skips her while she is not attackable).
+pack 126453 along=2514
