@@ -3,3 +3,8 @@
 # Keristrasza sits in the hub the route passes first; her sphere opens only when Telestra, Anomalus and Ormorok are
 # dead, so she goes last (the leader's target filter skips her while she is not attackable).
 pack 126453 along=2514
+# The three containment spheres around her: each becomes usable when its boss dies, and all three must be used
+# before she leaves the Frozen Prison (instance_nexus go_nexus_containment_sphere).
+object 2505 281.9 -25.5 -16.9 entry=188526 # Telestra's Containment Sphere
+object 2506 322.2 14.7 -16.8 entry=188527 # Anomalus' Containment Sphere
+object 2507 281.8 15.2 -16.6 entry=188528 # Ormorok's Containment Sphere

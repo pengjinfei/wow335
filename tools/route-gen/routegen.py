@@ -31,14 +31,18 @@ def main():
     ap.add_argument('out')
     ap.add_argument('--link', type=float, default=12.0)
     ap.add_argument('--side', type=float, default=30.0)
-    ap.add_argument('--overrides', help='hand fixes: lines "pack <spawnId> [along=<yd>] [side=<0|1>]"')
+    ap.add_argument('--overrides', help='hand fixes: lines "pack <spawnId> [along=<yd>] [side=<0|1>]" and '
+                    '"object <along> <x> <y> <z> entry=<go entry>"')
     a = ap.parse_args()
     overrides = {}
+    objects = []  # "object <along> <x> <y> <z> entry=<go entry,...>" lines, copied as written
     if a.overrides:
         for line in open(a.overrides):
             fields = line.split('#', 1)[0].split()
             if len(fields) >= 2 and fields[0] == 'pack':
                 overrides[int(fields[1])] = dict(f.split('=', 1) for f in fields[2:])
+            elif fields and fields[0] == 'object':
+                objects.append(line.strip())
     chain = [int(x) for x in a.chain.split(',')]
 
     names = {int(r[0]): r[1] for r in query('acore_playerbots',
@@ -141,6 +145,9 @@ def main():
         while pi < len(items):
             write_item(items[pi])
             pi += 1
+        # Objects to use (the loader orders every line by along).
+        for line in objects:
+            out.write(line + "\n")
     print(f"wrote {a.out}: {len(items)} packs, skeleton {cum[-1]:.0f} yd")
 
 
