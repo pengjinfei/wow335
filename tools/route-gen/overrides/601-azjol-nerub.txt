@@ -1,0 +1,3 @@
+# Hand fixes for the Azjol-Nerub route draft (routegen.py --overrides).
+# Chain: entrance -> Watcher Silthik -> Krik'thir -> Anub'ar Crusher -> Hadronox. Anub'arak's cavern below is reached by
+# dropping down the pit after Hadronox; the travel-node graph has no link for it, so this first route ends at Hadronox.
