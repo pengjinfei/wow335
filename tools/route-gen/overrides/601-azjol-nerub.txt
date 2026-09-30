@@ -9,9 +9,10 @@ pack 12760 sent=1
 pack 127214 sent=1
 # Hadronox's gauntlet: her first crusher pack is a summon (spawn id 0) standing on the "Anub'ar Crusher" travel node,
 # so the leader walked into it; engaging it summons packs 2 and 3 on the ledges, and she climbs up by herself
-# (boss_hadronox SUMMON_GROUP_CRUSHER_1..3). Pull pack 1 from range, then hold for her.
+# (boss_hadronox SUMMON_GROUP_CRUSHER_1..3). Pull pack 1 from range, then hold for her on the upper platform:
+# there she webs the tunnel doors shut; met lower she keeps healing by killing the crypt fiends (+10% each, run 1868).
 summoned 440 529.7 547.1 731.9 radius=15 entry=28922,29117,29118 # Hadronox crusher pack 1
-pack 127401 sent=1
+pack 127401 sent=1 hold=530.0,580.0,733.9
 # Down to Anub'arak: after Hadronox the way on is a hole in her pit's web floor, 360 yd above a pool (water surface
 # 288.5, floor 276: the fall is survivable, as for a player). There is no travel-node link, so the items below are
 # walked to directly on the navmesh. The Brood Keepers in the pool itself stay a side pack: fighting them means staying underwater.
