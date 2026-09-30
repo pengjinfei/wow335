@@ -15,7 +15,7 @@ pack 127401 sent=1
 # Down to Anub'arak: after Hadronox the way on is a hole in her pit's web floor, 360 yd above a pool (water surface
 # 288.5, floor 276: the fall is survivable, as for a player). There is no travel-node link, so the items below are
 # walked to directly on the navmesh.
-drop 700 530.0 553.0 646.0 # hole in Hadronox's pit
+drop 700 517.0 565.0 648.0 # hole in Hadronox's pit (open from x 514-522, y 560-572)
 pack 132214 along=720 side=0
 pack 132227 along=730 side=0
 pack 132219 along=735 side=0
