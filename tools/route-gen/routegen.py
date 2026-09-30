@@ -36,6 +36,7 @@ def main():
     a = ap.parse_args()
     overrides = {}
     objects = []  # "object <along> <x> <y> <z> entry=<go entry,...>" lines, copied as written
+    ignored = set()  # "ignore-entry <entry>": creatures that are not cleared (cannot die until a boss does)
     if a.overrides:
         for line in open(a.overrides):
             fields = line.split('#', 1)[0].split()
@@ -43,6 +44,8 @@ def main():
                 overrides[int(fields[1])] = dict(f.split('=', 1) for f in fields[2:])
             elif fields and fields[0] == 'object':
                 objects.append(line.strip())
+            elif len(fields) >= 2 and fields[0] == 'ignore-entry':
+                ignored.add(int(fields[1]))
     chain = [int(x) for x in a.chain.split(',')]
 
     names = {int(r[0]): r[1] for r in query('acore_playerbots',
@@ -72,7 +75,8 @@ def main():
           AND IFNULL(m.Flight, 0) = 0 AND t.faction NOT IN (35, 31, 188)""")
     spawns = [dict(guid=int(r[0]), entry=int(r[1]), name=r[2], rank=int(r[3]),
                    p=(float(r[4]), float(r[5]), float(r[6])), leader=int(r[7]),
-                   script=r[8] if len(r) > 8 else '', patrol=len(r) > 9 and r[9] == '2') for r in rows]
+                   script=r[8] if len(r) > 8 else '', patrol=len(r) > 9 and r[9] == '2') for r in rows
+              if int(r[1]) not in ignored]
     parent = {s['guid']: s['guid'] for s in spawns}
 
     def find(x):

@@ -12,3 +12,7 @@ object 2507 281.8 15.2 -16.6 entry=188528 # Ormorok's Containment Sphere
 # right next to them and the rifts keep summoning Mana-Wraiths: 20 wraiths and 3 surges wiped it (run 1822). Clear them.
 pack 126434 side=0
 pack 126439 side=0
+# Crystalline Frayers cannot die while Ormorok lives: at zero health they turn into a seed pod and come back 90 s later
+# (npc_crystalline_frayer). Clearing them is endless - the group fought them for 20 minutes (run 1831); they all die
+# with Ormorok. Leave them out of the packs.
+ignore-entry 26793
