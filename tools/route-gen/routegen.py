@@ -35,15 +35,15 @@ def main():
                     '"object <along> <x> <y> <z> entry=<go entry>"')
     a = ap.parse_args()
     overrides = {}
-    objects = []  # "object <along> <x> <y> <z> entry=<go entry,...>" lines, copied as written
+    objects = []  # "object|summoned <along> <x> <y> <z> entry=<...>" lines, copied as written
     ignored = set()  # "ignore-entry <entry>": creatures that are not cleared (cannot die until a boss does)
     if a.overrides:
         for line in open(a.overrides):
             fields = line.split('#', 1)[0].split()
             if len(fields) >= 2 and fields[0] == 'pack':
                 overrides[int(fields[1])] = dict(f.split('=', 1) for f in fields[2:])
-            elif fields and fields[0] == 'object':
-                objects.append(line.strip())
+            elif fields and fields[0] in ('object', 'summoned'):
+                objects.append(line.split('#', 1)[0].strip() + ('  # ' + line.split('#', 1)[1].strip() if '#' in line else ''))
             elif len(fields) >= 2 and fields[0] == 'ignore-entry':
                 ignored.add(int(fields[1]))
     chain = [int(x) for x in a.chain.split(',')]
