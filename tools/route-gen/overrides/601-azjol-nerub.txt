@@ -3,10 +3,12 @@
 # dropping down the pit after Hadronox; the travel-node graph has no link for it, so this first route ends at Hadronox.
 # Krik'thir's gauntlet: once a watcher group is engaged he sends the others himself (60 s, 120 s, and 5 s after each
 # group dies) and joins at 200 s on heroic (boss_krikthir DoAction). Pull Silthik's group only; wait for the rest.
-pack 12758 boss=0 pull=35
-pack 12759 sent=1
-pack 12760 sent=1
-pack 127214 sent=1
+# Fought as players do: pulled back up the entrance ramp round the corner (537.8,738.0,786.4), out of the hall's sight,
+# so the shadowcasters must come into melee and each sent group runs ~70 yd to arrive.
+pack 12758 boss=0 pull=35 hold=537.8,738.0,786.4
+pack 12759 sent=1 hold=537.8,738.0,786.4
+pack 12760 sent=1 hold=537.8,738.0,786.4
+pack 127214 sent=1 hold=537.8,738.0,786.4
 # Hadronox's gauntlet: her first crusher pack is a summon (spawn id 0) standing on the "Anub'ar Crusher" travel node,
 # so the leader walked into it; engaging it summons packs 2 and 3 on the ledges, and she climbs up by herself
 # (boss_hadronox SUMMON_GROUP_CRUSHER_1..3). Pull pack 1 from range, then hold for her on the upper platform:
