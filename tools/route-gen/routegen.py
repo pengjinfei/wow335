@@ -31,7 +31,7 @@ def main():
     ap.add_argument('out')
     ap.add_argument('--link', type=float, default=12.0)
     ap.add_argument('--side', type=float, default=30.0)
-    ap.add_argument('--overrides', help='hand fixes: lines "pack <spawnId> [along=<yd>] [side=<0|1>]" and '
+    ap.add_argument('--overrides', help='hand fixes: lines "pack <spawnId> [along=<yd>] [side=<0|1>] [boss=0] [sent=1]" and '
                     '"object <along> <x> <y> <z> entry=<go entry>"')
     a = ap.parse_args()
     overrides = {}
@@ -108,13 +108,17 @@ def main():
         radius = max(math.dist(s['p'], c) for s in members)
         bosses = [s for s in members if s['name'] in boss_names or s['script'].startswith('boss_')]
         along, off = cum[j], math.dist(skel[j], c)
+        sent = False
         for s in members:
             fix = overrides.get(s['guid'])
             if fix:
                 along = float(fix.get('along', along))
                 if 'side' in fix:
                     off = 0.0 if fix['side'] == '0' else a.side + 1.0
-        items.append((along, off, c, radius, members, bosses))
+                if 'boss' in fix:
+                    bosses = [] if fix['boss'] == '0' else bosses
+                sent = sent or fix.get('sent') == '1'
+        items.append((along, off, c, radius, members, bosses, sent))
     items.sort(key=lambda it: it[0])
 
     with open(a.out, 'w') as out:
@@ -124,17 +128,18 @@ def main():
         out.write("# node <along_yd> <x> <y> <z>\n# pack <along_yd> <x> <y> <z> radius=<yd> side=<0|1> elite=<n> "
                   "spawns=<guid,...> # names\n# boss <along_yd> <x> <y> <z> radius=<yd> entry=<entry,...> spawns=<guid,...> # names\n")
         def write_item(item):
-            along, off, c, radius, members, bosses = item
+            along, off, c, radius, members, bosses, sent = item
+            extra = ' sent=1' if sent else ''
             label = ', '.join(f"{v}x{k}" for k, v in collections.Counter(s['name'] for s in members).items())
             if bosses:
                 out.write(f"boss {along:.0f} {c[0]:.1f} {c[1]:.1f} {c[2]:.1f} radius={radius:.1f} "
                           f"entry={','.join(str(s['entry']) for s in bosses)} "
-                          f"spawns={','.join(str(s['guid']) for s in members)} # {label}\n")
+                          f"spawns={','.join(str(s['guid']) for s in members)}{extra} # {label}\n")
             else:
                 elite = sum(1 for s in members if s['rank'] >= 1)
                 out.write(f"pack {along:.0f} {c[0]:.1f} {c[1]:.1f} {c[2]:.1f} radius={radius:.1f} "
                           f"side={int(off > a.side)} elite={elite} "
-                          f"spawns={','.join(str(s['guid']) for s in members)} # {label}\n")
+                          f"spawns={','.join(str(s['guid']) for s in members)}{extra} # {label}\n")
 
         next_node = 0.0
         pi = 0
