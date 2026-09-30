@@ -12,3 +12,16 @@ pack 127214 sent=1
 # (boss_hadronox SUMMON_GROUP_CRUSHER_1..3). Pull pack 1 from range, then hold for her.
 summoned 440 529.7 547.1 731.9 radius=15 entry=28922,29117,29118 # Hadronox crusher pack 1
 pack 127401 sent=1
+# Down to Anub'arak: after Hadronox the way on is a hole in her pit's web floor, 360 yd above a pool (water surface
+# 288.5, floor 276: the fall is survivable, as for a player). There is no travel-node link, so the items below are
+# walked to directly on the navmesh.
+drop 700 530.0 553.0 646.0 # hole in Hadronox's pit
+pack 132214 along=720 side=0
+pack 132227 along=730 side=0
+pack 132219 along=735 side=0
+pack 132220 along=740 side=0
+pack 132216 along=745 side=0
+pack 132229 along=750 side=0
+pack 132274 along=780 side=0
+pack 132275 along=781 side=0
+pack 132273 along=800
