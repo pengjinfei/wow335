@@ -15,7 +15,10 @@
 
 ### 最新状态（2026-09-28，优先于下方所有条目）
 
-- **整本通关（2026-09-29）**：英雄乌特加德城堡 **首次全 bot 整本通关**（run 1788，35.2 分钟、死 1 人），见 [记录](testing/bosses/heroic-uk-run/README.md)。
+- **整本通关（2026-09-30）**：英雄乌特加德城堡 8/11 → 回归后 1852 击杀（[记录](testing/bosses/heroic-uk-run/README.md)）；
+  **英雄魔枢 4/6**（第二个副本，同一套领队逻辑 + 路线生成器 overrides，[记录](testing/bosses/heroic-nexus-run/README.md)）。
+  已合并 playerbots `main` `dabe6ab2`、raidtest `dev` `b822f0d`。新增共享能力：路线 `object` 条目、`AiPlayerbot.EmulateGravity`、
+  路径掉层时沿地面直走、开 boss 前清 35–70 码的组；raidtest 重置后总跑 boss AI `Reset`。批跑前开 `caffeinate -ims`（Mac 会睡眠）。
 - **下一阶段规划（2026-09-29，用户确认）**：纳克萨玛斯收尾（四骑士进行中）后做「整本通关」场景，从 5 人本开始做坦克自动寻路、指挥链与分工、真人跟随 AI 通关。设计见 [08-整本通关与AI带队-设计](08-整本通关与AI带队-设计.md)。
 
 - **10 人阵容与木桩（2026-09-28）**：阵容 `raid10-ilvl200-v1`（防骑/血 DK、戒律/神圣骑、刺杀贼/火法/元素萨/毁灭术/平衡德/生存猎），场景 `bench-dummy-raid10`（纳克萨玛斯入口平台），全队木桩约 22.6k；逐职业核对循环，修了血 DK 填充（灵界打击，+15%，`d90081b1`）。见 [DPS-BENCHMARK](testing/DPS-BENCHMARK.md)。**纳克萨玛斯 10 人（2026-09-28/29）**：击杀 **15/15**——帕奇维克、格罗布鲁斯、诺斯、希尔盖、拉苏维奥斯、塔迪乌斯（`24f94443`）、萨菲隆、迈克斯纳（`1c2bf120`/`ffdd3da3`）、天启四骑士（`6d095444`，专用阵容换恢复德）、哥特克（猎人远程开怪、不分组）5/5，阿努布雷坎、法琳娜、洛欧塞布、克尔苏加德、格拉斯（两坦轮换 `633f2949`）4/5。本轮合入：playerbots 副坦不嘲讽主坦 + 帕奇维克近战等副坦（`254e2e67`）、萨满有 DK 时放石肤（`dad73387`）、坦克开怪不受追敌上限约束（`4a8e3660`）；raidtest 按槽位准备点、`KillOnBossState`、`PullWaitAttackableSeconds`、普通开怪可用 `EngageConfirmBossState`、拿仇恨窗口不计坦克远距跑动。共享层新增 `LiftSunkenDestination`：短移动的目标 z 陷在地面下（取自陷进地面的 boss）时抬回 bot 所在层，修掉迈克斯纳走穿蛛网；raidtest 新增只读 `fall_detect` 诊断。经验：准备点离 boss 要 < 38.5 码或靠开怪豁免（`prep-within-heal-range` 记忆）。

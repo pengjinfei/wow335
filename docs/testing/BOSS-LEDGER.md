@@ -22,7 +22,7 @@ run761 是隔离 Dark Matter observation/execution smoke：bot action 与 28237 
 | 同上 | [斯卡瓦尔德&达隆](bosses/heroic-uk-skarvald-dalronn/README.md) | 完整遭遇战（10 前置 + 双 boss），run323 5/5、零死亡。 | **完成** |
 | 同上 | [因格瓦尔](bosses/heroic-uk-ingvar/README.md) | 隔离 boss 战当前构建累计 22/30 kill（73%，CI 56–86%）；不能等同完整副本。 **ilvl 200 档：10/10 kill**（上游同步前 5/5、后 5/5）。 | **完成（ilvl 200 档口径，2026-09-25 用户确认）；normal5 73%** |
 | 同上 | [整本通关](bosses/heroic-uk-run/README.md) | **整本通关 8/11**（复活修正后 1811–1813 连续 3 击杀，约 32 分钟；此前 1798 团灭、1806/1810 卡住均已修）：全 bot 队伍由坦克的 `dungeon run` 沿路线自行推进、开怪。 | **进行中（阶段 2）** |
-| 英雄魔枢 | [整本通关](bosses/heroic-nexus-run/README.md) | **整本通关 3/4**（1831、1832、1834，42–58 分钟；1833 团灭在阿诺玛鲁斯前的大组）：同一套领队逻辑换到第二个 5 人本；路线由生成器 + overrides（封印球体、裂隙组、去掉磨损者）。 | **进行中（阶段 2）** |
+| 英雄魔枢 | [整本通关](bosses/heroic-nexus-run/README.md) | **整本通关 4/6**（1831、1832、1834、1855，40–58 分钟；团灭在科卢尔格与阿诺玛鲁斯前大组）：同一套领队逻辑换到第二个 5 人本；路线由生成器 + overrides（封印球体、裂隙组、去掉磨损者）。 | **进行中（阶段 2）** |
 | [魔枢](bosses/heroic-nexus/FIXTURE-SURVEY.md) | [泰蕾斯特拉](bosses/heroic-nexus-telestra/README.md) | 完整链路已有击杀；run409 控制链 3 kill、2 作废。 **ilvl 200 档：5/5 kill、0 死**。 | **当前配置击杀** |
 | 同上 | [阿诺姆鲁斯](bosses/heroic-nexus-anomalus/README.md) | 正常规则；300s 档 9/10，420s 档 4/5（不同预算 cohort）。 | **完成** |
 | 同上 | [奥莫洛克](bosses/heroic-nexus-ormorok/README.md) | 完整链路 6/8，0 boss-stage wipe；2 场清怪减员。 **ilvl 200 档：5/5 kill、1 死**。 | **当前配置击杀** |
