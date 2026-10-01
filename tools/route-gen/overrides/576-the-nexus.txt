@@ -38,4 +38,6 @@ pack 126454 pull=35 hold=566.5,88.1,-16.1
 # The big pack on the ramp before Anomalus (rift, 2 enforcers, 3 surges, wraiths circling): pulled from 35 yd down the
 # ramp to (675.5,-186.3,-24.6), out of sight of all of it, so it comes in strung out; the rift dies first (strategy).
 # It sits beside the path to Anomalus but the draft put it after him (along 1355): cleared before passing it.
-pack 126435 along=1190 pull=35 hold=675.5,-186.3,-24.6
+# Pulled from the foot of the ramp (663.9,-195.3,-16.4), the only spot in its sight, 25 yd from it, without crowd control:
+# from the hold the leader walked on out of sight into it (run 1931).
+pack 126435 along=1190 pull=35 hold=675.5,-186.3,-24.6 from=663.9,-195.3,-16.4 cc=0
