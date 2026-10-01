@@ -1,5 +1,11 @@
 # Hand fixes for the Ahn'kahet route draft (routegen.py --overrides).
 # Chain: entrance -> Elder Nadox -> Prince Taldaram -> Amanitar (heroic) -> Jedoga Shadowseeker -> Herald Volazj.
+# The corridor before the first hall: the hall's patrol comes to its entrance (waypoint 2, 508.4,-1009.8) and joined
+# the Deep Crawlers fought there (run 1966, wipe). The crawlers are fought 45 yd west of that point, at (466.4,-1027),
+# the north group of four too (pulled with the single crawler beside it).
+pack 131894 pull=30 hold=466.4,-1027.0,30.3
+pack 131895 pull=30 hold=466.4,-1027.0,30.3
+pack 131889 side=0 pull=30 hold=466.4,-1027.0,30.3
 # The first hall (z 38): a patrol (Plague Walker + 2) walks between two elite squads 20-30 yd apart; chasing it took
 # the tank past the north squad and both came with it (run 1965, wipe). As players do: wait for the patrol at the
 # hall entrance and pull it alone, then the squads one by one from (538,-1002), each back to the corridor (490,-1032)
