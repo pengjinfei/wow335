@@ -33,6 +33,10 @@ pack 115952 pull=35 hold=312.7,149.3,-19.3
 # The mage-hunter squads east of Telestra's room: the default pull-back node lay inside her room (~16 yd from her),
 # so pulling the first squad brought Telestra and the next squad in at once (runs 1891, 1917). Players pull them east
 # along the corridor, away from her room, one squad at a time.
+# The first mage-hunter squad stands 24 yd from Telestra: pulled from the corridor mouth (544,96), in its sight and out
+# of hers, back round the bend to (542.2,117.9) so its casters come in; fought at the squad the tank was taken on to
+# her and she joined (run 1943).
+pack 126456 pull=35 hold=542.2,117.9,-16.6 from=544.0,96.0,-16.4
 pack 126458 pull=35 hold=550.7,85.3,-16.0
 pack 126454 pull=35 hold=566.5,88.1,-16.1
 # The big pack on the ramp before Anomalus (rift, 2 enforcers, 3 surges, wraiths circling): pulled from 35 yd down the
