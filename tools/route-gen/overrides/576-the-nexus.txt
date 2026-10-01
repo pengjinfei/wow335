@@ -25,8 +25,8 @@ ignore-entry 26793
 # Kolurg himself from (400,174): 27 yd from him, 44 yd from the berserker squad behind him.
 pack 126666 pull=35 hold=312.7,149.3,-19.3
 pack 126664 pull=35 hold=312.7,149.3,-19.3
-pack 126665 pull=35 hold=312.7,149.3,-19.3 from=385.0,164.0,-35.0
-pack 4764 pull=35 hold=312.7,149.3,-19.3 from=400.0,174.0,-35.0
+pack 126665 pull=35 hold=312.7,149.3,-19.3 from=385.0,164.0,-35.0 cc=0
+pack 4764 pull=35 hold=312.7,149.3,-19.3 from=400.0,174.0,-35.0 cc=0
 pack 115899 pull=35 hold=312.7,149.3,-19.3
 pack 115965 pull=35 hold=312.7,149.3,-19.3
 pack 115952 pull=35 hold=312.7,149.3,-19.3
