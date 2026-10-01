@@ -1,5 +1,12 @@
 # Hand fixes for the Ahn'kahet route draft (routegen.py --overrides).
 # Chain: entrance -> Elder Nadox -> Prince Taldaram -> Amanitar (heroic) -> Jedoga Shadowseeker -> Herald Volazj.
+# The first hall (z 38): a patrol (Plague Walker + 2) walks between two elite squads 20-30 yd apart; chasing it took
+# the tank past the north squad and both came with it (run 1965, wipe). As players do: wait for the patrol at the
+# hall entrance and pull it alone, then the squads one by one from (538,-1002), each back to the corridor (490,-1032)
+# out of the hall's sight.
+pack 131901 along=245 pull=35 from=522.5,-1011.5,37.9 hold=490.0,-1032.0,30.3
+pack 131867 along=262 side=0 pull=35 from=538.0,-1002.0,37.9 hold=490.0,-1032.0,30.3
+pack 131872 pull=35 from=538.0,-1002.0,37.9 hold=490.0,-1032.0,30.3
 # Taldaram is immune until both ancient devices on the side ledges (z 18) have been used (boss_prince_taldaram:
 # DATA_TELDRAM_SPHERE1/2); each ledge has a squad of 2 Eyes of Taldaram and 2 Frostbringers beside the device.
 pack 131909 along=650 side=0
