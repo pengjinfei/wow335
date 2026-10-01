@@ -33,3 +33,7 @@ pack 115952 pull=35 hold=312.7,149.3,-19.3
 # along the corridor, away from her room, one squad at a time.
 pack 126458 pull=35 hold=550.7,85.3,-16.0
 pack 126454 pull=35 hold=566.5,88.1,-16.1
+# The big pack on the ramp before Anomalus (rift, 2 enforcers, 3 surges, wraiths circling): pulled from 35 yd down the
+# ramp to (675.5,-186.3,-24.6), out of sight of all of it, so it comes in strung out; the rift dies first (strategy).
+# It sits beside the path to Anomalus but the draft put it after him (along 1355): cleared before passing it.
+pack 126435 along=1190 pull=35 hold=675.5,-186.3,-24.6
