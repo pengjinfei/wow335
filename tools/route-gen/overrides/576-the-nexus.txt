@@ -16,3 +16,13 @@ pack 126439 side=0
 # (npc_crystalline_frayer). Clearing them is endless - the group fought them for 20 minutes (run 1831); they all die
 # with Ormorok. Leave them out of the packs.
 ignore-entry 26793
+# Commander Kolurg / Stoutbeard's room, as players clear it: every squad is pulled from 35 yd back up the entrance
+# corridor (out of the room's sight), so the rangers and clerics have to come in and the frozen squads next to it
+# stay frozen; the clerics die first (strategy). The room wiped the group when two or three squads came at once.
+pack 126666 pull=35 hold=347.5,156.2,-29.1
+pack 126664 pull=35 hold=347.5,156.2,-29.1
+pack 126665 pull=35 hold=347.5,156.2,-29.1
+pack 4764 pull=35 hold=347.5,156.2,-29.1
+pack 115899 pull=35 hold=347.5,156.2,-29.1
+pack 115965 pull=35 hold=347.5,156.2,-29.1
+pack 115952 pull=35 hold=347.5,156.2,-29.1
