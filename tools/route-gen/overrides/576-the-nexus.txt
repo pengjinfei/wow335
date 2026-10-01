@@ -21,10 +21,12 @@ ignore-entry 26793
 # shot from the room and drew the tank in, run 1919);
 # corridor (out of the room's sight), so the rangers and clerics have to come in and the frozen squads next to it
 # stay frozen; the clerics die first (strategy). The room wiped the group when two or three squads came at once.
+# Kolurg's escort (cleric + ranger) is pulled from the doorway spot (385,164): 26 yd from it, 45 yd from Kolurg.
+# Kolurg himself from (400,174): 27 yd from him, 44 yd from the berserker squad behind him.
 pack 126666 pull=35 hold=312.7,149.3,-19.3
 pack 126664 pull=35 hold=312.7,149.3,-19.3
-pack 126665 pull=35 hold=312.7,149.3,-19.3
-pack 4764 pull=35 hold=312.7,149.3,-19.3
+pack 126665 pull=35 hold=312.7,149.3,-19.3 from=385.0,164.0,-35.0
+pack 4764 pull=35 hold=312.7,149.3,-19.3 from=400.0,174.0,-35.0
 pack 115899 pull=35 hold=312.7,149.3,-19.3
 pack 115965 pull=35 hold=312.7,149.3,-19.3
 pack 115952 pull=35 hold=312.7,149.3,-19.3
