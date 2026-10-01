@@ -16,8 +16,9 @@
 ### 最新状态（2026-09-28，优先于下方所有条目）
 
 - **整本通关（2026-10-01）**：三个英雄 5 人本全 bot 整本通关——乌特加德城堡（回归 2/2，[记录](testing/bosses/heroic-uk-run/README.md)）、
-  魔枢（累计 5/8，[记录](testing/bosses/heroic-nexus-run/README.md)）、**艾卓-尼鲁布 4/4**（[记录](testing/bosses/heroic-an-run/README.md)）。
-  已合并 playerbots `main` `56b71959`、raidtest `dev` `2a6a92f`。路线条目：`object`（交互物体）、`summoned`（脚本召唤怪组）、`sent`（遭遇派来，原地/`hold=` 等）、
+  魔枢（2026-10-02 按真人打法稳定：6 次整本击杀，v14 后 4/5，[记录](testing/bosses/heroic-nexus-run/README.md)）、**艾卓-尼鲁布**（[记录](testing/bosses/heroic-an-run/README.md)）。
+  已合并 playerbots `main` `9efe171b`、raidtest `dev` `7a415ea`（10-02；新路线条目 `from=` 拉怪点、`cc=0`；共享层：停在拉怪距离内、等吃喝、战斗中不拾取、视线外队员被缠住时过去、紧凑怪组不闷棍、重力模拟认正下方导航网格、boss 暂不可攻击不算清、跳坑卡半空的队员拉回落线）。
+  **下一步：安卡赫特整本**（路线草稿已生成；塔达拉姆装置、耶戈达、7 精英大组、阿曼尼塔坦克修复待做）。遗留：魔枢科卢尔格坦克单独拉、全队在拐角等。路线条目：`object`（交互物体）、`summoned`（脚本召唤怪组）、`sent`（遭遇派来，原地/`hold=` 等）、
   `drop … rim=`（跳坑）、`hold=`、`pull=`；共享层：`AiPlayerbot.EmulateGravity`（落地清下落标记、落水面、陷地抬回）、路径掉层时直走、有战斗标记无攻击者照常推进、
   拉回只选同层节点；raidtest：重置后跑 boss AI `Reset`、坦克移动 20 码清零卡住计时。卡点先按真人打法想（站位/卡视线/控制/击杀顺序/节奏）。
   批跑前开 `caffeinate -ims`（Mac 会睡眠）。
