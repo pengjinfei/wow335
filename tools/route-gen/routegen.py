@@ -92,8 +92,15 @@ def main():
         leader = by_guid.get(s['leader'])
         if leader and abs(leader['p'][2] - s['p'][2]) < 6:
             parent[find(s['guid'])] = find(s['leader'])
+    # "pack <spawnId> split=1": that spawn's formation is a pack of its own, not joined by distance to its neighbours
+    # (Ahn'kahet: a patrol walks through a static squad; joined, the pack could not be pulled on its own).
+    def formation(s):
+        return s['leader'] or s['guid']
+    split = {formation(by_guid[g]) for g, fix in overrides.items() if fix.get('split') == '1' and g in by_guid}
     for i, s in enumerate(spawns):
         for t in spawns[i + 1:]:
+            if (formation(s) in split or formation(t) in split) and formation(s) != formation(t):
+                continue
             if math.dist(s['p'], t['p']) <= a.link and abs(s['p'][2] - t['p'][2]) < 6:
                 parent[find(s['guid'])] = find(t['guid'])
     groups = collections.defaultdict(list)
