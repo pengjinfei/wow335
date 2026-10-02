@@ -36,6 +36,14 @@ pack 131948 side=0
 pack 131945 side=0
 pack 131949 side=0
 pack 131946 side=0
+# The Twilight packs on the floor below Taldaram's ramp (casters: Darkcasters' Shadow Bolts, Worshippers' Flamestrike)
+# stand within 25 yd of each other; walking down to the first, four came at once (run 2001, wipe). Fought one by
+# one at the upper ramp (497.3,-806.1), out of the floor's sight: the two nearest pulled from the ramp foot (486,-780),
+# the one 22 yd past the third last.
+pack 131944 pull=30 from=486.0,-780.0,-30.5 hold=497.3,-806.1,-23.5
+pack 131943 pull=30 from=486.0,-780.0,-30.5 hold=497.3,-806.1,-23.5
+pack 131939 pull=30 hold=497.3,-806.1,-23.5
+pack 131940 along=1280 pull=30 hold=497.3,-806.1,-23.5
 # Jedoga floats out of reach over 15 Twilight Initiates kneeling around her (script summons, no spawn ids); she comes
 # down when the last one dies. The worldgen draft drops her (she hovers): her boss line is written here.
 summoned 1815 378.0 -708.0 -16.1 radius=20 entry=30114 # Jedoga's Twilight Initiates
