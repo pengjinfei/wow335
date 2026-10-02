@@ -32,11 +32,12 @@ def main():
     ap.add_argument('--link', type=float, default=12.0)
     ap.add_argument('--side', type=float, default=30.0)
     ap.add_argument('--overrides', help='hand fixes: lines "pack <spawnId> [along=<yd>] [side=<0|1>] [boss=0] [sent=1]" and '
-                    '"object <along> <x> <y> <z> entry=<go entry>"')
+                    '"object <along> <x> <y> <z> entry=<go entry>", "node-fix <along> <x> <y> <z>"')
     a = ap.parse_args()
     overrides = {}
     objects = []  # "object|summoned <along> <x> <y> <z> entry=<...>" lines, copied as written
     ignored = set()  # "ignore-entry <entry>": creatures that are not cleared (cannot die until a boss does)
+    node_fixes = {}  # along (rounded yd) -> (x, y, z) for "node-fix" lines
     if a.overrides:
         for line in open(a.overrides):
             fields = line.split('#', 1)[0].split()
@@ -46,6 +47,10 @@ def main():
                 objects.append(line.split('#', 1)[0].strip() + ('  # ' + line.split('#', 1)[1].strip() if '#' in line else ''))
             elif len(fields) >= 2 and fields[0] == 'ignore-entry':
                 ignored.add(int(fields[1]))
+            elif len(fields) == 5 and fields[0] == 'node-fix':
+                # "node-fix <along> <x> <y> <z>": move the skeleton node written at that along (travel-node paths
+                # that hug a ledge put nodes where the navmesh path drops under the map - Drak'Tharon Keep's pit).
+                node_fixes[int(fields[1])] = tuple(float(v) for v in fields[2:5])
     chain = [int(x) for x in a.chain.split(',')]
 
     names = {int(r[0]): r[1] for r in query('acore_playerbots',
@@ -164,7 +169,12 @@ def main():
                 write_item(items[pi])
                 pi += 1
             if cum[i] >= next_node or i == len(skel) - 1:
-                out.write(f"node {cum[i]:.0f} {p[0]:.1f} {p[1]:.1f} {p[2]:.1f}\n")
+                fix = node_fixes.get(round(cum[i]))
+                if fix:
+                    out.write(f"node {cum[i]:.0f} {fix[0]:.1f} {fix[1]:.1f} {fix[2]:.1f} # node-fix, was "
+                              f"{p[0]:.1f} {p[1]:.1f} {p[2]:.1f}\n")
+                else:
+                    out.write(f"node {cum[i]:.0f} {p[0]:.1f} {p[1]:.1f} {p[2]:.1f}\n")
                 next_node = cum[i] + 15.0
         # Items an override placed past the last node (a final boss back at the hub) go at the end.
         while pi < len(items):

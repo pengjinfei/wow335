@@ -8,3 +8,10 @@ pack 127471 boss=0
 # (26675, NOT_SELECTABLE, NullCreatureAI - a script anchor).
 ignore-entry 27909
 ignore-entry 26675
+# The entrance corridor runs north-south along x -545..-527 above a pit (x > -525, y > -588; vmap floor map at 2 yd,
+# my-mac 2026-10-02). The travel-node path hugs the pit edge: nodes 86/102/118 sit on its rim, and the navmesh path to
+# node 102 dropped to the pit bottom (z -122.3): floor-guard refused it 75 times and the leader stood still (run100048).
+# Moved to the middle of the corridor and onto the floor south of the pit.
+node-fix 86 -537.0 -566.0 2.5
+node-fix 102 -537.0 -582.0 2.5
+node-fix 118 -515.0 -594.0 2.5
