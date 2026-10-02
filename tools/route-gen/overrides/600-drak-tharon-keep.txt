@@ -21,6 +21,8 @@ node-fix 118 -515.0 -594.0 2.5
 # Generated as one pack, the leader pulled it and 9 engaged at once (wipe, run100053). Single packs with pull=30 still
 # wiped (run100054): the first target was out of sight from the ramp, the leader walked into the hall for sight and
 # 10 engaged within 11 s. Pulled as players do, a corner at a time, each from a spot that sees it from outside aggro:
+# The 14 chain into one fight anyway (10 yd assistance chains, my-mac run100057/100058). Holding at the foot of the
+# ramp (route node 250) instead was worse: 1/3 through the hall (run100060-100062); back to the top of the ramp.
 # 1. From the hall entrance (route node 300) the north corner: tormentor 127608 brings 127568/127560/127609/127583
 #    (within 10 yd); then the north Belcher. Fought back at the top of the ramp (route node 284), out of the hall.
 pack 127608 split=1 along=320 pull=35 from=-345.3,-630.1,11.9 hold=-357.5,-619.7,10.4
