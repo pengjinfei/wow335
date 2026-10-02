@@ -27,6 +27,10 @@ pack 131909 along=650 side=0
 object 660 692.5 -783.9 18.0 entry=193094 # ancient device 2
 pack 131907 along=700 side=0
 object 710 655.7 -719.0 18.0 entry=193093 # ancient device 1
+# The seven-elite pack on the ledge by Nadox (565.7,-878.8, z 22.7) is placed after Taldaram by the draft, but it is
+# 12 yd over his chamber with no way up from there; the leader stood below it for eight minutes (run 1991). Not on
+# the way on: a side pack.
+pack 131866 side=1
 # Amanitar (heroic) stands among Savage Cave Beasts: cleared first, away from her 22 yd aggro.
 pack 131948 side=0
 pack 131945 side=0
