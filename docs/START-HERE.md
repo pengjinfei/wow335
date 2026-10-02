@@ -47,7 +47,7 @@
 - **核心 fork**：`12c3ed4b7`（HoR 反射体 IMMUNE_TO_PC 修复），已推 `mine/main`。
 - **构建**（2026-09-26 旧位置，已失效，见上）：增量构建树 `/private/tmp/azerothcore-tribunal-retry-build`，源码是核心 worktree `/private/tmp/azerothcore-tribunal-retry-src`（**核心源码不与主树共享**，改核心要先在主树提交再 `checkout <sha>`）；两个模块软链到主树 `azerothcore-wotlk/modules/`。`libscripts.a`/`libmodules.a` 各约 5–6G，磁盘紧时先 `--target modules` 再 `--target worldserver`，失败会留下 `modules/libmodules.a.XXXXXX` 临时文件。编完用 `strings worldserver | grep` 或看 mtime 确认新代码在里面。
 - **分支（2026-09-26 已整理）**：三个源码库都直接在主干上工作——core `main`（→ `mine`）、playerbots `main`（→ `mine`，推送走 SSH `git@github.com:pengjinfei/mod-playerbots.git`）、raidtest `dev`（→ `origin`，fork 默认分支）。旧的 `codex/gd-takeover` 已快进合入主干、内容相同。BACKLOG 22（爆发技能对 boss 生效）已于 2026-09-28 合入 `73c33b43`。
-- AK（安卡赫特）在 my-mac 上另一条工作线，有未推送提交，本机未接手。
+- my-mac 的逐 boss AK 线已收尾（2026-10-02）：纳多克斯、沃拉兹 h5g 各 10/10；坦克跳过被动单位与本机 `2215831a` 同一改动；其余（阿曼尼塔蘑菇策略 `mymac/ak-amanitar-mushroom` 未实跑、raidtest `ObserveAuras` 在 `mymac/dev`/`mymac/fullrun`）留给本机整本通关按需取用，见 [heroic-ak](testing/bosses/heroic-ak/README.md)。**my-mac 现认领英雄达克萨隆要塞（map 600）整本通关**，分支 `mymac/fullrun`，本机勿重复。
 
 ### 最新状态（2026-09-24，优先于下方历史事实）
 
