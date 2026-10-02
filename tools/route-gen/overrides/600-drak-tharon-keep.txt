@@ -1,0 +1,10 @@
+# Hand fixes for the Drak'Tharon Keep route draft (routegen.py --overrides). my-mac, 2026-10-02.
+# Chain: entrance 1815 -> 3202 -> Trollgore 1378 -> Novos 1029 -> 3428 -> King Dred 1379 -> 1048 -> 939 -> Tharon'ja 1017.
+# Two travel nodes are named after trash ("Scourge Brute", "Drakkari Commander"), so the generator marked those packs
+# as bosses; they are ordinary packs on the way up to Tharon'ja.
+pack 127438 boss=0
+pack 127471 boss=0
+# Not enemies to clear: Darkweb Victim (27909, faction 7, cocooned, cannot be attacked) and Spider Summon Target
+# (26675, NOT_SELECTABLE, NullCreatureAI - a script anchor).
+ignore-entry 27909
+ignore-entry 26675
