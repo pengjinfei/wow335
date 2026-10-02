@@ -15,9 +15,10 @@ pack 131867 along=262 side=0 pull=35 from=538.0,-1002.0,37.9 hold=490.0,-1032.0,
 pack 131872 pull=35 from=538.0,-1002.0,37.9 hold=490.0,-1032.0,30.3
 # The lower room past the first hall (z 23): a patrol (Plague Walker 131903 + 2) walks from (666,-966) to (625,-999)
 # through a static squad of four; fighting the swarmers below the ramp, the patrol came and the squad with it (run
-# 1969, wipe on seven elites). Pulled apart: the patrol from (625,-1012) only when it is at its west end (22 yd),
+# 1969, wipe on seven elites). Pulled apart: the patrol from (630,-1025), 24 yd off its path (from (625,-1012), 13 yd
+# from its west end, it came by itself and killed the tank alone, run 1974), only within 28 yd of the spot,
 # then the squad from (625,-1005); both back up the ramp to the hall (589.9,-1020.2), out of the room's sight.
-pack 131903 split=1 along=375 pull=22 from=625.0,-1012.0,22.9 hold=589.9,-1020.2,37.9
+pack 131903 split=1 along=375 pull=28 from=630.0,-1025.0,22.9 hold=589.9,-1020.2,37.9
 pack 131869 along=385 pull=35 from=625.0,-1005.0,22.9 hold=589.9,-1020.2,37.9
 pack 131954 hold=589.9,-1020.2,37.9 pull=30
 # Taldaram is immune until both ancient devices on the side ledges (z 18) have been used (boss_prince_taldaram:
