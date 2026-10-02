@@ -15,3 +15,29 @@ ignore-entry 26675
 node-fix 86 -537.0 -566.0 2.5
 node-fix 102 -537.0 -582.0 2.5
 node-fix 118 -515.0 -594.0 2.5
+# First hall (route along ~336): 15 elites within 30x22 yd - Wretched Belchers on patrol (1274030/1274040, both stay
+# in the hall), Flesheating Ghouls, Ghoul Tormentors, Drakkari Guardians, a Risen Drakkari Warrior and a Soulmage, all
+# faction 16; the core assistance radius is 10 yd (CreatureFamilyAssistanceRadius), so one pull brings its neighbours.
+# Generated as one pack, the leader pulled it and 9 engaged at once (wipe, run100053). Single packs with pull=30 still
+# wiped (run100054): the first target was out of sight from the ramp, the leader walked into the hall for sight and
+# 10 engaged within 11 s. Pulled as players do, a corner at a time, each from a spot that sees it from outside aggro:
+# 1. From the hall entrance (route node 300) the north corner: tormentor 127608 brings 127568/127560/127609/127583
+#    (within 10 yd); then the north Belcher. Fought back at the top of the ramp (route node 284), out of the hall.
+pack 127608 split=1 along=320 pull=35 from=-345.3,-630.1,11.9 hold=-357.5,-619.7,10.4
+pack 127568 split=1 along=321 pull=35 from=-345.3,-630.1,11.9 hold=-357.5,-619.7,10.4
+pack 127560 split=1 along=322 pull=35 from=-345.3,-630.1,11.9 hold=-357.5,-619.7,10.4
+pack 127609 split=1 along=323 pull=40 from=-345.3,-630.1,11.9 hold=-357.5,-619.7,10.4
+pack 127583 split=1 along=324 pull=40 from=-345.3,-630.1,11.9 hold=-357.5,-619.7,10.4
+pack 127404 split=1 along=325 pull=35 from=-345.3,-630.1,11.9 hold=-357.5,-619.7,10.4
+# 2. With the north half empty, from (-319.6,-638.7) (vmap floor 11.83, 19.9 yd from the nearest of the rest, sight to
+#    all three): the west corner - warrior 127429 brings soulmage 127439, tormentor 127607, guardian 127569.
+pack 127429 split=1 along=326 pull=30 from=-319.6,-638.7,11.8 hold=-357.5,-619.7,10.4
+pack 127439 split=1 along=327 pull=30 from=-319.6,-638.7,11.8 hold=-357.5,-619.7,10.4
+pack 127607 split=1 along=328 pull=30 from=-319.6,-638.7,11.8 hold=-357.5,-619.7,10.4
+pack 127569 split=1 along=329 pull=30 from=-319.6,-638.7,11.8 hold=-357.5,-619.7,10.4
+# 3. The south corner and the south Belcher from the same spot; the east guardian from route node 316.
+pack 127606 split=1 along=330 pull=30 from=-319.6,-638.7,11.8 hold=-357.5,-619.7,10.4
+pack 127559 split=1 along=331 pull=30 from=-319.6,-638.7,11.8 hold=-357.5,-619.7,10.4
+pack 127571 split=1 along=332 pull=30 from=-319.6,-638.7,11.8 hold=-357.5,-619.7,10.4
+pack 127403 split=1 along=333 pull=30 from=-319.6,-638.7,11.8 hold=-357.5,-619.7,10.4
+pack 127567 split=1 along=334 pull=35 from=-333.8,-641.2,12.4 hold=-357.5,-619.7,10.4
