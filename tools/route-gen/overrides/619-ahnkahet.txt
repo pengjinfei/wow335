@@ -74,7 +74,9 @@ pack 131944 pull=30 from=486.0,-780.0,-30.5 hold=497.3,-806.1,-23.5
 pack 131940 along=1280 pull=30 hold=497.3,-806.1,-23.5
 # Jedoga floats out of reach over 15 Twilight Initiates kneeling around her (script summons, no spawn ids); she comes
 # down when the last one dies. The worldgen draft drops her (she hovers): her boss line is written here.
-summoned 1815 378.0 -708.0 -16.1 radius=20 entry=30114 # Jedoga's Twilight Initiates
+# The initiates fought at the same spot: in among them the group drifted to 25 yd of the south worshippers, who
+# joined the moment she came down (run 2084, wipe).
+summoned 1815 378.0 -708.0 -16.1 radius=20 entry=30114 hold=366.2,-729.8,-16.2 # Jedoga's Twilight Initiates
 # Waited for where her worshippers cannot see: they appear kneeling in two groups of five when she engages, and the
 # group standing 26 yd from the south one had all five on it at once (run 2059, wipe). From (366.2,-729.8): 16 yd to
 # her, 43 and 62 yd to the two groups.
