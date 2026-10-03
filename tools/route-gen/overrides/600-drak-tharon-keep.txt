@@ -25,14 +25,16 @@ node-fix 118 -515.0 -594.0 2.5
 # ramp (route node 250) instead was worse: 1/3 through the hall (run100060-100062); back to the top of the ramp.
 # Their along is 301-315, before route node 316: that node is inside the hall (11 yd from warrior 127429), and with
 # the items at 320+ the leader walked the route on into it and pulled all 14 before any planned pull (run100066).
+# The north corner is held at the pull spot itself (25-30 yd from it), inside the 30 yd range in which the trash cc
+# chain assigns controls; from the ramp top (45 yd) none was ever assigned (cc gate no_plan, run100081).
 # 1. From the hall entrance (route node 300) the north corner: tormentor 127608 brings 127568/127560/127609/127583
 #    (within 10 yd); then the north Belcher. Fought back at the top of the ramp (route node 284), out of the hall.
-pack 127608 split=1 along=301 pull=35 from=-345.3,-630.1,11.9 hold=-357.5,-619.7,10.4
-pack 127568 split=1 along=302 pull=35 from=-345.3,-630.1,11.9 hold=-357.5,-619.7,10.4
-pack 127560 split=1 along=303 pull=35 from=-345.3,-630.1,11.9 hold=-357.5,-619.7,10.4
-pack 127609 split=1 along=304 pull=40 from=-345.3,-630.1,11.9 hold=-357.5,-619.7,10.4
-pack 127583 split=1 along=305 pull=40 from=-345.3,-630.1,11.9 hold=-357.5,-619.7,10.4
-pack 127404 split=1 along=306 pull=35 from=-345.3,-630.1,11.9 hold=-357.5,-619.7,10.4
+pack 127608 split=1 along=301 pull=35 from=-345.3,-630.1,11.9 hold=-345.3,-630.1,11.9
+pack 127568 split=1 along=302 pull=35 from=-345.3,-630.1,11.9 hold=-345.3,-630.1,11.9
+pack 127560 split=1 along=303 pull=35 from=-345.3,-630.1,11.9 hold=-345.3,-630.1,11.9
+pack 127609 split=1 along=304 pull=40 from=-345.3,-630.1,11.9 hold=-345.3,-630.1,11.9
+pack 127583 split=1 along=305 pull=40 from=-345.3,-630.1,11.9 hold=-345.3,-630.1,11.9
+pack 127404 split=1 along=306 pull=35 from=-345.3,-630.1,11.9 hold=-345.3,-630.1,11.9
 # 2. With the north half empty, from (-319.6,-638.7) (vmap floor 11.83, 19.9 yd from the nearest of the rest, sight to
 #    all three): the west corner - warrior 127429 brings soulmage 127439, tormentor 127607, guardian 127569.
 pack 127429 split=1 along=307 pull=30 from=-319.6,-638.7,11.8 hold=-357.5,-619.7,10.4
@@ -50,3 +52,15 @@ pack 127567 split=1 along=315 pull=35 from=-333.8,-641.2,12.4 hold=-357.5,-619.7
 # inside the field at the pull and died in 10 s (my-mac run100074). Pulled from the party position the dungeon strategy
 # already uses (NOVOS_PARTY_POSITION, 23 yd from him), the group holding there.
 pack 127424 pull=30 from=-378.9,-760.3,28.6 hold=-378.9,-760.3,28.6
+# Upper floor after King Dred (route along 1071-1123): the 1071 pack is formation 127590 (2 Scourge Brutes, 2 Drakkari
+# Guardians, groupAI 3: one pulled brings all four) and was fought where it stands, 16-20 yd from formation 127580
+# (2 Risen Drakkari Warriors, a Guardian, also groupAI 3) and on the patrol of Death Knight 127553 (path 1275530 along
+# y -608, west end x -423.6); 4+3+1 elites came together and the group wiped there three times (my-mac run100068,
+# 100077, 100079 at 1083 yd). Each pulled whole to the top of the stairs (route node 1030: 43 yd from the brutes, 70 from
+# the warriors, 59 from the patrol's end): the brutes from node 1046 (sight to 127438 at 27.8 yd), the warriors and the
+# patrol from node 1066 (sight at 35-38 / 28 yd). The brutes' pack keeps boss=0 (node 1048 is named after them). The
+# warriors and the patrol go before route node 1083 (21 yd from the warriors, on the patrol), as the first hall's packs
+# go before node 316.
+pack 127438 boss=0 pull=30 from=-467.1,-625.8,73.2 hold=-473.4,-640.4,72.6
+pack 127427 along=1075 pull=40 from=-450.9,-615.4,73.2 hold=-473.4,-640.4,72.6
+pack 127553 along=1077 pull=35 from=-450.9,-615.4,73.2 hold=-473.4,-640.4,72.6
