@@ -29,7 +29,7 @@ node-fix 118 -515.0 -594.0 2.5
 # chain assigns controls; from the ramp top (45 yd) none was ever assigned (cc gate no_plan, run100081).
 # 1. From the hall entrance (route node 300) the north corner: tormentor 127608 brings 127568/127560/127609/127583
 #    (within 10 yd); then the north Belcher. Fought back at the top of the ramp (route node 284), out of the hall.
-pack 127608 split=1 along=301 pull=35 from=-345.3,-630.1,11.9 hold=-345.3,-630.1,11.9
+pack 127608 split=1 along=301 pull=35 from=-345.3,-630.1,11.9 hold=-345.3,-630.1,11.9 clear=127403:17
 pack 127568 split=1 along=302 pull=35 from=-345.3,-630.1,11.9 hold=-345.3,-630.1,11.9
 pack 127560 split=1 along=303 pull=35 from=-345.3,-630.1,11.9 hold=-345.3,-630.1,11.9
 pack 127609 split=1 along=304 pull=40 from=-345.3,-630.1,11.9 hold=-345.3,-630.1,11.9
