@@ -55,8 +55,11 @@ pack 131946 side=0
 # height there the leader never counted itself at the spot and walked at the patrol, run 2025), only within 28 yd of the
 # spot - the west end of its walk, 36 yd and more from every standing pack.
 pack 131939 along=1180 pull=28 from=470.0,-800.0,-25.1 hold=497.3,-806.1,-23.5
-pack 131944 pull=30 from=486.0,-780.0,-30.5 hold=497.3,-806.1,-23.5
-pack 131943 pull=30 from=486.0,-780.0,-30.5 hold=497.3,-806.1,-23.5
+# Their spot on the ledge edge, not the ramp foot: (486,-780) is 19 yd from the near pack's Apostle and the way down
+# to it passes 19 yd from the west pack's; both packs were on the tank before the pull, 5k a second (run 2027, wipe).
+# From (485,-787) the nearest members are 24 and 29 yd off.
+pack 131944 pull=30 from=485.0,-787.0,-24.2 hold=497.3,-806.1,-23.5
+pack 131943 pull=32 from=485.0,-787.0,-24.2 hold=497.3,-806.1,-23.5
 pack 131940 along=1280 pull=30 hold=497.3,-806.1,-23.5
 # Jedoga floats out of reach over 15 Twilight Initiates kneeling around her (script summons, no spawn ids); she comes
 # down when the last one dies. The worldgen draft drops her (she hovers): her boss line is written here.
