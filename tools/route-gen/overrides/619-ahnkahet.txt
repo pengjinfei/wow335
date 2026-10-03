@@ -10,9 +10,13 @@ pack 131889 side=0 pull=30 hold=466.4,-1027.0,30.3
 # the tank past the north squad and both came with it (run 1965, wipe). As players do: wait for the patrol at the
 # hall entrance and pull it alone, then the squads one by one from (538,-1002), each back to the corridor (490,-1032)
 # out of the hall's sight.
+# The squads are held at the hall entrance (512,-1013), not back in the corridor: from there the spot was 57 yd from the
+# healer, the tank ran on into the north squad 64 yd from him and fell to 44% before a heal could reach (run 2017,
+# wipe). The north squad (547-555,-969..-976) is pulled from 20 yd off it, the south one (564-576,-1008..-1019) from
+# (538,-1002); both spots within 35 yd of the group.
 pack 131901 along=245 pull=35 from=522.5,-1011.5,37.9 hold=490.0,-1032.0,30.3
-pack 131867 along=262 side=0 pull=35 from=538.0,-1002.0,37.9 hold=490.0,-1032.0,30.3
-pack 131872 pull=35 from=538.0,-1002.0,37.9 hold=490.0,-1032.0,30.3
+pack 131867 along=262 side=0 pull=32 from=536.0,-993.0,37.9 hold=512.0,-1013.0,37.9
+pack 131872 pull=35 from=538.0,-1002.0,37.9 hold=512.0,-1013.0,37.9
 # The lower room past the first hall (z 23): a patrol (Plague Walker 131903 + 2) walks from (666,-966) to (625,-999)
 # through a static squad of four; fighting the swarmers below the ramp, the patrol came and the squad with it (run
 # 1969, wipe on seven elites). Pulled apart: the patrol from (630,-1025), 24 yd off its path (from (625,-1012), 13 yd
@@ -23,10 +27,15 @@ pack 131869 along=385 pull=35 from=625.0,-1005.0,22.9 hold=589.9,-1020.2,37.9
 pack 131954 hold=589.9,-1020.2,37.9 pull=30
 # Taldaram is immune until both ancient devices on the side ledges (z 18) have been used (boss_prince_taldaram:
 # DATA_TELDRAM_SPHERE1/2); each ledge has a squad of 2 Eyes of Taldaram and 2 Frostbringers beside the device.
-pack 131909 along=650 side=0
-object 660 692.5 -783.9 18.0 entry=193094 # ancient device 2
-pack 131907 along=700 side=0
-object 710 655.7 -719.0 18.0 entry=193093 # ancient device 1
+# The squads stand on the ledge top, off the navmesh path search: the leader got no closer than 48 yd, skipped the
+# squad, then walked to the device beside it and fought it there alone, the group 40-55 yd below on the ramp (run
+# 2018, tank dead; run 2019, tank at 19%). As players do: after the Plundering Geists at the ramp feet, each squad is
+# pulled from halfway up its ramp and fought at the ramp foot, then the device is used. Spots and holds are where the
+# tank walked in run 2018 (the collision model has no floor here to look heights up on).
+pack 131909 along=708 side=0 pull=35 from=665.0,-786.5,12.0 hold=632.5,-796.0,-2.2
+object 709 692.5 -783.9 18.0 entry=193094 # ancient device 2
+pack 131907 along=712 side=0 pull=38 from=642.4,-746.2,12.1 hold=621.3,-772.8,-2.7
+object 714 655.7 -719.0 18.0 entry=193093 # ancient device 1
 # The seven-elite pack on the ledge by Nadox (565.7,-878.8, z 22.7) is placed after Taldaram by the draft, but it is
 # 12 yd over his chamber with no way up from there; the leader stood below it for eight minutes (run 1991). Not on
 # the way on: a side pack.
@@ -40,9 +49,13 @@ pack 131946 side=0
 # stand within 25 yd of each other; walking down to the first, four came at once (run 2001, wipe). Fought one by
 # one at the upper ramp (497.3,-806.1), out of the floor's sight: the two nearest pulled from the ramp foot (486,-780),
 # the one 22 yd past the third last.
+# The patrol first (Twilight Apostle 132052 + Darkcaster 131939, 445,-811 <-> 474,-769 <-> 500,-744.7): it walks 13 yd
+# past the ramp foot spot and through the two packs pulled from there; the leader waiting at the spot met it there and
+# eleven came within 25 s (run 2018, wipe). Pulled alone from the floor west of the ramp, only within 28 yd of the
+# spot - the west end of its walk, 36 yd and more from every standing pack.
+pack 131939 along=1180 pull=28 from=470.0,-800.0,-31.6 hold=497.3,-806.1,-23.5
 pack 131944 pull=30 from=486.0,-780.0,-30.5 hold=497.3,-806.1,-23.5
 pack 131943 pull=30 from=486.0,-780.0,-30.5 hold=497.3,-806.1,-23.5
-pack 131939 pull=30 hold=497.3,-806.1,-23.5
 pack 131940 along=1280 pull=30 hold=497.3,-806.1,-23.5
 # Jedoga floats out of reach over 15 Twilight Initiates kneeling around her (script summons, no spawn ids); she comes
 # down when the last one dies. The worldgen draft drops her (she hovers): her boss line is written here.
