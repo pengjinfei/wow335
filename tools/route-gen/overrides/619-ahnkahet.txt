@@ -34,9 +34,12 @@ pack 131954 hold=589.9,-1020.2,37.9 pull=30
 # 2018, tank dead; run 2019, tank at 19%). As players do: after the Plundering Geists at the ramp feet, each squad is
 # pulled from halfway up its ramp and fought at the ramp foot, then the device is used. Spots and holds are where the
 # tank walked in run 2018 (the collision model has no floor here to look heights up on).
-pack 131909 along=708 side=0 pull=35 from=665.0,-786.5,12.0 hold=632.5,-796.0,-2.2
+# Only the ramp tops see the squads (.raidtest los: false from every point lower down the ramps). From halfway up the
+# leader waited a minute for sight, walked up and fought on the ledge, the group following (run 2053, wipe). Pulled
+# from the top, fought halfway down, out of the casters' sight so they come to the edge, 21 yd from the top.
+pack 131909 along=708 side=0 pull=25 from=678.0,-785.4,17.7 hold=656.8,-787.6,8.5
 object 709 692.5 -783.9 18.0 entry=193094 # ancient device 2
-pack 131907 along=712 side=0 pull=38 from=642.4,-746.2,12.1 hold=621.3,-772.8,-2.7
+pack 131907 along=712 side=0 pull=25 from=649.6,-732.0,17.7 hold=639.0,-749.0,9.9
 object 714 655.7 -719.0 18.0 entry=193093 # ancient device 1
 # The seven-elite pack on the ledge by Nadox (565.7,-878.8, z 22.7) is placed after Taldaram by the draft, but it is
 # 12 yd over his chamber with no way up from there; the leader stood below it for eight minutes (run 1991). Not on
