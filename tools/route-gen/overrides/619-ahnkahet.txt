@@ -51,9 +51,10 @@ pack 131946 side=0
 # the one 22 yd past the third last.
 # The patrol first (Twilight Apostle 132052 + Darkcaster 131939, 445,-811 <-> 474,-769 <-> 500,-744.7): it walks 13 yd
 # past the ramp foot spot and through the two packs pulled from there; the leader waiting at the spot met it there and
-# eleven came within 25 s (run 2018, wipe). Pulled alone from the floor west of the ramp, only within 28 yd of the
+# eleven came within 25 s (run 2018, wipe). Pulled alone from the ledge west of the ramp top (z -25: with the floor
+# height there the leader never counted itself at the spot and walked at the patrol, run 2025), only within 28 yd of the
 # spot - the west end of its walk, 36 yd and more from every standing pack.
-pack 131939 along=1180 pull=28 from=470.0,-800.0,-31.6 hold=497.3,-806.1,-23.5
+pack 131939 along=1180 pull=28 from=470.0,-800.0,-25.1 hold=497.3,-806.1,-23.5
 pack 131944 pull=30 from=486.0,-780.0,-30.5 hold=497.3,-806.1,-23.5
 pack 131943 pull=30 from=486.0,-780.0,-30.5 hold=497.3,-806.1,-23.5
 pack 131940 along=1280 pull=30 hold=497.3,-806.1,-23.5
