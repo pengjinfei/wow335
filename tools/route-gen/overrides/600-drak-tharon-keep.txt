@@ -66,3 +66,18 @@ pack 127424 pull=30 from=-378.9,-760.3,28.6 hold=-378.9,-760.3,28.6
 pack 127438 boss=0 pull=30 from=-467.1,-625.8,73.2 hold=-467.1,-625.8,73.2
 pack 127427 along=1075 pull=40 from=-450.9,-615.4,73.2 hold=-450.9,-615.4,73.2
 pack 127553 along=1077 pull=35 from=-450.9,-615.4,73.2 hold=-450.9,-615.4,73.2
+# King Dred's room (route along 750-889): Dred patrols the west side (path of 127507: x -530..-555, y -664..-711) and the
+# Risen Drakkari Handlers' formation (127442 leading 127443) patrols north-south along x -500. Route nodes 818 and 834 are
+# 23-24 yd from the east end of Dred's walk; pulling the handlers in the middle of the room, the gutripper and scytheclaw
+# by Dred, then Dred himself, then more raptors came within 33 s and the group wiped (my-mac run100091). Most of the room
+# has no collision floor; the points that see Dred's walk are all 7-13 yd from it, so Dred cannot be pulled from afar.
+# The handlers are pulled at the north end of their walk from the room's north-east corner (-492,-650: sight at 26.7 yd,
+# 46 yd from Dred's walk) and fought there; Dred next, before node 802, the group holding in that corner; the single
+# raptors near his walk after him.
+pack 127442 along=776 pull=30 from=-492.0,-650.0,28.6 hold=-492.0,-650.0,28.6
+pack 127507 along=790 pull=30 hold=-492.0,-650.0,28.6
+pack 127453 along=892
+pack 127454 along=893
+pack 127413 along=894
+pack 127415 along=895
+pack 127414 along=896
