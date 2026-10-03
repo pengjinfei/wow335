@@ -81,3 +81,8 @@ summoned 1815 378.0 -708.0 -16.1 radius=20 entry=30114 hold=366.2,-729.8,-16.2 #
 # group standing 26 yd from the south one had all five on it at once (run 2059, wipe). From (366.2,-729.8): 16 yd to
 # her, 43 and 62 yd to the two groups.
 boss 1830 372.3 -705.3 -0.6 radius=0.0 entry=29310 spawns=131953 hold=366.2,-729.8,-16.2 # 1xJedoga Shadowseeker
+# The ramp up from Jedoga's room towards Volazj: its nodes lay on the ramp's west edge, the path to 1999 ended 24 yd
+# below on the floor beside it and the leader stood under the ramp ten minutes (run 2086). Where tanks walked up in
+# runs 2076/2085.
+node-fix 1981 529.7 -715.1 -23.5
+node-fix 1999 533.7 -702.8 -14.7
