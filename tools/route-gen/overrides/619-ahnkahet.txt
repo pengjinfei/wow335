@@ -29,7 +29,9 @@ pack 131869 along=385 pull=35 from=625.0,-1005.0,22.9 hold=589.9,-1020.2,37.9
 # The swarmers below the ramp: walked at from the ramp top 18 yd over them, the leader got no path down, stood there 90 s
 # and skipped them, then met the patrol and the squad together at their spot (run 2055, wipe). Pulled from the floor
 # at the patrol's spot, which the ramp leads to.
-pack 131954 hold=589.9,-1020.2,37.9 pull=30 from=630.0,-1025.0,22.9 cc=0
+# Gone down to only when the lower room's patrol (131903, west end of its walk 26 yd from the spot) is 40 yd off: met
+# there as it passed, it and the squad came with the swarmers (run 2057, wipe).
+pack 131954 hold=589.9,-1020.2,37.9 pull=30 from=630.0,-1025.0,22.9 cc=0 away=131903:40
 # Taldaram is immune until both ancient devices on the side ledges (z 18) have been used (boss_prince_taldaram:
 # DATA_TELDRAM_SPHERE1/2); each ledge has a squad of 2 Eyes of Taldaram and 2 Frostbringers beside the device.
 # The squads stand on the ledge top, off the navmesh path search: the leader got no closer than 48 yd, skipped the

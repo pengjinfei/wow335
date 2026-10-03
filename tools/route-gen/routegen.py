@@ -126,6 +126,7 @@ def main():
         frm = ''
         nocc = False
         clear = ''
+        away = ''
         for s in members:
             fix = overrides.get(s['guid'])
             if fix:
@@ -140,7 +141,8 @@ def main():
                 frm = fix.get('from', frm)
                 nocc = nocc or fix.get('cc') == '0'
                 clear = fix.get('clear', clear)
-        items.append((along, off, c, radius, members, bosses, sent, hold, pull, frm, nocc, clear))
+                away = fix.get('away', away)
+        items.append((along, off, c, radius, members, bosses, sent, hold, pull, frm, nocc, clear, away))
     items.sort(key=lambda it: it[0])
 
     with open(a.out, 'w') as out:
@@ -150,9 +152,10 @@ def main():
         out.write("# node <along_yd> <x> <y> <z>\n# pack <along_yd> <x> <y> <z> radius=<yd> side=<0|1> elite=<n> "
                   "spawns=<guid,...> # names\n# boss <along_yd> <x> <y> <z> radius=<yd> entry=<entry,...> spawns=<guid,...> # names\n")
         def write_item(item):
-            along, off, c, radius, members, bosses, sent, hold, pull, frm, nocc, clear = item
+            along, off, c, radius, members, bosses, sent, hold, pull, frm, nocc, clear, away = item
             extra = ((' sent=1' if sent else '') + (f' hold={hold}' if hold else '') + (f' pull={pull}' if pull else '')
-                     + (f' from={frm}' if frm else '') + (' cc=0' if nocc else '') + (f' clear={clear}' if clear else ''))
+                     + (f' from={frm}' if frm else '') + (' cc=0' if nocc else '') + (f' clear={clear}' if clear else '')
+                     + (f' away={away}' if away else ''))
             label = ', '.join(f"{v}x{k}" for k, v in collections.Counter(s['name'] for s in members).items())
             if bosses:
                 out.write(f"boss {along:.0f} {c[0]:.1f} {c[1]:.1f} {c[2]:.1f} radius={radius:.1f} "
