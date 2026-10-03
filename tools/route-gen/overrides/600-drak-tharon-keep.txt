@@ -60,7 +60,9 @@ pack 127424 pull=30 from=-378.9,-760.3,28.6 hold=-378.9,-760.3,28.6
 # the warriors, 59 from the patrol's end): the brutes from node 1046 (sight to 127438 at 27.8 yd), the warriors and the
 # patrol from node 1066 (sight at 35-38 / 28 yd). The brutes' pack keeps boss=0 (node 1048 is named after them). The
 # warriors and the patrol go before route node 1083 (21 yd from the warriors, on the patrol), as the first hall's packs
-# go before node 316.
-pack 127438 boss=0 pull=30 from=-467.1,-625.8,73.2 hold=-473.4,-640.4,72.6
-pack 127427 along=1075 pull=40 from=-450.9,-615.4,73.2 hold=-473.4,-640.4,72.6
-pack 127553 along=1077 pull=35 from=-450.9,-615.4,73.2 hold=-473.4,-640.4,72.6
+# go before node 316. Held at their pull spots, not at the stairs: from the stairs top the priest never healed the tank
+# waiting at node 1046 (no sight), and King Dred's Grievous Bite bleed (48920, until healed to full) killed it (run100083).
+# At the spots the brutes are 54 yd from the warriors and 47 yd from the patrol's end.
+pack 127438 boss=0 pull=30 from=-467.1,-625.8,73.2 hold=-467.1,-625.8,73.2
+pack 127427 along=1075 pull=40 from=-450.9,-615.4,73.2 hold=-450.9,-615.4,73.2
+pack 127553 along=1077 pull=35 from=-450.9,-615.4,73.2 hold=-450.9,-615.4,73.2
