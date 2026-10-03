@@ -14,7 +14,9 @@ pack 131889 side=0 pull=30 hold=466.4,-1027.0,30.3
 # healer, the tank ran on into the north squad 64 yd from him and fell to 44% before a heal could reach (run 2017,
 # wipe). Both squads are pulled from (538,-1002), 28 yd from the group: from (536,-993), 20 yd off the north squad,
 # a pillar blocks the sight of it and the leader skipped it (run 2022).
-pack 131901 along=245 pull=35 from=522.5,-1011.5,37.9 hold=490.0,-1032.0,30.3
+# The patrol is pulled the moment it is in reach, with no crowd control first: waiting 35 s for it at the spot the
+# patrol walked on into the south squad and both came (run 2052, wipe).
+pack 131901 along=245 pull=35 from=522.5,-1011.5,37.9 hold=490.0,-1032.0,30.3 cc=0
 pack 131867 along=262 side=0 pull=35 from=538.0,-1002.0,37.9 hold=512.0,-1013.0,37.9
 pack 131872 pull=35 from=538.0,-1002.0,37.9 hold=512.0,-1013.0,37.9
 # The lower room past the first hall (z 23): a patrol (Plague Walker 131903 + 2) walks from (666,-966) to (625,-999)
