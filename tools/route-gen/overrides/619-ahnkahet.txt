@@ -53,6 +53,11 @@ object 714 655.7 -719.0 18.0 entry=193093 # ancient device 1
 # the way on: a side pack.
 pack 131866 side=1
 # Amanitar (heroic) stands among Savage Cave Beasts: cleared first, away from her 22 yd aggro.
+# The beasts down the tunnel before her are pulled up to its head and fought there: fought where they stood, the tank
+# was carried up onto the ledge path 20 yd over the tunnel while two of the group died below, out of its reach (runs
+# 2073, 2103).
+pack 131950 pull=25 from=463.2,-869.3,-44.7 hold=460.1,-853.6,-34.2
+pack 131947 pull=25 from=439.1,-879.2,-61.5 hold=454.8,-877.3,-54.3
 pack 131948 side=0
 pack 131945 side=0
 pack 131949 side=0
