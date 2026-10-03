@@ -45,3 +45,8 @@ pack 127559 split=1 along=312 pull=30 from=-319.6,-638.7,11.8 hold=-357.5,-619.7
 pack 127571 split=1 along=313 pull=30 from=-319.6,-638.7,11.8 hold=-357.5,-619.7,10.4
 pack 127403 split=1 along=314 pull=30 from=-319.6,-638.7,11.8 hold=-357.5,-619.7,10.4
 pack 127567 split=1 along=315 pull=35 from=-333.8,-641.2,12.4 hold=-357.5,-619.7,10.4
+# Novos: on engage he casts Arcane Field on himself (47346, persistent area aura, 11 yd radius, ~1.7k a second) and
+# turns unattackable until four Crystal Handlers die. The leader walked up to him and the group with it; three were
+# inside the field at the pull and died in 10 s (my-mac run100074). Pulled from the party position the dungeon strategy
+# already uses (NOVOS_PARTY_POSITION, 23 yd from him), the group holding there.
+pack 127424 pull=30 from=-378.9,-760.3,28.6 hold=-378.9,-760.3,28.6
