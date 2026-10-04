@@ -33,6 +33,7 @@ run761 是隔离 Dark Matter observation/execution smoke：bot action 与 28237 
 | 同上 | [哈多诺克斯](bosses/heroic-an-hadronox/README.md) | 完整遭遇（召唤物开怪 + 实例状态确认），ilvl 200 档 + MasterlessAvoidAoe + 坦克离云 + 克里克希尔节点作用域修正：**5/5、0 死，144–189 秒**（run915–919）。此前各 cohort 在 DPS 被克里克希尔节点劫持下测得，已作废。 | **稳定击杀（ilvl 200 档）** |
 | 同上 | [克里克希尔](bosses/heroic-an-krikthir/README.md) | 完整遭遇（含 9 只前置守望者）。ilvl 200 档 + 开怪门禁 `PrerequisiteRepullDelaySeconds=20`（raidtest `4790175`）：**17/20 启动 kill**（run950–982，原 15/30）；进入 boss 战后全部击杀。剩余中止为全员脱战时 boss 自身 evade。 | **基本稳定（ilvl 200 档）** |
 | [达克萨隆要塞](bosses/heroic-dtk-trollgore/README.md) | Trollgore / [Novos](bosses/heroic-dtk-novos/README.md) / [Tharon'ja](bosses/heroic-dtk-tharonja/README.md) / [King Dred](bosses/heroic-dtk-dred/README.md) | 四 boss 均已有正常规则隔离 boss 战通过；Dred 经共享 LOS 修复后 15/16。 | **完成（boss 机制口径）** |
+| 同上（my-mac） | [整本通关](bosses/heroic-dtk-run/README.md) | **整本通关**：入口整本 100100–100103 连续 4/4，合并后 100129、100133 击杀（32–36 分钟，1–2 死）。大厅南呕吐者用 `clear=` 等它走远再开怪；德雷德房间先驯兽师再德雷德拉到东北角。2026-10-04 已合并（playerbots `main` = `dac62432`、raidtest `dev` = `691c166`）。 | **进行中（阶段 2）** |
 | [古达克](bosses/heroic-gd/README.md) | [斯拉德兰](bosses/heroic-gd-sladran/README.md) | 隔离 boss 战合并后 3/5；平台阵位 0/5 已回退。 **ilvl 200 档：10/10 kill、0 死**（上游同步前 5/5、后 5/5）。 | **完成（ilvl 200 档口径，2026-09-25 用户确认）；normal5 不稳定** |
 | 同上 | [莫拉比](bosses/heroic-gd-moorabi/README.md) | 完整遭遇；旧 cohort 16/20，当前局部修复 run685 5/5、零死；不可与旧样本合并称稳定。 **ilvl 200 档：5/5 kill、0 死**。 | **当前配置击杀** |
 | 同上 | [德拉克瑞巨像](bosses/heroic-gd-colossus/README.md) | 隔离 boss 战 5/5、零死亡；移除了非机制常驻单位，原生 Mojo 链保留。 | **稳定击杀（隔离）** |
