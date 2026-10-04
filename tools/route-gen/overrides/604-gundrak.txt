@@ -28,3 +28,8 @@ pack 127044 along=1200
 # from the top. Run 2142 fought him on the constrictors' spawn point at the foot of the stairs, all five within 5 yd,
 # and lost the race at 8%.
 pack 127042 hold=1775.0,621.0,124.3 from=1775.0,660.0,129.2
+# The west hall: the Lancer and Fire Weaver patrol from (1696,637) west through the cobra pack's loop up to (1634,680)
+# and back; the cobra pack (127023 leads) loops between x 1640 and 1675. Walking in took the patrol and the cobra pack
+# at once, wipe (run 2143). The patrol pulled at its east end from the corridor, the cobras on their loop's east side.
+pack 127045 split=1 from=1716.7,635.4,129.2 pull=22 hold=1735.0,638.5,129.6 cc=0
+pack 127023 split=1 from=1692.0,637.6,127.4 pull=20 hold=1716.7,635.4,129.2
