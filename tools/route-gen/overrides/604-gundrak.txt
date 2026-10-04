@@ -1,0 +1,26 @@
+# Hand fixes for the Gundrak route draft (routegen.py --overrides).
+# Chain: south entrance (1882,631) -> Slad'ran -> Drakkari Colossus -> Moorabi; then Eck (heroic) and Gal'darah, which
+# the travel graph does not link. Each boss's altar is used after it (instance_gundrak: selectable once the boss is
+# done); with all three keys in, the centre opens the way to Gal'darah.
+#
+# Slad'ran's corridor and the room west of it: three elite formations each, joined by distance into packs of 8-10 elites.
+# Each formation a pack of its own.
+pack 127014 split=1
+pack 127017 split=1
+pack 127026 split=1
+pack 127009 split=1
+pack 127023 split=1
+pack 127045 split=1
+object 272 1775.3 679.7 129.2 entry=192518 # Altar of Slad'ran
+object 592 1693.5 743.6 142.8 entry=192520 # Altar of the Drakkari Colossus
+object 990 1772.2 805.0 129.2 entry=192519 # Altar of Moorabi
+# Eck (heroic): behind the door north of Moorabi (open once he is dead); when the six Ruins Dwellers below are dead the
+# script summons Eck by the pool (instance_gundrak OnUnitDeath).
+pack 127204 along=1010 side=0
+pack 127205 along=1010 side=0
+pack 127206 along=1010 side=0
+pack 127201 along=1030 side=0
+summoned 1050 1624.7 891.4 95.1 radius=15 entry=29932 # Eck the Ferocious
+# Gal'darah last, east of the centre, with the rhinos of his arena.
+pack 127207 along=1150 side=0
+pack 127044 along=1200
