@@ -79,6 +79,9 @@ pack 131939 along=1180 pull=28 from=470.0,-800.0,-25.1 hold=497.3,-806.1,-23.5
 pack 131943 along=1182 pull=32 from=483.0,-787.0,-24.2 hold=497.3,-806.1,-23.5
 pack 131944 pull=30 from=486.0,-780.0,-30.5 hold=497.3,-806.1,-23.5
 pack 131940 along=1280 pull=30 hold=497.3,-806.1,-23.5
+# Back west from Amanitar: the pack at (417,-802) stands 17 yd from the elementals' (406,-780); walked into, both came
+# (run 2114, wipe). Pulled from the route 20 yd short of it and fought 58 yd from the elementals.
+pack 131942 pull=25 from=440.7,-809.7,-31.0 hold=449.3,-822.9,-31.0
 # Jedoga floats out of reach over 15 Twilight Initiates kneeling around her (script summons, no spawn ids); she comes
 # down when the last one dies. The worldgen draft drops her (she hovers): her boss line is written here.
 # The initiates fought at the same spot: in among them the group drifted to 25 yd of the south worshippers, who
