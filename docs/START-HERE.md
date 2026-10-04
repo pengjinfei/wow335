@@ -18,7 +18,7 @@
 - **整本通关（2026-10-01）**：三个英雄 5 人本全 bot 整本通关——乌特加德城堡（回归 2/2，[记录](testing/bosses/heroic-uk-run/README.md)）、
   魔枢（2026-10-02 按真人打法稳定：6 次整本击杀，v14 后 4/5，[记录](testing/bosses/heroic-nexus-run/README.md)）、**艾卓-尼鲁布**（[记录](testing/bosses/heroic-an-run/README.md)）。
   已合并 playerbots `main` `9efe171b`、raidtest `dev` `7a415ea`（10-02；新路线条目 `from=` 拉怪点、`cc=0`；共享层：停在拉怪距离内、等吃喝、战斗中不拾取、视线外队员被缠住时过去、紧凑怪组不闷棍、重力模拟认正下方导航网格、boss 暂不可攻击不算清、跳坑卡半空的队员拉回落线）。
-  **安卡赫特整本通关（2026-10-04，已合并 playerbots `main` `e4754e37`、raidtest `dev` `1081544`）**：从入口到沃拉兹 6 次击杀（51–56 分钟），[记录](testing/bosses/heroic-ak-run/README.md)。共享层：治疗移动中不转身、视线外尸体绕到能看见处复活、寻路失败回到导航网格（含下落 10 码、断开碎片反向寻路）、停步点同层、拉怪点等 2 分钟、`away=` 路线字段、被扣队员重下 stay。回归：艾卓-尼鲁布 2/2、UK 1/1、魔枢 1/2（原有波动）。遗留：魔枢科卢尔格坦克单独拉、全队在拐角等。路线条目：`object`（交互物体）、`summoned`（脚本召唤怪组）、`sent`（遭遇派来，原地/`hold=` 等）、
+  **安卡赫特整本通关（2026-10-05 第二次合并 playerbots `main` `0004a68f`、raidtest `dev` `91291ac`）**：从入口到沃拉兹 10 次击杀（51–56 分钟），暮光信徒区多组已修；下一个副本古达克（`heroic-gd-run-h5g`，路线草稿 `tools/route-gen/overrides/604-gundrak.txt`），[记录](testing/bosses/heroic-ak-run/README.md)。共享层：治疗移动中不转身、视线外尸体绕到能看见处复活、寻路失败回到导航网格（含下落 10 码、断开碎片反向寻路）、停步点同层、拉怪点等 2 分钟、`away=` 路线字段、被扣队员重下 stay。回归：艾卓-尼鲁布 2/2、UK 1/1、魔枢 1/2（原有波动）。遗留：魔枢科卢尔格坦克单独拉、全队在拐角等。路线条目：`object`（交互物体）、`summoned`（脚本召唤怪组）、`sent`（遭遇派来，原地/`hold=` 等）、
   `drop … rim=`（跳坑）、`hold=`、`pull=`；共享层：`AiPlayerbot.EmulateGravity`（落地清下落标记、落水面、陷地抬回）、路径掉层时直走、有战斗标记无攻击者照常推进、
   拉回只选同层节点；raidtest：重置后跑 boss AI `Reset`、坦克移动 20 码清零卡住计时。卡点先按真人打法想（站位/卡视线/控制/击杀顺序/节奏）。
   批跑前开 `caffeinate -ims`（Mac 会睡眠）。
