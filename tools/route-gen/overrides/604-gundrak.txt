@@ -6,8 +6,10 @@
 # Slad'ran's corridor and the room west of it: three elite formations each, joined by distance into packs of 8-10 elites.
 # Each formation a pack of its own.
 pack 127014 split=1
-pack 127017 split=1
-pack 127026 split=1
+# On Slad'ran's hold point south of his stairs: cleared before him (run 2146 went to him with it alive, it joined).
+pack 127017 split=1 along=260
+# The first pack 22 yd from the next one: pulled from the corridor so the fight stays east (run 2146 took both).
+pack 127026 split=1 from=1830.4,639.8,129.8 pull=30
 pack 127009 split=1
 pack 127023 split=1
 pack 127045 split=1
