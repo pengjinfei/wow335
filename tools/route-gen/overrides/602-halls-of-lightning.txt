@@ -6,3 +6,15 @@
 # Mender beside him walks a path of its own: neither is part of the Hardened Steel squad at his spawn.
 pack 126981 split=1 along=330
 pack 126941 split=1
+
+# The only way to Volkhan crosses the slag pit (z 23; navmesh probe: every path from the north side to his platform
+# bottoms out at z 23.2). Its fourteen Slags respawn 20 s after death: cleared as packs, 621 came in 50 minutes and
+# the run never left the pit (my-mac run 100148). Not cleared - walked through from the pit entrance to the ramp top,
+# fighting whatever follows; the Unbound Firestorms in its corners do not respawn and are pulled as usual.
+ignore-entry 28585
+pass 420 0 0 0 to=575 entry=28585
+
+# After Volkhan the hall holds Titanium guards in rows of four. The row at y -146 (x 1170-1187) and the column at
+# x 1162 (y -154..-172) stand 11 yd apart at their nearest and were drafted as one pack of eight elites: the shaman
+# died there in both full runs (my-mac runs 100150, 100151). Pulled apart.
+pack 52899 split=1
