@@ -5,7 +5,9 @@
 #
 # Slad'ran's corridor and the room west of it: three elite formations each, joined by distance into packs of 8-10 elites.
 # Each formation a pack of its own.
-pack 127014 split=1
+# 10-15 yd from the pack south of Slad'ran's stairs: walked up to, it took that pack too, wipe (run 2165). Pulled from
+# (1808,634), in sight of all three (.raidtest los), 37 yd from the next pack.
+pack 127014 split=1 from=1808.0,634.0,129.2 pull=26 hold=1830.0,632.0,129.3
 # On Slad'ran's hold point south of his stairs: cleared before him (run 2146 went to him with it alive, it joined).
 # Pulled from the floor east of it: walking the skeleton to it went by node 257 at the top of the stairs, 13 yd from
 # Slad'ran, and took him with it (run 2148).
