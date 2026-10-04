@@ -1,0 +1,8 @@
+# Hand fixes for the Halls of Lightning route draft (routegen.py --overrides). Chain:
+#   1823,926,1383,2266,1591>1384@110:211  (entrance -> Bjarngrim -> Volkhan -> corridor; no stored path from Volkhan
+#   on to Ionar, so the exit -> Loken path from its point 110 past Ionar to Loken)
+#
+# General Bjarngrim patrols (path 1269810, 14 points from his spawn up the ramp to 1395,99) and the Stormforged
+# Mender beside him walks a path of its own: neither is part of the Hardened Steel squad at his spawn.
+pack 126981 split=1 along=330
+pack 126941 split=1

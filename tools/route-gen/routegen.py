@@ -51,12 +51,30 @@ def main():
                 # "node-fix <along> <x> <y> <z>": move the skeleton node written at that along (travel-node paths
                 # that hug a ledge put nodes where the navmesh path drops under the map - Drak'Tharon Keep's pit).
                 node_fixes[int(fields[1])] = tuple(float(v) for v in fields[2:5])
-    chain = [int(x) for x in a.chain.split(',')]
+    # A chain element "S>T@a:b" appends points a..b of the stored path S -> T: Halls of Lightning has no stored path
+    # from Volkhan on to Ionar, but the exit -> Loken path runs past both from point 110 on.
+    pieces = {}
+    chain = []
+    for x in a.chain.split(','):
+        if '>' in x:
+            st, rng = x.split('@')
+            ps, pt = (int(v) for v in st.split('>'))
+            lo, hi = (int(v) for v in rng.split(':'))
+            pieces[len(chain)] = (ps, pt, lo, hi)
+            chain.append(pt)
+        else:
+            chain.append(int(x))
 
     names = {int(r[0]): r[1] for r in query('acore_playerbots',
-             f"SELECT id, name FROM playerbots_travelnode WHERE id IN ({a.chain})")}
+             f"SELECT id, name FROM playerbots_travelnode WHERE id IN ({','.join(map(str, chain))})")}
     skel = []
-    for s, t in zip(chain, chain[1:]):
+    for i, (s, t) in enumerate(zip(chain, chain[1:])):
+        if i + 1 in pieces:
+            ps, pt, lo, hi = pieces[i + 1]
+            skel += [tuple(map(float, p)) for p in query('acore_playerbots', f"SELECT x, y, z FROM "
+                     f"playerbots_travelnode_path WHERE node_id={ps} AND to_node_id={pt} AND nr BETWEEN {lo} AND {hi} "
+                     f"ORDER BY nr")]
+            continue
         pts = query('acore_playerbots', f"SELECT x, y, z FROM playerbots_travelnode_path "
                     f"WHERE node_id={s} AND to_node_id={t} ORDER BY nr")
         if not pts:
