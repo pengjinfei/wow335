@@ -38,3 +38,7 @@ pack 127042 hold=1775.0,621.0,124.3 from=1775.0,660.0,129.2
 # at once, wipe (run 2143). The patrol pulled at its east end from the corridor, the cobras on their loop's east side.
 pack 127045 split=1 from=1716.7,635.4,129.2 pull=22 hold=1735.0,638.5,129.6 cc=0
 pack 127023 split=1 from=1692.0,637.6,127.4 pull=20 hold=1716.7,635.4,129.2
+# Past the Colossus: the God Hunter and Medicine Man patrol east-west along the walkway, its west end 12 yd from the
+# four elites at (1585,883); walking up to those took the patrol with them, wipe (run 2155). The patrol first, pulled
+# at its west end from (1586,855), 28 yd from the pack (.raidtest los sees both from there).
+pack 127054 along=725 from=1586.0,855.0,155.2 pull=18 hold=1589.9,843.3,154.8 cc=0
