@@ -10,7 +10,9 @@ pack 127014 split=1
 # Pulled from the floor east of it: walking the skeleton to it went by node 257 at the top of the stairs, 13 yd from
 # Slad'ran, and took him with it (run 2148).
 pack 127017 split=1 along=260 from=1790.0,632.0,124.4 pull=25
-pack 127026 split=1
+# Pulled back to the foot of the spiral, away from the next two packs: fought where it stands it took both, nine
+# elites, wipe (run 2151). Seen from (1830,632) only (.raidtest los): from (1830.4,639.8) it waited two minutes (2148).
+pack 127026 split=1 from=1830.0,632.0,129.3 pull=28 hold=1846.1,642.9,135.1
 pack 127009 split=1
 pack 127023 split=1
 pack 127045 split=1
