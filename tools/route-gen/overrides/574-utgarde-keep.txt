@@ -6,4 +6,11 @@
 # The draft marked forges 1 and 2 as side packs (42 / 55 yd off the skeleton) and met forge 3 first; the tank
 # pulled it over and over while it evaded (first full run, 2026-09-29).
 pack 125904 along=196 side=0
-pack 125905 along=205 side=0
+# Forge 2 is pulled from (375,-28), the one spot probed in its sight with a collision floor (no floor west of it: the
+# ground search found the terrain over the keep at z 176). Walking straight at it was refused for 45 s and it was
+# skipped, so forge 3 evaded every pull until the stall watchdog stopped the run (my-mac run 100106; run 1964 lost 8 min).
+pack 125905 along=205 side=0 pull=25 from=375.0,-28.0,24.7
+# The Strategist and his worg patrol the stairs between the second floor (z 65) and the top (z 109), passing 7 yd from
+# both top packs: met on the stairs top they came with them - six elites at once, wipe (my-mac run 100104). Waited
+# for on the landing (z 87) the patrol walks by within 15 yd and is pulled alone.
+pack 125998 pull=25 from=99.9,109.6,87.3
