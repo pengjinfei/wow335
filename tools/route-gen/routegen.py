@@ -43,7 +43,7 @@ def main():
             fields = line.split('#', 1)[0].split()
             if len(fields) >= 2 and fields[0] == 'pack':
                 overrides[int(fields[1])] = dict(f.split('=', 1) for f in fields[2:])
-            elif fields and fields[0] in ('object', 'summoned', 'drop', 'boss', 'pass', 'wait'):
+            elif fields and fields[0] in ('object', 'summoned', 'drop', 'boss', 'pass', 'wait', 'cross'):
                 objects.append(line.split('#', 1)[0].strip() + ('  # ' + line.split('#', 1)[1].strip() if '#' in line else ''))
             elif len(fields) >= 2 and fields[0] == 'ignore-entry':
                 ignored.add(int(fields[1]))
