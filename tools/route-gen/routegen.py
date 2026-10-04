@@ -95,7 +95,7 @@ def main():
         LEFT JOIN creature_template_movement m ON m.CreatureId = t.entry
         LEFT JOIN creature_formations f ON f.memberGUID = c.guid
         WHERE c.map = {a.map_id} AND t.npcflag = 0 AND (t.unit_flags & 0x2) = 0 AND t.type <> 8
-          AND IFNULL(m.Flight, 0) = 0 AND t.faction NOT IN (35, 31, 188)""")
+          AND IFNULL(m.Flight, 0) = 0 AND t.faction NOT IN (35, 31, 188, 7, 190)""")
     spawns = [dict(guid=int(r[0]), entry=int(r[1]), name=r[2], rank=int(r[3]),
                    p=(float(r[4]), float(r[5]), float(r[6])), leader=int(r[7]),
                    script=r[8] if len(r) > 8 else '', patrol=len(r) > 9 and r[9] == '2') for r in rows

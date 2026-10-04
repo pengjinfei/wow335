@@ -24,3 +24,7 @@ summoned 1050 1624.7 891.4 95.1 radius=15 entry=29932 # Eck the Ferocious
 # Gal'darah last, east of the centre, with the rhinos of his arena.
 pack 127207 along=1150 side=0
 pack 127044 along=1200
+# Slad'ran as in the isolated fight that killed him 10/10 at ilvl 200: the group waits south of his stairs, the tank pulls
+# from the top. Run 2142 fought him on the constrictors' spawn point at the foot of the stairs, all five within 5 yd,
+# and lost the race at 8%.
+pack 127042 hold=1775.0,621.0,124.3 from=1775.0,660.0,129.2
