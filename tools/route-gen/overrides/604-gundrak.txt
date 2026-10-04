@@ -42,6 +42,9 @@ pack 127023 split=1 from=1692.0,637.6,127.4 pull=20 hold=1716.7,635.4,129.2
 # four elites at (1585,883); walking up to those took the patrol with them, wipe (run 2155). The patrol first, pulled
 # at its west end from (1586,855), 28 yd from the pack (.raidtest los sees both from there).
 pack 127054 along=725 from=1586.0,855.0,155.2 pull=18 hold=1589.9,843.3,154.8 cc=0
-# To Gal'darah over the centre's keystone, raised once the three altars are used: a game object, not in the navmesh.
-# The path went down into the pit under it, ended under his room, and the tank fell through the map (run 2159).
-cross 1140 1845.0 746.0 135.9 from=1704.5,748.0,139.3 # over the raised keystone to Gal'darah's door
+# To Gal'darah over the bridges the three altars raise: the centre's keystone stands on an island at z 118, with a gap
+# to water on either side (1755-1767 and 1787-1797 at y 746, .raidtest los floors); the bridges are game objects, not in
+# the navmesh. The path went down into the pit, ended under his room, and the tank fell through the map (run 2159);
+# walked straight from the upper floor at z 139 the group fell into the pit (2161). From the foot of the west ramp to
+# the east floor, both on the navmesh.
+cross 1140 1803.0 746.0 119.3 from=1742.0,748.0,118.8 # over the keystone's bridges to Gal'darah's side
