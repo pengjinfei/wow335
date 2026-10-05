@@ -33,5 +33,27 @@ wait 967 1182.0 -206.0 53.0 ms=10000
 # x 1049-1097, y -200..-142) and 126935+126936 (path 1269350, y -125..-65). Drafted into the static squads they walk
 # past, they came with them - twelve elites at once, the run wiped (my-mac runs 100164, 100166). Each pair is waited
 # for at a spot on its walk and pulled on its own before the squads beside it.
-pack 126938 split=1 side=0 along=1170 pull=30 from=1065.0,-199.6,62.1
-pack 126935 split=1 along=1222 pull=30 from=1062.3,-131.7,61.9
+pack 126938 split=1 side=0 along=1160 pull=10 from=1065.0,-199.6,62.1
+pack 126935 split=1 along=1230 pull=14 from=1062.3,-131.7,61.9
+
+# The west ring squad below Volkhan's platform (two Blistering Steamragers and a Firestorm) is out of sight from the
+# route: walked at, the leader came within its steam blasts and the group died there (my-mac run 100168). Pulled from
+# the platform's south edge, the one probed spot in its sight (29 yd), and fought there.
+pack 126947 along=700 pull=42 from=1340.7,-127.6,57.5 hold=1340.7,-127.6,57.5
+# Pulled at its spot, the south pair walked beside the squad at (1059,-172) and the squad came with it - wipe (my-mac
+# run 100171). The squad first, while the pair is off it and walking away; the pair after, two more at the most.
+pack 126907 along=1165 clear=126938:20
+# The north pair the same way: pulled at its spot it walked through the squads at (1039,-111) and (1073,-105) and both
+# came - wipe (my-mac run 100173). Those squads first, while the pair is off them and walking away; the pair after.
+pack 126920 clear=126935:20
+pack 126903 clear=126935:20
+# Squads first did not hold either: their fight lasted, the south pair walked back into it 40 s later (my-mac run
+# 100178). Each pair is pulled first, but only at the one point of its loop far from the squads: the south pair at
+# (1073,-198), 8 yd from its spot and 30 yd from the squad (pull=10); the north pair at (1063..1074,-120..-125), 12-13 yd
+# from its spot and 18-20 yd from the squads (pull=14).
+# The west ring squad came with Volkhan 2-6 s after his pull in three runs of four (100175, 100177, 100178): cleared
+# before him, from the ring node at (1340.7,-127.6), in its sight at 41 yd and 26 yd from Volkhan.
+# Ionar was pulled with the group held 79 yd back at (1161,-262): his Sparks hunted the healer there, out of heal range
+# of the tank, the first death in six full runs and the start of the wipe in two (my-mac runs 100179, 100181).
+# Pulled and fought from 28 yd, in sight (probed), where his isolated fights were won.
+pack 126873 pull=30 from=1110.0,-261.8,56.9 hold=1110.0,-261.8,56.9
