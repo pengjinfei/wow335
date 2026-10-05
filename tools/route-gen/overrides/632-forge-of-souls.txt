@@ -1,0 +1,6 @@
+# Hand fixes for the Forge of Souls route draft (routegen.py 632 1856,2702,1233,1124 --overrides).
+# Chain: entrance -> the hub node of the forge -> Bronjahm -> Devourer of Souls.
+#
+# Dark Ranger Kalira: the Horde side's escort at the entrance (the instance swaps the faction leader's party by team);
+# not an enemy to clear.
+pack 1972090 side=1
