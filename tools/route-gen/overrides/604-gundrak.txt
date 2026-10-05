@@ -15,7 +15,9 @@ pack 127017 split=1 along=260 from=1790.0,632.0,124.4 pull=25
 # Pulled back to the foot of the spiral, away from the next two packs: fought where it stands it took both, nine
 # elites, wipe (run 2151). Seen from (1830,632) only (.raidtest los): from (1830.4,639.8) it waited two minutes (2148).
 pack 127026 split=1 from=1830.0,632.0,129.3 pull=28 hold=1846.1,642.9,135.1
-pack 127009 split=1
+# The Lancer patrol's east end is 4 yd from this pack: pulled as the patrol came back, both came, then the cobras, wipe
+# (run 2176). Pulled while the patrol is 40 yd off at the west of its walk, from the corridor so the fight stays east.
+pack 127009 split=1 from=1716.7,635.4,129.2 pull=26 hold=1735.0,638.5,129.6 clear=127045:40
 pack 127023 split=1
 pack 127045 split=1
 object 272 1775.3 679.7 129.2 entry=192518 # Altar of Slad'ran
