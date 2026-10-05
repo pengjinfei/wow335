@@ -7,4 +7,6 @@ pack 1972090 side=1
 # The four Soulguards on the ramp up to Bronjahm: walking at them the leader stood for 75 s at (5215,2369) with every
 # move refused, skipped them and walked to Bronjahm through them, wipe (run 2218). Pulled from (5222,2395), three of
 # four in sight (.raidtest los), the group back at (5193,2355).
-pack 201686 from=5222.0,2395.0,668.7 pull=30 hold=5193.2,2355.2,668.2
+# The group waits by the spot, not back at (5193,2355): the crowd-control chain gives polymorph only to a target in
+# its 30 yd range, and from back there only the rogue's sap was handed out (run 2224).
+pack 201686 from=5222.0,2395.0,668.7 pull=30 hold=5219.0,2390.0,668.5
