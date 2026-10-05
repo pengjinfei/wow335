@@ -29,7 +29,7 @@ pack 127206 along=1010 side=0
 pack 127201 along=1030 side=0
 summoned 1050 1624.7 891.4 95.1 radius=15 entry=29932 # Eck the Ferocious
 # Gal'darah last, east of the centre, with the rhinos of his arena.
-pack 127207 along=1150 side=0
+# (moved below)
 pack 127044 along=1200
 # Slad'ran as in the isolated fight that killed him 10/10 at ilvl 200: the group waits south of his stairs, the tank pulls
 # from the top. Run 2142 fought him on the constrictors' spawn point at the foot of the stairs, all five within 5 yd,
@@ -50,3 +50,10 @@ pack 127054 along=725 from=1586.0,855.0,155.2 pull=18 hold=1589.9,843.3,154.8 cc
 # walked straight from the upper floor at z 139 the group fell into the pit (2161). From the foot of the west ramp to
 # the east floor, both on the navmesh.
 cross 1140 1803.0 746.0 119.3 from=1742.0,748.0,118.8 # over the keystone's bridges to Gal'darah's side
+# Gal'darah's arena: three Drakkari Rhinos ridden by Battle Riders (vehicles, npcflag spellclick - route-gen used to skip
+# them) 14 yd apart, 16-23 yd from the lone rhino at the door. Walking in took all three at once, wipe (run 2169). The
+# lone rhino from the ramp, then each ridden one from the doorway (.raidtest los sees all three from there).
+pack 127207 along=1150 side=0 from=1840.0,745.0,135.5 pull=26 hold=1830.0,746.0,126.2
+pack 127110 split=1 along=1160 side=0 from=1855.0,744.0,136.0 pull=33 hold=1830.0,746.0,126.2 cc=0
+pack 127111 split=1 along=1162 side=0 from=1855.0,744.0,136.0 pull=33 hold=1830.0,746.0,126.2 cc=0
+pack 127112 split=1 along=1164 side=0 from=1855.0,744.0,136.0 pull=33 hold=1830.0,746.0,126.2 cc=0

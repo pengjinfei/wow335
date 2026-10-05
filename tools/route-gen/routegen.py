@@ -94,7 +94,7 @@ def main():
         FROM creature c JOIN creature_template t ON t.entry = c.id
         LEFT JOIN creature_template_movement m ON m.CreatureId = t.entry
         LEFT JOIN creature_formations f ON f.memberGUID = c.guid
-        WHERE c.map = {a.map_id} AND t.npcflag = 0 AND (t.unit_flags & 0x2) = 0 AND t.type <> 8
+        WHERE c.map = {a.map_id} AND (t.npcflag & ~16777216) = 0 AND (t.unit_flags & 0x2) = 0 AND t.type <> 8
           AND IFNULL(m.Flight, 0) = 0 AND t.faction NOT IN (35, 31, 188, 7, 190)""")
     spawns = [dict(guid=int(r[0]), entry=int(r[1]), name=r[2], rank=int(r[3]),
                    p=(float(r[4]), float(r[5]), float(r[6])), leader=int(r[7]),
