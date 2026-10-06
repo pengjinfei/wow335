@@ -41,3 +41,11 @@ pack 42160 side=0 along=154
 summoned 960 899.0 65.0 540.0 radius=28 entry=36892,36840,36893 sent=1 hold=860.0,62.0,516.0 # first ambush
 summoned 1000 937.8 21.2 574.6 radius=15 entry=36841,36842 sent=1 hold=883.2,54.6,528.5 # second ambush, lower
 summoned 1040 926.1 -46.6 591.2 radius=15 entry=36841,36842 sent=1 hold=937.8,21.2,574.6 # second ambush, upper
+# The first ambush fires on entering area trigger 5578 (box x 838-881, y -31-120 round (859,44)) - only once Krick's
+# outro is over (instance progress FINISHED_KRICK_SCENE, Tyrannus' event voice at his mark). Ick stands on the box's
+# edge: the group entered it fighting him, too early, and stood inside after, never entering again; the ambush never
+# came (run 2250). Out of the box for the outro, then back in to the hold below the ramp.
+wait 950 820.0 100.0 509.5 ms=40000
+# The second ambush fires on entering area trigger 5579 (box x 939-981, y 0-150, z 546-586 round (960,75)) once the
+# first one is dead - a step into it, then back down to the holds below its marks.
+wait 990 948.0 62.0 566.0 ms=2000
