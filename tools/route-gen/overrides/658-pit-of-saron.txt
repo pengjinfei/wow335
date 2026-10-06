@@ -25,3 +25,11 @@ pack 201981 side=0 along=840
 pack 201833 side=0 along=842
 pack 201903 side=0 along=844
 pack 202236 along=900 from=795.0,110.0,509.8 pull=33 hold=780.0,100.0,510.0
+# The slave pit: the Ghoul / Torturer / Shadowcaster squad at (628,113) stands 16 yd from the Necrolyte's slaves at
+# (612,117). Left as a side pack it came with them, and with the next ones, wipe 3 minutes in (run 2246). Cleared first.
+pack 201980 side=0 along=195
+# North of the slave pit (588,172): six elites in two squads with slaves, the first thing that came at the leader on
+# its way past to the Necrolyte (run 2246). Split into its formations and cleared on the way.
+pack 202030 split=1 side=0 along=150
+pack 202204 split=1 side=0 along=152
+pack 42160 side=0 along=154
