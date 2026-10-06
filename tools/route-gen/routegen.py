@@ -31,6 +31,8 @@ def main():
     ap.add_argument('out')
     ap.add_argument('--link', type=float, default=12.0)
     ap.add_argument('--side', type=float, default=30.0)
+    ap.add_argument('--skeleton', help='file of "x y z" lines walked in order, used instead of the travel-node chain '
+                    '(chain then only names the route): Utgarde Pinnacle has no linked travel nodes')
     ap.add_argument('--overrides', help='hand fixes: lines "pack <spawnId> [along=<yd>] [side=<0|1>] [boss=0] [sent=1]" and '
                     '"object <along> <x> <y> <z> entry=<go entry>", "node-fix <along> <x> <y> <z>"')
     a = ap.parse_args()
@@ -68,7 +70,7 @@ def main():
     names = {int(r[0]): r[1] for r in query('acore_playerbots',
              f"SELECT id, name FROM playerbots_travelnode WHERE id IN ({','.join(map(str, chain))})")}
     skel = []
-    for i, (s, t) in enumerate(zip(chain, chain[1:])):
+    for i, (s, t) in enumerate(zip(chain, chain[1:]) if not a.skeleton else []):
         if i + 1 in pieces:
             ps, pt, lo, hi = pieces[i + 1]
             skel += [tuple(map(float, p)) for p in query('acore_playerbots', f"SELECT x, y, z FROM "
@@ -84,6 +86,8 @@ def main():
         if not pts:
             raise SystemExit(f'no travel path {s} -> {t} in either direction')
         skel += [tuple(map(float, p)) for p in pts]
+    if a.skeleton:
+        skel = [tuple(float(v) for v in line.split()[:3]) for line in open(a.skeleton) if line.strip() and not line.startswith('#')]
     cum = [0.0]
     for i in range(1, len(skel)):
         cum.append(cum[-1] + math.dist(skel[i - 1], skel[i]))
