@@ -40,14 +40,40 @@ pack 42160 side=0 along=154
 # down once it stands.
 # Its upper four stop at (915,75,553) on the ramp and did not come with the lower ones; the leader could not walk to
 # them and stood below for six minutes (run 2251). Pulled from (878,62), in sight of that mark 39 yd off.
-summoned 960 899.0 65.0 540.0 radius=28 entry=36892,36840,36893 sent=1 hold=860.0,62.0,516.0 from=878.4,62.4,528.6 pull=40 # first ambush
-summoned 1000 937.8 21.2 574.6 radius=15 entry=36841,36842 sent=1 hold=883.2,54.6,528.5 # second ambush, lower
-summoned 1040 926.1 -46.6 591.2 radius=15 entry=36841,36842 sent=1 hold=937.8,21.2,574.6 # second ambush, upper
+# Held at (860,62) the lower half (Deathbringer, two Wrathbringers, two Flamebearers round (883,54)) aggroed as it
+# emerged, 15 yd off, before any crowd control, wipe in 50 s (run 2266). Held 33-50 yd off, pulled from (850,64) in
+# sight of the lower five (.raidtest los) so the crowd-control chain goes first. Not from (850,64): the Forge object
+# at (855,69) - not in the static collision model `los` reads - stood between, the spot waited out of sight and the
+# leader walked into the five (runs 2272, 2274). From (853,52) the line runs 15 yd clear of it.
+summoned 960 899.0 65.0 540.0 radius=28 entry=36892,36840,36893 sent=1 hold=845.0,70.0,516.8 from=853.0,52.0,514.4 pull=33 # first ambush
+# The second ambush (heroic: two sixes of Fallen Warriors and Wrathbone Coldwraiths) runs down from the tunnel to
+# (937.8,21.2) and (926.1,-46.6), both on the upper ramp - 109 yd of path above (883,54). Going down to that hold the
+# group was on the ramp's top bend at (933,43) when the lower six arrived and pulled them there, 22 yd off, wipe in 27 s
+# (run 2272). Held on the bend at (946.5,73.2), 53 yd off, then pulled from (950.6,50.9) in sight of their mark; the
+# upper six from (931.9,-13.1), 34 yd below theirs (.raidtest los and path).
+# Held 53 yd off no caster was within the 30 yd the crowd-control plan needs, nothing was marked and the six came
+# uncontrolled, wipe (run 2278). Held and pulled from (947,44), 24-31 yd from their marks - outside aggro, the
+# priest's shackles in reach; the upper six alike from (930.5,-18), 29 yd below their mark.
+# The six are linked: the priest's pre-pull shackle brought all of them onto the priest and the mage, the tank had no
+# threat, wipe (run 2280). The tank pulls them, no crowd control first.
+summoned 1000 937.8 21.2 574.6 radius=15 entry=36841,36842 sent=1 hold=947.0,44.0,569.3 from=947.0,44.0,569.3 pull=33 cc=0 # second ambush, lower
+summoned 1040 926.1 -46.6 591.2 radius=15 entry=36841,36842 sent=1 hold=930.5,-18.0,585.5 from=930.5,-18.0,585.5 pull=33 cc=0 # second ambush, upper
+# Geist Ambushers: on the cliffs over the slave pit until the freed slaves' event (area trigger 5589) has them jump down
+# on the slaves; their homes are then where they landed (~825,0). One left standing there followed Jaina's walk after
+# Krick into the first ambush and the group wiped (run 2261). Cleared after Ick they had already met Jaina on that
+# walk and fought her; pulled 20 times they never came (run 2268). Whatever is left of them is cleared right after the
+# slave pit (the trigger at (752,-52) is on the way there), before the Plagueborn Horrors.
+pack 202184 side=0 along=800
+pack 202276 side=0 along=801
+pack 201976 side=0 along=802
+pack 201815 side=0 along=803
+pack 202083 side=0 along=804
 # The first ambush fires on entering area trigger 5578 (box x 838-881, y -31-120 round (859,44)) - only once Krick's
 # outro is over (instance progress FINISHED_KRICK_SCENE, Tyrannus' event voice at his mark). Ick stands on the box's
 # edge: the group entered it fighting him, too early, and stood inside after, never entering again; the ambush never
-# came (run 2250). Out of the box for the outro, then back in to the hold below the ramp.
-wait 950 820.0 100.0 509.5 ms=40000
+# came (run 2250). Out of the box for the outro, then back in to the hold below the ramp. The outro runs ~68 s from
+# Ick's death, then Tyrannus flies to his mark (923,82,582) - 40 s was too short, the group re-entered early (run 2253).
+wait 950 820.0 100.0 509.5 ms=100000
 # The second ambush fires on entering area trigger 5579 (box x 939-981, y 0-150, z 546-586 round (960,75)) once the
 # first one is dead - a step into it, then back down to the holds below its marks.
 wait 990 948.0 62.0 566.0 ms=2000
