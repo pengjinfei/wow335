@@ -10,3 +10,8 @@ pack 1972090 side=1
 # The group waits by the spot, not back at (5193,2355): the crowd-control chain gives polymorph only to a target in
 # its 30 yd range, and from back there only the rogue's sap was handed out (run 2224).
 pack 201686 from=5222.0,2395.0,668.7 pull=30 hold=5219.0,2390.0,668.5
+# Around Bronjahm's platform, 50-60 yd off him: two Watchmen, and a Soul Horror with two Animators on either side. Left
+# as side packs, the Watchmen joined six seconds into his fight, wipe (run 2237). Cleared before him.
+pack 201706 side=0 along=840
+pack 201695 side=0 along=842
+pack 201732 side=0 along=844
