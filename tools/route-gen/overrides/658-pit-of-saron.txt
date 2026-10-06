@@ -18,3 +18,10 @@ pack 201998 boss=0
 # Tyrannus (36658) is summoned once the group comes out of the tunnel; fought on the ground below Rimefang (the per-boss
 # scenario's prep point).
 summoned 1680 1000.0 170.0 628.5 radius=45 entry=36658 # Scourgelord Tyrannus
+# Ick's yard: Plagueborn Horrors wander round him. Walking up to clear them took Ick, Krick and three Horrors at once,
+# wipe (run 2245). The three to the west first, each on its own; the one wandering 30 yd off Ick pulled from the west as
+# it comes over, the group back at (780,100); then Ick with the one beside him.
+pack 201981 side=0 along=840
+pack 201833 side=0 along=842
+pack 201903 side=0 along=844
+pack 202236 along=900 from=795.0,110.0,509.8 pull=33 hold=780.0,100.0,510.0
