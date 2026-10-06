@@ -25,7 +25,11 @@ ignore-entry 26536
 #
 # Skadi circles the hall on Grauf, out of reach: walked at, every move was refused 39 yd short and the run stood still
 # (my-mac run 100194). His gauntlet starts at SmartTrigger 4991 (330.9,-508.4): the leader goes there and holds.
-pack 126103 from=330.9,-508.4,104.3 hold=330.9,-508.4,104.3
+# Held at the trigger, the group fought at the west end while every Ymirjar wave comes from (477.6,-484.6) and the
+# three Harpoon Launchers stand at the east end (480-491,-508..-524): a damage dealer carried each harpoon 120-150 yd
+# alone through the new wave, and the first death was such a carrier in all three failed runs (my-mac runs 100209,
+# 100213, 100214). The group goes on to the launchers - crossing the trigger on the way - and holds there.
+pack 126103 from=465.0,-512.0,104.7 hold=465.0,-512.0,104.7
 #
 # The corridor past Skadi to Ymiron (z 75): squads at (424,-455), (396,-439) and (378,-437), and a pair of Berserkers
 # (126110+126111, path 1261110) walking the whole of it, 372..429. Drafted into the west squad, the east squad's pull
