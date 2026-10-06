@@ -1,0 +1,20 @@
+# Hand fixes for the Pit of Saron route draft (routegen.py 658 1858,3267,1397,1396,990,2358,1398 --overrides).
+# Chain: entrance -> Garfrost -> Ick -> the icicle tunnel (Disturbed Glacial Revenant) -> the cave mouth where Tyrannus
+# lands on Rimefang.
+#
+# The slaves are prisoners, immune to players (unit_flags 0x100) and freed by the encounters: not enemies.
+ignore-entry 36764
+ignore-entry 36765
+ignore-entry 36766
+ignore-entry 36767
+ignore-entry 36770
+ignore-entry 36771
+ignore-entry 36772
+ignore-entry 36773
+ignore-entry 36888
+ignore-entry 36889
+# The Revenant is named like a travel node, not a boss: a patrol in the tunnel.
+pack 201998 boss=0
+# Tyrannus (36658) is summoned once the group comes out of the tunnel; fought on the ground below Rimefang (the per-boss
+# scenario's prep point).
+summoned 1680 1000.0 170.0 628.5 radius=45 entry=36658 # Scourgelord Tyrannus
