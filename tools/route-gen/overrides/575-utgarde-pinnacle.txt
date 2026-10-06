@@ -5,7 +5,9 @@
 # (26668) and engages the whole zone. Not selectable until then: the leader walks to her and waits. The ten Dragonflayer
 # Spectators are the audience of her ritual, not a pack.
 ignore-entry 26667
-boss 455 296.6 -346.1 90.6 radius=0.0 entry=29281,26668 spawns=126115  # Svala
+# Her trigger must be crossed: held 26 yd off it at (316.5,-265) the intro never began and the leader waited for
+# her to be attackable until the run was stopped (my-mac runs 100196, 100198). The trigger is her pull spot.
+boss 455 296.6 -346.1 90.6 radius=0.0 entry=29281,26668 spawns=126115 from=312.6,-291.2,104.7 hold=312.6,-291.2,104.7  # Svala
 #
 # Gortok: four beasts in stasis (Frenzied Worgen, Ravenous Furbolg, Massive Jormungar, Ferocious Rhino) come one at a
 # time once a player uses the sphere (go_palehoof_sphere 188593), then Gortok. Not packs to pull. The Ymirjar around
@@ -20,3 +22,15 @@ object 770 238.5 -460.8 105.5 entry=188593  # Gortok's sphere
 # short of one at (560,-315) had no floor and the tank fell to z -175 at the start (my-mac run 100191). Non-elite;
 # what comes to the group is fought where it stands, nobody walks off the walkway after them.
 ignore-entry 26536
+#
+# Skadi circles the hall on Grauf, out of reach: walked at, every move was refused 39 yd short and the run stood still
+# (my-mac run 100194). His gauntlet starts at SmartTrigger 4991 (330.9,-508.4): the leader goes there and holds.
+pack 126103 from=330.9,-508.4,104.3 hold=330.9,-508.4,104.3
+#
+# The corridor past Skadi to Ymiron (z 75): squads at (424,-455), (396,-439) and (378,-437), and a pair of Berserkers
+# (126110+126111, path 1261110) walking the whole of it, 372..429. Drafted into the west squad, the east squad's pull
+# brought the pair 5 s later and the other two squads after it - ten elites, wipe (my-mac run 100197). The east squad
+# first from the corridor's east end while the pair is off it; the pair next, from there, at the east end of its loop
+# (22-24 yd), 30 yd and more from the next squad; then the others.
+pack 126109 pull=30 from=450.0,-455.6,75.1 hold=450.0,-455.6,75.1 clear=126111:15
+pack 126111 split=1 along=1160 pull=25 from=450.0,-455.6,75.1 hold=450.0,-455.6,75.1
