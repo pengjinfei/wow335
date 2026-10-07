@@ -27,8 +27,10 @@ gossip 2230 1202.9 667.0 196.2 entry=28070 menu=0 option=0 # Brann at Sjonnir's 
 pack 126743 along=196 clear=126715:28
 pack 126754 along=197 clear=126715:28
 pack 126715 along=200 from=1060.0,667.0,202.2 pull=26
-pack 126688 along=202 from=1038.0,668.0,202.3 pull=34 hold=1060.0,667.0,202.2
-pack 126694 along=204 from=1038.0,668.0,202.3 pull=31 hold=1060.0,667.0,202.2
+pack 126688 along=204 from=1038.0,668.0,202.3 pull=34 hold=1060.0,667.0,202.2
+# South before north, from (1048,668), as its loop brings it to its east end 31 yd off: pulled second from (1038,668)
+# it came 7 s into the fight with the north group, its loop passing 21 yd from the spot (run 2361).
+pack 126694 along=202 from=1048.0,668.0,201.8 pull=33 hold=1060.0,667.0,202.2
 # The entrance hall: the first group (two Warriors, a Theurgist walking among them) 34 yd in, a lone Theurgist
 # patrolling 25 yd past it, two Unrelenting Constructs 36 yd past that. Fought where it stood, the patrol and both
 # constructs joined within 7 s, three died (run 2336). Pulled from the entrance while the patrol is away.
