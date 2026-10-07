@@ -33,13 +33,17 @@ wait 967 1182.0 -206.0 53.0 ms=10000
 # x 1049-1097, y -200..-142) and 126935+126936 (path 1269350, y -125..-65). Drafted into the static squads they walk
 # past, they came with them - twelve elites at once, the run wiped (my-mac runs 100164, 100166). Each pair is waited
 # for at a spot on its walk and pulled on its own before the squads beside it.
-pack 126938 split=1 side=0 along=1160 pull=10 from=1065.0,-199.6,62.1
+# Walked to after the default 60 s wait, the pair was beside the squad (run 100259); fought at the spot, 28 yd from the
+# squad, the fight drifted to it (run 100262): waited for up to 3 minutes and fought at (1070,-225), 54 yd from the squad.
+pack 126938 split=1 side=0 along=1160 pull=10 from=1065.0,-199.6,62.1 hold=1070.0,-225.0,61.2 spotwait=180
 pack 126935 split=1 along=1230 pull=14 from=1062.3,-131.7,61.9
 
 # The west ring squad below Volkhan's platform (two Blistering Steamragers and a Firestorm) is out of sight from the
 # route: walked at, the leader came within its steam blasts and the group died there (my-mac run 100168). Pulled from
 # the platform's south edge, the one probed spot in its sight (29 yd), and fought there.
-pack 126947 along=700 pull=42 from=1340.7,-127.6,57.5 hold=1340.7,-127.6,57.5
+# Fought where it was pulled, 26 yd from Volkhan, it still brought him 8 s later (my-mac run 100258): fought back on
+# the ring at (1350.6,-158.1), 57 yd from him, where the squads round it are cleared by then.
+pack 126947 along=700 pull=42 from=1340.7,-127.6,57.5 hold=1350.6,-158.1,52.7
 # Pulled at its spot, the south pair walked beside the squad at (1059,-172) and the squad came with it - wipe (my-mac
 # run 100171). The squad first, while the pair is off it and walking away; the pair after, two more at the most.
 pack 126907 along=1165 clear=126938:20
@@ -57,3 +61,10 @@ pack 126903 clear=126935:20
 # of the tank, the first death in six full runs and the start of the wipe in two (my-mac runs 100179, 100181).
 # Pulled and fought from 28 yd, in sight (probed), where his isolated fights were won.
 pack 126873 pull=30 from=1110.0,-261.8,56.9 hold=1110.0,-261.8,56.9
+# Out of the slag pit, the ramp top lies 20-30 yd from two ring squads (627: two Firestorms and a Steamrager at
+# (1366,-183); 655: two Steamragers spread round (1333,-161)): walked up into them, both came together with the slags
+# still following - eight elites, wipe (my-mac runs 100150, 100254). The east squad is pulled from the ramp at
+# (1349.2,-210), in its sight at 32 yd, and fought down the ramp at (1348.6,-226), where neither squad sees the group.
+# Fought down on the ramp's landing (z 38) it brought the side squad at its west end, 30-40 yd off (126956/957/966,
+# run 100261, wipe): fought on the ramp at the pull spot itself, 50 yd and more from that squad.
+pack 126953 pull=35 from=1349.2,-210.0,48.0 hold=1349.2,-210.0,48.0
