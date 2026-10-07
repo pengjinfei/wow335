@@ -29,3 +29,7 @@ pack 126754 along=197 clear=126715:28
 pack 126715 along=200 from=1060.0,667.0,202.2 pull=26
 pack 126688 along=202 from=1038.0,668.0,202.3 pull=34 hold=1060.0,667.0,202.2
 pack 126694 along=204 from=1038.0,668.0,202.3 pull=31 hold=1060.0,667.0,202.2
+# The entrance hall: the first group (two Warriors, a Theurgist walking among them) 34 yd in, a lone Theurgist
+# patrolling 25 yd past it, two Unrelenting Constructs 36 yd past that. Fought where it stood, the patrol and both
+# constructs joined within 7 s, three died (run 2336). Pulled from the entrance while the patrol is away.
+pack 126692 from=1153.2,800.0,195.9 pull=36 clear=126710:25
