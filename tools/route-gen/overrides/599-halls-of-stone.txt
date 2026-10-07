@@ -1,0 +1,31 @@
+# Hand fixes for the Halls of Stone route draft:
+# routegen.py 599 1818,1377 <out> --skeleton overrides/599-halls-of-stone.skeleton --overrides overrides/599-halls-of-stone.txt
+# Skeleton: entrance -> hub -> Krystallus -> hub -> Maiden of Grief (straight west, no travel path) -> hub -> Brann ->
+# Brann's escort path (waypoint 280701) to the Tribunal of Ages -> back up it -> hub -> Sjonnir.
+#
+# The bosses carry NON_ATTACKABLE-free flags but were not drafted: written here.
+boss 549 1008.6 759.9 208.7 radius=0 entry=27977 spawns=126790 # Krystallus
+boss 1072 842.6 666.0 190.1 radius=0 entry=27975 spawns=126789 # Maiden of Grief
+# Brann Bronzebeard (brann_bronzebeard.cpp) is talked to four times; each gossip picks the step from his menu:
+# escort to the Tribunal of Ages, start the Tribunal, leave it, open Sjonnir's door.
+# The escort only after his way is clear: Brann fought an Unrelenting Construct on it, his evade cleared his waypoint
+# movement (brann_bronzebeard.cpp EnterEvadeMode) and he stood there, the escort never ended (runs 2331, 2332). The
+# constructs of the corridor and the Tribunal's approach first, then back to him.
+gossip 1645 1077.4 474.2 207.8 entry=28070 menu=0 option=0 # Brann: escort to the Tribunal
+gossip 1660 939.6 375.5 207.4 entry=28070 menu=0 option=0 # Brann: start the Tribunal of Ages
+# The Tribunal's waves - Dark Rune Protectors, Stormcallers and Iron Golem Custodians - come for about five minutes;
+# fought as they come while the leader waits at Brann for his next gossip.
+summoned 1665 897.2 331.8 203.7 radius=50 repeat=1 entry=27983,27984,27985 # Tribunal of Ages waves
+gossip 1670 897.2 331.8 203.7 entry=28070 menu=0 option=0 # Brann: leave the Tribunal
+gossip 2230 1202.9 667.0 196.2 entry=28070 menu=0 option=0 # Brann at Sjonnir's door: open it
+# The hub (1010,666): three Dark Rune groups walk short loops 10-25 yd apart - two Theurgists east-west along y 666
+# (987-1036), two Warriors and a Theurgist round (1008,680), a Warrior and two Theurgists round (1012,655). The route
+# met them at three separate passes; pulled in the middle of the hub all eight came, wipe (run 2330). First the
+# Unrelenting Construct and the Shardlings by the east door while the pair walks west, then the pair from the east
+# corridor as it reaches its east end, then the north and south groups from (1038,668), the one spot in sight of
+# both (.raidtest los), fought back at the corridor.
+pack 126743 along=196 clear=126715:28
+pack 126754 along=197 clear=126715:28
+pack 126715 along=200 from=1060.0,667.0,202.2 pull=26
+pack 126688 along=202 from=1038.0,668.0,202.3 pull=34 hold=1060.0,667.0,202.2
+pack 126694 along=204 from=1038.0,668.0,202.3 pull=31 hold=1060.0,667.0,202.2
