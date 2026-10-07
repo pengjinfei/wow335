@@ -29,7 +29,10 @@ ignore-entry 26536
 # three Harpoon Launchers stand at the east end (480-491,-508..-524): a damage dealer carried each harpoon 120-150 yd
 # alone through the new wave, and the first death was such a carrier in all three failed runs (my-mac runs 100209,
 # 100213, 100214). The group goes on to the launchers - crossing the trigger on the way - and holds there.
-pack 126103 from=465.0,-512.0,104.7 hold=465.0,-512.0,104.7
+# Measured over full runs, the launchers were no better: west hold 4/5 past Skadi (my-mac runs 100205-100209), held at
+# the launchers 3/5 (100234-100238), pushed there 0/2 (100243, 100244). The checkpoint runs that favoured the launchers
+# always start with Heroism ready. Back at the trigger.
+pack 126103 from=330.9,-508.4,104.3 hold=330.9,-508.4,104.3
 #
 # The corridor past Skadi to Ymiron (z 75): squads at (424,-455), (396,-439) and (378,-437), and a pair of Berserkers
 # (126110+126111, path 1261110) walking the whole of it, 372..429. Drafted into the west squad, the east squad's pull
