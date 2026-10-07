@@ -33,3 +33,8 @@ pack 126694 along=204 from=1038.0,668.0,202.3 pull=31 hold=1060.0,667.0,202.2
 # patrolling 25 yd past it, two Unrelenting Constructs 36 yd past that. Fought where it stood, the patrol and both
 # constructs joined within 7 s, three died (run 2336). Pulled from the entrance while the patrol is away.
 pack 126692 from=1153.2,800.0,195.9 pull=36 clear=126710:25
+# The corridor from the entrance hall to the hub: a Giant's group (1126,662) and a Warrior's group (1082,668) stand
+# on the way in. Drafted on the way back from Brann, they were passed on the way in and both came with the hub's
+# first pull, wipe (run 2344). Cleared on the way in.
+pack 126690 along=146
+pack 126691 along=182
