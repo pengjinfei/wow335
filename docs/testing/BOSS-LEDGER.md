@@ -55,6 +55,7 @@ run761 是隔离 Dark Matter observation/execution smoke：bot action 与 28237 
 | [冠军的试炼](bosses/heroic-toc5/README.md) | Grand Champions / Eadric / Paletress / Black Knight | **仅 ilvl 200 档，隔离**：Eadric **5/5**；Paletress **5/5**（反射护盾修复 `647c9c66` 后，修前 0/3）；Black Knight **5/5**（副本事件开战，正常规则）；Grand Champions 地面阶段 **6/6**（隔离，跳过骑乘，`KillOnInstanceData`）；**完整遭遇（骑乘 + 地面，正常规则）2/5**（2026-09-27：bot 自拿枪上马、拼枪破盾、践踏，`heroic-toc5-champions-h5g`）。 | **4/4（ilvl 200 档；Grand Champions 完整遭遇不稳定）** |
 | [映像大厅](bosses/heroic-hor/README.md) | Falric / Marwyn / Frostsworn General / 巫妖王逃亡 | **仅 ilvl 200 档**：Frostsworn General **5/5**（隔离；核心反射体免疫修复 `12c3ed4b7`）；Falric **3/18**（波次 + Hopelessness 总吞吐，BACKLOG 23）；巫妖王逃亡 **0/5**（2026-09-27 首建，隔离前三战与对峙剧情；过 3 面冰墙 3 次、倒在第 4 面，BACKLOG 23）；Marwyn 未建（链式）。 | **1/4；其余待确认** |
 | [岩石大厅](bosses/heroic-hos/README.md) | Krystallus / [Maiden](bosses/heroic-hos-maiden/README.md) / [Tribunal](bosses/heroic-hos-tribunal/README.md) / [Sjonnir](bosses/heroic-hos-sjonnir/README.md) | Krystallus 5/5（总2 death，证据边界）；Maiden 隔离 5/5（1 death）；Tribunal r32 1/5 DONE、未完成；Sjonnir **隔离 boss 战 5/5**（fixture 预置 Tribunal DONE+开门；正常规则续链仍框架阻断）；Tribunal ilvl 200 档 5/10。 | **完成（boss 机制口径；Maiden/Sjonnir 隔离，Tribunal 需 ilvl 200 档）** |
+| 同上（本机） | [整本通关](bosses/heroic-hos-run/README.md) | **整本 4 次通关**（2339/2345/2363/2364，2026-10-08；未合并 `backlog/vh`）：Tribunal 仍为压线点  |  |
 
 ## 团队副本 / 非当前队列
 

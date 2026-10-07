@@ -18,6 +18,7 @@
 - **整本通关（2026-10-01）**：三个英雄 5 人本全 bot 整本通关——乌特加德城堡（回归 2/2，[记录](testing/bosses/heroic-uk-run/README.md)）、
   魔枢（2026-10-02 按真人打法稳定：6 次整本击杀，v14 后 4/5，[记录](testing/bosses/heroic-nexus-run/README.md)）、**艾卓-尼鲁布**（[记录](testing/bosses/heroic-an-run/README.md)）。
   已合并 playerbots `main` `9efe171b`、raidtest `dev` `7a415ea`（10-02；新路线条目 `from=` 拉怪点、`cc=0`；共享层：停在拉怪距离内、等吃喝、战斗中不拾取、视线外队员被缠住时过去、紧凑怪组不闷棍、重力模拟认正下方导航网格、boss 暂不可攻击不算清、跳坑卡半空的队员拉回落线）。
+  **岩石大厅整本（2026-10-08，本机，未合并 `backlog/vh`）**：入口到 Sjonnir 通关 4 次（2339/2345/2363/2364）；Brann 四次对话用 `gossip` 条目，Krystallus 散开与禁召唤已修，Tribunal 仍压线，[记录](testing/bosses/heroic-hos-run/README.md)。
   **紫罗兰监狱整本（2026-10-07，本机，未合并）**：1/14 通关（2318），新路线条目 `gossip`/`repeat=1`；卡在 Xevozz 与第 12 波后守门波次，待用户定装等/打法，[记录](testing/bosses/heroic-vh-run/README.md)。萨隆矿坑第二波伏击同样待定（新三本后续统一打）。
   **灵魂洪炉整本通关（2026-10-06，3 次击杀，共享层已合并 playerbots `main` `f62b84ab`、raidtest `dev` `b538d45`）**：2212/2240/2242 打通，[记录](testing/bosses/heroic-fos-run/README.md)。共享层：停步点只按能打的怪算、离开深渊、被拒时直接走向目标；拉怪点拉看得见的那只；近目标直接走。待办：魔枢 Kolurg、DTK 第一大厅打嗝者巡逻、灵魂洪炉 Devourer 中途停手（2241）。下一个副本：萨隆矿坑整本（本机）。
   **古达克整本通关（2026-10-05，已合并 core `main` `77f88f2b9`、playerbots `main` `1b35afca`、raidtest `dev` `4437ae7`）**：从入口到迦尔达拉 6 次击杀、全部 0 死亡（33–37 分钟），[记录](testing/bosses/heroic-gd-run/README.md)。共享层：无碰撞地板处重力以导航网格为准、不可攻击 boss 打其召唤物开战、新路线条目 `cross`；核心：寻路点不低于网格 4 码、艾克召唤崩溃。注意本地 12:00 英雄副本每日重置会把整队传出副本。魔枢待办：Kolurg、Anomalus 前裂隙（2196 裂隙在高处没被打掉）、Telestra 后 783 组与 807 巡逻同上（2191）。下一个副本：灵魂洪炉整本（本机）。
